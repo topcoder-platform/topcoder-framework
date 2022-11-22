@@ -1,0 +1,34 @@
+{
+  "name": "@topcoder-framework/lib-logger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "concurrently 'npm run build:cjs' 'npm run build:es' 'npm run build:types'",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:es": "tsc -p tsconfig.es.json",
+    "build:types": "tsc -p tsconfig.types.json",
+    "build:include:deps": "lerna run --scope $npm_package_name --include-dependencies build"
+  },
+  "author": "",
+  "license": "ISC",
+  "volta": {
+    "node": "18.12.1",
+    "typescript": "4.9.3",
+    "npm": "9.1.2"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.189",
+    "joi": "^17.7.0",
+    "lodash": "^4.17.21",
+    "tslib": "^2.4.1",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
+    "@types/node": "^18.11.9",
+    "concurrently": "^7.5.0",
+    "typedoc": "^0.23.21",
+    "typescript": "^4.9.3"
+  }
+}

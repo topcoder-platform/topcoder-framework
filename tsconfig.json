@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "incremental": true,
+    "lib": ["ES2022"],
+    "importHelpers": true,
+    "noEmitHelpers": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@topcoder-framework/*": ["packages/*"],
+      "@topcoder-framework/domain-*": ["domains/domain-*"],
+      "@topcoder-framework/lib-*": ["lib/lib-*"]
+    },
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "target": "ES2022",
+    "useUnknownInCatchVariables": false
+  },
+  "include": ["packages/", "lib/", "domains/"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}
