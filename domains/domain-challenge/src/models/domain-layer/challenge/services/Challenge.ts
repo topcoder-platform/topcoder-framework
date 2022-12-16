@@ -15,8 +15,8 @@ import { Challenge, CreateChallengeInput } from "../Challenge";
 
 export type ChallengeService = typeof ChallengeService;
 export const ChallengeService = {
-  createChallenge: {
-    path: "/topcoder.domain.service.challenge.Challenge/createChallenge",
+  create: {
+    path: "/topcoder.domain.service.challenge.Challenge/create",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: CreateChallengeInput) => Buffer.from(CreateChallengeInput.encode(value).finish()),
@@ -27,20 +27,20 @@ export const ChallengeService = {
 } as const;
 
 export interface ChallengeServer extends UntypedServiceImplementation {
-  createChallenge: handleUnaryCall<CreateChallengeInput, Challenge>;
+  create: handleUnaryCall<CreateChallengeInput, Challenge>;
 }
 
 export interface ChallengeClient extends Client {
-  createChallenge(
+  create(
     request: CreateChallengeInput,
     callback: (error: ServiceError | null, response: Challenge) => void,
   ): ClientUnaryCall;
-  createChallenge(
+  create(
     request: CreateChallengeInput,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: Challenge) => void,
   ): ClientUnaryCall;
-  createChallenge(
+  create(
     request: CreateChallengeInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
