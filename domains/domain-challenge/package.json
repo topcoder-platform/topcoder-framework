@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.3",
-    "tslib": "^2.4.1"
+    "tslib": "^2.4.1",
+    "@grpc/grpc-js": "^1.8.0"
   },
   "devDependencies": {
     "@types/node": "^18.11.8",
