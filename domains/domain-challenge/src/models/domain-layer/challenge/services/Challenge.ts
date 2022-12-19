@@ -11,12 +11,12 @@ import {
   ServiceError,
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
-import { Challenge, CreateChallengeInput } from "../Challenge";
+import { Challenge, CreateChallengeInput } from "../challenge";
 
 export type ChallengeService = typeof ChallengeService;
 export const ChallengeService = {
   create: {
-    path: "/topcoder.domain.service.challenge.Challenge/create",
+    path: "/topcoder.domain.service.challenge.Challenge/Create",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: CreateChallengeInput) => Buffer.from(CreateChallengeInput.encode(value).finish()),

@@ -5,7 +5,11 @@ const rimraf = require("rimraf");
 
 const { execSync } = require("child_process");
 
-const PROTO_DIR = process.env.CHALLENGE_DOMAIN_PROTO_PATH;
+const PROTO_DIR = path.join(
+  __dirname,
+  "../../../node_modules/topcoder-interface"
+);
+
 const MODEL_DIR = path.join(__dirname, "../src/models/");
 
 const PROTOC_PATH = "protoc";

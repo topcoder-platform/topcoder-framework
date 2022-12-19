@@ -9,9 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@grpc/grpc-js": "^1.8.0",
     "dotenv": "^16.0.3",
-    "tslib": "^2.4.1",
-    "@grpc/grpc-js": "^1.8.0"
+    "topcoder-interface": "github:topcoder-platform/plat-interface-definition#feat/challenge-domain",
+    "tslib": "^2.4.1"
   },
   "devDependencies": {
     "@types/node": "^18.11.8",

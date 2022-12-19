@@ -1,30 +1,34 @@
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
-import { Boolean, booleanFromJSON, booleanToJSON } from "../../common/Common";
+import { Boolean, booleanFromJSON, booleanToJSON } from "../../common/common";
 import { Timestamp } from "../../google/protobuf/timestamp";
 
 export enum Track {
-  DEVELOP = 0,
-  DESIGN = 1,
-  DATA_SCIENCE = 2,
-  QA = 3,
+  TRACK_UNSPECIFIED = 0,
+  TRACK_DEVELOP = 1,
+  TRACK_DESIGN = 2,
+  TRACK_DATA_SCIENCE = 3,
+  TRACK_QA = 4,
   UNRECOGNIZED = -1,
 }
 
 export function trackFromJSON(object: any): Track {
   switch (object) {
     case 0:
-    case "DEVELOP":
-      return Track.DEVELOP;
+    case "TRACK_UNSPECIFIED":
+      return Track.TRACK_UNSPECIFIED;
     case 1:
-    case "DESIGN":
-      return Track.DESIGN;
+    case "TRACK_DEVELOP":
+      return Track.TRACK_DEVELOP;
     case 2:
-    case "DATA_SCIENCE":
-      return Track.DATA_SCIENCE;
+    case "TRACK_DESIGN":
+      return Track.TRACK_DESIGN;
     case 3:
-    case "QA":
-      return Track.QA;
+    case "TRACK_DATA_SCIENCE":
+      return Track.TRACK_DATA_SCIENCE;
+    case 4:
+    case "TRACK_QA":
+      return Track.TRACK_QA;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -34,14 +38,16 @@ export function trackFromJSON(object: any): Track {
 
 export function trackToJSON(object: Track): string {
   switch (object) {
-    case Track.DEVELOP:
-      return "DEVELOP";
-    case Track.DESIGN:
-      return "DESIGN";
-    case Track.DATA_SCIENCE:
-      return "DATA_SCIENCE";
-    case Track.QA:
-      return "QA";
+    case Track.TRACK_UNSPECIFIED:
+      return "TRACK_UNSPECIFIED";
+    case Track.TRACK_DEVELOP:
+      return "TRACK_DEVELOP";
+    case Track.TRACK_DESIGN:
+      return "TRACK_DESIGN";
+    case Track.TRACK_DATA_SCIENCE:
+      return "TRACK_DATA_SCIENCE";
+    case Track.TRACK_QA:
+      return "TRACK_QA";
     case Track.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -49,65 +55,69 @@ export function trackToJSON(object: Track): string {
 }
 
 export enum SubTrack {
-  FIRST_2_FINISH = 0,
-  CODE = 1,
-  DESIGN_FIRST_2_FINISH = 3,
+  SUB_TRACK_UNSPECIFIED = 0,
+  SUB_TRACK_FIRST_2_FINISH = 1,
+  SUB_TRACK_CODE = 2,
+  SUB_TRACK_DESIGN_FIRST_2_FINISH = 3,
   /** @deprecated */
-  ASSEMBLY_COMPETITION = 4,
+  SUB_TRACK_ASSEMBLY_COMPETITION = 4,
   /** @deprecated */
-  UI_PROTOTYPE_COMPETITION = 5,
+  SUB_TRACK_UI_PROTOTYPE_COMPETITION = 5,
   /** @deprecated */
-  ARCHITECTURE = 6,
-  BUG_HUNT = 7,
-  MARATHON_MATCH = 8,
+  SUB_TRACK_ARCHITECTURE = 6,
+  SUB_TRACK_BUG_HUNT = 7,
+  SUB_TRACK_MARATHON_MATCH = 8,
   /** @deprecated */
-  SPECIFICATION = 9,
-  WEB_DESIGNS = 10,
+  SUB_TRACK_SPECIFICATION = 9,
+  SUB_TRACK_WEB_DESIGNS = 10,
   /** @deprecated */
-  TEST_SCENARIOS = 11,
+  SUB_TRACK_TEST_SCENARIOS = 11,
   /** @deprecated */
-  TEST_SUITES = 12,
+  SUB_TRACK_TEST_SUITES = 12,
   UNRECOGNIZED = -1,
 }
 
 export function subTrackFromJSON(object: any): SubTrack {
   switch (object) {
     case 0:
-    case "FIRST_2_FINISH":
-      return SubTrack.FIRST_2_FINISH;
+    case "SUB_TRACK_UNSPECIFIED":
+      return SubTrack.SUB_TRACK_UNSPECIFIED;
     case 1:
-    case "CODE":
-      return SubTrack.CODE;
+    case "SUB_TRACK_FIRST_2_FINISH":
+      return SubTrack.SUB_TRACK_FIRST_2_FINISH;
+    case 2:
+    case "SUB_TRACK_CODE":
+      return SubTrack.SUB_TRACK_CODE;
     case 3:
-    case "DESIGN_FIRST_2_FINISH":
-      return SubTrack.DESIGN_FIRST_2_FINISH;
+    case "SUB_TRACK_DESIGN_FIRST_2_FINISH":
+      return SubTrack.SUB_TRACK_DESIGN_FIRST_2_FINISH;
     case 4:
-    case "ASSEMBLY_COMPETITION":
-      return SubTrack.ASSEMBLY_COMPETITION;
+    case "SUB_TRACK_ASSEMBLY_COMPETITION":
+      return SubTrack.SUB_TRACK_ASSEMBLY_COMPETITION;
     case 5:
-    case "UI_PROTOTYPE_COMPETITION":
-      return SubTrack.UI_PROTOTYPE_COMPETITION;
+    case "SUB_TRACK_UI_PROTOTYPE_COMPETITION":
+      return SubTrack.SUB_TRACK_UI_PROTOTYPE_COMPETITION;
     case 6:
-    case "ARCHITECTURE":
-      return SubTrack.ARCHITECTURE;
+    case "SUB_TRACK_ARCHITECTURE":
+      return SubTrack.SUB_TRACK_ARCHITECTURE;
     case 7:
-    case "BUG_HUNT":
-      return SubTrack.BUG_HUNT;
+    case "SUB_TRACK_BUG_HUNT":
+      return SubTrack.SUB_TRACK_BUG_HUNT;
     case 8:
-    case "MARATHON_MATCH":
-      return SubTrack.MARATHON_MATCH;
+    case "SUB_TRACK_MARATHON_MATCH":
+      return SubTrack.SUB_TRACK_MARATHON_MATCH;
     case 9:
-    case "SPECIFICATION":
-      return SubTrack.SPECIFICATION;
+    case "SUB_TRACK_SPECIFICATION":
+      return SubTrack.SUB_TRACK_SPECIFICATION;
     case 10:
-    case "WEB_DESIGNS":
-      return SubTrack.WEB_DESIGNS;
+    case "SUB_TRACK_WEB_DESIGNS":
+      return SubTrack.SUB_TRACK_WEB_DESIGNS;
     case 11:
-    case "TEST_SCENARIOS":
-      return SubTrack.TEST_SCENARIOS;
+    case "SUB_TRACK_TEST_SCENARIOS":
+      return SubTrack.SUB_TRACK_TEST_SCENARIOS;
     case 12:
-    case "TEST_SUITES":
-      return SubTrack.TEST_SUITES;
+    case "SUB_TRACK_TEST_SUITES":
+      return SubTrack.SUB_TRACK_TEST_SUITES;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -117,30 +127,32 @@ export function subTrackFromJSON(object: any): SubTrack {
 
 export function subTrackToJSON(object: SubTrack): string {
   switch (object) {
-    case SubTrack.FIRST_2_FINISH:
-      return "FIRST_2_FINISH";
-    case SubTrack.CODE:
-      return "CODE";
-    case SubTrack.DESIGN_FIRST_2_FINISH:
-      return "DESIGN_FIRST_2_FINISH";
-    case SubTrack.ASSEMBLY_COMPETITION:
-      return "ASSEMBLY_COMPETITION";
-    case SubTrack.UI_PROTOTYPE_COMPETITION:
-      return "UI_PROTOTYPE_COMPETITION";
-    case SubTrack.ARCHITECTURE:
-      return "ARCHITECTURE";
-    case SubTrack.BUG_HUNT:
-      return "BUG_HUNT";
-    case SubTrack.MARATHON_MATCH:
-      return "MARATHON_MATCH";
-    case SubTrack.SPECIFICATION:
-      return "SPECIFICATION";
-    case SubTrack.WEB_DESIGNS:
-      return "WEB_DESIGNS";
-    case SubTrack.TEST_SCENARIOS:
-      return "TEST_SCENARIOS";
-    case SubTrack.TEST_SUITES:
-      return "TEST_SUITES";
+    case SubTrack.SUB_TRACK_UNSPECIFIED:
+      return "SUB_TRACK_UNSPECIFIED";
+    case SubTrack.SUB_TRACK_FIRST_2_FINISH:
+      return "SUB_TRACK_FIRST_2_FINISH";
+    case SubTrack.SUB_TRACK_CODE:
+      return "SUB_TRACK_CODE";
+    case SubTrack.SUB_TRACK_DESIGN_FIRST_2_FINISH:
+      return "SUB_TRACK_DESIGN_FIRST_2_FINISH";
+    case SubTrack.SUB_TRACK_ASSEMBLY_COMPETITION:
+      return "SUB_TRACK_ASSEMBLY_COMPETITION";
+    case SubTrack.SUB_TRACK_UI_PROTOTYPE_COMPETITION:
+      return "SUB_TRACK_UI_PROTOTYPE_COMPETITION";
+    case SubTrack.SUB_TRACK_ARCHITECTURE:
+      return "SUB_TRACK_ARCHITECTURE";
+    case SubTrack.SUB_TRACK_BUG_HUNT:
+      return "SUB_TRACK_BUG_HUNT";
+    case SubTrack.SUB_TRACK_MARATHON_MATCH:
+      return "SUB_TRACK_MARATHON_MATCH";
+    case SubTrack.SUB_TRACK_SPECIFICATION:
+      return "SUB_TRACK_SPECIFICATION";
+    case SubTrack.SUB_TRACK_WEB_DESIGNS:
+      return "SUB_TRACK_WEB_DESIGNS";
+    case SubTrack.SUB_TRACK_TEST_SCENARIOS:
+      return "SUB_TRACK_TEST_SCENARIOS";
+    case SubTrack.SUB_TRACK_TEST_SUITES:
+      return "SUB_TRACK_TEST_SUITES";
     case SubTrack.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -148,19 +160,23 @@ export function subTrackToJSON(object: SubTrack): string {
 }
 
 export enum ReviewType {
-  COMMUNITY = 0,
-  INTERNAL = 1,
+  REVIEW_TYPE_UNSPECIFIED = 0,
+  REVIEW_TYPE_COMMUNITY = 1,
+  REVIEW_TYPE_INTERNAL = 2,
   UNRECOGNIZED = -1,
 }
 
 export function reviewTypeFromJSON(object: any): ReviewType {
   switch (object) {
     case 0:
-    case "COMMUNITY":
-      return ReviewType.COMMUNITY;
+    case "REVIEW_TYPE_UNSPECIFIED":
+      return ReviewType.REVIEW_TYPE_UNSPECIFIED;
     case 1:
-    case "INTERNAL":
-      return ReviewType.INTERNAL;
+    case "REVIEW_TYPE_COMMUNITY":
+      return ReviewType.REVIEW_TYPE_COMMUNITY;
+    case 2:
+    case "REVIEW_TYPE_INTERNAL":
+      return ReviewType.REVIEW_TYPE_INTERNAL;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -170,10 +186,12 @@ export function reviewTypeFromJSON(object: any): ReviewType {
 
 export function reviewTypeToJSON(object: ReviewType): string {
   switch (object) {
-    case ReviewType.COMMUNITY:
-      return "COMMUNITY";
-    case ReviewType.INTERNAL:
-      return "INTERNAL";
+    case ReviewType.REVIEW_TYPE_UNSPECIFIED:
+      return "REVIEW_TYPE_UNSPECIFIED";
+    case ReviewType.REVIEW_TYPE_COMMUNITY:
+      return "REVIEW_TYPE_COMMUNITY";
+    case ReviewType.REVIEW_TYPE_INTERNAL:
+      return "REVIEW_TYPE_INTERNAL";
     case ReviewType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -181,19 +199,23 @@ export function reviewTypeToJSON(object: ReviewType): string {
 }
 
 export enum ConfidentialityType {
-  PUBLIC = 0,
-  PRIVATE = 1,
+  CONFIDENTIALITY_TYPE_UNSPECIFIED = 0,
+  CONFIDENTIALITY_TYPE_PUBLIC = 1,
+  CONFIDENTIALITY_TYPE_PRIVATE = 2,
   UNRECOGNIZED = -1,
 }
 
 export function confidentialityTypeFromJSON(object: any): ConfidentialityType {
   switch (object) {
     case 0:
-    case "PUBLIC":
-      return ConfidentialityType.PUBLIC;
+    case "CONFIDENTIALITY_TYPE_UNSPECIFIED":
+      return ConfidentialityType.CONFIDENTIALITY_TYPE_UNSPECIFIED;
     case 1:
-    case "PRIVATE":
-      return ConfidentialityType.PRIVATE;
+    case "CONFIDENTIALITY_TYPE_PUBLIC":
+      return ConfidentialityType.CONFIDENTIALITY_TYPE_PUBLIC;
+    case 2:
+    case "CONFIDENTIALITY_TYPE_PRIVATE":
+      return ConfidentialityType.CONFIDENTIALITY_TYPE_PRIVATE;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -203,10 +225,12 @@ export function confidentialityTypeFromJSON(object: any): ConfidentialityType {
 
 export function confidentialityTypeToJSON(object: ConfidentialityType): string {
   switch (object) {
-    case ConfidentialityType.PUBLIC:
-      return "PUBLIC";
-    case ConfidentialityType.PRIVATE:
-      return "PRIVATE";
+    case ConfidentialityType.CONFIDENTIALITY_TYPE_UNSPECIFIED:
+      return "CONFIDENTIALITY_TYPE_UNSPECIFIED";
+    case ConfidentialityType.CONFIDENTIALITY_TYPE_PUBLIC:
+      return "CONFIDENTIALITY_TYPE_PUBLIC";
+    case ConfidentialityType.CONFIDENTIALITY_TYPE_PRIVATE:
+      return "CONFIDENTIALITY_TYPE_PRIVATE";
     case ConfidentialityType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -214,51 +238,55 @@ export function confidentialityTypeToJSON(object: ConfidentialityType): string {
 }
 
 export enum PhaseName {
-  REGISTRATION = 0,
-  SUBMISSION = 1,
-  SCREENING = 2,
-  REVIEW = 3,
-  APPEALS = 4,
-  APPEALS_RESPONSE = 5,
-  AGGREGATION = 6,
-  FINAL_FIX = 7,
-  POST_MORTEM = 8,
-  ITERATIVE_REVIEW = 9,
+  PHASE_NAME_UNSPECIFIED = 0,
+  PHASE_NAME_REGISTRATION = 1,
+  PHASE_NAME_SUBMISSION = 2,
+  PHASE_NAME_SCREENING = 3,
+  PHASE_NAME_REVIEW = 4,
+  PHASE_NAME_APPEALS = 5,
+  PHASE_NAME_APPEALS_RESPONSE = 6,
+  PHASE_NAME_AGGREGATION = 7,
+  PHASE_NAME_FINAL_FIX = 8,
+  PHASE_NAME_POST_MORTEM = 9,
+  PHASE_NAME_ITERATIVE_REVIEW = 10,
   UNRECOGNIZED = -1,
 }
 
 export function phaseNameFromJSON(object: any): PhaseName {
   switch (object) {
     case 0:
-    case "REGISTRATION":
-      return PhaseName.REGISTRATION;
+    case "PHASE_NAME_UNSPECIFIED":
+      return PhaseName.PHASE_NAME_UNSPECIFIED;
     case 1:
-    case "SUBMISSION":
-      return PhaseName.SUBMISSION;
+    case "PHASE_NAME_REGISTRATION":
+      return PhaseName.PHASE_NAME_REGISTRATION;
     case 2:
-    case "SCREENING":
-      return PhaseName.SCREENING;
+    case "PHASE_NAME_SUBMISSION":
+      return PhaseName.PHASE_NAME_SUBMISSION;
     case 3:
-    case "REVIEW":
-      return PhaseName.REVIEW;
+    case "PHASE_NAME_SCREENING":
+      return PhaseName.PHASE_NAME_SCREENING;
     case 4:
-    case "APPEALS":
-      return PhaseName.APPEALS;
+    case "PHASE_NAME_REVIEW":
+      return PhaseName.PHASE_NAME_REVIEW;
     case 5:
-    case "APPEALS_RESPONSE":
-      return PhaseName.APPEALS_RESPONSE;
+    case "PHASE_NAME_APPEALS":
+      return PhaseName.PHASE_NAME_APPEALS;
     case 6:
-    case "AGGREGATION":
-      return PhaseName.AGGREGATION;
+    case "PHASE_NAME_APPEALS_RESPONSE":
+      return PhaseName.PHASE_NAME_APPEALS_RESPONSE;
     case 7:
-    case "FINAL_FIX":
-      return PhaseName.FINAL_FIX;
+    case "PHASE_NAME_AGGREGATION":
+      return PhaseName.PHASE_NAME_AGGREGATION;
     case 8:
-    case "POST_MORTEM":
-      return PhaseName.POST_MORTEM;
+    case "PHASE_NAME_FINAL_FIX":
+      return PhaseName.PHASE_NAME_FINAL_FIX;
     case 9:
-    case "ITERATIVE_REVIEW":
-      return PhaseName.ITERATIVE_REVIEW;
+    case "PHASE_NAME_POST_MORTEM":
+      return PhaseName.PHASE_NAME_POST_MORTEM;
+    case 10:
+    case "PHASE_NAME_ITERATIVE_REVIEW":
+      return PhaseName.PHASE_NAME_ITERATIVE_REVIEW;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -268,26 +296,28 @@ export function phaseNameFromJSON(object: any): PhaseName {
 
 export function phaseNameToJSON(object: PhaseName): string {
   switch (object) {
-    case PhaseName.REGISTRATION:
-      return "REGISTRATION";
-    case PhaseName.SUBMISSION:
-      return "SUBMISSION";
-    case PhaseName.SCREENING:
-      return "SCREENING";
-    case PhaseName.REVIEW:
-      return "REVIEW";
-    case PhaseName.APPEALS:
-      return "APPEALS";
-    case PhaseName.APPEALS_RESPONSE:
-      return "APPEALS_RESPONSE";
-    case PhaseName.AGGREGATION:
-      return "AGGREGATION";
-    case PhaseName.FINAL_FIX:
-      return "FINAL_FIX";
-    case PhaseName.POST_MORTEM:
-      return "POST_MORTEM";
-    case PhaseName.ITERATIVE_REVIEW:
-      return "ITERATIVE_REVIEW";
+    case PhaseName.PHASE_NAME_UNSPECIFIED:
+      return "PHASE_NAME_UNSPECIFIED";
+    case PhaseName.PHASE_NAME_REGISTRATION:
+      return "PHASE_NAME_REGISTRATION";
+    case PhaseName.PHASE_NAME_SUBMISSION:
+      return "PHASE_NAME_SUBMISSION";
+    case PhaseName.PHASE_NAME_SCREENING:
+      return "PHASE_NAME_SCREENING";
+    case PhaseName.PHASE_NAME_REVIEW:
+      return "PHASE_NAME_REVIEW";
+    case PhaseName.PHASE_NAME_APPEALS:
+      return "PHASE_NAME_APPEALS";
+    case PhaseName.PHASE_NAME_APPEALS_RESPONSE:
+      return "PHASE_NAME_APPEALS_RESPONSE";
+    case PhaseName.PHASE_NAME_AGGREGATION:
+      return "PHASE_NAME_AGGREGATION";
+    case PhaseName.PHASE_NAME_FINAL_FIX:
+      return "PHASE_NAME_FINAL_FIX";
+    case PhaseName.PHASE_NAME_POST_MORTEM:
+      return "PHASE_NAME_POST_MORTEM";
+    case PhaseName.PHASE_NAME_ITERATIVE_REVIEW:
+      return "PHASE_NAME_ITERATIVE_REVIEW";
     case PhaseName.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -321,7 +351,6 @@ export interface Challenge {
   groups: string[];
   winners: Challenge_Winner[];
   discussions: Challenge_Discussion[];
-  overview?: Challenge_Overview | undefined;
   createdBy: string;
   updatedBy?: string | undefined;
   created?: Date;
@@ -371,15 +400,19 @@ export interface Challenge_Discussion {
 }
 
 export enum Challenge_Discussion_DiscussionType {
-  CHALLENGE = 0,
+  DISCUSSION_TYPE_UNSPECIFIED = 0,
+  DISCUSSION_TYPE_CHALLENGE = 1,
   UNRECOGNIZED = -1,
 }
 
 export function challenge_Discussion_DiscussionTypeFromJSON(object: any): Challenge_Discussion_DiscussionType {
   switch (object) {
     case 0:
-    case "CHALLENGE":
-      return Challenge_Discussion_DiscussionType.CHALLENGE;
+    case "DISCUSSION_TYPE_UNSPECIFIED":
+      return Challenge_Discussion_DiscussionType.DISCUSSION_TYPE_UNSPECIFIED;
+    case 1:
+    case "DISCUSSION_TYPE_CHALLENGE":
+      return Challenge_Discussion_DiscussionType.DISCUSSION_TYPE_CHALLENGE;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -389,8 +422,10 @@ export function challenge_Discussion_DiscussionTypeFromJSON(object: any): Challe
 
 export function challenge_Discussion_DiscussionTypeToJSON(object: Challenge_Discussion_DiscussionType): string {
   switch (object) {
-    case Challenge_Discussion_DiscussionType.CHALLENGE:
-      return "CHALLENGE";
+    case Challenge_Discussion_DiscussionType.DISCUSSION_TYPE_UNSPECIFIED:
+      return "DISCUSSION_TYPE_UNSPECIFIED";
+    case Challenge_Discussion_DiscussionType.DISCUSSION_TYPE_CHALLENGE:
+      return "DISCUSSION_TYPE_CHALLENGE";
     case Challenge_Discussion_DiscussionType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -420,9 +455,6 @@ export interface Challenge_Task {
   memberId?: number | undefined;
 }
 
-export interface Challenge_Overview {
-}
-
 export interface Challenge_PrizeSet {
   type: Challenge_PrizeSet_PrizeType;
   description: string;
@@ -430,23 +462,27 @@ export interface Challenge_PrizeSet {
 }
 
 export enum Challenge_PrizeSet_PrizeType {
-  PLACEMENT = 0,
-  COPILOT = 1,
-  REVIEWER_PRIZE = 2,
+  PRIZE_TYPE_UNSPECIFIED = 0,
+  PRIZE_TYPE_PLACEMENT = 1,
+  PRIZE_TYPE_COPILOT = 2,
+  PRIZE_TYPE_REVIEWER_PRIZE = 3,
   UNRECOGNIZED = -1,
 }
 
 export function challenge_PrizeSet_PrizeTypeFromJSON(object: any): Challenge_PrizeSet_PrizeType {
   switch (object) {
     case 0:
-    case "PLACEMENT":
-      return Challenge_PrizeSet_PrizeType.PLACEMENT;
+    case "PRIZE_TYPE_UNSPECIFIED":
+      return Challenge_PrizeSet_PrizeType.PRIZE_TYPE_UNSPECIFIED;
     case 1:
-    case "COPILOT":
-      return Challenge_PrizeSet_PrizeType.COPILOT;
+    case "PRIZE_TYPE_PLACEMENT":
+      return Challenge_PrizeSet_PrizeType.PRIZE_TYPE_PLACEMENT;
     case 2:
-    case "REVIEWER_PRIZE":
-      return Challenge_PrizeSet_PrizeType.REVIEWER_PRIZE;
+    case "PRIZE_TYPE_COPILOT":
+      return Challenge_PrizeSet_PrizeType.PRIZE_TYPE_COPILOT;
+    case 3:
+    case "PRIZE_TYPE_REVIEWER_PRIZE":
+      return Challenge_PrizeSet_PrizeType.PRIZE_TYPE_REVIEWER_PRIZE;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -456,12 +492,14 @@ export function challenge_PrizeSet_PrizeTypeFromJSON(object: any): Challenge_Pri
 
 export function challenge_PrizeSet_PrizeTypeToJSON(object: Challenge_PrizeSet_PrizeType): string {
   switch (object) {
-    case Challenge_PrizeSet_PrizeType.PLACEMENT:
-      return "PLACEMENT";
-    case Challenge_PrizeSet_PrizeType.COPILOT:
-      return "COPILOT";
-    case Challenge_PrizeSet_PrizeType.REVIEWER_PRIZE:
-      return "REVIEWER_PRIZE";
+    case Challenge_PrizeSet_PrizeType.PRIZE_TYPE_UNSPECIFIED:
+      return "PRIZE_TYPE_UNSPECIFIED";
+    case Challenge_PrizeSet_PrizeType.PRIZE_TYPE_PLACEMENT:
+      return "PRIZE_TYPE_PLACEMENT";
+    case Challenge_PrizeSet_PrizeType.PRIZE_TYPE_COPILOT:
+      return "PRIZE_TYPE_COPILOT";
+    case Challenge_PrizeSet_PrizeType.PRIZE_TYPE_REVIEWER_PRIZE:
+      return "PRIZE_TYPE_REVIEWER_PRIZE";
     case Challenge_PrizeSet_PrizeType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -475,6 +513,14 @@ export interface Challenge_PrizeSet_Prize {
 
 export interface CreateChallengeInput {
   challenge?: Challenge;
+}
+
+export interface UpdateChallengeInput {
+  challenge?: Challenge;
+}
+
+export interface RemoveChallengeInput {
+  id: string;
 }
 
 function createBaseChallenge(): Challenge {
@@ -505,7 +551,6 @@ function createBaseChallenge(): Challenge {
     groups: [],
     winners: [],
     discussions: [],
-    overview: undefined,
     createdBy: "",
     updatedBy: undefined,
     created: undefined,
@@ -593,20 +638,17 @@ export const Challenge = {
     for (const v of message.discussions) {
       Challenge_Discussion.encode(v!, writer.uint32(210).fork()).ldelim();
     }
-    if (message.overview !== undefined) {
-      Challenge_Overview.encode(message.overview, writer.uint32(218).fork()).ldelim();
-    }
     if (message.createdBy !== "") {
-      writer.uint32(226).string(message.createdBy);
+      writer.uint32(218).string(message.createdBy);
     }
     if (message.updatedBy !== undefined) {
-      writer.uint32(234).string(message.updatedBy);
+      writer.uint32(226).string(message.updatedBy);
     }
     if (message.created !== undefined) {
-      Timestamp.encode(toTimestamp(message.created), writer.uint32(242).fork()).ldelim();
+      Timestamp.encode(toTimestamp(message.created), writer.uint32(234).fork()).ldelim();
     }
     if (message.updated !== undefined) {
-      Timestamp.encode(toTimestamp(message.updated), writer.uint32(250).fork()).ldelim();
+      Timestamp.encode(toTimestamp(message.updated), writer.uint32(242).fork()).ldelim();
     }
     return writer;
   },
@@ -697,18 +739,15 @@ export const Challenge = {
           message.discussions.push(Challenge_Discussion.decode(reader, reader.uint32()));
           break;
         case 27:
-          message.overview = Challenge_Overview.decode(reader, reader.uint32());
-          break;
-        case 28:
           message.createdBy = reader.string();
           break;
-        case 29:
+        case 28:
           message.updatedBy = reader.string();
           break;
-        case 30:
+        case 29:
           message.created = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
           break;
-        case 31:
+        case 30:
           message.updated = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
           break;
         default:
@@ -751,7 +790,6 @@ export const Challenge = {
       discussions: Array.isArray(object?.discussions)
         ? object.discussions.map((e: any) => Challenge_Discussion.fromJSON(e))
         : [],
-      overview: isSet(object.overview) ? Challenge_Overview.fromJSON(object.overview) : undefined,
       createdBy: isSet(object.createdBy) ? String(object.createdBy) : "",
       updatedBy: isSet(object.updatedBy) ? String(object.updatedBy) : undefined,
       created: isSet(object.created) ? fromJsonTimestamp(object.created) : undefined,
@@ -828,8 +866,6 @@ export const Challenge = {
     } else {
       obj.discussions = [];
     }
-    message.overview !== undefined &&
-      (obj.overview = message.overview ? Challenge_Overview.toJSON(message.overview) : undefined);
     message.createdBy !== undefined && (obj.createdBy = message.createdBy);
     message.updatedBy !== undefined && (obj.updatedBy = message.updatedBy);
     message.created !== undefined && (obj.created = message.created.toISOString());
@@ -871,9 +907,6 @@ export const Challenge = {
     message.groups = object.groups?.map((e) => e) || [];
     message.winners = object.winners?.map((e) => Challenge_Winner.fromPartial(e)) || [];
     message.discussions = object.discussions?.map((e) => Challenge_Discussion.fromPartial(e)) || [];
-    message.overview = (object.overview !== undefined && object.overview !== null)
-      ? Challenge_Overview.fromPartial(object.overview)
-      : undefined;
     message.createdBy = object.createdBy ?? "";
     message.updatedBy = object.updatedBy ?? undefined;
     message.created = object.created ?? undefined;
@@ -1604,45 +1637,6 @@ export const Challenge_Task = {
   },
 };
 
-function createBaseChallenge_Overview(): Challenge_Overview {
-  return {};
-}
-
-export const Challenge_Overview = {
-  encode(_: Challenge_Overview, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): Challenge_Overview {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseChallenge_Overview();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(_: any): Challenge_Overview {
-    return {};
-  },
-
-  toJSON(_: Challenge_Overview): unknown {
-    const obj: any = {};
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<Challenge_Overview>, I>>(_: I): Challenge_Overview {
-    const message = createBaseChallenge_Overview();
-    return message;
-  },
-};
-
 function createBaseChallenge_PrizeSet(): Challenge_PrizeSet {
   return { type: 0, description: "", prizes: [] };
 }
@@ -1818,6 +1812,103 @@ export const CreateChallengeInput = {
     message.challenge = (object.challenge !== undefined && object.challenge !== null)
       ? Challenge.fromPartial(object.challenge)
       : undefined;
+    return message;
+  },
+};
+
+function createBaseUpdateChallengeInput(): UpdateChallengeInput {
+  return { challenge: undefined };
+}
+
+export const UpdateChallengeInput = {
+  encode(message: UpdateChallengeInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.challenge !== undefined) {
+      Challenge.encode(message.challenge, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateChallengeInput {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUpdateChallengeInput();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.challenge = Challenge.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UpdateChallengeInput {
+    return { challenge: isSet(object.challenge) ? Challenge.fromJSON(object.challenge) : undefined };
+  },
+
+  toJSON(message: UpdateChallengeInput): unknown {
+    const obj: any = {};
+    message.challenge !== undefined &&
+      (obj.challenge = message.challenge ? Challenge.toJSON(message.challenge) : undefined);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<UpdateChallengeInput>, I>>(object: I): UpdateChallengeInput {
+    const message = createBaseUpdateChallengeInput();
+    message.challenge = (object.challenge !== undefined && object.challenge !== null)
+      ? Challenge.fromPartial(object.challenge)
+      : undefined;
+    return message;
+  },
+};
+
+function createBaseRemoveChallengeInput(): RemoveChallengeInput {
+  return { id: "" };
+}
+
+export const RemoveChallengeInput = {
+  encode(message: RemoveChallengeInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.id !== "") {
+      writer.uint32(10).string(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): RemoveChallengeInput {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseRemoveChallengeInput();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): RemoveChallengeInput {
+    return { id: isSet(object.id) ? String(object.id) : "" };
+  },
+
+  toJSON(message: RemoveChallengeInput): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<RemoveChallengeInput>, I>>(object: I): RemoveChallengeInput {
+    const message = createBaseRemoveChallengeInput();
+    message.id = object.id ?? "";
     return message;
   },
 };
