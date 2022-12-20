@@ -11,15 +11,35 @@ import {
   ServiceError,
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
+import { LookupCriteria, ScanRequest, ScanResult } from "../../../common/common";
 import {
   ChallengeTimelineTemplate,
+  ChallengeTimelineTemplateList,
   CreateChallengeTimelineTemplateInput,
-  RemoveChallengeTimelineTemplateInput,
   UpdateChallengeTimelineTemplateInput,
 } from "../challenge_timeline_template";
 
 export type ChallengeTimelineTemplateService = typeof ChallengeTimelineTemplateService;
 export const ChallengeTimelineTemplateService = {
+  scan: {
+    path: "/topcoder.domain.service.challenge_timeline_template.ChallengeTimelineTemplate/Scan",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: ScanRequest) => Buffer.from(ScanRequest.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => ScanRequest.decode(value),
+    responseSerialize: (value: ScanResult) => Buffer.from(ScanResult.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => ScanResult.decode(value),
+  },
+  lookup: {
+    path: "/topcoder.domain.service.challenge_timeline_template.ChallengeTimelineTemplate/Lookup",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: LookupCriteria) => Buffer.from(LookupCriteria.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => LookupCriteria.decode(value),
+    responseSerialize: (value: ChallengeTimelineTemplate) =>
+      Buffer.from(ChallengeTimelineTemplate.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => ChallengeTimelineTemplate.decode(value),
+  },
   create: {
     path: "/topcoder.domain.service.challenge_timeline_template.ChallengeTimelineTemplate/Create",
     requestStream: false,
@@ -38,30 +58,58 @@ export const ChallengeTimelineTemplateService = {
     requestSerialize: (value: UpdateChallengeTimelineTemplateInput) =>
       Buffer.from(UpdateChallengeTimelineTemplateInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) => UpdateChallengeTimelineTemplateInput.decode(value),
-    responseSerialize: (value: ChallengeTimelineTemplate) =>
-      Buffer.from(ChallengeTimelineTemplate.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => ChallengeTimelineTemplate.decode(value),
+    responseSerialize: (value: ChallengeTimelineTemplateList) =>
+      Buffer.from(ChallengeTimelineTemplateList.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => ChallengeTimelineTemplateList.decode(value),
   },
-  remove: {
-    path: "/topcoder.domain.service.challenge_timeline_template.ChallengeTimelineTemplate/Remove",
+  delete: {
+    path: "/topcoder.domain.service.challenge_timeline_template.ChallengeTimelineTemplate/Delete",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: RemoveChallengeTimelineTemplateInput) =>
-      Buffer.from(RemoveChallengeTimelineTemplateInput.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => RemoveChallengeTimelineTemplateInput.decode(value),
-    responseSerialize: (value: ChallengeTimelineTemplate) =>
-      Buffer.from(ChallengeTimelineTemplate.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => ChallengeTimelineTemplate.decode(value),
+    requestSerialize: (value: LookupCriteria) => Buffer.from(LookupCriteria.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => LookupCriteria.decode(value),
+    responseSerialize: (value: ChallengeTimelineTemplateList) =>
+      Buffer.from(ChallengeTimelineTemplateList.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => ChallengeTimelineTemplateList.decode(value),
   },
 } as const;
 
 export interface ChallengeTimelineTemplateServer extends UntypedServiceImplementation {
+  scan: handleUnaryCall<ScanRequest, ScanResult>;
+  lookup: handleUnaryCall<LookupCriteria, ChallengeTimelineTemplate>;
   create: handleUnaryCall<CreateChallengeTimelineTemplateInput, ChallengeTimelineTemplate>;
-  update: handleUnaryCall<UpdateChallengeTimelineTemplateInput, ChallengeTimelineTemplate>;
-  remove: handleUnaryCall<RemoveChallengeTimelineTemplateInput, ChallengeTimelineTemplate>;
+  update: handleUnaryCall<UpdateChallengeTimelineTemplateInput, ChallengeTimelineTemplateList>;
+  delete: handleUnaryCall<LookupCriteria, ChallengeTimelineTemplateList>;
 }
 
 export interface ChallengeTimelineTemplateClient extends Client {
+  scan(request: ScanRequest, callback: (error: ServiceError | null, response: ScanResult) => void): ClientUnaryCall;
+  scan(
+    request: ScanRequest,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: ScanResult) => void,
+  ): ClientUnaryCall;
+  scan(
+    request: ScanRequest,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: ScanResult) => void,
+  ): ClientUnaryCall;
+  lookup(
+    request: LookupCriteria,
+    callback: (error: ServiceError | null, response: ChallengeTimelineTemplate) => void,
+  ): ClientUnaryCall;
+  lookup(
+    request: LookupCriteria,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: ChallengeTimelineTemplate) => void,
+  ): ClientUnaryCall;
+  lookup(
+    request: LookupCriteria,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: ChallengeTimelineTemplate) => void,
+  ): ClientUnaryCall;
   create(
     request: CreateChallengeTimelineTemplateInput,
     callback: (error: ServiceError | null, response: ChallengeTimelineTemplate) => void,
@@ -79,33 +127,33 @@ export interface ChallengeTimelineTemplateClient extends Client {
   ): ClientUnaryCall;
   update(
     request: UpdateChallengeTimelineTemplateInput,
-    callback: (error: ServiceError | null, response: ChallengeTimelineTemplate) => void,
+    callback: (error: ServiceError | null, response: ChallengeTimelineTemplateList) => void,
   ): ClientUnaryCall;
   update(
     request: UpdateChallengeTimelineTemplateInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: ChallengeTimelineTemplate) => void,
+    callback: (error: ServiceError | null, response: ChallengeTimelineTemplateList) => void,
   ): ClientUnaryCall;
   update(
     request: UpdateChallengeTimelineTemplateInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: ChallengeTimelineTemplate) => void,
+    callback: (error: ServiceError | null, response: ChallengeTimelineTemplateList) => void,
   ): ClientUnaryCall;
-  remove(
-    request: RemoveChallengeTimelineTemplateInput,
-    callback: (error: ServiceError | null, response: ChallengeTimelineTemplate) => void,
+  delete(
+    request: LookupCriteria,
+    callback: (error: ServiceError | null, response: ChallengeTimelineTemplateList) => void,
   ): ClientUnaryCall;
-  remove(
-    request: RemoveChallengeTimelineTemplateInput,
+  delete(
+    request: LookupCriteria,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: ChallengeTimelineTemplate) => void,
+    callback: (error: ServiceError | null, response: ChallengeTimelineTemplateList) => void,
   ): ClientUnaryCall;
-  remove(
-    request: RemoveChallengeTimelineTemplateInput,
+  delete(
+    request: LookupCriteria,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: ChallengeTimelineTemplate) => void,
+    callback: (error: ServiceError | null, response: ChallengeTimelineTemplateList) => void,
   ): ClientUnaryCall;
 }
 

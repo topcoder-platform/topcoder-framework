@@ -1,8 +1,12 @@
 {
   "name": "topcoder-framework",
+  "version": "0.0.0",
   "author": {
     "name": "Topcoder Platform Team",
     "url": "https://topcoder.com"
+  },
+  "scripts": {
+    "build": "lerna run --include-dependencies build --ignore @topcoder-framework/lib-*"
   },
   "private": true,
   "workspaces": [
