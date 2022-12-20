@@ -2,7 +2,7 @@
   "name": "@topcoder-framework/domain-challenge",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build:proto:client": "node bin/gen-challenge-client.js",
     "build:app": "rimraf dist && tsc -b",

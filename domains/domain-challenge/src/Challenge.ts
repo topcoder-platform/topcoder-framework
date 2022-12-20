@@ -1,14 +1,13 @@
-// TODO: Use Service Discovery to find the challenge gRPC server
-const { CHALLENGE_GRPC_SERVER_HOST, CHALLENGE_GRPC_SERVER_PORT } = process.env;
-
 import { credentials, Metadata } from "@grpc/grpc-js";
 
 import { ChallengeClient } from "./models/domain-layer/challenge/services/Challenge";
 import { CreateChallengeInput } from "./models/domain-layer/challenge/challenge";
 
-class Challenge {
+export default class Challenge {
+  constructor(public grpcServerHost: string, public grpcServerPort: string) {}
+
   private readonly client: ChallengeClient = new ChallengeClient(
-    `${CHALLENGE_GRPC_SERVER_HOST}:${CHALLENGE_GRPC_SERVER_PORT}`,
+    `${this.grpcServerHost}:${this.grpcServerPort}`,
     credentials.createInsecure(),
     {
       "grpc.keepalive_time_ms": 120000,
@@ -31,5 +30,3 @@ class Challenge {
     });
   }
 }
-
-export const challenge = new Challenge();

@@ -6,7 +6,7 @@
     "url": "https://topcoder.com"
   },
   "scripts": {
-    "build": "lerna run --include-dependencies build --ignore @topcoder-framework/lib-*"
+    "build": "lerna run --include-dependencies build"
   },
   "private": true,
   "workspaces": [
