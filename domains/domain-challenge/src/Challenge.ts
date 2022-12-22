@@ -1,6 +1,6 @@
 import { credentials, Metadata } from "@grpc/grpc-js";
 
-import { ChallengeClient } from "./models/domain-layer/challenge/services/Challenge";
+import { ChallengeClient } from "./models/domain-layer/challenge/services/challenge";
 import { CreateChallengeInput } from "./models/domain-layer/challenge/challenge";
 
 export default class Challenge {
