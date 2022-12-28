@@ -1,13 +1,13 @@
 import { credentials, Metadata } from "@grpc/grpc-js";
 
-import { ChallengeClient } from "./models/domain-layer/challenge/services/challenge";
-import { CreateChallengeInput, UpdateChallengeInput } from "./models/domain-layer/challenge/challenge";
+import { ChallengeTimelineTemplateClient } from "./models/domain-layer/challenge/services/challenge_timeline_template";
+import { CreateChallengeTimelineTemplateInput, UpdateChallengeTimelineTemplateInput } from "./models/domain-layer/challenge/challenge_timeline_template";
 import { LookupCriteria, ScanRequest } from "./models/common/common";
 
-export default class Challenge {
+export default class ChallengeTimelineTemplate {
   constructor(public grpcServerHost: string, public grpcServerPort: string) {}
 
-  private readonly client: ChallengeClient = new ChallengeClient(
+  private readonly client: ChallengeTimelineTemplateClient = new ChallengeTimelineTemplateClient(
     `${this.grpcServerHost}:${this.grpcServerPort}`,
     credentials.createInsecure(),
     {
@@ -20,7 +20,7 @@ export default class Challenge {
   );
 
   public async create(
-    param: CreateChallengeInput,
+    param: CreateChallengeTimelineTemplateInput,
     metadata: Metadata = new Metadata()
   ) {
     return new Promise((resolve, reject) => {
@@ -56,7 +56,7 @@ export default class Challenge {
   }
 
   public async update(
-    param: UpdateChallengeInput,
+    param: UpdateChallengeTimelineTemplateInput,
     metadata: Metadata = new Metadata()
   ) {
     return new Promise((resolve, reject) => {
