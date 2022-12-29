@@ -5,7 +5,7 @@ const rimraf = require("rimraf");
 
 const { execSync } = require("child_process");
 
-const PROTO_DIR = path.join(
+const PROTO_DIR = process.env.LOCAL_TOPCODER_INTERFACE ? path.resolve(process.env.LOCAL_TOPCODER_INTERFACE) : path.join(
   __dirname,
   "../../../node_modules/topcoder-interface"
 );
