@@ -55,7 +55,7 @@ Any line of the commit message cannot be longer than 100 characters.
   |        |
   |        └─⫸ Commit Scope: domain-challenge|domain-resource|lib-logger
   |
-  └─⫸ Commit Type: feat|fix|docs|chore|refactor|ci|test|perf
+  └─⫸ Commit Type: feat|fix|docs|chore|refactor|ci|test|perf|revert
 ```
 
 Both `<type>` and `<summary>` fields are mandatory.
@@ -72,6 +72,7 @@ Must be one of the following:
 - **ci**: Changes to our CI/CD configuration files and scripts
 - **test**: Adding missing tests or correcting existing tests
 - **perf**: A code change that improves performance
+- **revert**: Reverts a previous commit
 
 #### Summary
 
