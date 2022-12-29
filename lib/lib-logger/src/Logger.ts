@@ -29,6 +29,7 @@ export class Logger {
             format.timestamp(),
             format.align(),
             format.printf(
+              // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
               (info) => `${info.timestamp} ${info.level}: ${info.message}`
             )
           ),
@@ -73,27 +74,27 @@ export class Logger {
     service: FunctionConstructorWithJoiSchema,
     name: string
   ) {
-    console.log("decorate ", service.name, " with validators");
+    console.log(name, "decorate ", service.name, " with validators");
   }
 
   private decorateWithLogMethodParams(
     service: FunctionConstructorWithJoiSchema,
     name: string
   ) {
-    console.log("decorate ", service.name, " with log method params");
+    console.log(name, "decorate ", service.name, " with log method params");
   }
 
   private decorateWithTracing(
     service: FunctionConstructorWithJoiSchema,
     name: string
   ) {
-    console.log("decorate ", service.name, " with tracing");
+    console.log(name, "decorate ", service.name, " with tracing");
   }
 
   private decorateWithMetrics(
     service: FunctionConstructorWithJoiSchema,
     name: string
   ) {
-    console.log("decorate ", service.name, " with metrics");
+    console.log(name, "decorate ", service.name, " with metrics");
   }
 }

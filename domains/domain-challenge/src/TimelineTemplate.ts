@@ -1,7 +1,10 @@
 import { credentials, Metadata } from "@grpc/grpc-js";
 
 import { TimelineTemplateClient } from "./models/domain-layer/challenge/services/timeline_template";
-import { CreateTimelineTemplateInput, UpdateTimelineTemplateInput } from "./models/domain-layer/challenge/timeline_template";
+import {
+  CreateTimelineTemplateInput,
+  UpdateTimelineTemplateInput,
+} from "./models/domain-layer/challenge/timeline_template";
 import { LookupCriteria, ScanRequest } from "./models/common/common";
 
 export default class TimelineTemplate {
@@ -31,10 +34,7 @@ export default class TimelineTemplate {
     });
   }
 
-  public async scan(
-    param: ScanRequest,
-    metadata: Metadata = new Metadata()
-  ) {
+  public async scan(param: ScanRequest, metadata: Metadata = new Metadata()) {
     return new Promise((resolve, reject) => {
       this.client.scan(param, metadata, (error, response) => {
         if (error) reject(error);

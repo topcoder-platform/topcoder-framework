@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.es.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "../../dist-es/models",
+    "noImplicitReturns": false,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["**/*"],
+  "exclude": ["node_modules"]
+}

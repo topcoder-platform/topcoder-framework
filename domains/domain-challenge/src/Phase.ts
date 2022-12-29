@@ -1,7 +1,10 @@
 import { credentials, Metadata } from "@grpc/grpc-js";
 
 import { PhaseClient } from "./models/domain-layer/challenge/services/phase";
-import { CreatePhaseInput, UpdatePhaseInput } from "./models/domain-layer/challenge/phase";
+import {
+  CreatePhaseInput,
+  UpdatePhaseInput,
+} from "./models/domain-layer/challenge/phase";
 import { LookupCriteria, ScanRequest } from "./models/common/common";
 
 export default class Phase {
@@ -31,10 +34,7 @@ export default class Phase {
     });
   }
 
-  public async scan(
-    param: ScanRequest,
-    metadata: Metadata = new Metadata()
-  ) {
+  public async scan(param: ScanRequest, metadata: Metadata = new Metadata()) {
     return new Promise((resolve, reject) => {
       this.client.scan(param, metadata, (error, response) => {
         if (error) reject(error);

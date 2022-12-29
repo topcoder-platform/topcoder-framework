@@ -1,9 +1,11 @@
 {
+  "extends": "../../tsconfig.es.json",
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "dist-es",
-    "rootDir": "src"
+    "rootDir": "src",
+    "composite": true
   },
-  "extends": "../../tsconfig.es.json",
-  "include": ["src/"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }

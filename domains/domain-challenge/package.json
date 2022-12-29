@@ -1,15 +1,24 @@
 {
   "name": "@topcoder-framework/domain-challenge",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "./dist-cjs/index.js",
+  "types": "./dist-types/index.d.ts",
+  "module": "./dist-es/index.js",
   "scripts": {
-    "build:proto:client": "node bin/gen-challenge-client.js",
-    "build:app": "rimraf dist && tsc -b",
-    "build": "npm run build:proto:client && npm run build:app",
-    "build:include:deps": "lerna run --scope $npm_package_name --include-dependencies build"
+    "build:proto:client": "scripty",
+    "build": "scripty",
+    "build:es": "scripty",
+    "build:app": "scripty",
+    "build:include:deps": "scripty",
+    "clean": "scripty",
+    "lint": "scripty",
+    "format": "scripty"
   },
-  "author": "",
+  "scripty": {
+    "path": "../../scripts/packages"
+  },
+  "author": "Rakib Ansary <rakibansary.saikot@wipro.com>",
   "license": "ISC",
   "dependencies": {
     "@grpc/grpc-js": "^1.8.0",
@@ -19,7 +28,8 @@
   },
   "devDependencies": {
     "@types/node": "^18.11.17",
-    "rimraf": "^3.0.2",
+    "eslint": "^8.30.0",
+    "lerna": "^6.3.0",
     "ts-proto": "^1.131.0",
     "typescript": "^4.9.4"
   },

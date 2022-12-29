@@ -40,7 +40,10 @@ function createBaseTimelineTemplatePhase(): TimelineTemplatePhase {
 }
 
 export const TimelineTemplatePhase = {
-  encode(message: TimelineTemplatePhase, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: TimelineTemplatePhase,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.phaseId !== "") {
       writer.uint32(10).string(message.phaseId);
     }
@@ -53,7 +56,10 @@ export const TimelineTemplatePhase = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): TimelineTemplatePhase {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): TimelineTemplatePhase {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTimelineTemplatePhase();
@@ -80,20 +86,28 @@ export const TimelineTemplatePhase = {
   fromJSON(object: any): TimelineTemplatePhase {
     return {
       phaseId: isSet(object.phaseId) ? String(object.phaseId) : "",
-      defaultDuration: isSet(object.defaultDuration) ? Number(object.defaultDuration) : 0,
-      predecessor: isSet(object.predecessor) ? String(object.predecessor) : undefined,
+      defaultDuration: isSet(object.defaultDuration)
+        ? Number(object.defaultDuration)
+        : 0,
+      predecessor: isSet(object.predecessor)
+        ? String(object.predecessor)
+        : undefined,
     };
   },
 
   toJSON(message: TimelineTemplatePhase): unknown {
     const obj: any = {};
     message.phaseId !== undefined && (obj.phaseId = message.phaseId);
-    message.defaultDuration !== undefined && (obj.defaultDuration = Math.round(message.defaultDuration));
-    message.predecessor !== undefined && (obj.predecessor = message.predecessor);
+    message.defaultDuration !== undefined &&
+      (obj.defaultDuration = Math.round(message.defaultDuration));
+    message.predecessor !== undefined &&
+      (obj.predecessor = message.predecessor);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<TimelineTemplatePhase>, I>>(object: I): TimelineTemplatePhase {
+  fromPartial<I extends Exact<DeepPartial<TimelineTemplatePhase>, I>>(
+    object: I
+  ): TimelineTemplatePhase {
     const message = createBaseTimelineTemplatePhase();
     message.phaseId = object.phaseId ?? "";
     message.defaultDuration = object.defaultDuration ?? 0;
@@ -103,11 +117,20 @@ export const TimelineTemplatePhase = {
 };
 
 function createBaseTimelineTemplate(): TimelineTemplate {
-  return { id: "", name: "", description: undefined, isActive: false, phases: [] };
+  return {
+    id: "",
+    name: "",
+    description: undefined,
+    isActive: false,
+    phases: [],
+  };
 }
 
 export const TimelineTemplate = {
-  encode(message: TimelineTemplate, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: TimelineTemplate,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -146,7 +169,9 @@ export const TimelineTemplate = {
           message.isActive = reader.bool();
           break;
         case 5:
-          message.phases.push(TimelineTemplatePhase.decode(reader, reader.uint32()));
+          message.phases.push(
+            TimelineTemplatePhase.decode(reader, reader.uint32())
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -160,9 +185,13 @@ export const TimelineTemplate = {
     return {
       id: isSet(object.id) ? String(object.id) : "",
       name: isSet(object.name) ? String(object.name) : "",
-      description: isSet(object.description) ? String(object.description) : undefined,
+      description: isSet(object.description)
+        ? String(object.description)
+        : undefined,
       isActive: isSet(object.isActive) ? Boolean(object.isActive) : false,
-      phases: Array.isArray(object?.phases) ? object.phases.map((e: any) => TimelineTemplatePhase.fromJSON(e)) : [],
+      phases: Array.isArray(object?.phases)
+        ? object.phases.map((e: any) => TimelineTemplatePhase.fromJSON(e))
+        : [],
     };
   },
 
@@ -170,23 +199,29 @@ export const TimelineTemplate = {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined && (obj.description = message.description);
+    message.description !== undefined &&
+      (obj.description = message.description);
     message.isActive !== undefined && (obj.isActive = message.isActive);
     if (message.phases) {
-      obj.phases = message.phases.map((e) => e ? TimelineTemplatePhase.toJSON(e) : undefined);
+      obj.phases = message.phases.map((e) =>
+        e ? TimelineTemplatePhase.toJSON(e) : undefined
+      );
     } else {
       obj.phases = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<TimelineTemplate>, I>>(object: I): TimelineTemplate {
+  fromPartial<I extends Exact<DeepPartial<TimelineTemplate>, I>>(
+    object: I
+  ): TimelineTemplate {
     const message = createBaseTimelineTemplate();
     message.id = object.id ?? "";
     message.name = object.name ?? "";
     message.description = object.description ?? undefined;
     message.isActive = object.isActive ?? false;
-    message.phases = object.phases?.map((e) => TimelineTemplatePhase.fromPartial(e)) || [];
+    message.phases =
+      object.phases?.map((e) => TimelineTemplatePhase.fromPartial(e)) || [];
     return message;
   },
 };
@@ -196,7 +231,10 @@ function createBaseCreateTimelineTemplateInput(): CreateTimelineTemplateInput {
 }
 
 export const CreateTimelineTemplateInput = {
-  encode(message: CreateTimelineTemplateInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: CreateTimelineTemplateInput,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -212,7 +250,10 @@ export const CreateTimelineTemplateInput = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): CreateTimelineTemplateInput {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): CreateTimelineTemplateInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateTimelineTemplateInput();
@@ -229,7 +270,9 @@ export const CreateTimelineTemplateInput = {
           message.isActive = reader.bool();
           break;
         case 4:
-          message.phases.push(TimelineTemplatePhase.decode(reader, reader.uint32()));
+          message.phases.push(
+            TimelineTemplatePhase.decode(reader, reader.uint32())
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -242,41 +285,60 @@ export const CreateTimelineTemplateInput = {
   fromJSON(object: any): CreateTimelineTemplateInput {
     return {
       name: isSet(object.name) ? String(object.name) : "",
-      description: isSet(object.description) ? String(object.description) : undefined,
+      description: isSet(object.description)
+        ? String(object.description)
+        : undefined,
       isActive: isSet(object.isActive) ? Boolean(object.isActive) : false,
-      phases: Array.isArray(object?.phases) ? object.phases.map((e: any) => TimelineTemplatePhase.fromJSON(e)) : [],
+      phases: Array.isArray(object?.phases)
+        ? object.phases.map((e: any) => TimelineTemplatePhase.fromJSON(e))
+        : [],
     };
   },
 
   toJSON(message: CreateTimelineTemplateInput): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined && (obj.description = message.description);
+    message.description !== undefined &&
+      (obj.description = message.description);
     message.isActive !== undefined && (obj.isActive = message.isActive);
     if (message.phases) {
-      obj.phases = message.phases.map((e) => e ? TimelineTemplatePhase.toJSON(e) : undefined);
+      obj.phases = message.phases.map((e) =>
+        e ? TimelineTemplatePhase.toJSON(e) : undefined
+      );
     } else {
       obj.phases = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateTimelineTemplateInput>, I>>(object: I): CreateTimelineTemplateInput {
+  fromPartial<I extends Exact<DeepPartial<CreateTimelineTemplateInput>, I>>(
+    object: I
+  ): CreateTimelineTemplateInput {
     const message = createBaseCreateTimelineTemplateInput();
     message.name = object.name ?? "";
     message.description = object.description ?? undefined;
     message.isActive = object.isActive ?? false;
-    message.phases = object.phases?.map((e) => TimelineTemplatePhase.fromPartial(e)) || [];
+    message.phases =
+      object.phases?.map((e) => TimelineTemplatePhase.fromPartial(e)) || [];
     return message;
   },
 };
 
 function createBaseUpdateTimelineTemplateInput(): UpdateTimelineTemplateInput {
-  return { id: "", name: "", description: undefined, isActive: false, phases: [] };
+  return {
+    id: "",
+    name: "",
+    description: undefined,
+    isActive: false,
+    phases: [],
+  };
 }
 
 export const UpdateTimelineTemplateInput = {
-  encode(message: UpdateTimelineTemplateInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: UpdateTimelineTemplateInput,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -295,7 +357,10 @@ export const UpdateTimelineTemplateInput = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateTimelineTemplateInput {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): UpdateTimelineTemplateInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateTimelineTemplateInput();
@@ -315,7 +380,9 @@ export const UpdateTimelineTemplateInput = {
           message.isActive = reader.bool();
           break;
         case 5:
-          message.phases.push(TimelineTemplatePhase.decode(reader, reader.uint32()));
+          message.phases.push(
+            TimelineTemplatePhase.decode(reader, reader.uint32())
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -329,9 +396,13 @@ export const UpdateTimelineTemplateInput = {
     return {
       id: isSet(object.id) ? String(object.id) : "",
       name: isSet(object.name) ? String(object.name) : "",
-      description: isSet(object.description) ? String(object.description) : undefined,
+      description: isSet(object.description)
+        ? String(object.description)
+        : undefined,
       isActive: isSet(object.isActive) ? Boolean(object.isActive) : false,
-      phases: Array.isArray(object?.phases) ? object.phases.map((e: any) => TimelineTemplatePhase.fromJSON(e)) : [],
+      phases: Array.isArray(object?.phases)
+        ? object.phases.map((e: any) => TimelineTemplatePhase.fromJSON(e))
+        : [],
     };
   },
 
@@ -339,23 +410,29 @@ export const UpdateTimelineTemplateInput = {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined && (obj.description = message.description);
+    message.description !== undefined &&
+      (obj.description = message.description);
     message.isActive !== undefined && (obj.isActive = message.isActive);
     if (message.phases) {
-      obj.phases = message.phases.map((e) => e ? TimelineTemplatePhase.toJSON(e) : undefined);
+      obj.phases = message.phases.map((e) =>
+        e ? TimelineTemplatePhase.toJSON(e) : undefined
+      );
     } else {
       obj.phases = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdateTimelineTemplateInput>, I>>(object: I): UpdateTimelineTemplateInput {
+  fromPartial<I extends Exact<DeepPartial<UpdateTimelineTemplateInput>, I>>(
+    object: I
+  ): UpdateTimelineTemplateInput {
     const message = createBaseUpdateTimelineTemplateInput();
     message.id = object.id ?? "";
     message.name = object.name ?? "";
     message.description = object.description ?? undefined;
     message.isActive = object.isActive ?? false;
-    message.phases = object.phases?.map((e) => TimelineTemplatePhase.fromPartial(e)) || [];
+    message.phases =
+      object.phases?.map((e) => TimelineTemplatePhase.fromPartial(e)) || [];
     return message;
   },
 };
@@ -365,14 +442,20 @@ function createBaseTimelineTemplateList(): TimelineTemplateList {
 }
 
 export const TimelineTemplateList = {
-  encode(message: TimelineTemplateList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: TimelineTemplateList,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.timelineTemplates) {
       TimelineTemplate.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): TimelineTemplateList {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): TimelineTemplateList {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTimelineTemplateList();
@@ -380,7 +463,9 @@ export const TimelineTemplateList = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.timelineTemplates.push(TimelineTemplate.decode(reader, reader.uint32()));
+          message.timelineTemplates.push(
+            TimelineTemplate.decode(reader, reader.uint32())
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -401,16 +486,22 @@ export const TimelineTemplateList = {
   toJSON(message: TimelineTemplateList): unknown {
     const obj: any = {};
     if (message.timelineTemplates) {
-      obj.timelineTemplates = message.timelineTemplates.map((e) => e ? TimelineTemplate.toJSON(e) : undefined);
+      obj.timelineTemplates = message.timelineTemplates.map((e) =>
+        e ? TimelineTemplate.toJSON(e) : undefined
+      );
     } else {
       obj.timelineTemplates = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<TimelineTemplateList>, I>>(object: I): TimelineTemplateList {
+  fromPartial<I extends Exact<DeepPartial<TimelineTemplateList>, I>>(
+    object: I
+  ): TimelineTemplateList {
     const message = createBaseTimelineTemplateList();
-    message.timelineTemplates = object.timelineTemplates?.map((e) => TimelineTemplate.fromPartial(e)) || [];
+    message.timelineTemplates =
+      object.timelineTemplates?.map((e) => TimelineTemplate.fromPartial(e)) ||
+      [];
     return message;
   },
 };
@@ -434,21 +525,41 @@ var tsProtoGlobalThis: any = (() => {
   throw "Unable to locate global object";
 })();
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | undefined;
 
-type DeepPartial<T> = T extends Builtin ? T
-  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string }
+  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
+      $case: T["$case"];
+    }
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
+      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
+    };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+    throw new tsProtoGlobalThis.Error(
+      "Value is larger than Number.MAX_SAFE_INTEGER"
+    );
   }
   return long.toNumber();
 }

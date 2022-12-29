@@ -29,11 +29,20 @@ export interface ChallengeTrackList {
 }
 
 function createBaseChallengeTrack(): ChallengeTrack {
-  return { id: "", name: "", description: undefined, isActive: false, abbreviation: "" };
+  return {
+    id: "",
+    name: "",
+    description: undefined,
+    isActive: false,
+    abbreviation: "",
+  };
 }
 
 export const ChallengeTrack = {
-  encode(message: ChallengeTrack, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: ChallengeTrack,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -86,9 +95,13 @@ export const ChallengeTrack = {
     return {
       id: isSet(object.id) ? String(object.id) : "",
       name: isSet(object.name) ? String(object.name) : "",
-      description: isSet(object.description) ? String(object.description) : undefined,
+      description: isSet(object.description)
+        ? String(object.description)
+        : undefined,
       isActive: isSet(object.isActive) ? Boolean(object.isActive) : false,
-      abbreviation: isSet(object.abbreviation) ? String(object.abbreviation) : "",
+      abbreviation: isSet(object.abbreviation)
+        ? String(object.abbreviation)
+        : "",
     };
   },
 
@@ -96,13 +109,17 @@ export const ChallengeTrack = {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined && (obj.description = message.description);
+    message.description !== undefined &&
+      (obj.description = message.description);
     message.isActive !== undefined && (obj.isActive = message.isActive);
-    message.abbreviation !== undefined && (obj.abbreviation = message.abbreviation);
+    message.abbreviation !== undefined &&
+      (obj.abbreviation = message.abbreviation);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ChallengeTrack>, I>>(object: I): ChallengeTrack {
+  fromPartial<I extends Exact<DeepPartial<ChallengeTrack>, I>>(
+    object: I
+  ): ChallengeTrack {
     const message = createBaseChallengeTrack();
     message.id = object.id ?? "";
     message.name = object.name ?? "";
@@ -114,11 +131,19 @@ export const ChallengeTrack = {
 };
 
 function createBaseCreateChallengeTrackInput(): CreateChallengeTrackInput {
-  return { name: "", description: undefined, isActive: false, abbreviation: "" };
+  return {
+    name: "",
+    description: undefined,
+    isActive: false,
+    abbreviation: "",
+  };
 }
 
 export const CreateChallengeTrackInput = {
-  encode(message: CreateChallengeTrackInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: CreateChallengeTrackInput,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -134,7 +159,10 @@ export const CreateChallengeTrackInput = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): CreateChallengeTrackInput {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): CreateChallengeTrackInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateChallengeTrackInput();
@@ -164,22 +192,30 @@ export const CreateChallengeTrackInput = {
   fromJSON(object: any): CreateChallengeTrackInput {
     return {
       name: isSet(object.name) ? String(object.name) : "",
-      description: isSet(object.description) ? String(object.description) : undefined,
+      description: isSet(object.description)
+        ? String(object.description)
+        : undefined,
       isActive: isSet(object.isActive) ? Boolean(object.isActive) : false,
-      abbreviation: isSet(object.abbreviation) ? String(object.abbreviation) : "",
+      abbreviation: isSet(object.abbreviation)
+        ? String(object.abbreviation)
+        : "",
     };
   },
 
   toJSON(message: CreateChallengeTrackInput): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined && (obj.description = message.description);
+    message.description !== undefined &&
+      (obj.description = message.description);
     message.isActive !== undefined && (obj.isActive = message.isActive);
-    message.abbreviation !== undefined && (obj.abbreviation = message.abbreviation);
+    message.abbreviation !== undefined &&
+      (obj.abbreviation = message.abbreviation);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateChallengeTrackInput>, I>>(object: I): CreateChallengeTrackInput {
+  fromPartial<I extends Exact<DeepPartial<CreateChallengeTrackInput>, I>>(
+    object: I
+  ): CreateChallengeTrackInput {
     const message = createBaseCreateChallengeTrackInput();
     message.name = object.name ?? "";
     message.description = object.description ?? undefined;
@@ -190,11 +226,20 @@ export const CreateChallengeTrackInput = {
 };
 
 function createBaseUpdateChallengeTrackInput(): UpdateChallengeTrackInput {
-  return { id: "", name: "", description: undefined, isActive: false, abbreviation: "" };
+  return {
+    id: "",
+    name: "",
+    description: undefined,
+    isActive: false,
+    abbreviation: "",
+  };
 }
 
 export const UpdateChallengeTrackInput = {
-  encode(message: UpdateChallengeTrackInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: UpdateChallengeTrackInput,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -213,7 +258,10 @@ export const UpdateChallengeTrackInput = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateChallengeTrackInput {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): UpdateChallengeTrackInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateChallengeTrackInput();
@@ -247,9 +295,13 @@ export const UpdateChallengeTrackInput = {
     return {
       id: isSet(object.id) ? String(object.id) : "",
       name: isSet(object.name) ? String(object.name) : "",
-      description: isSet(object.description) ? String(object.description) : undefined,
+      description: isSet(object.description)
+        ? String(object.description)
+        : undefined,
       isActive: isSet(object.isActive) ? Boolean(object.isActive) : false,
-      abbreviation: isSet(object.abbreviation) ? String(object.abbreviation) : "",
+      abbreviation: isSet(object.abbreviation)
+        ? String(object.abbreviation)
+        : "",
     };
   },
 
@@ -257,13 +309,17 @@ export const UpdateChallengeTrackInput = {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined && (obj.description = message.description);
+    message.description !== undefined &&
+      (obj.description = message.description);
     message.isActive !== undefined && (obj.isActive = message.isActive);
-    message.abbreviation !== undefined && (obj.abbreviation = message.abbreviation);
+    message.abbreviation !== undefined &&
+      (obj.abbreviation = message.abbreviation);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdateChallengeTrackInput>, I>>(object: I): UpdateChallengeTrackInput {
+  fromPartial<I extends Exact<DeepPartial<UpdateChallengeTrackInput>, I>>(
+    object: I
+  ): UpdateChallengeTrackInput {
     const message = createBaseUpdateChallengeTrackInput();
     message.id = object.id ?? "";
     message.name = object.name ?? "";
@@ -279,7 +335,10 @@ function createBaseChallengeTrackList(): ChallengeTrackList {
 }
 
 export const ChallengeTrackList = {
-  encode(message: ChallengeTrackList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: ChallengeTrackList,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.challengeTracks) {
       ChallengeTrack.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -294,7 +353,9 @@ export const ChallengeTrackList = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.challengeTracks.push(ChallengeTrack.decode(reader, reader.uint32()));
+          message.challengeTracks.push(
+            ChallengeTrack.decode(reader, reader.uint32())
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -315,31 +376,54 @@ export const ChallengeTrackList = {
   toJSON(message: ChallengeTrackList): unknown {
     const obj: any = {};
     if (message.challengeTracks) {
-      obj.challengeTracks = message.challengeTracks.map((e) => e ? ChallengeTrack.toJSON(e) : undefined);
+      obj.challengeTracks = message.challengeTracks.map((e) =>
+        e ? ChallengeTrack.toJSON(e) : undefined
+      );
     } else {
       obj.challengeTracks = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ChallengeTrackList>, I>>(object: I): ChallengeTrackList {
+  fromPartial<I extends Exact<DeepPartial<ChallengeTrackList>, I>>(
+    object: I
+  ): ChallengeTrackList {
     const message = createBaseChallengeTrackList();
-    message.challengeTracks = object.challengeTracks?.map((e) => ChallengeTrack.fromPartial(e)) || [];
+    message.challengeTracks =
+      object.challengeTracks?.map((e) => ChallengeTrack.fromPartial(e)) || [];
     return message;
   },
 };
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | undefined;
 
-type DeepPartial<T> = T extends Builtin ? T
-  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string }
+  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
+      $case: T["$case"];
+    }
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
+      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
+    };
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

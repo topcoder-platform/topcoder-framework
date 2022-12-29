@@ -1,16 +1,22 @@
 {
   "name": "@topcoder-framework/lib-logger",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "concurrently 'npm run build:cjs' 'npm run build:es' 'npm run build:types'",
-    "build:cjs": "tsc -p tsconfig.cjs.json",
-    "build:es": "tsc -p tsconfig.es.json",
-    "build:types": "tsc -p tsconfig.types.json",
-    "build:include:deps": "lerna run --scope $npm_package_name --include-dependencies build"
+    "build:proto:client": "scripty",
+    "build": "scripty",
+    "build:es": "scripty",
+    "build:app": "scripty",
+    "build:include:deps": "scripty",
+    "clean": "scripty",
+    "lint": "scripty"
   },
-  "author": "",
+  "scripty": {
+    "path": "../../scripts/packages",
+    "format": "scripty"
+  },
+  "author": "Rakib Ansary <rakibansary.saikot@wipro.com>",
   "license": "ISC",
   "volta": {
     "node": "18.12.1",

@@ -1,7 +1,10 @@
 import { credentials, Metadata } from "@grpc/grpc-js";
 
 import { ChallengeTrackClient } from "./models/domain-layer/challenge/services/challenge_track";
-import { CreateChallengeTrackInput, UpdateChallengeTrackInput } from "./models/domain-layer/challenge/challenge_track";
+import {
+  CreateChallengeTrackInput,
+  UpdateChallengeTrackInput,
+} from "./models/domain-layer/challenge/challenge_track";
 import { LookupCriteria, ScanRequest } from "./models/common/common";
 
 export default class ChallengeTrack {
@@ -31,10 +34,7 @@ export default class ChallengeTrack {
     });
   }
 
-  public async scan(
-    param: ScanRequest,
-    metadata: Metadata = new Metadata()
-  ) {
+  public async scan(param: ScanRequest, metadata: Metadata = new Metadata()) {
     return new Promise((resolve, reject) => {
       this.client.scan(param, metadata, (error, response) => {
         if (error) reject(error);

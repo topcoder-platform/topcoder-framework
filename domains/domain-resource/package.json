@@ -1,12 +1,17 @@
 {
   "name": "@topcoder-framework/domain-resource",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:proto:client": "node bin/gen-resource-client.js"
+    "clean": "scripty",
+    "lint": "scripty",
+    "format": "scripty"
   },
-  "author": "",
+  "scripty": {
+    "path": "../../scripts/packages"
+  },
+  "author": "Rakib Ansary <rakibansary.saikot@wipro.com>",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.3",
@@ -14,7 +19,6 @@
   },
   "devDependencies": {
     "@types/node": "^18.11.8",
-    "rimraf": "^3.0.2",
     "ts-proto": "^1.131.0",
     "typescript": "^4.8.4"
   },

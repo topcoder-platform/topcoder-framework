@@ -27,7 +27,10 @@ function createBaseChallenge(): Challenge {
 }
 
 export const Challenge = {
-  encode(message: Challenge, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: Challenge,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -80,7 +83,9 @@ export const Challenge = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<Challenge>, I>>(object: I): Challenge {
+  fromPartial<I extends Exact<DeepPartial<Challenge>, I>>(
+    object: I
+  ): Challenge {
     const message = createBaseChallenge();
     message.id = object.id ?? "";
     message.legacyId = object.legacyId ?? "";
@@ -102,7 +107,10 @@ function createBaseChallengePhase(): ChallengePhase {
 }
 
 export const ChallengePhase = {
-  encode(message: ChallengePhase, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: ChallengePhase,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -167,10 +175,18 @@ export const ChallengePhase = {
     return {
       name: isSet(object.name) ? String(object.name) : "",
       duration: isSet(object.duration) ? Number(object.duration) : 0,
-      scheduledStartTime: isSet(object.scheduledStartTime) ? String(object.scheduledStartTime) : undefined,
-      scheduledEndTime: isSet(object.scheduledEndTime) ? String(object.scheduledEndTime) : undefined,
-      actualStartTime: isSet(object.actualStartTime) ? String(object.actualStartTime) : undefined,
-      actualEndTime: isSet(object.actualEndTime) ? String(object.actualEndTime) : undefined,
+      scheduledStartTime: isSet(object.scheduledStartTime)
+        ? String(object.scheduledStartTime)
+        : undefined,
+      scheduledEndTime: isSet(object.scheduledEndTime)
+        ? String(object.scheduledEndTime)
+        : undefined,
+      actualStartTime: isSet(object.actualStartTime)
+        ? String(object.actualStartTime)
+        : undefined,
+      actualEndTime: isSet(object.actualEndTime)
+        ? String(object.actualEndTime)
+        : undefined,
       isOpen: isSet(object.isOpen) ? Boolean(object.isOpen) : false,
     };
   },
@@ -178,16 +194,23 @@ export const ChallengePhase = {
   toJSON(message: ChallengePhase): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
-    message.duration !== undefined && (obj.duration = Math.round(message.duration));
-    message.scheduledStartTime !== undefined && (obj.scheduledStartTime = message.scheduledStartTime);
-    message.scheduledEndTime !== undefined && (obj.scheduledEndTime = message.scheduledEndTime);
-    message.actualStartTime !== undefined && (obj.actualStartTime = message.actualStartTime);
-    message.actualEndTime !== undefined && (obj.actualEndTime = message.actualEndTime);
+    message.duration !== undefined &&
+      (obj.duration = Math.round(message.duration));
+    message.scheduledStartTime !== undefined &&
+      (obj.scheduledStartTime = message.scheduledStartTime);
+    message.scheduledEndTime !== undefined &&
+      (obj.scheduledEndTime = message.scheduledEndTime);
+    message.actualStartTime !== undefined &&
+      (obj.actualStartTime = message.actualStartTime);
+    message.actualEndTime !== undefined &&
+      (obj.actualEndTime = message.actualEndTime);
     message.isOpen !== undefined && (obj.isOpen = message.isOpen);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ChallengePhase>, I>>(object: I): ChallengePhase {
+  fromPartial<I extends Exact<DeepPartial<ChallengePhase>, I>>(
+    object: I
+  ): ChallengePhase {
     const message = createBaseChallengePhase();
     message.name = object.name ?? "";
     message.duration = object.duration ?? 0;
@@ -205,14 +228,20 @@ function createBaseUpdateChallengePhasesRequest(): UpdateChallengePhasesRequest 
 }
 
 export const UpdateChallengePhasesRequest = {
-  encode(message: UpdateChallengePhasesRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: UpdateChallengePhasesRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.phases) {
       ChallengePhase.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateChallengePhasesRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): UpdateChallengePhasesRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateChallengePhasesRequest();
@@ -231,22 +260,31 @@ export const UpdateChallengePhasesRequest = {
   },
 
   fromJSON(object: any): UpdateChallengePhasesRequest {
-    return { phases: Array.isArray(object?.phases) ? object.phases.map((e: any) => ChallengePhase.fromJSON(e)) : [] };
+    return {
+      phases: Array.isArray(object?.phases)
+        ? object.phases.map((e: any) => ChallengePhase.fromJSON(e))
+        : [],
+    };
   },
 
   toJSON(message: UpdateChallengePhasesRequest): unknown {
     const obj: any = {};
     if (message.phases) {
-      obj.phases = message.phases.map((e) => e ? ChallengePhase.toJSON(e) : undefined);
+      obj.phases = message.phases.map((e) =>
+        e ? ChallengePhase.toJSON(e) : undefined
+      );
     } else {
       obj.phases = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdateChallengePhasesRequest>, I>>(object: I): UpdateChallengePhasesRequest {
+  fromPartial<I extends Exact<DeepPartial<UpdateChallengePhasesRequest>, I>>(
+    object: I
+  ): UpdateChallengePhasesRequest {
     const message = createBaseUpdateChallengePhasesRequest();
-    message.phases = object.phases?.map((e) => ChallengePhase.fromPartial(e)) || [];
+    message.phases =
+      object.phases?.map((e) => ChallengePhase.fromPartial(e)) || [];
     return message;
   },
 };
@@ -270,17 +308,35 @@ var globalThis: any = (() => {
   throw "Unable to locate global object";
 })();
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | undefined;
 
-type DeepPartial<T> = T extends Builtin ? T
-  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string }
+  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
+      $case: T["$case"];
+    }
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
+      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
+    };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {

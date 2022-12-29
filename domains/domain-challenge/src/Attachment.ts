@@ -1,7 +1,11 @@
 import { credentials, Metadata } from "@grpc/grpc-js";
 
 import { AttachmentClient } from "./models/domain-layer/challenge/services/attachment";
-import { CreateAttachmentInput, UpdateAttachmentInput, RemoveAttachmentInput } from "./models/domain-layer/challenge/attachment";
+import {
+  CreateAttachmentInput,
+  UpdateAttachmentInput,
+  RemoveAttachmentInput,
+} from "./models/domain-layer/challenge/attachment";
 
 export default class Attachment {
   constructor(public grpcServerHost: string, public grpcServerPort: string) {}
