@@ -152,7 +152,9 @@ export interface ScanResult {
 }
 
 export interface FilterValue {
-  value?: { $case: "stringValue"; stringValue: string } | { $case: "numberValue"; numberValue: number };
+  value?:
+    | { $case: "stringValue"; stringValue: string }
+    | { $case: "numberValue"; numberValue: number };
 }
 
 export interface LookupCriteria {
@@ -169,7 +171,10 @@ function createBaseScanCriteria(): ScanCriteria {
 }
 
 export const ScanCriteria = {
-  encode(message: ScanCriteria, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: ScanCriteria,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -177,7 +182,10 @@ export const ScanCriteria = {
       writer.uint32(16).int32(message.operator);
     }
     if (message.value !== undefined) {
-      Value.encode(Value.wrap(message.value), writer.uint32(26).fork()).ldelim();
+      Value.encode(
+        Value.wrap(message.value),
+        writer.uint32(26).fork()
+      ).ldelim();
     }
     return writer;
   },
@@ -209,7 +217,9 @@ export const ScanCriteria = {
   fromJSON(object: any): ScanCriteria {
     return {
       key: isSet(object.key) ? String(object.key) : "",
-      operator: isSet(object.operator) ? operatorFromJSON(object.operator) : undefined,
+      operator: isSet(object.operator)
+        ? operatorFromJSON(object.operator)
+        : undefined,
       value: isSet(object?.value) ? object.value : undefined,
     };
   },
@@ -218,12 +228,17 @@ export const ScanCriteria = {
     const obj: any = {};
     message.key !== undefined && (obj.key = message.key);
     message.operator !== undefined &&
-      (obj.operator = message.operator !== undefined ? operatorToJSON(message.operator) : undefined);
+      (obj.operator =
+        message.operator !== undefined
+          ? operatorToJSON(message.operator)
+          : undefined);
     message.value !== undefined && (obj.value = message.value);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ScanCriteria>, I>>(object: I): ScanCriteria {
+  fromPartial<I extends Exact<DeepPartial<ScanCriteria>, I>>(
+    object: I
+  ): ScanCriteria {
     const message = createBaseScanCriteria();
     message.key = object.key ?? "";
     message.operator = object.operator ?? undefined;
@@ -237,7 +252,10 @@ function createBaseScanRequest(): ScanRequest {
 }
 
 export const ScanRequest = {
-  encode(message: ScanRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: ScanRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.nextToken !== undefined) {
       writer.uint32(10).string(message.nextToken);
     }
@@ -258,7 +276,9 @@ export const ScanRequest = {
           message.nextToken = reader.string();
           break;
         case 2:
-          message.scanCriteria.push(ScanCriteria.decode(reader, reader.uint32()));
+          message.scanCriteria.push(
+            ScanCriteria.decode(reader, reader.uint32())
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -281,17 +301,22 @@ export const ScanRequest = {
     const obj: any = {};
     message.nextToken !== undefined && (obj.nextToken = message.nextToken);
     if (message.scanCriteria) {
-      obj.scanCriteria = message.scanCriteria.map((e) => e ? ScanCriteria.toJSON(e) : undefined);
+      obj.scanCriteria = message.scanCriteria.map((e) =>
+        e ? ScanCriteria.toJSON(e) : undefined
+      );
     } else {
       obj.scanCriteria = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ScanRequest>, I>>(object: I): ScanRequest {
+  fromPartial<I extends Exact<DeepPartial<ScanRequest>, I>>(
+    object: I
+  ): ScanRequest {
     const message = createBaseScanRequest();
     message.nextToken = object.nextToken ?? undefined;
-    message.scanCriteria = object.scanCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
+    message.scanCriteria =
+      object.scanCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
     return message;
   },
 };
@@ -301,7 +326,10 @@ function createBaseScanResult(): ScanResult {
 }
 
 export const ScanResult = {
-  encode(message: ScanResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: ScanResult,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.nextToken !== undefined) {
       writer.uint32(10).string(message.nextToken);
     }
@@ -322,7 +350,9 @@ export const ScanResult = {
           message.nextToken = reader.string();
           break;
         case 2:
-          message.items.push(Struct.unwrap(Struct.decode(reader, reader.uint32())));
+          message.items.push(
+            Struct.unwrap(Struct.decode(reader, reader.uint32()))
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -350,7 +380,9 @@ export const ScanResult = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ScanResult>, I>>(object: I): ScanResult {
+  fromPartial<I extends Exact<DeepPartial<ScanResult>, I>>(
+    object: I
+  ): ScanResult {
     const message = createBaseScanResult();
     message.nextToken = object.nextToken ?? undefined;
     message.items = object.items?.map((e) => e) || [];
@@ -363,7 +395,10 @@ function createBaseFilterValue(): FilterValue {
 }
 
 export const FilterValue = {
-  encode(message: FilterValue, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: FilterValue,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.value?.$case === "stringValue") {
       writer.uint32(10).string(message.value.stringValue);
     }
@@ -381,10 +416,16 @@ export const FilterValue = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.value = { $case: "stringValue", stringValue: reader.string() };
+          message.value = {
+            $case: "stringValue",
+            stringValue: reader.string(),
+          };
           break;
         case 2:
-          message.value = { $case: "numberValue", numberValue: longToNumber(reader.int64() as Long) };
+          message.value = {
+            $case: "numberValue",
+            numberValue: longToNumber(reader.int64() as Long),
+          };
           break;
         default:
           reader.skipType(tag & 7);
@@ -406,26 +447,36 @@ export const FilterValue = {
 
   toJSON(message: FilterValue): unknown {
     const obj: any = {};
-    message.value?.$case === "stringValue" && (obj.stringValue = message.value?.stringValue);
-    message.value?.$case === "numberValue" && (obj.numberValue = Math.round(message.value?.numberValue));
+    message.value?.$case === "stringValue" &&
+      (obj.stringValue = message.value?.stringValue);
+    message.value?.$case === "numberValue" &&
+      (obj.numberValue = Math.round(message.value?.numberValue));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<FilterValue>, I>>(object: I): FilterValue {
+  fromPartial<I extends Exact<DeepPartial<FilterValue>, I>>(
+    object: I
+  ): FilterValue {
     const message = createBaseFilterValue();
     if (
       object.value?.$case === "stringValue" &&
       object.value?.stringValue !== undefined &&
       object.value?.stringValue !== null
     ) {
-      message.value = { $case: "stringValue", stringValue: object.value.stringValue };
+      message.value = {
+        $case: "stringValue",
+        stringValue: object.value.stringValue,
+      };
     }
     if (
       object.value?.$case === "numberValue" &&
       object.value?.numberValue !== undefined &&
       object.value?.numberValue !== null
     ) {
-      message.value = { $case: "numberValue", numberValue: object.value.numberValue };
+      message.value = {
+        $case: "numberValue",
+        numberValue: object.value.numberValue,
+      };
     }
     return message;
   },
@@ -436,7 +487,10 @@ function createBaseLookupCriteria(): LookupCriteria {
 }
 
 export const LookupCriteria = {
-  encode(message: LookupCriteria, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: LookupCriteria,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -470,23 +524,31 @@ export const LookupCriteria = {
   fromJSON(object: any): LookupCriteria {
     return {
       key: isSet(object.key) ? String(object.key) : "",
-      value: isSet(object.value) ? FilterValue.fromJSON(object.value) : undefined,
+      value: isSet(object.value)
+        ? FilterValue.fromJSON(object.value)
+        : undefined,
     };
   },
 
   toJSON(message: LookupCriteria): unknown {
     const obj: any = {};
     message.key !== undefined && (obj.key = message.key);
-    message.value !== undefined && (obj.value = message.value ? FilterValue.toJSON(message.value) : undefined);
+    message.value !== undefined &&
+      (obj.value = message.value
+        ? FilterValue.toJSON(message.value)
+        : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<LookupCriteria>, I>>(object: I): LookupCriteria {
+  fromPartial<I extends Exact<DeepPartial<LookupCriteria>, I>>(
+    object: I
+  ): LookupCriteria {
     const message = createBaseLookupCriteria();
     message.key = object.key ?? "";
-    message.value = (object.value !== undefined && object.value !== null)
-      ? FilterValue.fromPartial(object.value)
-      : undefined;
+    message.value =
+      object.value !== undefined && object.value !== null
+        ? FilterValue.fromPartial(object.value)
+        : undefined;
     return message;
   },
 };
@@ -496,14 +558,20 @@ function createBaseUpdateOperationResult(): UpdateOperationResult {
 }
 
 export const UpdateOperationResult = {
-  encode(message: UpdateOperationResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: UpdateOperationResult,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.success === true) {
       writer.uint32(8).bool(message.success);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateOperationResult {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): UpdateOperationResult {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateOperationResult();
@@ -531,7 +599,9 @@ export const UpdateOperationResult = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdateOperationResult>, I>>(object: I): UpdateOperationResult {
+  fromPartial<I extends Exact<DeepPartial<UpdateOperationResult>, I>>(
+    object: I
+  ): UpdateOperationResult {
     const message = createBaseUpdateOperationResult();
     message.success = object.success ?? false;
     return message;
@@ -557,17 +627,35 @@ var globalThis: any = (() => {
   throw "Unable to locate global object";
 })();
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | undefined;
 
-type DeepPartial<T> = T extends Builtin ? T
-  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string }
+  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
+      $case: T["$case"];
+    }
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
+      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
+    };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {

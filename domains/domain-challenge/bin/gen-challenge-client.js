@@ -20,7 +20,11 @@ const PLUGIN_PATH = path.join(
 );
 
 rimraf.sync(`${MODEL_DIR}/*`, {
-  glob: { ignore: `${MODEL_DIR}/tsconfig.json` },
+  glob: [
+    { ignore: `${MODEL_DIR}/tsconfig.json` },
+    { ignore: `${MODEL_DIR}/tsconfig.types.json` },
+    { ignore: `${MODEL_DIR}/tsconfig.es.json` },
+  ],
 });
 
 const protoConfig = [

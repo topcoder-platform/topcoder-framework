@@ -6,6 +6,7 @@
     "rootDir": "src",
     "composite": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["typings/global.d.ts", "src/*"],
+  "exclude": ["node_modules", "src/models"],
+  "references": [{ "path": "src/models/tsconfig.es.json" }]
 }
