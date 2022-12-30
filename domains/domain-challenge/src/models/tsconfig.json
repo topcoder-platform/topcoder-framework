@@ -4,6 +4,6 @@
     "composite": true,
     "outDir": "../../dist-cjs"
   },
-  "include": ["./"],
+  "include": ["./**/*.ts"],
   "exclude": ["node_modules"]
 }

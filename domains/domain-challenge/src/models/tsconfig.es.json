@@ -4,6 +4,6 @@
     "composite": true,
     "outDir": "../../dist-es"
   },
-  "include": ["./"],
+  "include": ["./**/*.ts"],
   "exclude": ["node_modules"]
 }
