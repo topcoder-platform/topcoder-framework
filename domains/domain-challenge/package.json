@@ -1,19 +1,21 @@
 {
   "name": "@topcoder-framework/domain-challenge",
-  "version": "0.0.1",
+  "version": "0.3.1",
   "description": "",
   "main": "./dist-cjs/index.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist-es/index.d.ts",
   "module": "./dist-es/index.js",
   "scripts": {
     "build:proto:client": "scripty",
     "build": "scripty",
     "build:es": "scripty",
     "build:app": "scripty",
+    "build:types": "scripty",
     "build:include:deps": "scripty",
     "clean": "scripty",
     "lint": "scripty",
-    "format": "scripty"
+    "format": "scripty",
+    "prepublishOnly": "yarn clean && yarn build"
   },
   "scripty": {
     "path": "../../scripts/packages"
@@ -30,6 +32,7 @@
     "@types/node": "^18.11.17",
     "eslint": "^8.30.0",
     "lerna": "^6.3.0",
+    "rimraf": "^3.0.2",
     "ts-proto": "^1.131.0",
     "typescript": "^4.9.4"
   },
@@ -37,5 +40,8 @@
     "node": "18.12.1",
     "typescript": "4.9.4",
     "npm": "9.2.0"
-  }
+  },
+  "files": [
+    "dist-*"
+  ]
 }

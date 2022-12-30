@@ -1,27 +1,14 @@
-import { credentials, Metadata } from "@grpc/grpc-js";
+import { Metadata } from "@grpc/grpc-js";
 
-import { PhaseClient } from "./models/domain-layer/challenge/services/phase";
+import { GrpcClient } from "../common/GrpcClient";
+import { PhaseClient } from "../models/domain-layer/challenge/services/phase";
+import { LookupCriteria, ScanRequest } from "../models/common/common";
 import {
   CreatePhaseInput,
   UpdatePhaseInput,
-} from "./models/domain-layer/challenge/phase";
-import { LookupCriteria, ScanRequest } from "./models/common/common";
+} from "../models/domain-layer/challenge/phase";
 
-export default class Phase {
-  constructor(public grpcServerHost: string, public grpcServerPort: string) {}
-
-  private readonly client: PhaseClient = new PhaseClient(
-    `${this.grpcServerHost}:${this.grpcServerPort}`,
-    credentials.createInsecure(),
-    {
-      "grpc.keepalive_time_ms": 120000,
-      "grpc.http2.min_time_between_pings_ms": 120000,
-      "grpc.keepalive_timeout_ms": 20000,
-      "grpc.http2.max_pings_without_data": 0,
-      "grpc.keepalive_permit_without_calls": 1,
-    }
-  );
-
+export class Phase extends GrpcClient<PhaseClient> {
   public async create(
     param: CreatePhaseInput,
     metadata: Metadata = new Metadata()
