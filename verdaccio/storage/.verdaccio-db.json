@@ -1,0 +1,8 @@
+{
+  "list": [
+    "@topcoder-framework/domain-challenge",
+    "@topcoder-framework/domain-resource",
+    "@topcoder-framework/lib-logger"
+  ],
+  "secret": "6f0e11c9cad53b6292c4c09c8cfa787aa1540ec0d5efc87417c06c29532b24dc"
+}

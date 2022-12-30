@@ -9,3 +9,4 @@ package-lock.json
 *.tsbuildinfo
 lerna-debug.log
 yarn-error.log
+.npmrc

@@ -1,0 +1,71 @@
+{
+  "name": "@topcoder-framework/domain-resource",
+  "versions": {
+    "0.1.1-ci.0": {
+      "name": "@topcoder-framework/domain-resource",
+      "version": "0.1.1-ci.0",
+      "description": "",
+      "main": "index.js",
+      "scripts": {
+        "clean": "scripty",
+        "lint": "scripty",
+        "format": "scripty"
+      },
+      "scripty": {
+        "path": "../../scripts/packages"
+      },
+      "author": {
+        "name": "Rakib Ansary",
+        "email": "rakibansary.saikot@wipro.com"
+      },
+      "license": "ISC",
+      "dependencies": {
+        "dotenv": "^16.0.3",
+        "tslib": "^2.4.1"
+      },
+      "devDependencies": {
+        "@types/node": "^18.11.8",
+        "ts-proto": "^1.131.0",
+        "typescript": "^4.8.4"
+      },
+      "volta": {
+        "node": "18.12.1"
+      },
+      "files": [
+        "dist-*"
+      ],
+      "gitHead": "a74e71d6112baa446707af6341596d02a0f77180",
+      "readmeFilename": "README.md",
+      "_id": "@topcoder-framework/domain-resource@0.1.1-ci.0",
+      "_nodeVersion": "18.12.1",
+      "_npmVersion": "lerna/6.3.0/node@v18.12.1+arm64 (darwin)",
+      "dist": {
+        "integrity": "sha512-lKo7N54GQcS7qU892DZIdL36IkS2Q4xOUR1rkx03Av/4mHyvr5iLGd1M/2+Tr/Gmwl+TvHVcws44EM63dDGDoQ==",
+        "shasum": "49ba1e0c6437c53f13f2ee5e18e5b106351826aa",
+        "tarball": "http://localhost:4873/@topcoder-framework/domain-resource/-/@topcoder-framework/domain-resource-0.1.1-ci.0.tgz"
+      },
+      "contributors": []
+    }
+  },
+  "time": {
+    "modified": "2022-12-30T17:05:34.865Z",
+    "created": "2022-12-30T17:05:34.865Z",
+    "0.1.1-ci.0": "2022-12-30T17:05:34.865Z"
+  },
+  "users": {},
+  "dist-tags": {
+    "latest": "0.1.1-ci.0",
+    "ci": "0.1.1-ci.0"
+  },
+  "_uplinks": {},
+  "_distfiles": {},
+  "_attachments": {
+    "domain-resource-0.1.1-ci.0.tgz": {
+      "shasum": "49ba1e0c6437c53f13f2ee5e18e5b106351826aa",
+      "version": "0.1.1-ci.0"
+    }
+  },
+  "_rev": "3-0a8cd402bf85644a",
+  "_id": "@topcoder-framework/domain-resource",
+  "readme": "ERROR: No README data found!"
+}

@@ -2,10 +2,8 @@
   "extends": "../../tsconfig.es.json",
   "compilerOptions": {
     "composite": true,
-    "outDir": "../../dist-es/models",
-    "noImplicitReturns": false,
-    "forceConsistentCasingInFileNames": true
+    "outDir": "../../dist-es"
   },
-  "include": ["**/*"],
+  "include": ["./"],
   "exclude": ["node_modules"]
 }

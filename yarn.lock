@@ -1801,9 +1801,9 @@ at-least-node@^1.0.0:
   integrity sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
 
 axios@^1.0.0:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.1.tgz#44cf04a3c9f0c2252ebd85975361c026cb9f864a"
-  integrity sha512-I88cFiGu9ryt/tfVEi4kX2SITsvDddTajXTOFmt2uK1ZVA8LytjtdeyefdQWEf5PU8w+4SSJDoYnggflB5tW4A==
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.2.tgz#72681724c6e6a43a9fea860fc558127dbe32f9f1"
+  integrity sha512-bz/J4gS2S3I7mpN/YZfGFTqhXTYzRho8Ay38w2otuuDR322KzFIWm/4W2K6gIwvWaws5n+mnb7D1lN9uD+QH6Q==
   dependencies:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"
@@ -5814,9 +5814,9 @@ ts-proto-descriptors@1.7.1:
     protobufjs "^6.8.8"
 
 ts-proto@^1.131.0:
-  version "1.136.1"
-  resolved "https://registry.yarnpkg.com/ts-proto/-/ts-proto-1.136.1.tgz#c5b81846de96e3e75540995190d2435bea6d561f"
-  integrity sha512-amnm7CUOsBkXtzSP9eY+bIlm9CZcmkle3p+9pm3dGbQ71Pi85AmqeC6F9+5u0kYZwqrcr0Sgaz9QeYKOyphfQA==
+  version "1.137.0"
+  resolved "https://registry.yarnpkg.com/ts-proto/-/ts-proto-1.137.0.tgz#505d8df002a6898c7ed1d80ca51e3b47a5af31f8"
+  integrity sha512-9+j/Z8DdnVGIyFHxg35nmVYx1dnY8Ig5zYKpvRRQphjTch7i2sPYDEmITkPC2KFNTFCezLX0xzKTelomrek9xw==
   dependencies:
     "@types/object-hash" "^1.3.0"
     case-anything "^2.1.10"
@@ -6203,9 +6203,9 @@ yaml@^1.10.0:
   integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
 
 yaml@^2.1.3:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.2.0.tgz#882c762992888b4144bffdec5745df340627fdd3"
-  integrity sha512-auf7Gi6QwO7HW//GA9seGvTXVGWl1CM/ADWh1+RxtXr6XOxnT65ovDl9fTi4e0monEyJxCHqDpF6QnFDXmJE4g==
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.2.1.tgz#3014bf0482dcd15147aa8e56109ce8632cd60ce4"
+  integrity sha512-e0WHiYql7+9wr4cWMx3TVQrNwejKaEe7/rHNmQmqRjazfOP5W8PB6Jpebb5o6fIapbz9o9+2ipcaTM2ZwDI6lw==
 
 yargs-parser@20.2.4:
   version "20.2.4"

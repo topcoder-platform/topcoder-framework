@@ -10,7 +10,9 @@
     "lint": "scripty",
     "format": "scripty",
     "clean": "scripty",
-    "prepare": "husky install"
+    "local-publish": "scripty",
+    "prepare": "husky install",
+    "prepublishOnly": "yarn build"
   },
   "scripty": {
     "path": "./scripts/workspace"
@@ -55,6 +57,7 @@
   },
   "volta": {
     "lerna": "6.3.0",
-    "node": "18.12.1"
+    "node": "18.12.1",
+    "yarn": "1.22.19"
   }
 }

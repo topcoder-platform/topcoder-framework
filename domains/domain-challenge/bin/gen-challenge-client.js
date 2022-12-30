@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 require("dotenv").config();
 
 const path = require("path");
@@ -5,10 +7,9 @@ const rimraf = require("rimraf");
 
 const { execSync } = require("child_process");
 
-const PROTO_DIR = process.env.LOCAL_TOPCODER_INTERFACE ? path.resolve(process.env.LOCAL_TOPCODER_INTERFACE) : path.join(
-  __dirname,
-  "../../../node_modules/topcoder-interface"
-);
+const PROTO_DIR = process.env.LOCAL_TOPCODER_INTERFACE
+  ? path.resolve(process.env.LOCAL_TOPCODER_INTERFACE)
+  : path.join(__dirname, "../../../node_modules/topcoder-interface");
 
 const MODEL_DIR = path.join(__dirname, "../src/models/");
 
@@ -19,12 +20,8 @@ const PLUGIN_PATH = path.join(
   "../../../node_modules/.bin/protoc-gen-ts_proto"
 );
 
-rimraf.sync(`${MODEL_DIR}/*`, {
-  glob: [
-    { ignore: `${MODEL_DIR}/tsconfig.json` },
-    { ignore: `${MODEL_DIR}/tsconfig.types.json` },
-    { ignore: `${MODEL_DIR}/tsconfig.es.json` },
-  ],
+const result = rimraf.sync(`${MODEL_DIR}/*`, {
+  glob: { ignore: `${MODEL_DIR}/*.json` },
 });
 
 const protoConfig = [

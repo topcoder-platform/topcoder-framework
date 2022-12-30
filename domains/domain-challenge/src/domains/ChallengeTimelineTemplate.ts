@@ -1,28 +1,15 @@
-import { credentials, Metadata } from "@grpc/grpc-js";
+import { Metadata } from "@grpc/grpc-js";
 
-import { ChallengeTimelineTemplateClient } from "./models/domain-layer/challenge/services/challenge_timeline_template";
+import { ChallengeTimelineTemplateClient } from "../models/domain-layer/challenge/services/challenge_timeline_template";
 import {
   CreateChallengeTimelineTemplateInput,
   UpdateChallengeTimelineTemplateInput,
-} from "./models/domain-layer/challenge/challenge_timeline_template";
-import { LookupCriteria, ScanRequest } from "./models/common/common";
+} from "../models/domain-layer/challenge/challenge_timeline_template";
 
-export default class ChallengeTimelineTemplate {
-  constructor(public grpcServerHost: string, public grpcServerPort: string) {}
+import { GrpcClient } from "../common/GrpcClient";
+import { LookupCriteria, ScanRequest } from "../models/common/common";
 
-  private readonly client: ChallengeTimelineTemplateClient =
-    new ChallengeTimelineTemplateClient(
-      `${this.grpcServerHost}:${this.grpcServerPort}`,
-      credentials.createInsecure(),
-      {
-        "grpc.keepalive_time_ms": 120000,
-        "grpc.http2.min_time_between_pings_ms": 120000,
-        "grpc.keepalive_timeout_ms": 20000,
-        "grpc.http2.max_pings_without_data": 0,
-        "grpc.keepalive_permit_without_calls": 1,
-      }
-    );
-
+export class ChallengeTimelineTemplateDomain extends GrpcClient<ChallengeTimelineTemplateClient> {
   public async create(
     param: CreateChallengeTimelineTemplateInput,
     metadata: Metadata = new Metadata()

@@ -1,0 +1,82 @@
+{
+  "name": "@topcoder-framework/lib-logger",
+  "versions": {
+    "0.1.1-ci.0": {
+      "name": "@topcoder-framework/lib-logger",
+      "version": "0.1.1-ci.0",
+      "description": "",
+      "main": "index.js",
+      "scripts": {
+        "build:proto:client": "scripty",
+        "build": "scripty",
+        "build:es": "scripty",
+        "build:app": "scripty",
+        "build:include:deps": "scripty",
+        "clean": "scripty",
+        "lint": "scripty"
+      },
+      "scripty": {
+        "path": "../../scripts/packages",
+        "format": "scripty"
+      },
+      "author": {
+        "name": "Rakib Ansary",
+        "email": "rakibansary.saikot@wipro.com"
+      },
+      "license": "ISC",
+      "volta": {
+        "node": "18.12.1",
+        "typescript": "4.9.3",
+        "npm": "9.1.2"
+      },
+      "dependencies": {
+        "@types/lodash": "^4.14.189",
+        "joi": "^17.7.0",
+        "lodash": "^4.17.21",
+        "tslib": "^2.4.1",
+        "winston": "^3.8.2"
+      },
+      "devDependencies": {
+        "@tsconfig/recommended": "^1.0.1",
+        "@types/node": "^18.11.9",
+        "concurrently": "^7.5.0",
+        "typedoc": "^0.23.21",
+        "typescript": "^4.9.3"
+      },
+      "files": [
+        "dist-*"
+      ],
+      "gitHead": "a74e71d6112baa446707af6341596d02a0f77180",
+      "_id": "@topcoder-framework/lib-logger@0.1.1-ci.0",
+      "_nodeVersion": "18.12.1",
+      "_npmVersion": "lerna/6.3.0/node@v18.12.1+arm64 (darwin)",
+      "dist": {
+        "integrity": "sha512-ROVtRms3mTOmORAaIUTzK0y/+RSYwW4NxthiJPIIOj3eLSnw/FI2TGU42GGvLMiZFxFtkbjKkVoEJbxVjVB3vw==",
+        "shasum": "8346f3760cc3663331c711968e5ac633d4149937",
+        "tarball": "http://localhost:4873/@topcoder-framework/lib-logger/-/@topcoder-framework/lib-logger-0.1.1-ci.0.tgz"
+      },
+      "contributors": []
+    }
+  },
+  "time": {
+    "modified": "2022-12-30T17:05:34.889Z",
+    "created": "2022-12-30T17:05:34.889Z",
+    "0.1.1-ci.0": "2022-12-30T17:05:34.889Z"
+  },
+  "users": {},
+  "dist-tags": {
+    "latest": "0.1.1-ci.0",
+    "ci": "0.1.1-ci.0"
+  },
+  "_uplinks": {},
+  "_distfiles": {},
+  "_attachments": {
+    "lib-logger-0.1.1-ci.0.tgz": {
+      "shasum": "8346f3760cc3663331c711968e5ac633d4149937",
+      "version": "0.1.1-ci.0"
+    }
+  },
+  "_rev": "3-f00f496c59c5a212",
+  "_id": "@topcoder-framework/lib-logger",
+  "readme": "ERROR: No README data found!"
+}
