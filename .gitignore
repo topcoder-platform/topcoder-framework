@@ -4,7 +4,12 @@ node_modules/
 *.tgz
 dist
 dist-*
-workspace
 coverage
 package-lock.json
 *.tsbuildinfo
+lerna-debug.log
+yarn-error.log
+.npmrc
+verdaccio/storage
+verdaccio/htpasswd
+verdaccio/storage/

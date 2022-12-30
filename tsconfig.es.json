@@ -3,8 +3,8 @@
   "compilerOptions": {
     "importHelpers": true,
     "module": "esnext",
-    "noEmitHelpers": true,
     "target": "ES2022",
-    "strict": true
+    "strict": true,
+    "noEmitHelpers": true
   }
 }

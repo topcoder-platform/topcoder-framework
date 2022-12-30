@@ -43,7 +43,10 @@ function createBaseResource(): Resource {
 }
 
 export const Resource = {
-  encode(message: Resource, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: Resource,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -129,7 +132,9 @@ export const Resource = {
       created: isSet(object.created) ? Number(object.created) : 0,
       createdBy: isSet(object.createdBy) ? String(object.createdBy) : "",
       legacyId: isSet(object.legacyId) ? Number(object.legacyId) : undefined,
-      memberHandle: isSet(object.memberHandle) ? String(object.memberHandle) : "",
+      memberHandle: isSet(object.memberHandle)
+        ? String(object.memberHandle)
+        : "",
       memberId: isSet(object.memberId) ? String(object.memberId) : "",
       roleId: isSet(object.roleId) ? String(object.roleId) : "",
       updated: isSet(object.updated) ? Number(object.updated) : undefined,
@@ -140,14 +145,19 @@ export const Resource = {
   toJSON(message: Resource): unknown {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
-    message.challengeId !== undefined && (obj.challengeId = message.challengeId);
-    message.created !== undefined && (obj.created = Math.round(message.created));
+    message.challengeId !== undefined &&
+      (obj.challengeId = message.challengeId);
+    message.created !== undefined &&
+      (obj.created = Math.round(message.created));
     message.createdBy !== undefined && (obj.createdBy = message.createdBy);
-    message.legacyId !== undefined && (obj.legacyId = Math.round(message.legacyId));
-    message.memberHandle !== undefined && (obj.memberHandle = message.memberHandle);
+    message.legacyId !== undefined &&
+      (obj.legacyId = Math.round(message.legacyId));
+    message.memberHandle !== undefined &&
+      (obj.memberHandle = message.memberHandle);
     message.memberId !== undefined && (obj.memberId = message.memberId);
     message.roleId !== undefined && (obj.roleId = message.roleId);
-    message.updated !== undefined && (obj.updated = Math.round(message.updated));
+    message.updated !== undefined &&
+      (obj.updated = Math.round(message.updated));
     message.updatedBy !== undefined && (obj.updatedBy = message.updatedBy);
     return obj;
   },
@@ -169,11 +179,20 @@ export const Resource = {
 };
 
 function createBaseCreateResourceInput(): CreateResourceInput {
-  return { challengeId: "", memberHandle: "", memberId: "", roleId: "", paymentAmount: undefined };
+  return {
+    challengeId: "",
+    memberHandle: "",
+    memberId: "",
+    roleId: "",
+    paymentAmount: undefined,
+  };
 }
 
 export const CreateResourceInput = {
-  encode(message: CreateResourceInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: CreateResourceInput,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.challengeId !== "") {
       writer.uint32(10).string(message.challengeId);
     }
@@ -225,24 +244,33 @@ export const CreateResourceInput = {
   fromJSON(object: any): CreateResourceInput {
     return {
       challengeId: isSet(object.challengeId) ? String(object.challengeId) : "",
-      memberHandle: isSet(object.memberHandle) ? String(object.memberHandle) : "",
+      memberHandle: isSet(object.memberHandle)
+        ? String(object.memberHandle)
+        : "",
       memberId: isSet(object.memberId) ? String(object.memberId) : "",
       roleId: isSet(object.roleId) ? String(object.roleId) : "",
-      paymentAmount: isSet(object.paymentAmount) ? Number(object.paymentAmount) : undefined,
+      paymentAmount: isSet(object.paymentAmount)
+        ? Number(object.paymentAmount)
+        : undefined,
     };
   },
 
   toJSON(message: CreateResourceInput): unknown {
     const obj: any = {};
-    message.challengeId !== undefined && (obj.challengeId = message.challengeId);
-    message.memberHandle !== undefined && (obj.memberHandle = message.memberHandle);
+    message.challengeId !== undefined &&
+      (obj.challengeId = message.challengeId);
+    message.memberHandle !== undefined &&
+      (obj.memberHandle = message.memberHandle);
     message.memberId !== undefined && (obj.memberId = message.memberId);
     message.roleId !== undefined && (obj.roleId = message.roleId);
-    message.paymentAmount !== undefined && (obj.paymentAmount = message.paymentAmount);
+    message.paymentAmount !== undefined &&
+      (obj.paymentAmount = message.paymentAmount);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateResourceInput>, I>>(object: I): CreateResourceInput {
+  fromPartial<I extends Exact<DeepPartial<CreateResourceInput>, I>>(
+    object: I
+  ): CreateResourceInput {
     const message = createBaseCreateResourceInput();
     message.challengeId = object.challengeId ?? "";
     message.memberHandle = object.memberHandle ?? "";
@@ -258,7 +286,10 @@ function createBaseResourceList(): ResourceList {
 }
 
 export const ResourceList = {
-  encode(message: ResourceList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: ResourceList,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.resources) {
       Resource.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -285,23 +316,30 @@ export const ResourceList = {
 
   fromJSON(object: any): ResourceList {
     return {
-      resources: Array.isArray(object?.resources) ? object.resources.map((e: any) => Resource.fromJSON(e)) : [],
+      resources: Array.isArray(object?.resources)
+        ? object.resources.map((e: any) => Resource.fromJSON(e))
+        : [],
     };
   },
 
   toJSON(message: ResourceList): unknown {
     const obj: any = {};
     if (message.resources) {
-      obj.resources = message.resources.map((e) => e ? Resource.toJSON(e) : undefined);
+      obj.resources = message.resources.map((e) =>
+        e ? Resource.toJSON(e) : undefined
+      );
     } else {
       obj.resources = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ResourceList>, I>>(object: I): ResourceList {
+  fromPartial<I extends Exact<DeepPartial<ResourceList>, I>>(
+    object: I
+  ): ResourceList {
     const message = createBaseResourceList();
-    message.resources = object.resources?.map((e) => Resource.fromPartial(e)) || [];
+    message.resources =
+      object.resources?.map((e) => Resource.fromPartial(e)) || [];
     return message;
   },
 };
@@ -325,17 +363,35 @@ var globalThis: any = (() => {
   throw "Unable to locate global object";
 })();
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | undefined;
 
-type DeepPartial<T> = T extends Builtin ? T
-  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string }
+  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
+      $case: T["$case"];
+    }
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
+      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
+    };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {

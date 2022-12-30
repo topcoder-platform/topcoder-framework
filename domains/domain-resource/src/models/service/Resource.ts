@@ -13,7 +13,11 @@ import {
 } from "@grpc/grpc-js";
 import _m0 from "protobufjs/minimal";
 import { LookupCriteria, ScanRequest, ScanResult } from "../common/Common";
-import { CreateResourceInput, Resource, ResourceList } from "../resource/Resource";
+import {
+  CreateResourceInput,
+  Resource,
+  ResourceList,
+} from "../resource/Resource";
 
 export interface Payment {
   resourceId: string;
@@ -25,7 +29,10 @@ function createBasePayment(): Payment {
 }
 
 export const Payment = {
-  encode(message: Payment, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: Payment,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.resourceId !== "") {
       writer.uint32(10).string(message.resourceId);
     }
@@ -84,45 +91,55 @@ export const ResourceService = {
     path: "/topcoder.domain.resource_service.Resource/Scan",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: ScanRequest) => Buffer.from(ScanRequest.encode(value).finish()),
+    requestSerialize: (value: ScanRequest) =>
+      Buffer.from(ScanRequest.encode(value).finish()),
     requestDeserialize: (value: Buffer) => ScanRequest.decode(value),
-    responseSerialize: (value: ScanResult) => Buffer.from(ScanResult.encode(value).finish()),
+    responseSerialize: (value: ScanResult) =>
+      Buffer.from(ScanResult.encode(value).finish()),
     responseDeserialize: (value: Buffer) => ScanResult.decode(value),
   },
   lookup: {
     path: "/topcoder.domain.resource_service.Resource/Lookup",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: LookupCriteria) => Buffer.from(LookupCriteria.encode(value).finish()),
+    requestSerialize: (value: LookupCriteria) =>
+      Buffer.from(LookupCriteria.encode(value).finish()),
     requestDeserialize: (value: Buffer) => LookupCriteria.decode(value),
-    responseSerialize: (value: Resource) => Buffer.from(Resource.encode(value).finish()),
+    responseSerialize: (value: Resource) =>
+      Buffer.from(Resource.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Resource.decode(value),
   },
   create: {
     path: "/topcoder.domain.resource_service.Resource/Create",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: CreateResourceInput) => Buffer.from(CreateResourceInput.encode(value).finish()),
+    requestSerialize: (value: CreateResourceInput) =>
+      Buffer.from(CreateResourceInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) => CreateResourceInput.decode(value),
-    responseSerialize: (value: Resource) => Buffer.from(Resource.encode(value).finish()),
+    responseSerialize: (value: Resource) =>
+      Buffer.from(Resource.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Resource.decode(value),
   },
   delete: {
     path: "/topcoder.domain.resource_service.Resource/Delete",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: LookupCriteria) => Buffer.from(LookupCriteria.encode(value).finish()),
+    requestSerialize: (value: LookupCriteria) =>
+      Buffer.from(LookupCriteria.encode(value).finish()),
     requestDeserialize: (value: Buffer) => LookupCriteria.decode(value),
-    responseSerialize: (value: ResourceList) => Buffer.from(ResourceList.encode(value).finish()),
+    responseSerialize: (value: ResourceList) =>
+      Buffer.from(ResourceList.encode(value).finish()),
     responseDeserialize: (value: Buffer) => ResourceList.decode(value),
   },
   addPayment: {
     path: "/topcoder.domain.resource_service.Resource/addPayment",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: Payment) => Buffer.from(Payment.encode(value).finish()),
+    requestSerialize: (value: Payment) =>
+      Buffer.from(Payment.encode(value).finish()),
     requestDeserialize: (value: Buffer) => Payment.decode(value),
-    responseSerialize: (value: Resource) => Buffer.from(Resource.encode(value).finish()),
+    responseSerialize: (value: Resource) =>
+      Buffer.from(Resource.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Resource.decode(value),
   },
 } as const;
@@ -136,93 +153,124 @@ export interface ResourceServer extends UntypedServiceImplementation {
 }
 
 export interface ResourceClient extends Client {
-  scan(request: ScanRequest, callback: (error: ServiceError | null, response: ScanResult) => void): ClientUnaryCall;
+  scan(
+    request: ScanRequest,
+    callback: (error: ServiceError | null, response: ScanResult) => void
+  ): ClientUnaryCall;
   scan(
     request: ScanRequest,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: ScanResult) => void,
+    callback: (error: ServiceError | null, response: ScanResult) => void
   ): ClientUnaryCall;
   scan(
     request: ScanRequest,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: ScanResult) => void,
-  ): ClientUnaryCall;
-  lookup(request: LookupCriteria, callback: (error: ServiceError | null, response: Resource) => void): ClientUnaryCall;
-  lookup(
-    request: LookupCriteria,
-    metadata: Metadata,
-    callback: (error: ServiceError | null, response: Resource) => void,
+    callback: (error: ServiceError | null, response: ScanResult) => void
   ): ClientUnaryCall;
   lookup(
     request: LookupCriteria,
-    metadata: Metadata,
-    options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: Resource) => void,
+    callback: (error: ServiceError | null, response: Resource) => void
   ): ClientUnaryCall;
-  create(
-    request: CreateResourceInput,
-    callback: (error: ServiceError | null, response: Resource) => void,
-  ): ClientUnaryCall;
-  create(
-    request: CreateResourceInput,
-    metadata: Metadata,
-    callback: (error: ServiceError | null, response: Resource) => void,
-  ): ClientUnaryCall;
-  create(
-    request: CreateResourceInput,
-    metadata: Metadata,
-    options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: Resource) => void,
-  ): ClientUnaryCall;
-  delete(
-    request: LookupCriteria,
-    callback: (error: ServiceError | null, response: ResourceList) => void,
-  ): ClientUnaryCall;
-  delete(
+  lookup(
     request: LookupCriteria,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: ResourceList) => void,
+    callback: (error: ServiceError | null, response: Resource) => void
   ): ClientUnaryCall;
-  delete(
+  lookup(
     request: LookupCriteria,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: ResourceList) => void,
+    callback: (error: ServiceError | null, response: Resource) => void
   ): ClientUnaryCall;
-  addPayment(request: Payment, callback: (error: ServiceError | null, response: Resource) => void): ClientUnaryCall;
+  create(
+    request: CreateResourceInput,
+    callback: (error: ServiceError | null, response: Resource) => void
+  ): ClientUnaryCall;
+  create(
+    request: CreateResourceInput,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: Resource) => void
+  ): ClientUnaryCall;
+  create(
+    request: CreateResourceInput,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: Resource) => void
+  ): ClientUnaryCall;
+  delete(
+    request: LookupCriteria,
+    callback: (error: ServiceError | null, response: ResourceList) => void
+  ): ClientUnaryCall;
+  delete(
+    request: LookupCriteria,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: ResourceList) => void
+  ): ClientUnaryCall;
+  delete(
+    request: LookupCriteria,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: ResourceList) => void
+  ): ClientUnaryCall;
+  addPayment(
+    request: Payment,
+    callback: (error: ServiceError | null, response: Resource) => void
+  ): ClientUnaryCall;
   addPayment(
     request: Payment,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: Resource) => void,
+    callback: (error: ServiceError | null, response: Resource) => void
   ): ClientUnaryCall;
   addPayment(
     request: Payment,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: Resource) => void,
+    callback: (error: ServiceError | null, response: Resource) => void
   ): ClientUnaryCall;
 }
 
 export const ResourceClient = makeGenericClientConstructor(
   ResourceService,
-  "topcoder.domain.resource_service.Resource",
+  "topcoder.domain.resource_service.Resource"
 ) as unknown as {
-  new (address: string, credentials: ChannelCredentials, options?: Partial<ChannelOptions>): ResourceClient;
+  new (
+    address: string,
+    credentials: ChannelCredentials,
+    options?: Partial<ChannelOptions>
+  ): ResourceClient;
   service: typeof ResourceService;
 };
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | undefined;
 
-type DeepPartial<T> = T extends Builtin ? T
-  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string }
+  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
+      $case: T["$case"];
+    }
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
+      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
+    };
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

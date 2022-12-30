@@ -4,12 +4,9 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "downlevelIteration": true,
-    "esModuleInterop": true,
     "incremental": true,
-    "lib": ["ES2022"],
-    "importHelpers": true,
-    "noEmitHelpers": true,
-    "module": "commonjs",
+    "lib": ["ES2020"],
+    "module": "CommonJS",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "paths": {
@@ -20,8 +17,11 @@
     "preserveConstEnums": true,
     "removeComments": true,
     "resolveJsonModule": true,
-    "target": "ES2022",
-    "useUnknownInCatchVariables": false
+    "target": "ES2020",
+    "useUnknownInCatchVariables": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "importHelpers": true
   },
   "include": ["packages/", "lib/", "domains/"],
   "exclude": ["node_modules", "**/*.spec.ts"]

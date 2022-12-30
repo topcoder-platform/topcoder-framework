@@ -55,7 +55,10 @@ function createBaseResourceRole(): ResourceRole {
 }
 
 export const ResourceRole = {
-  encode(message: ResourceRole, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: ResourceRole,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -132,13 +135,19 @@ export const ResourceRole = {
     return {
       id: isSet(object.id) ? String(object.id) : "",
       fullAccess: isSet(object.fullAccess) ? Boolean(object.fullAccess) : false,
-      fullReadAccess: isSet(object.fullReadAccess) ? Boolean(object.fullReadAccess) : false,
-      fullWriteAccess: isSet(object.fullWriteAccess) ? Boolean(object.fullWriteAccess) : false,
+      fullReadAccess: isSet(object.fullReadAccess)
+        ? Boolean(object.fullReadAccess)
+        : false,
+      fullWriteAccess: isSet(object.fullWriteAccess)
+        ? Boolean(object.fullWriteAccess)
+        : false,
       isActive: isSet(object.isActive) ? Boolean(object.isActive) : false,
       legacyId: isSet(object.legacyId) ? Number(object.legacyId) : 0,
       name: isSet(object.name) ? String(object.name) : "",
       nameLower: isSet(object.nameLower) ? String(object.nameLower) : "",
-      selfObtainable: isSet(object.selfObtainable) ? Boolean(object.selfObtainable) : false,
+      selfObtainable: isSet(object.selfObtainable)
+        ? Boolean(object.selfObtainable)
+        : false,
     };
   },
 
@@ -146,17 +155,23 @@ export const ResourceRole = {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     message.fullAccess !== undefined && (obj.fullAccess = message.fullAccess);
-    message.fullReadAccess !== undefined && (obj.fullReadAccess = message.fullReadAccess);
-    message.fullWriteAccess !== undefined && (obj.fullWriteAccess = message.fullWriteAccess);
+    message.fullReadAccess !== undefined &&
+      (obj.fullReadAccess = message.fullReadAccess);
+    message.fullWriteAccess !== undefined &&
+      (obj.fullWriteAccess = message.fullWriteAccess);
     message.isActive !== undefined && (obj.isActive = message.isActive);
-    message.legacyId !== undefined && (obj.legacyId = Math.round(message.legacyId));
+    message.legacyId !== undefined &&
+      (obj.legacyId = Math.round(message.legacyId));
     message.name !== undefined && (obj.name = message.name);
     message.nameLower !== undefined && (obj.nameLower = message.nameLower);
-    message.selfObtainable !== undefined && (obj.selfObtainable = message.selfObtainable);
+    message.selfObtainable !== undefined &&
+      (obj.selfObtainable = message.selfObtainable);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ResourceRole>, I>>(object: I): ResourceRole {
+  fromPartial<I extends Exact<DeepPartial<ResourceRole>, I>>(
+    object: I
+  ): ResourceRole {
     const message = createBaseResourceRole();
     message.id = object.id ?? "";
     message.fullAccess = object.fullAccess ?? false;
@@ -183,7 +198,10 @@ function createBaseCreateResourceRoleInput(): CreateResourceRoleInput {
 }
 
 export const CreateResourceRoleInput = {
-  encode(message: CreateResourceRoleInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: CreateResourceRoleInput,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.fullAccess === true) {
       writer.uint32(16).bool(message.fullAccess);
     }
@@ -205,7 +223,10 @@ export const CreateResourceRoleInput = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): CreateResourceRoleInput {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): CreateResourceRoleInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateResourceRoleInput();
@@ -241,26 +262,37 @@ export const CreateResourceRoleInput = {
   fromJSON(object: any): CreateResourceRoleInput {
     return {
       fullAccess: isSet(object.fullAccess) ? Boolean(object.fullAccess) : false,
-      fullReadAccess: isSet(object.fullReadAccess) ? Boolean(object.fullReadAccess) : false,
-      fullWriteAccess: isSet(object.fullWriteAccess) ? Boolean(object.fullWriteAccess) : false,
+      fullReadAccess: isSet(object.fullReadAccess)
+        ? Boolean(object.fullReadAccess)
+        : false,
+      fullWriteAccess: isSet(object.fullWriteAccess)
+        ? Boolean(object.fullWriteAccess)
+        : false,
       isActive: isSet(object.isActive) ? Boolean(object.isActive) : false,
       name: isSet(object.name) ? String(object.name) : "",
-      selfObtainable: isSet(object.selfObtainable) ? Boolean(object.selfObtainable) : false,
+      selfObtainable: isSet(object.selfObtainable)
+        ? Boolean(object.selfObtainable)
+        : false,
     };
   },
 
   toJSON(message: CreateResourceRoleInput): unknown {
     const obj: any = {};
     message.fullAccess !== undefined && (obj.fullAccess = message.fullAccess);
-    message.fullReadAccess !== undefined && (obj.fullReadAccess = message.fullReadAccess);
-    message.fullWriteAccess !== undefined && (obj.fullWriteAccess = message.fullWriteAccess);
+    message.fullReadAccess !== undefined &&
+      (obj.fullReadAccess = message.fullReadAccess);
+    message.fullWriteAccess !== undefined &&
+      (obj.fullWriteAccess = message.fullWriteAccess);
     message.isActive !== undefined && (obj.isActive = message.isActive);
     message.name !== undefined && (obj.name = message.name);
-    message.selfObtainable !== undefined && (obj.selfObtainable = message.selfObtainable);
+    message.selfObtainable !== undefined &&
+      (obj.selfObtainable = message.selfObtainable);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateResourceRoleInput>, I>>(object: I): CreateResourceRoleInput {
+  fromPartial<I extends Exact<DeepPartial<CreateResourceRoleInput>, I>>(
+    object: I
+  ): CreateResourceRoleInput {
     const message = createBaseCreateResourceRoleInput();
     message.fullAccess = object.fullAccess ?? false;
     message.fullReadAccess = object.fullReadAccess ?? false;
@@ -277,17 +309,26 @@ function createBaseUpdateResourceRoleInput(): UpdateResourceRoleInput {
 }
 
 export const UpdateResourceRoleInput = {
-  encode(message: UpdateResourceRoleInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: UpdateResourceRoleInput,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
     if (message.payload !== undefined) {
-      UpdateResourceRoleInput_Payload.encode(message.payload, writer.uint32(18).fork()).ldelim();
+      UpdateResourceRoleInput_Payload.encode(
+        message.payload,
+        writer.uint32(18).fork()
+      ).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateResourceRoleInput {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): UpdateResourceRoleInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateResourceRoleInput();
@@ -298,7 +339,10 @@ export const UpdateResourceRoleInput = {
           message.id = reader.string();
           break;
         case 2:
-          message.payload = UpdateResourceRoleInput_Payload.decode(reader, reader.uint32());
+          message.payload = UpdateResourceRoleInput_Payload.decode(
+            reader,
+            reader.uint32()
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -311,7 +355,9 @@ export const UpdateResourceRoleInput = {
   fromJSON(object: any): UpdateResourceRoleInput {
     return {
       id: isSet(object.id) ? String(object.id) : "",
-      payload: isSet(object.payload) ? UpdateResourceRoleInput_Payload.fromJSON(object.payload) : undefined,
+      payload: isSet(object.payload)
+        ? UpdateResourceRoleInput_Payload.fromJSON(object.payload)
+        : undefined,
     };
   },
 
@@ -319,16 +365,21 @@ export const UpdateResourceRoleInput = {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     message.payload !== undefined &&
-      (obj.payload = message.payload ? UpdateResourceRoleInput_Payload.toJSON(message.payload) : undefined);
+      (obj.payload = message.payload
+        ? UpdateResourceRoleInput_Payload.toJSON(message.payload)
+        : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdateResourceRoleInput>, I>>(object: I): UpdateResourceRoleInput {
+  fromPartial<I extends Exact<DeepPartial<UpdateResourceRoleInput>, I>>(
+    object: I
+  ): UpdateResourceRoleInput {
     const message = createBaseUpdateResourceRoleInput();
     message.id = object.id ?? "";
-    message.payload = (object.payload !== undefined && object.payload !== null)
-      ? UpdateResourceRoleInput_Payload.fromPartial(object.payload)
-      : undefined;
+    message.payload =
+      object.payload !== undefined && object.payload !== null
+        ? UpdateResourceRoleInput_Payload.fromPartial(object.payload)
+        : undefined;
     return message;
   },
 };
@@ -345,7 +396,10 @@ function createBaseUpdateResourceRoleInput_Payload(): UpdateResourceRoleInput_Pa
 }
 
 export const UpdateResourceRoleInput_Payload = {
-  encode(message: UpdateResourceRoleInput_Payload, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: UpdateResourceRoleInput_Payload,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.fullAccess === true) {
       writer.uint32(8).bool(message.fullAccess);
     }
@@ -367,7 +421,10 @@ export const UpdateResourceRoleInput_Payload = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateResourceRoleInput_Payload {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): UpdateResourceRoleInput_Payload {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateResourceRoleInput_Payload();
@@ -403,27 +460,36 @@ export const UpdateResourceRoleInput_Payload = {
   fromJSON(object: any): UpdateResourceRoleInput_Payload {
     return {
       fullAccess: isSet(object.fullAccess) ? Boolean(object.fullAccess) : false,
-      fullReadAccess: isSet(object.fullReadAccess) ? Boolean(object.fullReadAccess) : false,
-      fullWriteAccess: isSet(object.fullWriteAccess) ? Boolean(object.fullWriteAccess) : false,
+      fullReadAccess: isSet(object.fullReadAccess)
+        ? Boolean(object.fullReadAccess)
+        : false,
+      fullWriteAccess: isSet(object.fullWriteAccess)
+        ? Boolean(object.fullWriteAccess)
+        : false,
       isActive: isSet(object.isActive) ? Boolean(object.isActive) : false,
       name: isSet(object.name) ? String(object.name) : "",
-      selfObtainable: isSet(object.selfObtainable) ? Boolean(object.selfObtainable) : false,
+      selfObtainable: isSet(object.selfObtainable)
+        ? Boolean(object.selfObtainable)
+        : false,
     };
   },
 
   toJSON(message: UpdateResourceRoleInput_Payload): unknown {
     const obj: any = {};
     message.fullAccess !== undefined && (obj.fullAccess = message.fullAccess);
-    message.fullReadAccess !== undefined && (obj.fullReadAccess = message.fullReadAccess);
-    message.fullWriteAccess !== undefined && (obj.fullWriteAccess = message.fullWriteAccess);
+    message.fullReadAccess !== undefined &&
+      (obj.fullReadAccess = message.fullReadAccess);
+    message.fullWriteAccess !== undefined &&
+      (obj.fullWriteAccess = message.fullWriteAccess);
     message.isActive !== undefined && (obj.isActive = message.isActive);
     message.name !== undefined && (obj.name = message.name);
-    message.selfObtainable !== undefined && (obj.selfObtainable = message.selfObtainable);
+    message.selfObtainable !== undefined &&
+      (obj.selfObtainable = message.selfObtainable);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<UpdateResourceRoleInput_Payload>, I>>(
-    object: I,
+    object: I
   ): UpdateResourceRoleInput_Payload {
     const message = createBaseUpdateResourceRoleInput_Payload();
     message.fullAccess = object.fullAccess ?? false;
@@ -441,7 +507,10 @@ function createBaseResourceRoleList(): ResourceRoleList {
 }
 
 export const ResourceRoleList = {
-  encode(message: ResourceRoleList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: ResourceRoleList,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.resourceRoles) {
       ResourceRole.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -456,7 +525,9 @@ export const ResourceRoleList = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.resourceRoles.push(ResourceRole.decode(reader, reader.uint32()));
+          message.resourceRoles.push(
+            ResourceRole.decode(reader, reader.uint32())
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -477,31 +548,54 @@ export const ResourceRoleList = {
   toJSON(message: ResourceRoleList): unknown {
     const obj: any = {};
     if (message.resourceRoles) {
-      obj.resourceRoles = message.resourceRoles.map((e) => e ? ResourceRole.toJSON(e) : undefined);
+      obj.resourceRoles = message.resourceRoles.map((e) =>
+        e ? ResourceRole.toJSON(e) : undefined
+      );
     } else {
       obj.resourceRoles = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ResourceRoleList>, I>>(object: I): ResourceRoleList {
+  fromPartial<I extends Exact<DeepPartial<ResourceRoleList>, I>>(
+    object: I
+  ): ResourceRoleList {
     const message = createBaseResourceRoleList();
-    message.resourceRoles = object.resourceRoles?.map((e) => ResourceRole.fromPartial(e)) || [];
+    message.resourceRoles =
+      object.resourceRoles?.map((e) => ResourceRole.fromPartial(e)) || [];
     return message;
   },
 };
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | undefined;
 
-type DeepPartial<T> = T extends Builtin ? T
-  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string }
+  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
+      $case: T["$case"];
+    }
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
+      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
+    };
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

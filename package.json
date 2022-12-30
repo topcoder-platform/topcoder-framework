@@ -1,8 +1,21 @@
 {
   "name": "topcoder-framework",
+  "version": "0.0.0",
   "author": {
     "name": "Topcoder Platform Team",
     "url": "https://topcoder.com"
+  },
+  "scripts": {
+    "build": "scripty",
+    "lint": "scripty",
+    "format": "scripty",
+    "clean": "scripty",
+    "local-publish": "scripty",
+    "prepare": "husky install",
+    "prepublishOnly": "yarn build"
+  },
+  "scripty": {
+    "path": "./scripts/workspace"
   },
   "private": true,
   "workspaces": [
@@ -11,10 +24,40 @@
     "packages/*"
   ],
   "devDependencies": {
-    "lerna": "^6.0.1"
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
+    "@commitlint/config-lerna-scopes": "^17.2.1",
+    "@typescript-eslint/eslint-plugin": "^5.47.1",
+    "@typescript-eslint/parser": "^5.47.1",
+    "commitlint": "^17.3.0",
+    "concurrently": "^7.6.0",
+    "eslint": "^8.30.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.0",
+    "lerna": "^6.3.0",
+    "lerna-changelog": "^2.2.0",
+    "lint-staged": "^13.1.0",
+    "prettier": "^2.8.1",
+    "rimraf": "^3.0.2",
+    "scripty": "^2.1.1"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:topcoder-platform/topcoder-framework.git"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "npx prettier --write",
+      "npx eslint --fix"
+    ],
+    "*.{json,md,yml}": [
+      "npx prettier --write"
+    ]
+  },
+  "volta": {
+    "lerna": "6.3.0",
+    "node": "18.12.1",
+    "yarn": "1.22.19"
   }
 }
