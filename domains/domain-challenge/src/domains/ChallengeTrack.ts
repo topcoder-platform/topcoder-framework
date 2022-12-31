@@ -1,9 +1,8 @@
 import { Metadata } from "@grpc/grpc-js";
+import { LookupCriteria, ScanRequest } from "@topcoder-framework/lib-common";
 
 import { GrpcClient } from "../common/GrpcClient";
 import { ChallengeTrackClient } from "../models/domain-layer/challenge/services/challenge_track";
-import { LookupCriteria, ScanRequest } from "../models/common/common";
-
 import {
   CreateChallengeTrackInput,
   UpdateChallengeTrackInput,

@@ -15,7 +15,7 @@ import {
   LookupCriteria,
   ScanRequest,
   ScanResult,
-} from "../../../common/common";
+} from "@topcoder-framework/lib-common";
 import {
   ChallengeTrack,
   ChallengeTrackList,

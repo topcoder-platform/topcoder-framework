@@ -1,11 +1,13 @@
 import { Metadata, ServiceError } from "@grpc/grpc-js";
+import { LookupCriteria, ScanRequest } from "@topcoder-framework/lib-common";
+
+import { GrpcClient } from "../common/GrpcClient";
 import { TimelineTemplateClient } from "../models/domain-layer/challenge/services/timeline_template";
+
 import {
   CreateTimelineTemplateInput,
   UpdateTimelineTemplateInput,
 } from "../models/domain-layer/challenge/timeline_template";
-import { GrpcClient } from "../common/GrpcClient";
-import { LookupCriteria, ScanRequest } from "../models/common/common";
 
 export class TimelineTemplate extends GrpcClient<TimelineTemplateClient> {
   public async create(

@@ -1,6 +1,6 @@
 /* eslint-disable */
+import { Timestamp } from "@topcoder-framework/lib-common";
 import _m0 from "protobufjs/minimal";
-import { Timestamp } from "../../google/protobuf/timestamp";
 
 export enum Track {
   TRACK_UNSPECIFIED = 0,
