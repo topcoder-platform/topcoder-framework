@@ -11,10 +11,11 @@ import {
   ServiceError,
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
+import { LookupCriteria } from "@topcoder-framework/lib-common";
 import {
   Attachment,
+  AttachmentList,
   CreateAttachmentInput,
-  RemoveAttachmentInput,
   UpdateAttachmentInput,
 } from "../attachment";
 
@@ -42,23 +43,23 @@ export const AttachmentService = {
       Buffer.from(Attachment.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Attachment.decode(value),
   },
-  remove: {
-    path: "/topcoder.domain.service.attachment.Attachment/Remove",
+  delete: {
+    path: "/topcoder.domain.service.attachment.Attachment/Delete",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: RemoveAttachmentInput) =>
-      Buffer.from(RemoveAttachmentInput.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => RemoveAttachmentInput.decode(value),
-    responseSerialize: (value: Attachment) =>
-      Buffer.from(Attachment.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => Attachment.decode(value),
+    requestSerialize: (value: LookupCriteria) =>
+      Buffer.from(LookupCriteria.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => LookupCriteria.decode(value),
+    responseSerialize: (value: AttachmentList) =>
+      Buffer.from(AttachmentList.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => AttachmentList.decode(value),
   },
 } as const;
 
 export interface AttachmentServer extends UntypedServiceImplementation {
   create: handleUnaryCall<CreateAttachmentInput, Attachment>;
   update: handleUnaryCall<UpdateAttachmentInput, Attachment>;
-  remove: handleUnaryCall<RemoveAttachmentInput, Attachment>;
+  delete: handleUnaryCall<LookupCriteria, AttachmentList>;
 }
 
 export interface AttachmentClient extends Client {
@@ -92,20 +93,20 @@ export interface AttachmentClient extends Client {
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Attachment) => void
   ): ClientUnaryCall;
-  remove(
-    request: RemoveAttachmentInput,
-    callback: (error: ServiceError | null, response: Attachment) => void
+  delete(
+    request: LookupCriteria,
+    callback: (error: ServiceError | null, response: AttachmentList) => void
   ): ClientUnaryCall;
-  remove(
-    request: RemoveAttachmentInput,
+  delete(
+    request: LookupCriteria,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: Attachment) => void
+    callback: (error: ServiceError | null, response: AttachmentList) => void
   ): ClientUnaryCall;
-  remove(
-    request: RemoveAttachmentInput,
+  delete(
+    request: LookupCriteria,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: Attachment) => void
+    callback: (error: ServiceError | null, response: AttachmentList) => void
   ): ClientUnaryCall;
 }
 
