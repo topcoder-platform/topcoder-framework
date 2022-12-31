@@ -1,69 +1,80 @@
+import { promisify } from "util";
 import { Metadata } from "@grpc/grpc-js";
-import { LookupCriteria, ScanRequest } from "@topcoder-framework/lib-common";
+import {
+  LookupCriteria,
+  ScanRequest,
+  ScanResult,
+} from "@topcoder-framework/lib-common";
 
 import { ChallengeTimelineTemplateClient } from "../models/domain-layer/challenge/services/challenge_timeline_template";
 import {
+  ChallengeTimelineTemplate,
+  ChallengeTimelineTemplateList,
   CreateChallengeTimelineTemplateInput,
   UpdateChallengeTimelineTemplateInput,
 } from "../models/domain-layer/challenge/challenge_timeline_template";
 
 import { GrpcClient } from "../common/GrpcClient";
 
-export class ChallengeTimelineTemplateDomain extends GrpcClient<ChallengeTimelineTemplateClient> {
+export class ChallengeTimelineTemplateDomain {
+  constructor(
+    protected grpcServerHost: string,
+    protected grpcServerPort: string
+  ) {}
+
+  protected readonly client: ChallengeTimelineTemplateClient =
+    new ChallengeTimelineTemplateClient(
+      `${this.grpcServerHost}:${this.grpcServerPort}`,
+      GrpcClient.credentials,
+      GrpcClient.clientOptions
+    );
+
   public async create(
     param: CreateChallengeTimelineTemplateInput,
     metadata: Metadata = new Metadata()
   ) {
-    return new Promise((resolve, reject) => {
-      this.client.create(param, metadata, (error, response) => {
-        if (error) reject(error);
-        else resolve(response);
-      });
-    });
+    return promisify<
+      CreateChallengeTimelineTemplateInput,
+      Metadata,
+      ChallengeTimelineTemplate
+    >(this.client.create.bind(this.client))(param, metadata);
   }
 
-  public async scan(param: ScanRequest, metadata: Metadata = new Metadata()) {
-    return new Promise((resolve, reject) => {
-      this.client.scan(param, metadata, (error, response) => {
-        if (error) reject(error);
-        else resolve(response);
-      });
-    });
+  public async scan(
+    param: ScanRequest,
+    metadata: Metadata = new Metadata()
+  ): Promise<ScanResult> {
+    return promisify<ScanRequest, Metadata, ScanResult>(
+      this.client.scan.bind(this.client)
+    )(param, metadata);
   }
 
   public async lookup(
     param: LookupCriteria,
     metadata: Metadata = new Metadata()
   ) {
-    return new Promise((resolve, reject) => {
-      this.client.lookup(param, metadata, (error, response) => {
-        if (error) reject(error);
-        else resolve(response);
-      });
-    });
+    return promisify<LookupCriteria, Metadata, ChallengeTimelineTemplate>(
+      this.client.lookup.bind(this.client)
+    )(param, metadata);
   }
 
   public async update(
     param: UpdateChallengeTimelineTemplateInput,
     metadata: Metadata = new Metadata()
   ) {
-    return new Promise((resolve, reject) => {
-      this.client.update(param, metadata, (error, response) => {
-        if (error) reject(error);
-        else resolve(response);
-      });
-    });
+    return promisify<
+      UpdateChallengeTimelineTemplateInput,
+      Metadata,
+      ChallengeTimelineTemplateList
+    >(this.client.update.bind(this.client))(param, metadata);
   }
 
   public async delete(
     param: LookupCriteria,
     metadata: Metadata = new Metadata()
   ) {
-    return new Promise((resolve, reject) => {
-      this.client.delete(param, metadata, (error, response) => {
-        if (error) reject(error);
-        else resolve(response);
-      });
-    });
+    return promisify<LookupCriteria, Metadata, ChallengeTimelineTemplateList>(
+      this.client.delete.bind(this.client)
+    )(param, metadata);
   }
 }
