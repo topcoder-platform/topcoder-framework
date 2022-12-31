@@ -1,4 +1,5 @@
 import { Metadata } from "@grpc/grpc-js";
+import { LookupCriteria, ScanRequest } from "@topcoder-framework/lib-common";
 
 import { ChallengeTimelineTemplateClient } from "../models/domain-layer/challenge/services/challenge_timeline_template";
 import {
@@ -7,7 +8,6 @@ import {
 } from "../models/domain-layer/challenge/challenge_timeline_template";
 
 import { GrpcClient } from "../common/GrpcClient";
-import { LookupCriteria, ScanRequest } from "../models/common/common";
 
 export class ChallengeTimelineTemplateDomain extends GrpcClient<ChallengeTimelineTemplateClient> {
   public async create(

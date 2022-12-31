@@ -2,6 +2,7 @@
 import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { Struct, Value } from "../google/protobuf/struct";
+import { Timestamp } from "../google/protobuf/timestamp";
 
 export enum Operator {
   OPERATOR_UNSPECIFIED = 0,
@@ -166,7 +167,11 @@ export interface ScanResult {
 export interface FilterValue {
   value?:
     | { $case: "stringValue"; stringValue: string }
-    | { $case: "numberValue"; numberValue: number };
+    | { $case: "numberValue"; numberValue: number }
+    | {
+        $case: "dateValue";
+        dateValue: Date;
+      };
 }
 
 export interface LookupCriteria {
@@ -413,6 +418,12 @@ export const FilterValue = {
     if (message.value?.$case === "numberValue") {
       writer.uint32(16).int64(message.value.numberValue);
     }
+    if (message.value?.$case === "dateValue") {
+      Timestamp.encode(
+        toTimestamp(message.value.dateValue),
+        writer.uint32(26).fork()
+      ).ldelim();
+    }
     return writer;
   },
 
@@ -435,6 +446,12 @@ export const FilterValue = {
             numberValue: longToNumber(reader.int64() as Long),
           };
           break;
+        case 3:
+          message.value = {
+            $case: "dateValue",
+            dateValue: fromTimestamp(Timestamp.decode(reader, reader.uint32())),
+          };
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -449,6 +466,8 @@ export const FilterValue = {
         ? { $case: "stringValue", stringValue: String(object.stringValue) }
         : isSet(object.numberValue)
         ? { $case: "numberValue", numberValue: Number(object.numberValue) }
+        : isSet(object.dateValue)
+        ? { $case: "dateValue", dateValue: fromJsonTimestamp(object.dateValue) }
         : undefined,
     };
   },
@@ -459,6 +478,8 @@ export const FilterValue = {
       (obj.stringValue = message.value?.stringValue);
     message.value?.$case === "numberValue" &&
       (obj.numberValue = Math.round(message.value?.numberValue));
+    message.value?.$case === "dateValue" &&
+      (obj.dateValue = message.value?.dateValue.toISOString());
     return obj;
   },
 
@@ -485,6 +506,13 @@ export const FilterValue = {
         $case: "numberValue",
         numberValue: object.value.numberValue,
       };
+    }
+    if (
+      object.value?.$case === "dateValue" &&
+      object.value?.dateValue !== undefined &&
+      object.value?.dateValue !== null
+    ) {
+      message.value = { $case: "dateValue", dateValue: object.value.dateValue };
     }
     return message;
   },
@@ -609,6 +637,28 @@ type Exact<P, I extends P> = P extends Builtin
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
       [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
     };
+
+function toTimestamp(date: Date): Timestamp {
+  const seconds = date.getTime() / 1_000;
+  const nanos = (date.getTime() % 1_000) * 1_000_000;
+  return { seconds, nanos };
+}
+
+function fromTimestamp(t: Timestamp): Date {
+  let millis = t.seconds * 1_000;
+  millis += t.nanos / 1_000_000;
+  return new Date(millis);
+}
+
+function fromJsonTimestamp(o: any): Date {
+  if (o instanceof Date) {
+    return o;
+  } else if (typeof o === "string") {
+    return new Date(o);
+  } else {
+    return fromTimestamp(Timestamp.fromJSON(o));
+  }
+}
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {

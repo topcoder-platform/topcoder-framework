@@ -15,7 +15,7 @@ import {
   LookupCriteria,
   ScanRequest,
   ScanResult,
-} from "../../../common/common";
+} from "@topcoder-framework/lib-common";
 import { CreatePhaseInput, Phase, PhaseList, UpdatePhaseInput } from "../phase";
 
 export type PhaseService = typeof PhaseService;

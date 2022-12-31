@@ -1,8 +1,8 @@
 import { Metadata } from "@grpc/grpc-js";
+import { LookupCriteria, ScanRequest } from "@topcoder-framework/lib-common";
 
 import { GrpcClient } from "../common/GrpcClient";
 import { PhaseClient } from "../models/domain-layer/challenge/services/phase";
-import { LookupCriteria, ScanRequest } from "../models/common/common";
 import {
   CreatePhaseInput,
   UpdatePhaseInput,
