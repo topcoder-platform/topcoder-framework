@@ -1,5 +1,4 @@
 /* eslint-disable */
-import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { Struct, Value } from "../google/protobuf/struct";
 import { Timestamp } from "../google/protobuf/timestamp";
@@ -108,6 +107,12 @@ export enum Domain {
   DOMAIN_RESOURCE = 1,
   DOMAIN_RESOURCE_ROLE = 2,
   DOMAIN_RESOURCE_ROLE_PHASE_DEPENDENCY = 3,
+  DOMAIN_CHALLENGE = 4,
+  DOMAIN_CHALLENGE_TYPE = 5,
+  DOMAIN_CHALLENG_TIMELINE_TEMPLATE = 6,
+  DOMAIN_CHALLENGE_TRACK = 7,
+  DOMAIN_CHALLENGE_PHASE = 8,
+  DOMAIN_CHALLENGE_TIMELINE_TEMPLATE = 9,
   UNRECOGNIZED = -1,
 }
 
@@ -125,6 +130,24 @@ export function domainFromJSON(object: any): Domain {
     case 3:
     case "DOMAIN_RESOURCE_ROLE_PHASE_DEPENDENCY":
       return Domain.DOMAIN_RESOURCE_ROLE_PHASE_DEPENDENCY;
+    case 4:
+    case "DOMAIN_CHALLENGE":
+      return Domain.DOMAIN_CHALLENGE;
+    case 5:
+    case "DOMAIN_CHALLENGE_TYPE":
+      return Domain.DOMAIN_CHALLENGE_TYPE;
+    case 6:
+    case "DOMAIN_CHALLENG_TIMELINE_TEMPLATE":
+      return Domain.DOMAIN_CHALLENG_TIMELINE_TEMPLATE;
+    case 7:
+    case "DOMAIN_CHALLENGE_TRACK":
+      return Domain.DOMAIN_CHALLENGE_TRACK;
+    case 8:
+    case "DOMAIN_CHALLENGE_PHASE":
+      return Domain.DOMAIN_CHALLENGE_PHASE;
+    case 9:
+    case "DOMAIN_CHALLENGE_TIMELINE_TEMPLATE":
+      return Domain.DOMAIN_CHALLENGE_TIMELINE_TEMPLATE;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -142,6 +165,18 @@ export function domainToJSON(object: Domain): string {
       return "DOMAIN_RESOURCE_ROLE";
     case Domain.DOMAIN_RESOURCE_ROLE_PHASE_DEPENDENCY:
       return "DOMAIN_RESOURCE_ROLE_PHASE_DEPENDENCY";
+    case Domain.DOMAIN_CHALLENGE:
+      return "DOMAIN_CHALLENGE";
+    case Domain.DOMAIN_CHALLENGE_TYPE:
+      return "DOMAIN_CHALLENGE_TYPE";
+    case Domain.DOMAIN_CHALLENG_TIMELINE_TEMPLATE:
+      return "DOMAIN_CHALLENG_TIMELINE_TEMPLATE";
+    case Domain.DOMAIN_CHALLENGE_TRACK:
+      return "DOMAIN_CHALLENGE_TRACK";
+    case Domain.DOMAIN_CHALLENGE_PHASE:
+      return "DOMAIN_CHALLENGE_PHASE";
+    case Domain.DOMAIN_CHALLENGE_TIMELINE_TEMPLATE:
+      return "DOMAIN_CHALLENGE_TIMELINE_TEMPLATE";
     case Domain.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -164,19 +199,13 @@ export interface ScanResult {
   items: { [key: string]: any }[];
 }
 
-export interface FilterValue {
-  value?:
-    | { $case: "stringValue"; stringValue: string }
-    | { $case: "numberValue"; numberValue: number }
-    | {
-        $case: "dateValue";
-        dateValue: Date;
-      };
-}
-
 export interface LookupCriteria {
   key: string;
-  value?: FilterValue;
+  value?: any;
+}
+
+export interface GoogleProtobufTypesPlaceholder {
+  timestamp?: Date;
 }
 
 function createBaseScanCriteria(): ScanCriteria {
@@ -403,121 +432,6 @@ export const ScanResult = {
   },
 };
 
-function createBaseFilterValue(): FilterValue {
-  return { value: undefined };
-}
-
-export const FilterValue = {
-  encode(
-    message: FilterValue,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.value?.$case === "stringValue") {
-      writer.uint32(10).string(message.value.stringValue);
-    }
-    if (message.value?.$case === "numberValue") {
-      writer.uint32(16).int64(message.value.numberValue);
-    }
-    if (message.value?.$case === "dateValue") {
-      Timestamp.encode(
-        toTimestamp(message.value.dateValue),
-        writer.uint32(26).fork()
-      ).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): FilterValue {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseFilterValue();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.value = {
-            $case: "stringValue",
-            stringValue: reader.string(),
-          };
-          break;
-        case 2:
-          message.value = {
-            $case: "numberValue",
-            numberValue: longToNumber(reader.int64() as Long),
-          };
-          break;
-        case 3:
-          message.value = {
-            $case: "dateValue",
-            dateValue: fromTimestamp(Timestamp.decode(reader, reader.uint32())),
-          };
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): FilterValue {
-    return {
-      value: isSet(object.stringValue)
-        ? { $case: "stringValue", stringValue: String(object.stringValue) }
-        : isSet(object.numberValue)
-        ? { $case: "numberValue", numberValue: Number(object.numberValue) }
-        : isSet(object.dateValue)
-        ? { $case: "dateValue", dateValue: fromJsonTimestamp(object.dateValue) }
-        : undefined,
-    };
-  },
-
-  toJSON(message: FilterValue): unknown {
-    const obj: any = {};
-    message.value?.$case === "stringValue" &&
-      (obj.stringValue = message.value?.stringValue);
-    message.value?.$case === "numberValue" &&
-      (obj.numberValue = Math.round(message.value?.numberValue));
-    message.value?.$case === "dateValue" &&
-      (obj.dateValue = message.value?.dateValue.toISOString());
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<FilterValue>, I>>(
-    object: I
-  ): FilterValue {
-    const message = createBaseFilterValue();
-    if (
-      object.value?.$case === "stringValue" &&
-      object.value?.stringValue !== undefined &&
-      object.value?.stringValue !== null
-    ) {
-      message.value = {
-        $case: "stringValue",
-        stringValue: object.value.stringValue,
-      };
-    }
-    if (
-      object.value?.$case === "numberValue" &&
-      object.value?.numberValue !== undefined &&
-      object.value?.numberValue !== null
-    ) {
-      message.value = {
-        $case: "numberValue",
-        numberValue: object.value.numberValue,
-      };
-    }
-    if (
-      object.value?.$case === "dateValue" &&
-      object.value?.dateValue !== undefined &&
-      object.value?.dateValue !== null
-    ) {
-      message.value = { $case: "dateValue", dateValue: object.value.dateValue };
-    }
-    return message;
-  },
-};
-
 function createBaseLookupCriteria(): LookupCriteria {
   return { key: "", value: undefined };
 }
@@ -531,7 +445,10 @@ export const LookupCriteria = {
       writer.uint32(10).string(message.key);
     }
     if (message.value !== undefined) {
-      FilterValue.encode(message.value, writer.uint32(18).fork()).ldelim();
+      Value.encode(
+        Value.wrap(message.value),
+        writer.uint32(26).fork()
+      ).ldelim();
     }
     return writer;
   },
@@ -546,8 +463,8 @@ export const LookupCriteria = {
         case 1:
           message.key = reader.string();
           break;
-        case 2:
-          message.value = FilterValue.decode(reader, reader.uint32());
+        case 3:
+          message.value = Value.unwrap(Value.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -560,19 +477,14 @@ export const LookupCriteria = {
   fromJSON(object: any): LookupCriteria {
     return {
       key: isSet(object.key) ? String(object.key) : "",
-      value: isSet(object.value)
-        ? FilterValue.fromJSON(object.value)
-        : undefined,
+      value: isSet(object?.value) ? object.value : undefined,
     };
   },
 
   toJSON(message: LookupCriteria): unknown {
     const obj: any = {};
     message.key !== undefined && (obj.key = message.key);
-    message.value !== undefined &&
-      (obj.value = message.value
-        ? FilterValue.toJSON(message.value)
-        : undefined);
+    message.value !== undefined && (obj.value = message.value);
     return obj;
   },
 
@@ -581,32 +493,75 @@ export const LookupCriteria = {
   ): LookupCriteria {
     const message = createBaseLookupCriteria();
     message.key = object.key ?? "";
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? FilterValue.fromPartial(object.value)
-        : undefined;
+    message.value = object.value ?? undefined;
     return message;
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
+function createBaseGoogleProtobufTypesPlaceholder(): GoogleProtobufTypesPlaceholder {
+  return { timestamp: undefined };
+}
+
+export const GoogleProtobufTypesPlaceholder = {
+  encode(
+    message: GoogleProtobufTypesPlaceholder,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.timestamp !== undefined) {
+      Timestamp.encode(
+        toTimestamp(message.timestamp),
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GoogleProtobufTypesPlaceholder {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGoogleProtobufTypesPlaceholder();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.timestamp = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32())
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GoogleProtobufTypesPlaceholder {
+    return {
+      timestamp: isSet(object.timestamp)
+        ? fromJsonTimestamp(object.timestamp)
+        : undefined,
+    };
+  },
+
+  toJSON(message: GoogleProtobufTypesPlaceholder): unknown {
+    const obj: any = {};
+    message.timestamp !== undefined &&
+      (obj.timestamp = message.timestamp.toISOString());
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<GoogleProtobufTypesPlaceholder>, I>>(
+    object: I
+  ): GoogleProtobufTypesPlaceholder {
+    const message = createBaseGoogleProtobufTypesPlaceholder();
+    message.timestamp = object.timestamp ?? undefined;
+    return message;
+  },
+};
 
 type Builtin =
   | Date
@@ -658,20 +613,6 @@ function fromJsonTimestamp(o: any): Date {
   } else {
     return fromTimestamp(Timestamp.fromJSON(o));
   }
-}
-
-function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
-  }
-  return long.toNumber();
-}
-
-if (_m0.util.Long !== Long) {
-  _m0.util.Long = Long as any;
-  _m0.configure();
 }
 
 function isSet(value: any): boolean {
