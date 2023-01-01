@@ -1,4 +1,8 @@
-import { Operator, ScanCriteria } from "../models/common/common";
+import {
+  Operator,
+  ScanCriteria,
+  LookupCriteria,
+} from "../models/common/common";
 import { Value } from "../models/google/protobuf/struct";
 
 export class DomainHelper {
@@ -11,10 +15,19 @@ export class DomainHelper {
       scanCriteria.push({
         key,
         operator: Operator.OPERATOR_EQUAL,
-        value: criteria[key],
+        value: Value.wrap(criteria[key]),
       });
     }
 
     return scanCriteria;
+  }
+
+  public static getLookupCriteria(key: string, value: unknown): LookupCriteria {
+    return {
+      key,
+      value: {
+        value: Value.wrap(value),
+      },
+    };
   }
 }
