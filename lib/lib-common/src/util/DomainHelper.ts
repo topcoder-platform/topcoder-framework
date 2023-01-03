@@ -15,7 +15,7 @@ export class DomainHelper {
       scanCriteria.push({
         key,
         operator: Operator.OPERATOR_EQUAL,
-        value: Value.wrap(criteria[key]),
+        value: criteria[key],
       });
     }
 
