@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { ScanCriteria } from "@topcoder-framework/lib-common";
 import _m0 from "protobufjs/minimal";
 
 export interface ChallengeTimelineTemplate {
@@ -7,6 +8,10 @@ export interface ChallengeTimelineTemplate {
   typeId: string;
   timelineTemplateId: string;
   isDefault: boolean;
+}
+
+export interface ChallengeTimelineTemplateList {
+  challengeTimelineTemplates: ChallengeTimelineTemplate[];
 }
 
 export interface CreateChallengeTimelineTemplateInput {
@@ -22,10 +27,7 @@ export interface UpdateChallengeTimelineTemplateInput {
   typeId?: string | undefined;
   timelineTemplateId?: string | undefined;
   isDefault: boolean;
-}
-
-export interface ChallengeTimelineTemplateList {
-  challengeTimelineTemplates: ChallengeTimelineTemplate[];
+  filterCriteria: ScanCriteria[];
 }
 
 function createBaseChallengeTimelineTemplate(): ChallengeTimelineTemplate {
@@ -130,6 +132,80 @@ export const ChallengeTimelineTemplate = {
   },
 };
 
+function createBaseChallengeTimelineTemplateList(): ChallengeTimelineTemplateList {
+  return { challengeTimelineTemplates: [] };
+}
+
+export const ChallengeTimelineTemplateList = {
+  encode(
+    message: ChallengeTimelineTemplateList,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    for (const v of message.challengeTimelineTemplates) {
+      ChallengeTimelineTemplate.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): ChallengeTimelineTemplateList {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseChallengeTimelineTemplateList();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.challengeTimelineTemplates.push(
+            ChallengeTimelineTemplate.decode(reader, reader.uint32())
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ChallengeTimelineTemplateList {
+    return {
+      challengeTimelineTemplates: Array.isArray(
+        object?.challengeTimelineTemplates
+      )
+        ? object.challengeTimelineTemplates.map((e: any) =>
+            ChallengeTimelineTemplate.fromJSON(e)
+          )
+        : [],
+    };
+  },
+
+  toJSON(message: ChallengeTimelineTemplateList): unknown {
+    const obj: any = {};
+    if (message.challengeTimelineTemplates) {
+      obj.challengeTimelineTemplates = message.challengeTimelineTemplates.map(
+        (e) => (e ? ChallengeTimelineTemplate.toJSON(e) : undefined)
+      );
+    } else {
+      obj.challengeTimelineTemplates = [];
+    }
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<ChallengeTimelineTemplateList>, I>>(
+    object: I
+  ): ChallengeTimelineTemplateList {
+    const message = createBaseChallengeTimelineTemplateList();
+    message.challengeTimelineTemplates =
+      object.challengeTimelineTemplates?.map((e) =>
+        ChallengeTimelineTemplate.fromPartial(e)
+      ) || [];
+    return message;
+  },
+};
+
 function createBaseCreateChallengeTimelineTemplateInput(): CreateChallengeTimelineTemplateInput {
   return { trackId: "", typeId: "", timelineTemplateId: "", isDefault: false };
 }
@@ -224,6 +300,7 @@ function createBaseUpdateChallengeTimelineTemplateInput(): UpdateChallengeTimeli
     typeId: undefined,
     timelineTemplateId: undefined,
     isDefault: false,
+    filterCriteria: [],
   };
 }
 
@@ -246,6 +323,9 @@ export const UpdateChallengeTimelineTemplateInput = {
     }
     if (message.isDefault === true) {
       writer.uint32(40).bool(message.isDefault);
+    }
+    for (const v of message.filterCriteria) {
+      ScanCriteria.encode(v!, writer.uint32(50).fork()).ldelim();
     }
     return writer;
   },
@@ -275,6 +355,11 @@ export const UpdateChallengeTimelineTemplateInput = {
         case 5:
           message.isDefault = reader.bool();
           break;
+        case 6:
+          message.filterCriteria.push(
+            ScanCriteria.decode(reader, reader.uint32())
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -292,6 +377,9 @@ export const UpdateChallengeTimelineTemplateInput = {
         ? String(object.timelineTemplateId)
         : undefined,
       isDefault: isSet(object.isDefault) ? Boolean(object.isDefault) : false,
+      filterCriteria: Array.isArray(object?.filterCriteria)
+        ? object.filterCriteria.map((e: any) => ScanCriteria.fromJSON(e))
+        : [],
     };
   },
 
@@ -303,6 +391,13 @@ export const UpdateChallengeTimelineTemplateInput = {
     message.timelineTemplateId !== undefined &&
       (obj.timelineTemplateId = message.timelineTemplateId);
     message.isDefault !== undefined && (obj.isDefault = message.isDefault);
+    if (message.filterCriteria) {
+      obj.filterCriteria = message.filterCriteria.map((e) =>
+        e ? ScanCriteria.toJSON(e) : undefined
+      );
+    } else {
+      obj.filterCriteria = [];
+    }
     return obj;
   },
 
@@ -315,80 +410,8 @@ export const UpdateChallengeTimelineTemplateInput = {
     message.typeId = object.typeId ?? undefined;
     message.timelineTemplateId = object.timelineTemplateId ?? undefined;
     message.isDefault = object.isDefault ?? false;
-    return message;
-  },
-};
-
-function createBaseChallengeTimelineTemplateList(): ChallengeTimelineTemplateList {
-  return { challengeTimelineTemplates: [] };
-}
-
-export const ChallengeTimelineTemplateList = {
-  encode(
-    message: ChallengeTimelineTemplateList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    for (const v of message.challengeTimelineTemplates) {
-      ChallengeTimelineTemplate.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): ChallengeTimelineTemplateList {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseChallengeTimelineTemplateList();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.challengeTimelineTemplates.push(
-            ChallengeTimelineTemplate.decode(reader, reader.uint32())
-          );
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): ChallengeTimelineTemplateList {
-    return {
-      challengeTimelineTemplates: Array.isArray(
-        object?.challengeTimelineTemplates
-      )
-        ? object.challengeTimelineTemplates.map((e: any) =>
-            ChallengeTimelineTemplate.fromJSON(e)
-          )
-        : [],
-    };
-  },
-
-  toJSON(message: ChallengeTimelineTemplateList): unknown {
-    const obj: any = {};
-    if (message.challengeTimelineTemplates) {
-      obj.challengeTimelineTemplates = message.challengeTimelineTemplates.map(
-        (e) => (e ? ChallengeTimelineTemplate.toJSON(e) : undefined)
-      );
-    } else {
-      obj.challengeTimelineTemplates = [];
-    }
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<ChallengeTimelineTemplateList>, I>>(
-    object: I
-  ): ChallengeTimelineTemplateList {
-    const message = createBaseChallengeTimelineTemplateList();
-    message.challengeTimelineTemplates =
-      object.challengeTimelineTemplates?.map((e) =>
-        ChallengeTimelineTemplate.fromPartial(e)
-      ) || [];
+    message.filterCriteria =
+      object.filterCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
     return message;
   },
 };

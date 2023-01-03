@@ -10,6 +10,10 @@ export interface Phase {
   duration: number;
 }
 
+export interface PhaseList {
+  phases: Phase[];
+}
+
 export interface CreatePhaseInput {
   name: string;
   description?: string | undefined;
@@ -23,10 +27,6 @@ export interface UpdatePhaseInput {
   description?: string | undefined;
   isOpen: boolean;
   duration: number;
-}
-
-export interface PhaseList {
-  phases: Phase[];
 }
 
 function createBasePhase(): Phase {
@@ -120,6 +120,66 @@ export const Phase = {
     message.description = object.description ?? undefined;
     message.isOpen = object.isOpen ?? false;
     message.duration = object.duration ?? 0;
+    return message;
+  },
+};
+
+function createBasePhaseList(): PhaseList {
+  return { phases: [] };
+}
+
+export const PhaseList = {
+  encode(
+    message: PhaseList,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    for (const v of message.phases) {
+      Phase.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): PhaseList {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBasePhaseList();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.phases.push(Phase.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): PhaseList {
+    return {
+      phases: Array.isArray(object?.phases)
+        ? object.phases.map((e: any) => Phase.fromJSON(e))
+        : [],
+    };
+  },
+
+  toJSON(message: PhaseList): unknown {
+    const obj: any = {};
+    if (message.phases) {
+      obj.phases = message.phases.map((e) => (e ? Phase.toJSON(e) : undefined));
+    } else {
+      obj.phases = [];
+    }
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<PhaseList>, I>>(
+    object: I
+  ): PhaseList {
+    const message = createBasePhaseList();
+    message.phases = object.phases?.map((e) => Phase.fromPartial(e)) || [];
     return message;
   },
 };
@@ -305,66 +365,6 @@ export const UpdatePhaseInput = {
     message.description = object.description ?? undefined;
     message.isOpen = object.isOpen ?? false;
     message.duration = object.duration ?? 0;
-    return message;
-  },
-};
-
-function createBasePhaseList(): PhaseList {
-  return { phases: [] };
-}
-
-export const PhaseList = {
-  encode(
-    message: PhaseList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    for (const v of message.phases) {
-      Phase.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): PhaseList {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBasePhaseList();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.phases.push(Phase.decode(reader, reader.uint32()));
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): PhaseList {
-    return {
-      phases: Array.isArray(object?.phases)
-        ? object.phases.map((e: any) => Phase.fromJSON(e))
-        : [],
-    };
-  },
-
-  toJSON(message: PhaseList): unknown {
-    const obj: any = {};
-    if (message.phases) {
-      obj.phases = message.phases.map((e) => (e ? Phase.toJSON(e) : undefined));
-    } else {
-      obj.phases = [];
-    }
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<PhaseList>, I>>(
-    object: I
-  ): PhaseList {
-    const message = createBasePhaseList();
-    message.phases = object.phases?.map((e) => Phase.fromPartial(e)) || [];
     return message;
   },
 };

@@ -10,6 +10,10 @@ export interface ChallengeType {
   abbreviation: string;
 }
 
+export interface ChallengeTypeList {
+  challengeTypes: ChallengeType[];
+}
+
 export interface CreateChallengeTypeInput {
   name: string;
   description?: string | undefined;
@@ -25,10 +29,6 @@ export interface UpdateChallengeTypeInput {
   isActive: boolean;
   isTask: boolean;
   abbreviation: string;
-}
-
-export interface ChallengeTypeList {
-  challengeTypes: ChallengeType[];
 }
 
 function createBaseChallengeType(): ChallengeType {
@@ -139,6 +139,71 @@ export const ChallengeType = {
     message.isActive = object.isActive ?? false;
     message.isTask = object.isTask ?? false;
     message.abbreviation = object.abbreviation ?? "";
+    return message;
+  },
+};
+
+function createBaseChallengeTypeList(): ChallengeTypeList {
+  return { challengeTypes: [] };
+}
+
+export const ChallengeTypeList = {
+  encode(
+    message: ChallengeTypeList,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    for (const v of message.challengeTypes) {
+      ChallengeType.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): ChallengeTypeList {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseChallengeTypeList();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.challengeTypes.push(
+            ChallengeType.decode(reader, reader.uint32())
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ChallengeTypeList {
+    return {
+      challengeTypes: Array.isArray(object?.challengeTypes)
+        ? object.challengeTypes.map((e: any) => ChallengeType.fromJSON(e))
+        : [],
+    };
+  },
+
+  toJSON(message: ChallengeTypeList): unknown {
+    const obj: any = {};
+    if (message.challengeTypes) {
+      obj.challengeTypes = message.challengeTypes.map((e) =>
+        e ? ChallengeType.toJSON(e) : undefined
+      );
+    } else {
+      obj.challengeTypes = [];
+    }
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<ChallengeTypeList>, I>>(
+    object: I
+  ): ChallengeTypeList {
+    const message = createBaseChallengeTypeList();
+    message.challengeTypes =
+      object.challengeTypes?.map((e) => ChallengeType.fromPartial(e)) || [];
     return message;
   },
 };
@@ -359,71 +424,6 @@ export const UpdateChallengeTypeInput = {
     message.isActive = object.isActive ?? false;
     message.isTask = object.isTask ?? false;
     message.abbreviation = object.abbreviation ?? "";
-    return message;
-  },
-};
-
-function createBaseChallengeTypeList(): ChallengeTypeList {
-  return { challengeTypes: [] };
-}
-
-export const ChallengeTypeList = {
-  encode(
-    message: ChallengeTypeList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    for (const v of message.challengeTypes) {
-      ChallengeType.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): ChallengeTypeList {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseChallengeTypeList();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.challengeTypes.push(
-            ChallengeType.decode(reader, reader.uint32())
-          );
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): ChallengeTypeList {
-    return {
-      challengeTypes: Array.isArray(object?.challengeTypes)
-        ? object.challengeTypes.map((e: any) => ChallengeType.fromJSON(e))
-        : [],
-    };
-  },
-
-  toJSON(message: ChallengeTypeList): unknown {
-    const obj: any = {};
-    if (message.challengeTypes) {
-      obj.challengeTypes = message.challengeTypes.map((e) =>
-        e ? ChallengeType.toJSON(e) : undefined
-      );
-    } else {
-      obj.challengeTypes = [];
-    }
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<ChallengeTypeList>, I>>(
-    object: I
-  ): ChallengeTypeList {
-    const message = createBaseChallengeTypeList();
-    message.challengeTypes =
-      object.challengeTypes?.map((e) => ChallengeType.fromPartial(e)) || [];
     return message;
   },
 };
