@@ -640,7 +640,7 @@ export interface Challenge_PrizeSet_Prize {
 }
 
 export interface ChallengeList {
-  challenges: Challenge[];
+  items: Challenge[];
 }
 
 export interface CreateChallengeInput {
@@ -2230,7 +2230,7 @@ export const Challenge_PrizeSet_Prize = {
 };
 
 function createBaseChallengeList(): ChallengeList {
-  return { challenges: [] };
+  return { items: [] };
 }
 
 export const ChallengeList = {
@@ -2238,7 +2238,7 @@ export const ChallengeList = {
     message: ChallengeList,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    for (const v of message.challenges) {
+    for (const v of message.items) {
       Challenge.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
@@ -2252,7 +2252,7 @@ export const ChallengeList = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.challenges.push(Challenge.decode(reader, reader.uint32()));
+          message.items.push(Challenge.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -2264,20 +2264,20 @@ export const ChallengeList = {
 
   fromJSON(object: any): ChallengeList {
     return {
-      challenges: Array.isArray(object?.challenges)
-        ? object.challenges.map((e: any) => Challenge.fromJSON(e))
+      items: Array.isArray(object?.items)
+        ? object.items.map((e: any) => Challenge.fromJSON(e))
         : [],
     };
   },
 
   toJSON(message: ChallengeList): unknown {
     const obj: any = {};
-    if (message.challenges) {
-      obj.challenges = message.challenges.map((e) =>
+    if (message.items) {
+      obj.items = message.items.map((e) =>
         e ? Challenge.toJSON(e) : undefined
       );
     } else {
-      obj.challenges = [];
+      obj.items = [];
     }
     return obj;
   },
@@ -2286,8 +2286,7 @@ export const ChallengeList = {
     object: I
   ): ChallengeList {
     const message = createBaseChallengeList();
-    message.challenges =
-      object.challenges?.map((e) => Challenge.fromPartial(e)) || [];
+    message.items = object.items?.map((e) => Challenge.fromPartial(e)) || [];
     return message;
   },
 };

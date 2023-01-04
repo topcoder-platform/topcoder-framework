@@ -17,7 +17,7 @@ export interface TimelineTemplate {
 }
 
 export interface TimelineTemplateList {
-  timelineTemplates: TimelineTemplate[];
+  items: TimelineTemplate[];
 }
 
 export interface CreateTimelineTemplateInput {
@@ -227,7 +227,7 @@ export const TimelineTemplate = {
 };
 
 function createBaseTimelineTemplateList(): TimelineTemplateList {
-  return { timelineTemplates: [] };
+  return { items: [] };
 }
 
 export const TimelineTemplateList = {
@@ -235,7 +235,7 @@ export const TimelineTemplateList = {
     message: TimelineTemplateList,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    for (const v of message.timelineTemplates) {
+    for (const v of message.items) {
       TimelineTemplate.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
@@ -252,9 +252,7 @@ export const TimelineTemplateList = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.timelineTemplates.push(
-            TimelineTemplate.decode(reader, reader.uint32())
-          );
+          message.items.push(TimelineTemplate.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -266,20 +264,20 @@ export const TimelineTemplateList = {
 
   fromJSON(object: any): TimelineTemplateList {
     return {
-      timelineTemplates: Array.isArray(object?.timelineTemplates)
-        ? object.timelineTemplates.map((e: any) => TimelineTemplate.fromJSON(e))
+      items: Array.isArray(object?.items)
+        ? object.items.map((e: any) => TimelineTemplate.fromJSON(e))
         : [],
     };
   },
 
   toJSON(message: TimelineTemplateList): unknown {
     const obj: any = {};
-    if (message.timelineTemplates) {
-      obj.timelineTemplates = message.timelineTemplates.map((e) =>
+    if (message.items) {
+      obj.items = message.items.map((e) =>
         e ? TimelineTemplate.toJSON(e) : undefined
       );
     } else {
-      obj.timelineTemplates = [];
+      obj.items = [];
     }
     return obj;
   },
@@ -288,9 +286,8 @@ export const TimelineTemplateList = {
     object: I
   ): TimelineTemplateList {
     const message = createBaseTimelineTemplateList();
-    message.timelineTemplates =
-      object.timelineTemplates?.map((e) => TimelineTemplate.fromPartial(e)) ||
-      [];
+    message.items =
+      object.items?.map((e) => TimelineTemplate.fromPartial(e)) || [];
     return message;
   },
 };

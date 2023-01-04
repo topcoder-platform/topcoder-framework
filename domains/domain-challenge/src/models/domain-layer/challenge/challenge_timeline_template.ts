@@ -11,7 +11,7 @@ export interface ChallengeTimelineTemplate {
 }
 
 export interface ChallengeTimelineTemplateList {
-  challengeTimelineTemplates: ChallengeTimelineTemplate[];
+  items: ChallengeTimelineTemplate[];
 }
 
 export interface CreateChallengeTimelineTemplateInput {
@@ -136,7 +136,7 @@ export const ChallengeTimelineTemplate = {
 };
 
 function createBaseChallengeTimelineTemplateList(): ChallengeTimelineTemplateList {
-  return { challengeTimelineTemplates: [] };
+  return { items: [] };
 }
 
 export const ChallengeTimelineTemplateList = {
@@ -144,7 +144,7 @@ export const ChallengeTimelineTemplateList = {
     message: ChallengeTimelineTemplateList,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    for (const v of message.challengeTimelineTemplates) {
+    for (const v of message.items) {
       ChallengeTimelineTemplate.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
@@ -161,7 +161,7 @@ export const ChallengeTimelineTemplateList = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.challengeTimelineTemplates.push(
+          message.items.push(
             ChallengeTimelineTemplate.decode(reader, reader.uint32())
           );
           break;
@@ -175,24 +175,20 @@ export const ChallengeTimelineTemplateList = {
 
   fromJSON(object: any): ChallengeTimelineTemplateList {
     return {
-      challengeTimelineTemplates: Array.isArray(
-        object?.challengeTimelineTemplates
-      )
-        ? object.challengeTimelineTemplates.map((e: any) =>
-            ChallengeTimelineTemplate.fromJSON(e)
-          )
+      items: Array.isArray(object?.items)
+        ? object.items.map((e: any) => ChallengeTimelineTemplate.fromJSON(e))
         : [],
     };
   },
 
   toJSON(message: ChallengeTimelineTemplateList): unknown {
     const obj: any = {};
-    if (message.challengeTimelineTemplates) {
-      obj.challengeTimelineTemplates = message.challengeTimelineTemplates.map(
-        (e) => (e ? ChallengeTimelineTemplate.toJSON(e) : undefined)
+    if (message.items) {
+      obj.items = message.items.map((e) =>
+        e ? ChallengeTimelineTemplate.toJSON(e) : undefined
       );
     } else {
-      obj.challengeTimelineTemplates = [];
+      obj.items = [];
     }
     return obj;
   },
@@ -201,10 +197,8 @@ export const ChallengeTimelineTemplateList = {
     object: I
   ): ChallengeTimelineTemplateList {
     const message = createBaseChallengeTimelineTemplateList();
-    message.challengeTimelineTemplates =
-      object.challengeTimelineTemplates?.map((e) =>
-        ChallengeTimelineTemplate.fromPartial(e)
-      ) || [];
+    message.items =
+      object.items?.map((e) => ChallengeTimelineTemplate.fromPartial(e)) || [];
     return message;
   },
 };
