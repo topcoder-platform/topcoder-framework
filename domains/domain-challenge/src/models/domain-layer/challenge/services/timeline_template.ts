@@ -67,9 +67,9 @@ export const TimelineTemplateService = {
       Buffer.from(UpdateTimelineTemplateInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) =>
       UpdateTimelineTemplateInput.decode(value),
-    responseSerialize: (value: TimelineTemplate) =>
-      Buffer.from(TimelineTemplate.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => TimelineTemplate.decode(value),
+    responseSerialize: (value: TimelineTemplateList) =>
+      Buffer.from(TimelineTemplateList.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => TimelineTemplateList.decode(value),
   },
   delete: {
     path: "/topcoder.domain.service.timeline_template.TimelineTemplate/Delete",
@@ -88,7 +88,7 @@ export interface TimelineTemplateServer extends UntypedServiceImplementation {
   scan: handleUnaryCall<ScanRequest, ScanResult>;
   lookup: handleUnaryCall<LookupCriteria, TimelineTemplate>;
   create: handleUnaryCall<CreateTimelineTemplateInput, TimelineTemplate>;
-  update: handleUnaryCall<UpdateTimelineTemplateInput, TimelineTemplate>;
+  update: handleUnaryCall<UpdateTimelineTemplateInput, TimelineTemplateList>;
   delete: handleUnaryCall<LookupCriteria, TimelineTemplateList>;
 }
 
@@ -140,18 +140,27 @@ export interface TimelineTemplateClient extends Client {
   ): ClientUnaryCall;
   update(
     request: UpdateTimelineTemplateInput,
-    callback: (error: ServiceError | null, response: TimelineTemplate) => void
+    callback: (
+      error: ServiceError | null,
+      response: TimelineTemplateList
+    ) => void
   ): ClientUnaryCall;
   update(
     request: UpdateTimelineTemplateInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: TimelineTemplate) => void
+    callback: (
+      error: ServiceError | null,
+      response: TimelineTemplateList
+    ) => void
   ): ClientUnaryCall;
   update(
     request: UpdateTimelineTemplateInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: TimelineTemplate) => void
+    callback: (
+      error: ServiceError | null,
+      response: TimelineTemplateList
+    ) => void
   ): ClientUnaryCall;
   delete(
     request: LookupCriteria,
