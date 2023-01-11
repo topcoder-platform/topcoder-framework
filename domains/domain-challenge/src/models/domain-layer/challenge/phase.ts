@@ -113,6 +113,10 @@ export const Phase = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<Phase>, I>>(base?: I): Phase {
+    return Phase.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<Phase>, I>>(object: I): Phase {
     const message = createBasePhase();
     message.id = object.id ?? "";
@@ -173,6 +177,10 @@ export const PhaseList = {
       obj.items = [];
     }
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<PhaseList>, I>>(base?: I): PhaseList {
+    return PhaseList.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<PhaseList>, I>>(
@@ -255,6 +263,12 @@ export const CreatePhaseInput = {
     message.duration !== undefined &&
       (obj.duration = Math.round(message.duration));
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<CreatePhaseInput>, I>>(
+    base?: I
+  ): CreatePhaseInput {
+    return CreatePhaseInput.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<CreatePhaseInput>, I>>(
@@ -354,6 +368,12 @@ export const UpdatePhaseInput = {
     message.duration !== undefined &&
       (obj.duration = Math.round(message.duration));
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<UpdatePhaseInput>, I>>(
+    base?: I
+  ): UpdatePhaseInput {
+    return UpdatePhaseInput.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<UpdatePhaseInput>, I>>(
