@@ -13,3 +13,5 @@ yarn-error.log
 verdaccio/storage
 verdaccio/htpasswd
 verdaccio/storage/
+.yarnrc.yml
+.yarn
