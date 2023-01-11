@@ -120,6 +120,10 @@ export const Attachment = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<Attachment>, I>>(base?: I): Attachment {
+    return Attachment.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<Attachment>, I>>(
     object: I
   ): Attachment {
@@ -187,6 +191,12 @@ export const AttachmentList = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<AttachmentList>, I>>(
+    base?: I
+  ): AttachmentList {
+    return AttachmentList.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<AttachmentList>, I>>(
     object: I
   ): AttachmentList {
@@ -247,6 +257,12 @@ export const CreateAttachmentInput = {
         ? Attachment.toJSON(message.attachment)
         : undefined);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<CreateAttachmentInput>, I>>(
+    base?: I
+  ): CreateAttachmentInput {
+    return CreateAttachmentInput.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<CreateAttachmentInput>, I>>(
@@ -312,6 +328,12 @@ export const UpdateAttachmentInput = {
         ? Attachment.toJSON(message.attachment)
         : undefined);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<UpdateAttachmentInput>, I>>(
+    base?: I
+  ): UpdateAttachmentInput {
+    return UpdateAttachmentInput.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<UpdateAttachmentInput>, I>>(

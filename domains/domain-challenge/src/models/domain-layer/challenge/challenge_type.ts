@@ -129,6 +129,12 @@ export const ChallengeType = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<ChallengeType>, I>>(
+    base?: I
+  ): ChallengeType {
+    return ChallengeType.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<ChallengeType>, I>>(
     object: I
   ): ChallengeType {
@@ -194,6 +200,12 @@ export const ChallengeTypeList = {
       obj.items = [];
     }
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ChallengeTypeList>, I>>(
+    base?: I
+  ): ChallengeTypeList {
+    return ChallengeTypeList.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<ChallengeTypeList>, I>>(
@@ -296,6 +308,12 @@ export const CreateChallengeTypeInput = {
     message.abbreviation !== undefined &&
       (obj.abbreviation = message.abbreviation);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<CreateChallengeTypeInput>, I>>(
+    base?: I
+  ): CreateChallengeTypeInput {
+    return CreateChallengeTypeInput.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<CreateChallengeTypeInput>, I>>(
@@ -410,6 +428,12 @@ export const UpdateChallengeTypeInput = {
     message.abbreviation !== undefined &&
       (obj.abbreviation = message.abbreviation);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<UpdateChallengeTypeInput>, I>>(
+    base?: I
+  ): UpdateChallengeTypeInput {
+    return UpdateChallengeTypeInput.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<UpdateChallengeTypeInput>, I>>(

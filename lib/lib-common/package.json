@@ -20,12 +20,12 @@
   "scripty": {
     "path": "../../scripts/packages"
   },
-  "author": "Rakib Ansary <rakibansary.saikot@wipro.com>",
+  "author": "Rakib Ansary <rakibansary@topcoder.com>",
   "license": "ISC",
   "dependencies": {
     "@grpc/grpc-js": "^1.8.0",
     "rimraf": "^3.0.2",
-    "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.4",
+    "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.6",
     "tslib": "^2.4.1"
   },
   "devDependencies": {
@@ -41,6 +41,5 @@
   },
   "files": [
     "dist-*"
-  ],
-  "gitHead": "09f04973d56ff16f1c92094e8e3a514da5dfa579"
+  ]
 }

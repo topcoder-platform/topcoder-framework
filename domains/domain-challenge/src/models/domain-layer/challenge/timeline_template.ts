@@ -105,6 +105,12 @@ export const TimelineTemplatePhase = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<TimelineTemplatePhase>, I>>(
+    base?: I
+  ): TimelineTemplatePhase {
+    return TimelineTemplatePhase.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<TimelineTemplatePhase>, I>>(
     object: I
   ): TimelineTemplatePhase {
@@ -212,6 +218,12 @@ export const TimelineTemplate = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<TimelineTemplate>, I>>(
+    base?: I
+  ): TimelineTemplate {
+    return TimelineTemplate.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<TimelineTemplate>, I>>(
     object: I
   ): TimelineTemplate {
@@ -280,6 +292,12 @@ export const TimelineTemplateList = {
       obj.items = [];
     }
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<TimelineTemplateList>, I>>(
+    base?: I
+  ): TimelineTemplateList {
+    return TimelineTemplateList.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<TimelineTemplateList>, I>>(
@@ -375,6 +393,12 @@ export const CreateTimelineTemplateInput = {
       obj.phases = [];
     }
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<CreateTimelineTemplateInput>, I>>(
+    base?: I
+  ): CreateTimelineTemplateInput {
+    return CreateTimelineTemplateInput.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<CreateTimelineTemplateInput>, I>>(
@@ -487,6 +511,12 @@ export const UpdateTimelineTemplateInput = {
       obj.phases = [];
     }
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<UpdateTimelineTemplateInput>, I>>(
+    base?: I
+  ): UpdateTimelineTemplateInput {
+    return UpdateTimelineTemplateInput.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<UpdateTimelineTemplateInput>, I>>(

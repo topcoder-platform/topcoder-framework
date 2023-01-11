@@ -11,7 +11,7 @@
   "scripty": {
     "path": "../../scripts/packages"
   },
-  "author": "Rakib Ansary <rakibansary.saikot@wipro.com>",
+  "author": "Rakib Ansary <rakibansary@topcoder.com>",
   "license": "ISC",
   "dependencies": {
     "@topcoder-framework/lib-common": "^0.2.1",
