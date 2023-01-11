@@ -20,7 +20,7 @@
   "scripty": {
     "path": "../../scripts/packages"
   },
-  "author": "Rakib Ansary <rakibansary.saikot@wipro.com>",
+  "author": "Rakib Ansary <rakibansary@topcoder.com>",
   "license": "ISC",
   "dependencies": {
     "@grpc/grpc-js": "^1.8.0",

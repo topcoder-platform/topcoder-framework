@@ -16,7 +16,7 @@
     "path": "../../scripts/packages",
     "format": "scripty"
   },
-  "author": "Rakib Ansary <rakibansary.saikot@wipro.com>",
+  "author": "Rakib Ansary <rakibansary@topcoder.com>",
   "license": "ISC",
   "volta": {
     "node": "18.12.1",
