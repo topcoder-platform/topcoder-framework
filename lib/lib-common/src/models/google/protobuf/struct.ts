@@ -149,6 +149,10 @@ export const Struct = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<Struct>, I>>(base?: I): Struct {
+    return Struct.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<Struct>, I>>(object: I): Struct {
     const message = createBaseStruct();
     message.fields = Object.entries(object.fields ?? {}).reduce<{
@@ -235,6 +239,12 @@ export const Struct_FieldsEntry = {
     message.key !== undefined && (obj.key = message.key);
     message.value !== undefined && (obj.value = message.value);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Struct_FieldsEntry>, I>>(
+    base?: I
+  ): Struct_FieldsEntry {
+    return Struct_FieldsEntry.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<Struct_FieldsEntry>, I>>(
@@ -360,6 +370,10 @@ export const Value = {
     message.kind?.$case === "listValue" &&
       (obj.listValue = message.kind?.listValue);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Value>, I>>(base?: I): Value {
+    return Value.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<Value>, I>>(object: I): Value {
@@ -508,6 +522,10 @@ export const ListValue = {
       obj.values = [];
     }
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ListValue>, I>>(base?: I): ListValue {
+    return ListValue.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<ListValue>, I>>(

@@ -1,6 +1,6 @@
 {
   "name": "@topcoder-framework/domain-challenge",
-  "version": "0.2.1",
+  "version": "0.4.0",
   "description": "",
   "main": "./dist-cjs/index.js",
   "types": "./dist-es/index.d.ts",
@@ -20,12 +20,12 @@
   "scripty": {
     "path": "../../scripts/packages"
   },
-  "author": "Rakib Ansary <rakibansary.saikot@wipro.com>",
+  "author": "Rakib Ansary <rakibansary@topcoder.com>",
   "license": "ISC",
   "dependencies": {
     "@grpc/grpc-js": "^1.8.0",
-    "@topcoder-framework/lib-common": "^0.2.1",
-    "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.4",
+    "@topcoder-framework/lib-common": "^0.4.0",
+    "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.7",
     "tslib": "^2.4.1"
   },
   "devDependencies": {
@@ -38,10 +38,10 @@
   "volta": {
     "node": "18.12.1",
     "typescript": "4.9.4",
-    "npm": "9.2.0"
+    "npm": "9.2.0",
+    "yarn": "1.22.19"
   },
   "files": [
     "dist-*"
-  ],
-  "gitHead": "09f04973d56ff16f1c92094e8e3a514da5dfa579"
+  ]
 }

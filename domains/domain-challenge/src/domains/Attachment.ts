@@ -36,7 +36,7 @@ export class AttachmentDomain {
     param: UpdateAttachmentInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<UpdateAttachmentInput, Metadata, Attachment>(
+    return promisify<UpdateAttachmentInput, Metadata, AttachmentList>(
       this.client.update.bind(this.client)
     )(param, metadata);
   }

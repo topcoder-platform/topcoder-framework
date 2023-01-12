@@ -59,7 +59,7 @@ export class PhaseDomain {
     param: UpdatePhaseInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<UpdatePhaseInput, Metadata, Phase>(
+    return promisify<UpdatePhaseInput, Metadata, PhaseList>(
       this.client.update.bind(this.client)
     )(param, metadata);
   }
