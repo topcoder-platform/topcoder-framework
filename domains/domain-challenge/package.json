@@ -1,6 +1,6 @@
 {
   "name": "@topcoder-framework/domain-challenge",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "",
   "main": "./dist-cjs/index.js",
   "types": "./dist-es/index.d.ts",
@@ -24,7 +24,7 @@
   "license": "ISC",
   "dependencies": {
     "@grpc/grpc-js": "^1.8.0",
-    "@topcoder-framework/lib-common": "^0.3.0",
+    "@topcoder-framework/lib-common": "^0.4.0",
     "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.7",
     "tslib": "^2.4.1"
   },
