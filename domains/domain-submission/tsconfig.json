@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": "src",
+    "outDir": "dist-cjs",
+    "composite": true
+  },
+  "include": ["typings/global.d.ts", "src"],
+  "exclude": ["node_modules", "src/models", "dist-cjs", "dist-es"],
+  "references": [
+    {
+      "path": "src/models"
+    }
+  ]
+}
