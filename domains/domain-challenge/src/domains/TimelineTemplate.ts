@@ -60,9 +60,11 @@ export class TimelineTemplateDomain {
     param: UpdateTimelineTemplateInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<UpdateTimelineTemplateInput, Metadata, TimelineTemplate>(
-      this.client.update.bind(this.client)
-    )(param, metadata);
+    return promisify<
+      UpdateTimelineTemplateInput,
+      Metadata,
+      TimelineTemplateList
+    >(this.client.update.bind(this.client))(param, metadata);
   }
 
   public async delete(

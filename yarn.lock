@@ -5753,9 +5753,9 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-"topcoder-interface@github:topcoder-platform/plat-interface-definition#v0.0.6":
+"topcoder-interface@github:topcoder-platform/plat-interface-definition#v0.0.7":
   version "1.0.0"
-  resolved "https://codeload.github.com/topcoder-platform/plat-interface-definition/tar.gz/f8f52b7022ad412ce6c312cd5f8ee40baf7499ea"
+  resolved "https://codeload.github.com/topcoder-platform/plat-interface-definition/tar.gz/6c0ef6bb00fcb599eb3e606502e386e15971d43c"
 
 tr46@~0.0.3:
   version "0.0.3"

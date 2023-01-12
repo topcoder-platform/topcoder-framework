@@ -278,6 +278,12 @@ export const ScanCriteria = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<ScanCriteria>, I>>(
+    base?: I
+  ): ScanCriteria {
+    return ScanCriteria.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<ScanCriteria>, I>>(
     object: I
   ): ScanCriteria {
@@ -352,6 +358,10 @@ export const ScanRequest = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<ScanRequest>, I>>(base?: I): ScanRequest {
+    return ScanRequest.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<ScanRequest>, I>>(
     object: I
   ): ScanRequest {
@@ -422,6 +432,10 @@ export const ScanResult = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<ScanResult>, I>>(base?: I): ScanResult {
+    return ScanResult.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<ScanResult>, I>>(
     object: I
   ): ScanResult {
@@ -488,6 +502,12 @@ export const LookupCriteria = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<LookupCriteria>, I>>(
+    base?: I
+  ): LookupCriteria {
+    return LookupCriteria.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<LookupCriteria>, I>>(
     object: I
   ): LookupCriteria {
@@ -552,6 +572,12 @@ export const GoogleProtobufTypesPlaceholder = {
     message.timestamp !== undefined &&
       (obj.timestamp = message.timestamp.toISOString());
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<GoogleProtobufTypesPlaceholder>, I>>(
+    base?: I
+  ): GoogleProtobufTypesPlaceholder {
+    return GoogleProtobufTypesPlaceholder.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<GoogleProtobufTypesPlaceholder>, I>>(
