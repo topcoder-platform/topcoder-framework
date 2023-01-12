@@ -1,5 +1,4 @@
 /* eslint-disable */
-import { Timestamp } from "@topcoder-framework/lib-common";
 import _m0 from "protobufjs/minimal";
 
 export enum Track {
@@ -343,8 +342,8 @@ export interface Challenge {
   prizeSets: Challenge_PrizeSet[];
   tags: string[];
   projectId?: number | undefined;
-  startDate?: Date | undefined;
-  endDate?: Date | undefined;
+  startDate?: number | undefined;
+  endDate?: number | undefined;
   status: Challenge_ChallengeStatus;
   attachments: string[];
   groups: string[];
@@ -352,8 +351,8 @@ export interface Challenge {
   discussions: Challenge_Discussion[];
   createdBy: string;
   updatedBy?: string | undefined;
-  created?: Date;
-  updated?: Date | undefined;
+  created: number;
+  updated?: number | undefined;
   overview?: Challenge_Overview;
 }
 
@@ -517,7 +516,7 @@ export interface Challenge_Discussion {
   name: string;
   type: Challenge_Discussion_DiscussionType;
   provider: string;
-  url: string;
+  url?: string | undefined;
 }
 
 export enum Challenge_Discussion_DiscussionType {
@@ -559,14 +558,14 @@ export function challenge_Discussion_DiscussionTypeToJSON(
 
 export interface Challenge_Phase {
   duration: number;
-  scheduledStartDate?: Date | undefined;
-  scheduledEndDate?: Date | undefined;
-  actualStartDate?: Date | undefined;
-  actualEndDate?: Date | undefined;
+  scheduledStartDate?: string | undefined;
+  scheduledEndDate?: string | undefined;
+  actualStartDate?: string | undefined;
+  actualEndDate?: string | undefined;
   name: PhaseName;
   phaseId: string;
   id: string;
-  open: boolean;
+  isOpen: boolean;
 }
 
 export interface Challenge_Winner {
@@ -583,7 +582,7 @@ export interface Challenge_Task {
 export interface Challenge_PrizeSet {
   /** Placement, Copilot, Reviewer */
   type: string;
-  description: string;
+  description?: string | undefined;
   prizes: Challenge_PrizeSet_Prize[];
 }
 
@@ -618,8 +617,8 @@ export interface CreateChallengeInput {
   prizeSets: Challenge_PrizeSet[];
   tags: string[];
   projectId?: number | undefined;
-  startDate?: Date | undefined;
-  endDate?: Date | undefined;
+  startDate?: number | undefined;
+  endDate?: number | undefined;
   status: Challenge_ChallengeStatus;
   attachments: string[];
   groups: string[];
@@ -660,7 +659,7 @@ function createBaseChallenge(): Challenge {
     discussions: [],
     createdBy: "",
     updatedBy: undefined,
-    created: undefined,
+    created: 0,
     updated: undefined,
     overview: undefined,
   };
@@ -735,16 +734,10 @@ export const Challenge = {
       writer.uint32(152).int32(message.projectId);
     }
     if (message.startDate !== undefined) {
-      Timestamp.encode(
-        toTimestamp(message.startDate),
-        writer.uint32(162).fork()
-      ).ldelim();
+      writer.uint32(160).int32(message.startDate);
     }
     if (message.endDate !== undefined) {
-      Timestamp.encode(
-        toTimestamp(message.endDate),
-        writer.uint32(170).fork()
-      ).ldelim();
+      writer.uint32(168).int32(message.endDate);
     }
     if (message.status !== 0) {
       writer.uint32(176).int32(message.status);
@@ -767,17 +760,11 @@ export const Challenge = {
     if (message.updatedBy !== undefined) {
       writer.uint32(226).string(message.updatedBy);
     }
-    if (message.created !== undefined) {
-      Timestamp.encode(
-        toTimestamp(message.created),
-        writer.uint32(234).fork()
-      ).ldelim();
+    if (message.created !== 0) {
+      writer.uint32(232).int32(message.created);
     }
     if (message.updated !== undefined) {
-      Timestamp.encode(
-        toTimestamp(message.updated),
-        writer.uint32(242).fork()
-      ).ldelim();
+      writer.uint32(240).int32(message.updated);
     }
     if (message.overview !== undefined) {
       Challenge_Overview.encode(
@@ -857,14 +844,10 @@ export const Challenge = {
           message.projectId = reader.int32();
           break;
         case 20:
-          message.startDate = fromTimestamp(
-            Timestamp.decode(reader, reader.uint32())
-          );
+          message.startDate = reader.int32();
           break;
         case 21:
-          message.endDate = fromTimestamp(
-            Timestamp.decode(reader, reader.uint32())
-          );
+          message.endDate = reader.int32();
           break;
         case 22:
           message.status = reader.int32() as any;
@@ -892,14 +875,10 @@ export const Challenge = {
           message.updatedBy = reader.string();
           break;
         case 29:
-          message.created = fromTimestamp(
-            Timestamp.decode(reader, reader.uint32())
-          );
+          message.created = reader.int32();
           break;
         case 30:
-          message.updated = fromTimestamp(
-            Timestamp.decode(reader, reader.uint32())
-          );
+          message.updated = reader.int32();
           break;
         case 31:
           message.overview = Challenge_Overview.decode(reader, reader.uint32());
@@ -957,12 +936,8 @@ export const Challenge = {
         ? object.tags.map((e: any) => String(e))
         : [],
       projectId: isSet(object.projectId) ? Number(object.projectId) : undefined,
-      startDate: isSet(object.startDate)
-        ? fromJsonTimestamp(object.startDate)
-        : undefined,
-      endDate: isSet(object.endDate)
-        ? fromJsonTimestamp(object.endDate)
-        : undefined,
+      startDate: isSet(object.startDate) ? Number(object.startDate) : undefined,
+      endDate: isSet(object.endDate) ? Number(object.endDate) : undefined,
       status: isSet(object.status)
         ? challenge_ChallengeStatusFromJSON(object.status)
         : 0,
@@ -980,12 +955,8 @@ export const Challenge = {
         : [],
       createdBy: isSet(object.createdBy) ? String(object.createdBy) : "",
       updatedBy: isSet(object.updatedBy) ? String(object.updatedBy) : undefined,
-      created: isSet(object.created)
-        ? fromJsonTimestamp(object.created)
-        : undefined,
-      updated: isSet(object.updated)
-        ? fromJsonTimestamp(object.updated)
-        : undefined,
+      created: isSet(object.created) ? Number(object.created) : 0,
+      updated: isSet(object.updated) ? Number(object.updated) : undefined,
       overview: isSet(object.overview)
         ? Challenge_Overview.fromJSON(object.overview)
         : undefined,
@@ -1063,9 +1034,9 @@ export const Challenge = {
     message.projectId !== undefined &&
       (obj.projectId = Math.round(message.projectId));
     message.startDate !== undefined &&
-      (obj.startDate = message.startDate.toISOString());
+      (obj.startDate = Math.round(message.startDate));
     message.endDate !== undefined &&
-      (obj.endDate = message.endDate.toISOString());
+      (obj.endDate = Math.round(message.endDate));
     message.status !== undefined &&
       (obj.status = challenge_ChallengeStatusToJSON(message.status));
     if (message.attachments) {
@@ -1095,9 +1066,9 @@ export const Challenge = {
     message.createdBy !== undefined && (obj.createdBy = message.createdBy);
     message.updatedBy !== undefined && (obj.updatedBy = message.updatedBy);
     message.created !== undefined &&
-      (obj.created = message.created.toISOString());
+      (obj.created = Math.round(message.created));
     message.updated !== undefined &&
-      (obj.updated = message.updated.toISOString());
+      (obj.updated = Math.round(message.updated));
     message.overview !== undefined &&
       (obj.overview = message.overview
         ? Challenge_Overview.toJSON(message.overview)
@@ -1157,7 +1128,7 @@ export const Challenge = {
       object.discussions?.map((e) => Challenge_Discussion.fromPartial(e)) || [];
     message.createdBy = object.createdBy ?? "";
     message.updatedBy = object.updatedBy ?? undefined;
-    message.created = object.created ?? undefined;
+    message.created = object.created ?? 0;
     message.updated = object.updated ?? undefined;
     message.overview =
       object.overview !== undefined && object.overview !== null
@@ -1630,7 +1601,7 @@ export const Challenge_Metadata = {
 };
 
 function createBaseChallenge_Discussion(): Challenge_Discussion {
-  return { id: undefined, name: "", type: 0, provider: "", url: "" };
+  return { id: undefined, name: "", type: 0, provider: "", url: undefined };
 }
 
 export const Challenge_Discussion = {
@@ -1650,7 +1621,7 @@ export const Challenge_Discussion = {
     if (message.provider !== "") {
       writer.uint32(34).string(message.provider);
     }
-    if (message.url !== "") {
+    if (message.url !== undefined) {
       writer.uint32(42).string(message.url);
     }
     return writer;
@@ -1697,7 +1668,7 @@ export const Challenge_Discussion = {
         ? challenge_Discussion_DiscussionTypeFromJSON(object.type)
         : 0,
       provider: isSet(object.provider) ? String(object.provider) : "",
-      url: isSet(object.url) ? String(object.url) : "",
+      url: isSet(object.url) ? String(object.url) : undefined,
     };
   },
 
@@ -1726,7 +1697,7 @@ export const Challenge_Discussion = {
     message.name = object.name ?? "";
     message.type = object.type ?? 0;
     message.provider = object.provider ?? "";
-    message.url = object.url ?? "";
+    message.url = object.url ?? undefined;
     return message;
   },
 };
@@ -1741,7 +1712,7 @@ function createBaseChallenge_Phase(): Challenge_Phase {
     name: 0,
     phaseId: "",
     id: "",
-    open: false,
+    isOpen: false,
   };
 }
 
@@ -1754,28 +1725,16 @@ export const Challenge_Phase = {
       writer.uint32(8).int32(message.duration);
     }
     if (message.scheduledStartDate !== undefined) {
-      Timestamp.encode(
-        toTimestamp(message.scheduledStartDate),
-        writer.uint32(18).fork()
-      ).ldelim();
+      writer.uint32(18).string(message.scheduledStartDate);
     }
     if (message.scheduledEndDate !== undefined) {
-      Timestamp.encode(
-        toTimestamp(message.scheduledEndDate),
-        writer.uint32(26).fork()
-      ).ldelim();
+      writer.uint32(26).string(message.scheduledEndDate);
     }
     if (message.actualStartDate !== undefined) {
-      Timestamp.encode(
-        toTimestamp(message.actualStartDate),
-        writer.uint32(34).fork()
-      ).ldelim();
+      writer.uint32(34).string(message.actualStartDate);
     }
     if (message.actualEndDate !== undefined) {
-      Timestamp.encode(
-        toTimestamp(message.actualEndDate),
-        writer.uint32(42).fork()
-      ).ldelim();
+      writer.uint32(42).string(message.actualEndDate);
     }
     if (message.name !== 0) {
       writer.uint32(48).int32(message.name);
@@ -1786,8 +1745,8 @@ export const Challenge_Phase = {
     if (message.id !== "") {
       writer.uint32(66).string(message.id);
     }
-    if (message.open === true) {
-      writer.uint32(72).bool(message.open);
+    if (message.isOpen === true) {
+      writer.uint32(72).bool(message.isOpen);
     }
     return writer;
   },
@@ -1803,24 +1762,16 @@ export const Challenge_Phase = {
           message.duration = reader.int32();
           break;
         case 2:
-          message.scheduledStartDate = fromTimestamp(
-            Timestamp.decode(reader, reader.uint32())
-          );
+          message.scheduledStartDate = reader.string();
           break;
         case 3:
-          message.scheduledEndDate = fromTimestamp(
-            Timestamp.decode(reader, reader.uint32())
-          );
+          message.scheduledEndDate = reader.string();
           break;
         case 4:
-          message.actualStartDate = fromTimestamp(
-            Timestamp.decode(reader, reader.uint32())
-          );
+          message.actualStartDate = reader.string();
           break;
         case 5:
-          message.actualEndDate = fromTimestamp(
-            Timestamp.decode(reader, reader.uint32())
-          );
+          message.actualEndDate = reader.string();
           break;
         case 6:
           message.name = reader.int32() as any;
@@ -1832,7 +1783,7 @@ export const Challenge_Phase = {
           message.id = reader.string();
           break;
         case 9:
-          message.open = reader.bool();
+          message.isOpen = reader.bool();
           break;
         default:
           reader.skipType(tag & 7);
@@ -1846,21 +1797,21 @@ export const Challenge_Phase = {
     return {
       duration: isSet(object.duration) ? Number(object.duration) : 0,
       scheduledStartDate: isSet(object.scheduledStartDate)
-        ? fromJsonTimestamp(object.scheduledStartDate)
+        ? String(object.scheduledStartDate)
         : undefined,
       scheduledEndDate: isSet(object.scheduledEndDate)
-        ? fromJsonTimestamp(object.scheduledEndDate)
+        ? String(object.scheduledEndDate)
         : undefined,
       actualStartDate: isSet(object.actualStartDate)
-        ? fromJsonTimestamp(object.actualStartDate)
+        ? String(object.actualStartDate)
         : undefined,
       actualEndDate: isSet(object.actualEndDate)
-        ? fromJsonTimestamp(object.actualEndDate)
+        ? String(object.actualEndDate)
         : undefined,
       name: isSet(object.name) ? phaseNameFromJSON(object.name) : 0,
       phaseId: isSet(object.phaseId) ? String(object.phaseId) : "",
       id: isSet(object.id) ? String(object.id) : "",
-      open: isSet(object.open) ? Boolean(object.open) : false,
+      isOpen: isSet(object.isOpen) ? Boolean(object.isOpen) : false,
     };
   },
 
@@ -1869,17 +1820,17 @@ export const Challenge_Phase = {
     message.duration !== undefined &&
       (obj.duration = Math.round(message.duration));
     message.scheduledStartDate !== undefined &&
-      (obj.scheduledStartDate = message.scheduledStartDate.toISOString());
+      (obj.scheduledStartDate = message.scheduledStartDate);
     message.scheduledEndDate !== undefined &&
-      (obj.scheduledEndDate = message.scheduledEndDate.toISOString());
+      (obj.scheduledEndDate = message.scheduledEndDate);
     message.actualStartDate !== undefined &&
-      (obj.actualStartDate = message.actualStartDate.toISOString());
+      (obj.actualStartDate = message.actualStartDate);
     message.actualEndDate !== undefined &&
-      (obj.actualEndDate = message.actualEndDate.toISOString());
+      (obj.actualEndDate = message.actualEndDate);
     message.name !== undefined && (obj.name = phaseNameToJSON(message.name));
     message.phaseId !== undefined && (obj.phaseId = message.phaseId);
     message.id !== undefined && (obj.id = message.id);
-    message.open !== undefined && (obj.open = message.open);
+    message.isOpen !== undefined && (obj.isOpen = message.isOpen);
     return obj;
   },
 
@@ -1901,7 +1852,7 @@ export const Challenge_Phase = {
     message.name = object.name ?? 0;
     message.phaseId = object.phaseId ?? "";
     message.id = object.id ?? "";
-    message.open = object.open ?? false;
+    message.isOpen = object.isOpen ?? false;
     return message;
   },
 };
@@ -2056,7 +2007,7 @@ export const Challenge_Task = {
 };
 
 function createBaseChallenge_PrizeSet(): Challenge_PrizeSet {
-  return { type: "", description: "", prizes: [] };
+  return { type: "", description: undefined, prizes: [] };
 }
 
 export const Challenge_PrizeSet = {
@@ -2067,7 +2018,7 @@ export const Challenge_PrizeSet = {
     if (message.type !== "") {
       writer.uint32(10).string(message.type);
     }
-    if (message.description !== "") {
+    if (message.description !== undefined) {
       writer.uint32(18).string(message.description);
     }
     for (const v of message.prizes) {
@@ -2105,7 +2056,9 @@ export const Challenge_PrizeSet = {
   fromJSON(object: any): Challenge_PrizeSet {
     return {
       type: isSet(object.type) ? String(object.type) : "",
-      description: isSet(object.description) ? String(object.description) : "",
+      description: isSet(object.description)
+        ? String(object.description)
+        : undefined,
       prizes: Array.isArray(object?.prizes)
         ? object.prizes.map((e: any) => Challenge_PrizeSet_Prize.fromJSON(e))
         : [],
@@ -2138,7 +2091,7 @@ export const Challenge_PrizeSet = {
   ): Challenge_PrizeSet {
     const message = createBaseChallenge_PrizeSet();
     message.type = object.type ?? "";
-    message.description = object.description ?? "";
+    message.description = object.description ?? undefined;
     message.prizes =
       object.prizes?.map((e) => Challenge_PrizeSet_Prize.fromPartial(e)) || [];
     return message;
@@ -2437,16 +2390,10 @@ export const CreateChallengeInput = {
       writer.uint32(136).int32(message.projectId);
     }
     if (message.startDate !== undefined) {
-      Timestamp.encode(
-        toTimestamp(message.startDate),
-        writer.uint32(146).fork()
-      ).ldelim();
+      writer.uint32(144).int32(message.startDate);
     }
     if (message.endDate !== undefined) {
-      Timestamp.encode(
-        toTimestamp(message.endDate),
-        writer.uint32(154).fork()
-      ).ldelim();
+      writer.uint32(152).int32(message.endDate);
     }
     if (message.status !== 0) {
       writer.uint32(160).int32(message.status);
@@ -2529,14 +2476,10 @@ export const CreateChallengeInput = {
           message.projectId = reader.int32();
           break;
         case 18:
-          message.startDate = fromTimestamp(
-            Timestamp.decode(reader, reader.uint32())
-          );
+          message.startDate = reader.int32();
           break;
         case 19:
-          message.endDate = fromTimestamp(
-            Timestamp.decode(reader, reader.uint32())
-          );
+          message.endDate = reader.int32();
           break;
         case 20:
           message.status = reader.int32() as any;
@@ -2603,12 +2546,8 @@ export const CreateChallengeInput = {
         ? object.tags.map((e: any) => String(e))
         : [],
       projectId: isSet(object.projectId) ? Number(object.projectId) : undefined,
-      startDate: isSet(object.startDate)
-        ? fromJsonTimestamp(object.startDate)
-        : undefined,
-      endDate: isSet(object.endDate)
-        ? fromJsonTimestamp(object.endDate)
-        : undefined,
+      startDate: isSet(object.startDate) ? Number(object.startDate) : undefined,
+      endDate: isSet(object.endDate) ? Number(object.endDate) : undefined,
       status: isSet(object.status)
         ? challenge_ChallengeStatusFromJSON(object.status)
         : 0,
@@ -2692,9 +2631,9 @@ export const CreateChallengeInput = {
     message.projectId !== undefined &&
       (obj.projectId = Math.round(message.projectId));
     message.startDate !== undefined &&
-      (obj.startDate = message.startDate.toISOString());
+      (obj.startDate = Math.round(message.startDate));
     message.endDate !== undefined &&
-      (obj.endDate = message.endDate.toISOString());
+      (obj.endDate = Math.round(message.endDate));
     message.status !== undefined &&
       (obj.status = challenge_ChallengeStatusToJSON(message.status));
     if (message.attachments) {
@@ -2869,28 +2808,6 @@ type Exact<P, I extends P> = P extends Builtin
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
       [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
     };
-
-function toTimestamp(date: Date): Timestamp {
-  const seconds = date.getTime() / 1_000;
-  const nanos = (date.getTime() % 1_000) * 1_000_000;
-  return { seconds, nanos };
-}
-
-function fromTimestamp(t: Timestamp): Date {
-  let millis = t.seconds * 1_000;
-  millis += t.nanos / 1_000_000;
-  return new Date(millis);
-}
-
-function fromJsonTimestamp(o: any): Date {
-  if (o instanceof Date) {
-    return o;
-  } else if (typeof o === "string") {
-    return new Date(o);
-  } else {
-    return fromTimestamp(Timestamp.fromJSON(o));
-  }
-}
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

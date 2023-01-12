@@ -205,7 +205,7 @@ export interface LookupCriteria {
 }
 
 export interface GoogleProtobufTypesPlaceholder {
-  timestamp?: Date;
+  timestamp?: Timestamp;
 }
 
 function createBaseScanCriteria(): ScanCriteria {
@@ -528,10 +528,7 @@ export const GoogleProtobufTypesPlaceholder = {
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.timestamp !== undefined) {
-      Timestamp.encode(
-        toTimestamp(message.timestamp),
-        writer.uint32(10).fork()
-      ).ldelim();
+      Timestamp.encode(message.timestamp, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
@@ -547,9 +544,7 @@ export const GoogleProtobufTypesPlaceholder = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.timestamp = fromTimestamp(
-            Timestamp.decode(reader, reader.uint32())
-          );
+          message.timestamp = Timestamp.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -570,7 +565,7 @@ export const GoogleProtobufTypesPlaceholder = {
   toJSON(message: GoogleProtobufTypesPlaceholder): unknown {
     const obj: any = {};
     message.timestamp !== undefined &&
-      (obj.timestamp = message.timestamp.toISOString());
+      (obj.timestamp = fromTimestamp(message.timestamp).toISOString());
     return obj;
   },
 
@@ -584,7 +579,10 @@ export const GoogleProtobufTypesPlaceholder = {
     object: I
   ): GoogleProtobufTypesPlaceholder {
     const message = createBaseGoogleProtobufTypesPlaceholder();
-    message.timestamp = object.timestamp ?? undefined;
+    message.timestamp =
+      object.timestamp !== undefined && object.timestamp !== null
+        ? Timestamp.fromPartial(object.timestamp)
+        : undefined;
     return message;
   },
 };
@@ -631,13 +629,13 @@ function fromTimestamp(t: Timestamp): Date {
   return new Date(millis);
 }
 
-function fromJsonTimestamp(o: any): Date {
+function fromJsonTimestamp(o: any): Timestamp {
   if (o instanceof Date) {
-    return o;
+    return toTimestamp(o);
   } else if (typeof o === "string") {
-    return new Date(o);
+    return toTimestamp(new Date(o));
   } else {
-    return fromTimestamp(Timestamp.fromJSON(o));
+    return Timestamp.fromJSON(o);
   }
 }
 
