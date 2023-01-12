@@ -4,20 +4,20 @@ import { Struct, Value } from "../google/protobuf/struct";
 import { Timestamp } from "../google/protobuf/timestamp";
 
 export enum Operator {
-  OPERATOR_UNSPECIFIED = 0,
-  OPERATOR_EQUAL = 1,
-  OPERATOR_NOT_EQUAL = 2,
-  OPERATOR_GREATER_THAN = 3,
-  OPERATOR_GREATER_THAN_OR_EQUAL = 4,
-  OPERATOR_LESS_THAN = 5,
-  OPERATOR_LESS_THAN_OR_EQUAL = 6,
-  OPERATOR_AND = 7,
-  OPERATOR_BETWEEN = 8,
-  OPERATOR_IN = 9,
-  OPERATOR_IS = 10,
-  OPERATOR_NOT = 11,
-  OPERATOR_OR = 12,
-  UNRECOGNIZED = -1,
+  OPERATOR_UNSPECIFIED = "OPERATOR_UNSPECIFIED",
+  OPERATOR_EQUAL = "OPERATOR_EQUAL",
+  OPERATOR_NOT_EQUAL = "OPERATOR_NOT_EQUAL",
+  OPERATOR_GREATER_THAN = "OPERATOR_GREATER_THAN",
+  OPERATOR_GREATER_THAN_OR_EQUAL = "OPERATOR_GREATER_THAN_OR_EQUAL",
+  OPERATOR_LESS_THAN = "OPERATOR_LESS_THAN",
+  OPERATOR_LESS_THAN_OR_EQUAL = "OPERATOR_LESS_THAN_OR_EQUAL",
+  OPERATOR_AND = "OPERATOR_AND",
+  OPERATOR_BETWEEN = "OPERATOR_BETWEEN",
+  OPERATOR_IN = "OPERATOR_IN",
+  OPERATOR_IS = "OPERATOR_IS",
+  OPERATOR_NOT = "OPERATOR_NOT",
+  OPERATOR_OR = "OPERATOR_OR",
+  UNRECOGNIZED = "UNRECOGNIZED",
 }
 
 export function operatorFromJSON(object: any): Operator {
@@ -102,18 +102,52 @@ export function operatorToJSON(object: Operator): string {
   }
 }
 
+export function operatorToNumber(object: Operator): number {
+  switch (object) {
+    case Operator.OPERATOR_UNSPECIFIED:
+      return 0;
+    case Operator.OPERATOR_EQUAL:
+      return 1;
+    case Operator.OPERATOR_NOT_EQUAL:
+      return 2;
+    case Operator.OPERATOR_GREATER_THAN:
+      return 3;
+    case Operator.OPERATOR_GREATER_THAN_OR_EQUAL:
+      return 4;
+    case Operator.OPERATOR_LESS_THAN:
+      return 5;
+    case Operator.OPERATOR_LESS_THAN_OR_EQUAL:
+      return 6;
+    case Operator.OPERATOR_AND:
+      return 7;
+    case Operator.OPERATOR_BETWEEN:
+      return 8;
+    case Operator.OPERATOR_IN:
+      return 9;
+    case Operator.OPERATOR_IS:
+      return 10;
+    case Operator.OPERATOR_NOT:
+      return 11;
+    case Operator.OPERATOR_OR:
+      return 12;
+    case Operator.UNRECOGNIZED:
+    default:
+      return -1;
+  }
+}
+
 export enum Domain {
-  DOMAIN_UNSPECIFIED = 0,
-  DOMAIN_RESOURCE = 1,
-  DOMAIN_RESOURCE_ROLE = 2,
-  DOMAIN_RESOURCE_ROLE_PHASE_DEPENDENCY = 3,
-  DOMAIN_CHALLENGE = 4,
-  DOMAIN_CHALLENGE_TYPE = 5,
-  DOMAIN_CHALLENG_TIMELINE_TEMPLATE = 6,
-  DOMAIN_CHALLENGE_TRACK = 7,
-  DOMAIN_CHALLENGE_PHASE = 8,
-  DOMAIN_CHALLENGE_TIMELINE_TEMPLATE = 9,
-  UNRECOGNIZED = -1,
+  DOMAIN_UNSPECIFIED = "DOMAIN_UNSPECIFIED",
+  DOMAIN_RESOURCE = "DOMAIN_RESOURCE",
+  DOMAIN_RESOURCE_ROLE = "DOMAIN_RESOURCE_ROLE",
+  DOMAIN_RESOURCE_ROLE_PHASE_DEPENDENCY = "DOMAIN_RESOURCE_ROLE_PHASE_DEPENDENCY",
+  DOMAIN_CHALLENGE = "DOMAIN_CHALLENGE",
+  DOMAIN_CHALLENGE_TYPE = "DOMAIN_CHALLENGE_TYPE",
+  DOMAIN_CHALLENG_TIMELINE_TEMPLATE = "DOMAIN_CHALLENG_TIMELINE_TEMPLATE",
+  DOMAIN_CHALLENGE_TRACK = "DOMAIN_CHALLENGE_TRACK",
+  DOMAIN_CHALLENGE_PHASE = "DOMAIN_CHALLENGE_PHASE",
+  DOMAIN_CHALLENGE_TIMELINE_TEMPLATE = "DOMAIN_CHALLENGE_TIMELINE_TEMPLATE",
+  UNRECOGNIZED = "UNRECOGNIZED",
 }
 
 export function domainFromJSON(object: any): Domain {
@@ -183,6 +217,34 @@ export function domainToJSON(object: Domain): string {
   }
 }
 
+export function domainToNumber(object: Domain): number {
+  switch (object) {
+    case Domain.DOMAIN_UNSPECIFIED:
+      return 0;
+    case Domain.DOMAIN_RESOURCE:
+      return 1;
+    case Domain.DOMAIN_RESOURCE_ROLE:
+      return 2;
+    case Domain.DOMAIN_RESOURCE_ROLE_PHASE_DEPENDENCY:
+      return 3;
+    case Domain.DOMAIN_CHALLENGE:
+      return 4;
+    case Domain.DOMAIN_CHALLENGE_TYPE:
+      return 5;
+    case Domain.DOMAIN_CHALLENG_TIMELINE_TEMPLATE:
+      return 6;
+    case Domain.DOMAIN_CHALLENGE_TRACK:
+      return 7;
+    case Domain.DOMAIN_CHALLENGE_PHASE:
+      return 8;
+    case Domain.DOMAIN_CHALLENGE_TIMELINE_TEMPLATE:
+      return 9;
+    case Domain.UNRECOGNIZED:
+    default:
+      return -1;
+  }
+}
+
 export interface ScanCriteria {
   key: string;
   operator?: Operator | undefined;
@@ -205,7 +267,7 @@ export interface LookupCriteria {
 }
 
 export interface GoogleProtobufTypesPlaceholder {
-  timestamp?: Timestamp;
+  timestamp?: string;
 }
 
 function createBaseScanCriteria(): ScanCriteria {
@@ -221,7 +283,7 @@ export const ScanCriteria = {
       writer.uint32(10).string(message.key);
     }
     if (message.operator !== undefined) {
-      writer.uint32(16).int32(message.operator);
+      writer.uint32(16).int32(operatorToNumber(message.operator));
     }
     if (message.value !== undefined) {
       Value.encode(
@@ -243,7 +305,7 @@ export const ScanCriteria = {
           message.key = reader.string();
           break;
         case 2:
-          message.operator = reader.int32() as any;
+          message.operator = operatorFromJSON(reader.int32());
           break;
         case 3:
           message.value = Value.unwrap(Value.decode(reader, reader.uint32()));
@@ -528,7 +590,10 @@ export const GoogleProtobufTypesPlaceholder = {
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.timestamp !== undefined) {
-      Timestamp.encode(message.timestamp, writer.uint32(10).fork()).ldelim();
+      Timestamp.encode(
+        toTimestamp(message.timestamp),
+        writer.uint32(10).fork()
+      ).ldelim();
     }
     return writer;
   },
@@ -544,7 +609,9 @@ export const GoogleProtobufTypesPlaceholder = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.timestamp = Timestamp.decode(reader, reader.uint32());
+          message.timestamp = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32())
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -556,16 +623,13 @@ export const GoogleProtobufTypesPlaceholder = {
 
   fromJSON(object: any): GoogleProtobufTypesPlaceholder {
     return {
-      timestamp: isSet(object.timestamp)
-        ? fromJsonTimestamp(object.timestamp)
-        : undefined,
+      timestamp: isSet(object.timestamp) ? String(object.timestamp) : undefined,
     };
   },
 
   toJSON(message: GoogleProtobufTypesPlaceholder): unknown {
     const obj: any = {};
-    message.timestamp !== undefined &&
-      (obj.timestamp = fromTimestamp(message.timestamp).toISOString());
+    message.timestamp !== undefined && (obj.timestamp = message.timestamp);
     return obj;
   },
 
@@ -579,10 +643,7 @@ export const GoogleProtobufTypesPlaceholder = {
     object: I
   ): GoogleProtobufTypesPlaceholder {
     const message = createBaseGoogleProtobufTypesPlaceholder();
-    message.timestamp =
-      object.timestamp !== undefined && object.timestamp !== null
-        ? Timestamp.fromPartial(object.timestamp)
-        : undefined;
+    message.timestamp = object.timestamp ?? undefined;
     return message;
   },
 };
@@ -617,26 +678,17 @@ type Exact<P, I extends P> = P extends Builtin
       [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
     };
 
-function toTimestamp(date: Date): Timestamp {
+function toTimestamp(dateStr: string): Timestamp {
+  const date = new Date(dateStr);
   const seconds = date.getTime() / 1_000;
   const nanos = (date.getTime() % 1_000) * 1_000_000;
   return { seconds, nanos };
 }
 
-function fromTimestamp(t: Timestamp): Date {
+function fromTimestamp(t: Timestamp): string {
   let millis = t.seconds * 1_000;
   millis += t.nanos / 1_000_000;
-  return new Date(millis);
-}
-
-function fromJsonTimestamp(o: any): Timestamp {
-  if (o instanceof Date) {
-    return toTimestamp(o);
-  } else if (typeof o === "string") {
-    return toTimestamp(new Date(o));
-  } else {
-    return Timestamp.fromJSON(o);
-  }
+  return new Date(millis).toISOString();
 }
 
 function isSet(value: any): boolean {
