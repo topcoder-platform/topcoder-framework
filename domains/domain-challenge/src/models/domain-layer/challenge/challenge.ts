@@ -1,439 +1,7 @@
 /* eslint-disable */
+import { Timestamp } from "@topcoder-framework/lib-common";
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-
-export enum Track {
-  TRACK_UNSPECIFIED = "TRACK_UNSPECIFIED",
-  TRACK_DEVELOP = "TRACK_DEVELOP",
-  TRACK_DESIGN = "TRACK_DESIGN",
-  TRACK_DATA_SCIENCE = "TRACK_DATA_SCIENCE",
-  TRACK_QA = "TRACK_QA",
-  UNRECOGNIZED = "UNRECOGNIZED",
-}
-
-export function trackFromJSON(object: any): Track {
-  switch (object) {
-    case 0:
-    case "TRACK_UNSPECIFIED":
-      return Track.TRACK_UNSPECIFIED;
-    case 1:
-    case "TRACK_DEVELOP":
-      return Track.TRACK_DEVELOP;
-    case 2:
-    case "TRACK_DESIGN":
-      return Track.TRACK_DESIGN;
-    case 3:
-    case "TRACK_DATA_SCIENCE":
-      return Track.TRACK_DATA_SCIENCE;
-    case 4:
-    case "TRACK_QA":
-      return Track.TRACK_QA;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return Track.UNRECOGNIZED;
-  }
-}
-
-export function trackToJSON(object: Track): string {
-  switch (object) {
-    case Track.TRACK_UNSPECIFIED:
-      return "TRACK_UNSPECIFIED";
-    case Track.TRACK_DEVELOP:
-      return "TRACK_DEVELOP";
-    case Track.TRACK_DESIGN:
-      return "TRACK_DESIGN";
-    case Track.TRACK_DATA_SCIENCE:
-      return "TRACK_DATA_SCIENCE";
-    case Track.TRACK_QA:
-      return "TRACK_QA";
-    case Track.UNRECOGNIZED:
-    default:
-      return "UNRECOGNIZED";
-  }
-}
-
-export function trackToNumber(object: Track): number {
-  switch (object) {
-    case Track.TRACK_UNSPECIFIED:
-      return 0;
-    case Track.TRACK_DEVELOP:
-      return 1;
-    case Track.TRACK_DESIGN:
-      return 2;
-    case Track.TRACK_DATA_SCIENCE:
-      return 3;
-    case Track.TRACK_QA:
-      return 4;
-    case Track.UNRECOGNIZED:
-    default:
-      return -1;
-  }
-}
-
-export enum SubTrack {
-  SUB_TRACK_UNSPECIFIED = "SUB_TRACK_UNSPECIFIED",
-  SUB_TRACK_FIRST_2_FINISH = "SUB_TRACK_FIRST_2_FINISH",
-  SUB_TRACK_CODE = "SUB_TRACK_CODE",
-  SUB_TRACK_DESIGN_FIRST_2_FINISH = "SUB_TRACK_DESIGN_FIRST_2_FINISH",
-  /** @deprecated */
-  SUB_TRACK_ASSEMBLY_COMPETITION = "SUB_TRACK_ASSEMBLY_COMPETITION",
-  /** @deprecated */
-  SUB_TRACK_UI_PROTOTYPE_COMPETITION = "SUB_TRACK_UI_PROTOTYPE_COMPETITION",
-  /** @deprecated */
-  SUB_TRACK_ARCHITECTURE = "SUB_TRACK_ARCHITECTURE",
-  SUB_TRACK_BUG_HUNT = "SUB_TRACK_BUG_HUNT",
-  SUB_TRACK_MARATHON_MATCH = "SUB_TRACK_MARATHON_MATCH",
-  /** @deprecated */
-  SUB_TRACK_SPECIFICATION = "SUB_TRACK_SPECIFICATION",
-  SUB_TRACK_WEB_DESIGNS = "SUB_TRACK_WEB_DESIGNS",
-  /** @deprecated */
-  SUB_TRACK_TEST_SCENARIOS = "SUB_TRACK_TEST_SCENARIOS",
-  /** @deprecated */
-  SUB_TRACK_TEST_SUITES = "SUB_TRACK_TEST_SUITES",
-  UNRECOGNIZED = "UNRECOGNIZED",
-}
-
-export function subTrackFromJSON(object: any): SubTrack {
-  switch (object) {
-    case 0:
-    case "SUB_TRACK_UNSPECIFIED":
-      return SubTrack.SUB_TRACK_UNSPECIFIED;
-    case 1:
-    case "SUB_TRACK_FIRST_2_FINISH":
-      return SubTrack.SUB_TRACK_FIRST_2_FINISH;
-    case 2:
-    case "SUB_TRACK_CODE":
-      return SubTrack.SUB_TRACK_CODE;
-    case 3:
-    case "SUB_TRACK_DESIGN_FIRST_2_FINISH":
-      return SubTrack.SUB_TRACK_DESIGN_FIRST_2_FINISH;
-    case 4:
-    case "SUB_TRACK_ASSEMBLY_COMPETITION":
-      return SubTrack.SUB_TRACK_ASSEMBLY_COMPETITION;
-    case 5:
-    case "SUB_TRACK_UI_PROTOTYPE_COMPETITION":
-      return SubTrack.SUB_TRACK_UI_PROTOTYPE_COMPETITION;
-    case 6:
-    case "SUB_TRACK_ARCHITECTURE":
-      return SubTrack.SUB_TRACK_ARCHITECTURE;
-    case 7:
-    case "SUB_TRACK_BUG_HUNT":
-      return SubTrack.SUB_TRACK_BUG_HUNT;
-    case 8:
-    case "SUB_TRACK_MARATHON_MATCH":
-      return SubTrack.SUB_TRACK_MARATHON_MATCH;
-    case 9:
-    case "SUB_TRACK_SPECIFICATION":
-      return SubTrack.SUB_TRACK_SPECIFICATION;
-    case 10:
-    case "SUB_TRACK_WEB_DESIGNS":
-      return SubTrack.SUB_TRACK_WEB_DESIGNS;
-    case 11:
-    case "SUB_TRACK_TEST_SCENARIOS":
-      return SubTrack.SUB_TRACK_TEST_SCENARIOS;
-    case 12:
-    case "SUB_TRACK_TEST_SUITES":
-      return SubTrack.SUB_TRACK_TEST_SUITES;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return SubTrack.UNRECOGNIZED;
-  }
-}
-
-export function subTrackToJSON(object: SubTrack): string {
-  switch (object) {
-    case SubTrack.SUB_TRACK_UNSPECIFIED:
-      return "SUB_TRACK_UNSPECIFIED";
-    case SubTrack.SUB_TRACK_FIRST_2_FINISH:
-      return "SUB_TRACK_FIRST_2_FINISH";
-    case SubTrack.SUB_TRACK_CODE:
-      return "SUB_TRACK_CODE";
-    case SubTrack.SUB_TRACK_DESIGN_FIRST_2_FINISH:
-      return "SUB_TRACK_DESIGN_FIRST_2_FINISH";
-    case SubTrack.SUB_TRACK_ASSEMBLY_COMPETITION:
-      return "SUB_TRACK_ASSEMBLY_COMPETITION";
-    case SubTrack.SUB_TRACK_UI_PROTOTYPE_COMPETITION:
-      return "SUB_TRACK_UI_PROTOTYPE_COMPETITION";
-    case SubTrack.SUB_TRACK_ARCHITECTURE:
-      return "SUB_TRACK_ARCHITECTURE";
-    case SubTrack.SUB_TRACK_BUG_HUNT:
-      return "SUB_TRACK_BUG_HUNT";
-    case SubTrack.SUB_TRACK_MARATHON_MATCH:
-      return "SUB_TRACK_MARATHON_MATCH";
-    case SubTrack.SUB_TRACK_SPECIFICATION:
-      return "SUB_TRACK_SPECIFICATION";
-    case SubTrack.SUB_TRACK_WEB_DESIGNS:
-      return "SUB_TRACK_WEB_DESIGNS";
-    case SubTrack.SUB_TRACK_TEST_SCENARIOS:
-      return "SUB_TRACK_TEST_SCENARIOS";
-    case SubTrack.SUB_TRACK_TEST_SUITES:
-      return "SUB_TRACK_TEST_SUITES";
-    case SubTrack.UNRECOGNIZED:
-    default:
-      return "UNRECOGNIZED";
-  }
-}
-
-export function subTrackToNumber(object: SubTrack): number {
-  switch (object) {
-    case SubTrack.SUB_TRACK_UNSPECIFIED:
-      return 0;
-    case SubTrack.SUB_TRACK_FIRST_2_FINISH:
-      return 1;
-    case SubTrack.SUB_TRACK_CODE:
-      return 2;
-    case SubTrack.SUB_TRACK_DESIGN_FIRST_2_FINISH:
-      return 3;
-    case SubTrack.SUB_TRACK_ASSEMBLY_COMPETITION:
-      return 4;
-    case SubTrack.SUB_TRACK_UI_PROTOTYPE_COMPETITION:
-      return 5;
-    case SubTrack.SUB_TRACK_ARCHITECTURE:
-      return 6;
-    case SubTrack.SUB_TRACK_BUG_HUNT:
-      return 7;
-    case SubTrack.SUB_TRACK_MARATHON_MATCH:
-      return 8;
-    case SubTrack.SUB_TRACK_SPECIFICATION:
-      return 9;
-    case SubTrack.SUB_TRACK_WEB_DESIGNS:
-      return 10;
-    case SubTrack.SUB_TRACK_TEST_SCENARIOS:
-      return 11;
-    case SubTrack.SUB_TRACK_TEST_SUITES:
-      return 12;
-    case SubTrack.UNRECOGNIZED:
-    default:
-      return -1;
-  }
-}
-
-export enum ReviewType {
-  REVIEW_TYPE_UNSPECIFIED = "REVIEW_TYPE_UNSPECIFIED",
-  REVIEW_TYPE_COMMUNITY = "REVIEW_TYPE_COMMUNITY",
-  REVIEW_TYPE_INTERNAL = "REVIEW_TYPE_INTERNAL",
-  UNRECOGNIZED = "UNRECOGNIZED",
-}
-
-export function reviewTypeFromJSON(object: any): ReviewType {
-  switch (object) {
-    case 0:
-    case "REVIEW_TYPE_UNSPECIFIED":
-      return ReviewType.REVIEW_TYPE_UNSPECIFIED;
-    case 1:
-    case "REVIEW_TYPE_COMMUNITY":
-      return ReviewType.REVIEW_TYPE_COMMUNITY;
-    case 2:
-    case "REVIEW_TYPE_INTERNAL":
-      return ReviewType.REVIEW_TYPE_INTERNAL;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return ReviewType.UNRECOGNIZED;
-  }
-}
-
-export function reviewTypeToJSON(object: ReviewType): string {
-  switch (object) {
-    case ReviewType.REVIEW_TYPE_UNSPECIFIED:
-      return "REVIEW_TYPE_UNSPECIFIED";
-    case ReviewType.REVIEW_TYPE_COMMUNITY:
-      return "REVIEW_TYPE_COMMUNITY";
-    case ReviewType.REVIEW_TYPE_INTERNAL:
-      return "REVIEW_TYPE_INTERNAL";
-    case ReviewType.UNRECOGNIZED:
-    default:
-      return "UNRECOGNIZED";
-  }
-}
-
-export function reviewTypeToNumber(object: ReviewType): number {
-  switch (object) {
-    case ReviewType.REVIEW_TYPE_UNSPECIFIED:
-      return 0;
-    case ReviewType.REVIEW_TYPE_COMMUNITY:
-      return 1;
-    case ReviewType.REVIEW_TYPE_INTERNAL:
-      return 2;
-    case ReviewType.UNRECOGNIZED:
-    default:
-      return -1;
-  }
-}
-
-export enum ConfidentialityType {
-  CONFIDENTIALITY_TYPE_UNSPECIFIED = "CONFIDENTIALITY_TYPE_UNSPECIFIED",
-  CONFIDENTIALITY_TYPE_PUBLIC = "CONFIDENTIALITY_TYPE_PUBLIC",
-  CONFIDENTIALITY_TYPE_PRIVATE = "CONFIDENTIALITY_TYPE_PRIVATE",
-  UNRECOGNIZED = "UNRECOGNIZED",
-}
-
-export function confidentialityTypeFromJSON(object: any): ConfidentialityType {
-  switch (object) {
-    case 0:
-    case "CONFIDENTIALITY_TYPE_UNSPECIFIED":
-      return ConfidentialityType.CONFIDENTIALITY_TYPE_UNSPECIFIED;
-    case 1:
-    case "CONFIDENTIALITY_TYPE_PUBLIC":
-      return ConfidentialityType.CONFIDENTIALITY_TYPE_PUBLIC;
-    case 2:
-    case "CONFIDENTIALITY_TYPE_PRIVATE":
-      return ConfidentialityType.CONFIDENTIALITY_TYPE_PRIVATE;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return ConfidentialityType.UNRECOGNIZED;
-  }
-}
-
-export function confidentialityTypeToJSON(object: ConfidentialityType): string {
-  switch (object) {
-    case ConfidentialityType.CONFIDENTIALITY_TYPE_UNSPECIFIED:
-      return "CONFIDENTIALITY_TYPE_UNSPECIFIED";
-    case ConfidentialityType.CONFIDENTIALITY_TYPE_PUBLIC:
-      return "CONFIDENTIALITY_TYPE_PUBLIC";
-    case ConfidentialityType.CONFIDENTIALITY_TYPE_PRIVATE:
-      return "CONFIDENTIALITY_TYPE_PRIVATE";
-    case ConfidentialityType.UNRECOGNIZED:
-    default:
-      return "UNRECOGNIZED";
-  }
-}
-
-export function confidentialityTypeToNumber(
-  object: ConfidentialityType
-): number {
-  switch (object) {
-    case ConfidentialityType.CONFIDENTIALITY_TYPE_UNSPECIFIED:
-      return 0;
-    case ConfidentialityType.CONFIDENTIALITY_TYPE_PUBLIC:
-      return 1;
-    case ConfidentialityType.CONFIDENTIALITY_TYPE_PRIVATE:
-      return 2;
-    case ConfidentialityType.UNRECOGNIZED:
-    default:
-      return -1;
-  }
-}
-
-export enum PhaseName {
-  PHASE_NAME_UNSPECIFIED = "PHASE_NAME_UNSPECIFIED",
-  PHASE_NAME_REGISTRATION = "PHASE_NAME_REGISTRATION",
-  PHASE_NAME_SUBMISSION = "PHASE_NAME_SUBMISSION",
-  PHASE_NAME_SCREENING = "PHASE_NAME_SCREENING",
-  PHASE_NAME_REVIEW = "PHASE_NAME_REVIEW",
-  PHASE_NAME_APPEALS = "PHASE_NAME_APPEALS",
-  PHASE_NAME_APPEALS_RESPONSE = "PHASE_NAME_APPEALS_RESPONSE",
-  PHASE_NAME_AGGREGATION = "PHASE_NAME_AGGREGATION",
-  PHASE_NAME_FINAL_FIX = "PHASE_NAME_FINAL_FIX",
-  PHASE_NAME_POST_MORTEM = "PHASE_NAME_POST_MORTEM",
-  PHASE_NAME_ITERATIVE_REVIEW = "PHASE_NAME_ITERATIVE_REVIEW",
-  UNRECOGNIZED = "UNRECOGNIZED",
-}
-
-export function phaseNameFromJSON(object: any): PhaseName {
-  switch (object) {
-    case 0:
-    case "PHASE_NAME_UNSPECIFIED":
-      return PhaseName.PHASE_NAME_UNSPECIFIED;
-    case 1:
-    case "PHASE_NAME_REGISTRATION":
-      return PhaseName.PHASE_NAME_REGISTRATION;
-    case 2:
-    case "PHASE_NAME_SUBMISSION":
-      return PhaseName.PHASE_NAME_SUBMISSION;
-    case 3:
-    case "PHASE_NAME_SCREENING":
-      return PhaseName.PHASE_NAME_SCREENING;
-    case 4:
-    case "PHASE_NAME_REVIEW":
-      return PhaseName.PHASE_NAME_REVIEW;
-    case 5:
-    case "PHASE_NAME_APPEALS":
-      return PhaseName.PHASE_NAME_APPEALS;
-    case 6:
-    case "PHASE_NAME_APPEALS_RESPONSE":
-      return PhaseName.PHASE_NAME_APPEALS_RESPONSE;
-    case 7:
-    case "PHASE_NAME_AGGREGATION":
-      return PhaseName.PHASE_NAME_AGGREGATION;
-    case 8:
-    case "PHASE_NAME_FINAL_FIX":
-      return PhaseName.PHASE_NAME_FINAL_FIX;
-    case 9:
-    case "PHASE_NAME_POST_MORTEM":
-      return PhaseName.PHASE_NAME_POST_MORTEM;
-    case 10:
-    case "PHASE_NAME_ITERATIVE_REVIEW":
-      return PhaseName.PHASE_NAME_ITERATIVE_REVIEW;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return PhaseName.UNRECOGNIZED;
-  }
-}
-
-export function phaseNameToJSON(object: PhaseName): string {
-  switch (object) {
-    case PhaseName.PHASE_NAME_UNSPECIFIED:
-      return "PHASE_NAME_UNSPECIFIED";
-    case PhaseName.PHASE_NAME_REGISTRATION:
-      return "PHASE_NAME_REGISTRATION";
-    case PhaseName.PHASE_NAME_SUBMISSION:
-      return "PHASE_NAME_SUBMISSION";
-    case PhaseName.PHASE_NAME_SCREENING:
-      return "PHASE_NAME_SCREENING";
-    case PhaseName.PHASE_NAME_REVIEW:
-      return "PHASE_NAME_REVIEW";
-    case PhaseName.PHASE_NAME_APPEALS:
-      return "PHASE_NAME_APPEALS";
-    case PhaseName.PHASE_NAME_APPEALS_RESPONSE:
-      return "PHASE_NAME_APPEALS_RESPONSE";
-    case PhaseName.PHASE_NAME_AGGREGATION:
-      return "PHASE_NAME_AGGREGATION";
-    case PhaseName.PHASE_NAME_FINAL_FIX:
-      return "PHASE_NAME_FINAL_FIX";
-    case PhaseName.PHASE_NAME_POST_MORTEM:
-      return "PHASE_NAME_POST_MORTEM";
-    case PhaseName.PHASE_NAME_ITERATIVE_REVIEW:
-      return "PHASE_NAME_ITERATIVE_REVIEW";
-    case PhaseName.UNRECOGNIZED:
-    default:
-      return "UNRECOGNIZED";
-  }
-}
-
-export function phaseNameToNumber(object: PhaseName): number {
-  switch (object) {
-    case PhaseName.PHASE_NAME_UNSPECIFIED:
-      return 0;
-    case PhaseName.PHASE_NAME_REGISTRATION:
-      return 1;
-    case PhaseName.PHASE_NAME_SUBMISSION:
-      return 2;
-    case PhaseName.PHASE_NAME_SCREENING:
-      return 3;
-    case PhaseName.PHASE_NAME_REVIEW:
-      return 4;
-    case PhaseName.PHASE_NAME_APPEALS:
-      return 5;
-    case PhaseName.PHASE_NAME_APPEALS_RESPONSE:
-      return 6;
-    case PhaseName.PHASE_NAME_AGGREGATION:
-      return 7;
-    case PhaseName.PHASE_NAME_FINAL_FIX:
-      return 8;
-    case PhaseName.PHASE_NAME_POST_MORTEM:
-      return 9;
-    case PhaseName.PHASE_NAME_ITERATIVE_REVIEW:
-      return 10;
-    case PhaseName.UNRECOGNIZED:
-    default:
-      return -1;
-  }
-}
 
 export interface Challenge {
   id: string;
@@ -457,7 +25,7 @@ export interface Challenge {
   projectId?: number | undefined;
   startDate?: number | undefined;
   endDate?: number | undefined;
-  status: Challenge_ChallengeStatus;
+  status: string;
   attachments: string[];
   groups: string[];
   winners: Challenge_Winner[];
@@ -469,175 +37,16 @@ export interface Challenge {
   overview?: Challenge_Overview;
 }
 
-export enum Challenge_ChallengeStatus {
-  CHALLENGE_STATUS_UNSPECIFIED = "CHALLENGE_STATUS_UNSPECIFIED",
-  CHALLENGE_STATUS_NEW = "CHALLENGE_STATUS_NEW",
-  CHALLENGE_STATUS_DRAFT = "CHALLENGE_STATUS_DRAFT",
-  CHALLENGE_STATUS_ACTIVE = "CHALLENGE_STATUS_ACTIVE",
-  CHALLENGE_STATUS_COMPLETED = "CHALLENGE_STATUS_COMPLETED",
-  CHALLENGE_STATUS_CANCELLED = "CHALLENGE_STATUS_CANCELLED",
-  CHALLENGE_STATUS_DELETED = "CHALLENGE_STATUS_DELETED",
-  CHALLENGE_STATUS_APPROVED = "CHALLENGE_STATUS_APPROVED",
-  CHALLENGE_STATUS_CANCELLED_FAILED_REVIEW = "CHALLENGE_STATUS_CANCELLED_FAILED_REVIEW",
-  CHALLENGE_STATUS_CANCELLED_FAILED_SCREENING = "CHALLENGE_STATUS_CANCELLED_FAILED_SCREENING",
-  CHALLENGE_STATUS_CANCELLED_ZERO_SUBMISSIONS = "CHALLENGE_STATUS_CANCELLED_ZERO_SUBMISSIONS",
-  CHALLENGE_STATUS_CANCELLED_WINNER_UNRESPONSIVE = "CHALLENGE_STATUS_CANCELLED_WINNER_UNRESPONSIVE",
-  CHALLENGE_STATUS_CANCELLED_CLIENT_REQUEST = "CHALLENGE_STATUS_CANCELLED_CLIENT_REQUEST",
-  CHALLENGE_STATUS_CANCELLED_REQUIREMENTS_INFEASIBLE = "CHALLENGE_STATUS_CANCELLED_REQUIREMENTS_INFEASIBLE",
-  CHALLENGE_STATUS_CANCELLED_ZERO_REGISTRATIONS = "CHALLENGE_STATUS_CANCELLED_ZERO_REGISTRATIONS",
-  CHALLENGE_STATUS_CANCELLED_PAYMENT_FAILED = "CHALLENGE_STATUS_CANCELLED_PAYMENT_FAILED",
-  UNRECOGNIZED = "UNRECOGNIZED",
-}
-
-export function challenge_ChallengeStatusFromJSON(
-  object: any
-): Challenge_ChallengeStatus {
-  switch (object) {
-    case 0:
-    case "CHALLENGE_STATUS_UNSPECIFIED":
-      return Challenge_ChallengeStatus.CHALLENGE_STATUS_UNSPECIFIED;
-    case 1:
-    case "CHALLENGE_STATUS_NEW":
-      return Challenge_ChallengeStatus.CHALLENGE_STATUS_NEW;
-    case 2:
-    case "CHALLENGE_STATUS_DRAFT":
-      return Challenge_ChallengeStatus.CHALLENGE_STATUS_DRAFT;
-    case 3:
-    case "CHALLENGE_STATUS_ACTIVE":
-      return Challenge_ChallengeStatus.CHALLENGE_STATUS_ACTIVE;
-    case 4:
-    case "CHALLENGE_STATUS_COMPLETED":
-      return Challenge_ChallengeStatus.CHALLENGE_STATUS_COMPLETED;
-    case 5:
-    case "CHALLENGE_STATUS_CANCELLED":
-      return Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED;
-    case 6:
-    case "CHALLENGE_STATUS_DELETED":
-      return Challenge_ChallengeStatus.CHALLENGE_STATUS_DELETED;
-    case 7:
-    case "CHALLENGE_STATUS_APPROVED":
-      return Challenge_ChallengeStatus.CHALLENGE_STATUS_APPROVED;
-    case 8:
-    case "CHALLENGE_STATUS_CANCELLED_FAILED_REVIEW":
-      return Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_FAILED_REVIEW;
-    case 9:
-    case "CHALLENGE_STATUS_CANCELLED_FAILED_SCREENING":
-      return Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_FAILED_SCREENING;
-    case 10:
-    case "CHALLENGE_STATUS_CANCELLED_ZERO_SUBMISSIONS":
-      return Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_ZERO_SUBMISSIONS;
-    case 11:
-    case "CHALLENGE_STATUS_CANCELLED_WINNER_UNRESPONSIVE":
-      return Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_WINNER_UNRESPONSIVE;
-    case 12:
-    case "CHALLENGE_STATUS_CANCELLED_CLIENT_REQUEST":
-      return Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_CLIENT_REQUEST;
-    case 13:
-    case "CHALLENGE_STATUS_CANCELLED_REQUIREMENTS_INFEASIBLE":
-      return Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_REQUIREMENTS_INFEASIBLE;
-    case 14:
-    case "CHALLENGE_STATUS_CANCELLED_ZERO_REGISTRATIONS":
-      return Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_ZERO_REGISTRATIONS;
-    case 15:
-    case "CHALLENGE_STATUS_CANCELLED_PAYMENT_FAILED":
-      return Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_PAYMENT_FAILED;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return Challenge_ChallengeStatus.UNRECOGNIZED;
-  }
-}
-
-export function challenge_ChallengeStatusToJSON(
-  object: Challenge_ChallengeStatus
-): string {
-  switch (object) {
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_UNSPECIFIED:
-      return "CHALLENGE_STATUS_UNSPECIFIED";
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_NEW:
-      return "CHALLENGE_STATUS_NEW";
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_DRAFT:
-      return "CHALLENGE_STATUS_DRAFT";
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_ACTIVE:
-      return "CHALLENGE_STATUS_ACTIVE";
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_COMPLETED:
-      return "CHALLENGE_STATUS_COMPLETED";
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED:
-      return "CHALLENGE_STATUS_CANCELLED";
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_DELETED:
-      return "CHALLENGE_STATUS_DELETED";
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_APPROVED:
-      return "CHALLENGE_STATUS_APPROVED";
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_FAILED_REVIEW:
-      return "CHALLENGE_STATUS_CANCELLED_FAILED_REVIEW";
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_FAILED_SCREENING:
-      return "CHALLENGE_STATUS_CANCELLED_FAILED_SCREENING";
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_ZERO_SUBMISSIONS:
-      return "CHALLENGE_STATUS_CANCELLED_ZERO_SUBMISSIONS";
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_WINNER_UNRESPONSIVE:
-      return "CHALLENGE_STATUS_CANCELLED_WINNER_UNRESPONSIVE";
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_CLIENT_REQUEST:
-      return "CHALLENGE_STATUS_CANCELLED_CLIENT_REQUEST";
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_REQUIREMENTS_INFEASIBLE:
-      return "CHALLENGE_STATUS_CANCELLED_REQUIREMENTS_INFEASIBLE";
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_ZERO_REGISTRATIONS:
-      return "CHALLENGE_STATUS_CANCELLED_ZERO_REGISTRATIONS";
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_PAYMENT_FAILED:
-      return "CHALLENGE_STATUS_CANCELLED_PAYMENT_FAILED";
-    case Challenge_ChallengeStatus.UNRECOGNIZED:
-    default:
-      return "UNRECOGNIZED";
-  }
-}
-
-export function challenge_ChallengeStatusToNumber(
-  object: Challenge_ChallengeStatus
-): number {
-  switch (object) {
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_UNSPECIFIED:
-      return 0;
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_NEW:
-      return 1;
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_DRAFT:
-      return 2;
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_ACTIVE:
-      return 3;
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_COMPLETED:
-      return 4;
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED:
-      return 5;
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_DELETED:
-      return 6;
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_APPROVED:
-      return 7;
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_FAILED_REVIEW:
-      return 8;
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_FAILED_SCREENING:
-      return 9;
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_ZERO_SUBMISSIONS:
-      return 10;
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_WINNER_UNRESPONSIVE:
-      return 11;
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_CLIENT_REQUEST:
-      return 12;
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_REQUIREMENTS_INFEASIBLE:
-      return 13;
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_ZERO_REGISTRATIONS:
-      return 14;
-    case Challenge_ChallengeStatus.CHALLENGE_STATUS_CANCELLED_PAYMENT_FAILED:
-      return 15;
-    case Challenge_ChallengeStatus.UNRECOGNIZED:
-    default:
-      return -1;
-  }
-}
-
 export interface Challenge_Legacy {
-  track: Track;
-  subTrack: SubTrack;
-  forumId: number;
+  /** Develop, Design, Data Science, QA */
+  track?: string | undefined;
+  subTrack?: string | undefined;
+  forumId?: number | undefined;
   directProjectId: number;
-  reviewType: ReviewType;
+  /** Community, Internal */
+  reviewType: string;
+  /** Public, Private */
+  confidentialityType: string;
   reviewScorecardId?: number | undefined;
   screeningScorecardId?: number | undefined;
   pureV5Task?: boolean | undefined;
@@ -669,73 +78,19 @@ export interface Challenge_Metadata {
 export interface Challenge_Discussion {
   id?: string | undefined;
   name: string;
-  type: Challenge_Discussion_DiscussionType;
+  /** Challenge */
+  type: string;
   provider: string;
   url?: string | undefined;
 }
 
-export enum Challenge_Discussion_DiscussionType {
-  DISCUSSION_TYPE_UNSPECIFIED = "DISCUSSION_TYPE_UNSPECIFIED",
-  DISCUSSION_TYPE_CHALLENGE = "DISCUSSION_TYPE_CHALLENGE",
-  UNRECOGNIZED = "UNRECOGNIZED",
-}
-
-export function challenge_Discussion_DiscussionTypeFromJSON(
-  object: any
-): Challenge_Discussion_DiscussionType {
-  switch (object) {
-    case 0:
-    case "DISCUSSION_TYPE_UNSPECIFIED":
-      return Challenge_Discussion_DiscussionType.DISCUSSION_TYPE_UNSPECIFIED;
-    case 1:
-    case "DISCUSSION_TYPE_CHALLENGE":
-      return Challenge_Discussion_DiscussionType.DISCUSSION_TYPE_CHALLENGE;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return Challenge_Discussion_DiscussionType.UNRECOGNIZED;
-  }
-}
-
-export function challenge_Discussion_DiscussionTypeToJSON(
-  object: Challenge_Discussion_DiscussionType
-): string {
-  switch (object) {
-    case Challenge_Discussion_DiscussionType.DISCUSSION_TYPE_UNSPECIFIED:
-      return "DISCUSSION_TYPE_UNSPECIFIED";
-    case Challenge_Discussion_DiscussionType.DISCUSSION_TYPE_CHALLENGE:
-      return "DISCUSSION_TYPE_CHALLENGE";
-    case Challenge_Discussion_DiscussionType.UNRECOGNIZED:
-    default:
-      return "UNRECOGNIZED";
-  }
-}
-
-export function challenge_Discussion_DiscussionTypeToNumber(
-  object: Challenge_Discussion_DiscussionType
-): number {
-  switch (object) {
-    case Challenge_Discussion_DiscussionType.DISCUSSION_TYPE_UNSPECIFIED:
-      return 0;
-    case Challenge_Discussion_DiscussionType.DISCUSSION_TYPE_CHALLENGE:
-      return 1;
-    case Challenge_Discussion_DiscussionType.UNRECOGNIZED:
-    default:
-      return -1;
-  }
-}
-
 export interface Challenge_Phase {
   duration: number;
-  /** Unix timestamp */
-  scheduledStartDate?: number | undefined;
-  /** Unix timestamp */
-  scheduledEndDate?: number | undefined;
-  /** Unix timestamp */
-  actualStartDate?: number | undefined;
-  /** Unix timestamp */
-  actualEndDate?: number | undefined;
-  name: PhaseName;
+  scheduledStartDate?: string | undefined;
+  scheduledEndDate?: string | undefined;
+  actualStartDate?: string | undefined;
+  actualEndDate?: string | undefined;
+  name: string;
   phaseId: string;
   id: string;
   isOpen: boolean;
@@ -784,7 +139,7 @@ export interface CreateChallengeInput {
   descriptionFormat?: string | undefined;
   metadata: Challenge_Metadata[];
   task?: Challenge_Task | undefined;
-  phases: CreateChallengeInput_Phase[];
+  phases: Challenge_Phase[];
   events: Challenge_Event[];
   terms: Challenge_Term[];
   prizeSets: Challenge_PrizeSet[];
@@ -792,16 +147,10 @@ export interface CreateChallengeInput {
   projectId?: number | undefined;
   startDate?: number | undefined;
   endDate?: number | undefined;
-  status: Challenge_ChallengeStatus;
+  status: string;
   attachments: string[];
   groups: string[];
   discussions: Challenge_Discussion[];
-}
-
-export interface CreateChallengeInput_Phase {
-  defaultDuration: number;
-  phaseId: string;
-  predecessor: string;
 }
 
 export interface UpdateChallengeInput {
@@ -831,7 +180,7 @@ function createBaseChallenge(): Challenge {
     projectId: undefined,
     startDate: undefined,
     endDate: undefined,
-    status: Challenge_ChallengeStatus.CHALLENGE_STATUS_UNSPECIFIED,
+    status: "",
     attachments: [],
     groups: [],
     winners: [],
@@ -918,12 +267,8 @@ export const Challenge = {
     if (message.endDate !== undefined) {
       writer.uint32(168).int64(message.endDate);
     }
-    if (
-      message.status !== Challenge_ChallengeStatus.CHALLENGE_STATUS_UNSPECIFIED
-    ) {
-      writer
-        .uint32(176)
-        .int32(challenge_ChallengeStatusToNumber(message.status));
+    if (message.status !== "") {
+      writer.uint32(178).string(message.status);
     }
     for (const v of message.attachments) {
       writer.uint32(186).string(v!);
@@ -1033,7 +378,7 @@ export const Challenge = {
           message.endDate = longToNumber(reader.int64() as Long);
           break;
         case 22:
-          message.status = challenge_ChallengeStatusFromJSON(reader.int32());
+          message.status = reader.string();
           break;
         case 23:
           message.attachments.push(reader.string());
@@ -1121,9 +466,7 @@ export const Challenge = {
       projectId: isSet(object.projectId) ? Number(object.projectId) : undefined,
       startDate: isSet(object.startDate) ? Number(object.startDate) : undefined,
       endDate: isSet(object.endDate) ? Number(object.endDate) : undefined,
-      status: isSet(object.status)
-        ? challenge_ChallengeStatusFromJSON(object.status)
-        : Challenge_ChallengeStatus.CHALLENGE_STATUS_UNSPECIFIED,
+      status: isSet(object.status) ? String(object.status) : "",
       attachments: Array.isArray(object?.attachments)
         ? object.attachments.map((e: any) => String(e))
         : [],
@@ -1220,8 +563,7 @@ export const Challenge = {
       (obj.startDate = Math.round(message.startDate));
     message.endDate !== undefined &&
       (obj.endDate = Math.round(message.endDate));
-    message.status !== undefined &&
-      (obj.status = challenge_ChallengeStatusToJSON(message.status));
+    message.status !== undefined && (obj.status = message.status);
     if (message.attachments) {
       obj.attachments = message.attachments.map((e) => e);
     } else {
@@ -1302,8 +644,7 @@ export const Challenge = {
     message.projectId = object.projectId ?? undefined;
     message.startDate = object.startDate ?? undefined;
     message.endDate = object.endDate ?? undefined;
-    message.status =
-      object.status ?? Challenge_ChallengeStatus.CHALLENGE_STATUS_UNSPECIFIED;
+    message.status = object.status ?? "";
     message.attachments = object.attachments?.map((e) => e) || [];
     message.groups = object.groups?.map((e) => e) || [];
     message.winners =
@@ -1324,11 +665,12 @@ export const Challenge = {
 
 function createBaseChallenge_Legacy(): Challenge_Legacy {
   return {
-    track: Track.TRACK_UNSPECIFIED,
-    subTrack: SubTrack.SUB_TRACK_UNSPECIFIED,
-    forumId: 0,
+    track: undefined,
+    subTrack: undefined,
+    forumId: undefined,
     directProjectId: 0,
-    reviewType: ReviewType.REVIEW_TYPE_UNSPECIFIED,
+    reviewType: "",
+    confidentialityType: "",
     reviewScorecardId: undefined,
     screeningScorecardId: undefined,
     pureV5Task: undefined,
@@ -1342,35 +684,38 @@ export const Challenge_Legacy = {
     message: Challenge_Legacy,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.track !== Track.TRACK_UNSPECIFIED) {
-      writer.uint32(8).int32(trackToNumber(message.track));
+    if (message.track !== undefined) {
+      writer.uint32(10).string(message.track);
     }
-    if (message.subTrack !== SubTrack.SUB_TRACK_UNSPECIFIED) {
-      writer.uint32(16).int32(subTrackToNumber(message.subTrack));
+    if (message.subTrack !== undefined) {
+      writer.uint32(18).string(message.subTrack);
     }
-    if (message.forumId !== 0) {
+    if (message.forumId !== undefined) {
       writer.uint32(24).int32(message.forumId);
     }
     if (message.directProjectId !== 0) {
       writer.uint32(32).int32(message.directProjectId);
     }
-    if (message.reviewType !== ReviewType.REVIEW_TYPE_UNSPECIFIED) {
-      writer.uint32(40).int32(reviewTypeToNumber(message.reviewType));
+    if (message.reviewType !== "") {
+      writer.uint32(42).string(message.reviewType);
+    }
+    if (message.confidentialityType !== "") {
+      writer.uint32(50).string(message.confidentialityType);
     }
     if (message.reviewScorecardId !== undefined) {
-      writer.uint32(48).int32(message.reviewScorecardId);
+      writer.uint32(56).int32(message.reviewScorecardId);
     }
     if (message.screeningScorecardId !== undefined) {
-      writer.uint32(56).int32(message.screeningScorecardId);
+      writer.uint32(64).int32(message.screeningScorecardId);
     }
     if (message.pureV5Task !== undefined) {
-      writer.uint32(64).bool(message.pureV5Task);
+      writer.uint32(72).bool(message.pureV5Task);
     }
     if (message.selfService !== undefined) {
-      writer.uint32(72).bool(message.selfService);
+      writer.uint32(80).bool(message.selfService);
     }
     if (message.selfServiceCopilot !== undefined) {
-      writer.uint32(82).string(message.selfServiceCopilot);
+      writer.uint32(90).string(message.selfServiceCopilot);
     }
     return writer;
   },
@@ -1383,10 +728,10 @@ export const Challenge_Legacy = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.track = trackFromJSON(reader.int32());
+          message.track = reader.string();
           break;
         case 2:
-          message.subTrack = subTrackFromJSON(reader.int32());
+          message.subTrack = reader.string();
           break;
         case 3:
           message.forumId = reader.int32();
@@ -1395,21 +740,24 @@ export const Challenge_Legacy = {
           message.directProjectId = reader.int32();
           break;
         case 5:
-          message.reviewType = reviewTypeFromJSON(reader.int32());
+          message.reviewType = reader.string();
           break;
         case 6:
-          message.reviewScorecardId = reader.int32();
+          message.confidentialityType = reader.string();
           break;
         case 7:
-          message.screeningScorecardId = reader.int32();
+          message.reviewScorecardId = reader.int32();
           break;
         case 8:
-          message.pureV5Task = reader.bool();
+          message.screeningScorecardId = reader.int32();
           break;
         case 9:
-          message.selfService = reader.bool();
+          message.pureV5Task = reader.bool();
           break;
         case 10:
+          message.selfService = reader.bool();
+          break;
+        case 11:
           message.selfServiceCopilot = reader.string();
           break;
         default:
@@ -1422,19 +770,16 @@ export const Challenge_Legacy = {
 
   fromJSON(object: any): Challenge_Legacy {
     return {
-      track: isSet(object.track)
-        ? trackFromJSON(object.track)
-        : Track.TRACK_UNSPECIFIED,
-      subTrack: isSet(object.subTrack)
-        ? subTrackFromJSON(object.subTrack)
-        : SubTrack.SUB_TRACK_UNSPECIFIED,
-      forumId: isSet(object.forumId) ? Number(object.forumId) : 0,
+      track: isSet(object.track) ? String(object.track) : undefined,
+      subTrack: isSet(object.subTrack) ? String(object.subTrack) : undefined,
+      forumId: isSet(object.forumId) ? Number(object.forumId) : undefined,
       directProjectId: isSet(object.directProjectId)
         ? Number(object.directProjectId)
         : 0,
-      reviewType: isSet(object.reviewType)
-        ? reviewTypeFromJSON(object.reviewType)
-        : ReviewType.REVIEW_TYPE_UNSPECIFIED,
+      reviewType: isSet(object.reviewType) ? String(object.reviewType) : "",
+      confidentialityType: isSet(object.confidentialityType)
+        ? String(object.confidentialityType)
+        : "",
       reviewScorecardId: isSet(object.reviewScorecardId)
         ? Number(object.reviewScorecardId)
         : undefined,
@@ -1455,15 +800,15 @@ export const Challenge_Legacy = {
 
   toJSON(message: Challenge_Legacy): unknown {
     const obj: any = {};
-    message.track !== undefined && (obj.track = trackToJSON(message.track));
-    message.subTrack !== undefined &&
-      (obj.subTrack = subTrackToJSON(message.subTrack));
+    message.track !== undefined && (obj.track = message.track);
+    message.subTrack !== undefined && (obj.subTrack = message.subTrack);
     message.forumId !== undefined &&
       (obj.forumId = Math.round(message.forumId));
     message.directProjectId !== undefined &&
       (obj.directProjectId = Math.round(message.directProjectId));
-    message.reviewType !== undefined &&
-      (obj.reviewType = reviewTypeToJSON(message.reviewType));
+    message.reviewType !== undefined && (obj.reviewType = message.reviewType);
+    message.confidentialityType !== undefined &&
+      (obj.confidentialityType = message.confidentialityType);
     message.reviewScorecardId !== undefined &&
       (obj.reviewScorecardId = Math.round(message.reviewScorecardId));
     message.screeningScorecardId !== undefined &&
@@ -1486,12 +831,12 @@ export const Challenge_Legacy = {
     object: I
   ): Challenge_Legacy {
     const message = createBaseChallenge_Legacy();
-    message.track = object.track ?? Track.TRACK_UNSPECIFIED;
-    message.subTrack = object.subTrack ?? SubTrack.SUB_TRACK_UNSPECIFIED;
-    message.forumId = object.forumId ?? 0;
+    message.track = object.track ?? undefined;
+    message.subTrack = object.subTrack ?? undefined;
+    message.forumId = object.forumId ?? undefined;
     message.directProjectId = object.directProjectId ?? 0;
-    message.reviewType =
-      object.reviewType ?? ReviewType.REVIEW_TYPE_UNSPECIFIED;
+    message.reviewType = object.reviewType ?? "";
+    message.confidentialityType = object.confidentialityType ?? "";
     message.reviewScorecardId = object.reviewScorecardId ?? undefined;
     message.screeningScorecardId = object.screeningScorecardId ?? undefined;
     message.pureV5Task = object.pureV5Task ?? undefined;
@@ -1790,13 +1135,7 @@ export const Challenge_Metadata = {
 };
 
 function createBaseChallenge_Discussion(): Challenge_Discussion {
-  return {
-    id: undefined,
-    name: "",
-    type: Challenge_Discussion_DiscussionType.DISCUSSION_TYPE_UNSPECIFIED,
-    provider: "",
-    url: undefined,
-  };
+  return { id: undefined, name: "", type: "", provider: "", url: undefined };
 }
 
 export const Challenge_Discussion = {
@@ -1810,13 +1149,8 @@ export const Challenge_Discussion = {
     if (message.name !== "") {
       writer.uint32(18).string(message.name);
     }
-    if (
-      message.type !==
-      Challenge_Discussion_DiscussionType.DISCUSSION_TYPE_UNSPECIFIED
-    ) {
-      writer
-        .uint32(24)
-        .int32(challenge_Discussion_DiscussionTypeToNumber(message.type));
+    if (message.type !== "") {
+      writer.uint32(26).string(message.type);
     }
     if (message.provider !== "") {
       writer.uint32(34).string(message.provider);
@@ -1844,9 +1178,7 @@ export const Challenge_Discussion = {
           message.name = reader.string();
           break;
         case 3:
-          message.type = challenge_Discussion_DiscussionTypeFromJSON(
-            reader.int32()
-          );
+          message.type = reader.string();
           break;
         case 4:
           message.provider = reader.string();
@@ -1866,9 +1198,7 @@ export const Challenge_Discussion = {
     return {
       id: isSet(object.id) ? String(object.id) : undefined,
       name: isSet(object.name) ? String(object.name) : "",
-      type: isSet(object.type)
-        ? challenge_Discussion_DiscussionTypeFromJSON(object.type)
-        : Challenge_Discussion_DiscussionType.DISCUSSION_TYPE_UNSPECIFIED,
+      type: isSet(object.type) ? String(object.type) : "",
       provider: isSet(object.provider) ? String(object.provider) : "",
       url: isSet(object.url) ? String(object.url) : undefined,
     };
@@ -1878,8 +1208,7 @@ export const Challenge_Discussion = {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     message.name !== undefined && (obj.name = message.name);
-    message.type !== undefined &&
-      (obj.type = challenge_Discussion_DiscussionTypeToJSON(message.type));
+    message.type !== undefined && (obj.type = message.type);
     message.provider !== undefined && (obj.provider = message.provider);
     message.url !== undefined && (obj.url = message.url);
     return obj;
@@ -1897,9 +1226,7 @@ export const Challenge_Discussion = {
     const message = createBaseChallenge_Discussion();
     message.id = object.id ?? undefined;
     message.name = object.name ?? "";
-    message.type =
-      object.type ??
-      Challenge_Discussion_DiscussionType.DISCUSSION_TYPE_UNSPECIFIED;
+    message.type = object.type ?? "";
     message.provider = object.provider ?? "";
     message.url = object.url ?? undefined;
     return message;
@@ -1913,7 +1240,7 @@ function createBaseChallenge_Phase(): Challenge_Phase {
     scheduledEndDate: undefined,
     actualStartDate: undefined,
     actualEndDate: undefined,
-    name: PhaseName.PHASE_NAME_UNSPECIFIED,
+    name: "",
     phaseId: "",
     id: "",
     isOpen: false,
@@ -1929,19 +1256,31 @@ export const Challenge_Phase = {
       writer.uint32(8).int32(message.duration);
     }
     if (message.scheduledStartDate !== undefined) {
-      writer.uint32(16).int64(message.scheduledStartDate);
+      Timestamp.encode(
+        toTimestamp(message.scheduledStartDate),
+        writer.uint32(18).fork()
+      ).ldelim();
     }
     if (message.scheduledEndDate !== undefined) {
-      writer.uint32(24).int64(message.scheduledEndDate);
+      Timestamp.encode(
+        toTimestamp(message.scheduledEndDate),
+        writer.uint32(26).fork()
+      ).ldelim();
     }
     if (message.actualStartDate !== undefined) {
-      writer.uint32(32).int64(message.actualStartDate);
+      Timestamp.encode(
+        toTimestamp(message.actualStartDate),
+        writer.uint32(34).fork()
+      ).ldelim();
     }
     if (message.actualEndDate !== undefined) {
-      writer.uint32(40).int64(message.actualEndDate);
+      Timestamp.encode(
+        toTimestamp(message.actualEndDate),
+        writer.uint32(42).fork()
+      ).ldelim();
     }
-    if (message.name !== PhaseName.PHASE_NAME_UNSPECIFIED) {
-      writer.uint32(48).int32(phaseNameToNumber(message.name));
+    if (message.name !== "") {
+      writer.uint32(50).string(message.name);
     }
     if (message.phaseId !== "") {
       writer.uint32(58).string(message.phaseId);
@@ -1966,19 +1305,27 @@ export const Challenge_Phase = {
           message.duration = reader.int32();
           break;
         case 2:
-          message.scheduledStartDate = longToNumber(reader.int64() as Long);
+          message.scheduledStartDate = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32())
+          );
           break;
         case 3:
-          message.scheduledEndDate = longToNumber(reader.int64() as Long);
+          message.scheduledEndDate = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32())
+          );
           break;
         case 4:
-          message.actualStartDate = longToNumber(reader.int64() as Long);
+          message.actualStartDate = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32())
+          );
           break;
         case 5:
-          message.actualEndDate = longToNumber(reader.int64() as Long);
+          message.actualEndDate = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32())
+          );
           break;
         case 6:
-          message.name = phaseNameFromJSON(reader.int32());
+          message.name = reader.string();
           break;
         case 7:
           message.phaseId = reader.string();
@@ -2001,20 +1348,18 @@ export const Challenge_Phase = {
     return {
       duration: isSet(object.duration) ? Number(object.duration) : 0,
       scheduledStartDate: isSet(object.scheduledStartDate)
-        ? Number(object.scheduledStartDate)
+        ? String(object.scheduledStartDate)
         : undefined,
       scheduledEndDate: isSet(object.scheduledEndDate)
-        ? Number(object.scheduledEndDate)
+        ? String(object.scheduledEndDate)
         : undefined,
       actualStartDate: isSet(object.actualStartDate)
-        ? Number(object.actualStartDate)
+        ? String(object.actualStartDate)
         : undefined,
       actualEndDate: isSet(object.actualEndDate)
-        ? Number(object.actualEndDate)
+        ? String(object.actualEndDate)
         : undefined,
-      name: isSet(object.name)
-        ? phaseNameFromJSON(object.name)
-        : PhaseName.PHASE_NAME_UNSPECIFIED,
+      name: isSet(object.name) ? String(object.name) : "",
       phaseId: isSet(object.phaseId) ? String(object.phaseId) : "",
       id: isSet(object.id) ? String(object.id) : "",
       isOpen: isSet(object.isOpen) ? Boolean(object.isOpen) : false,
@@ -2026,14 +1371,14 @@ export const Challenge_Phase = {
     message.duration !== undefined &&
       (obj.duration = Math.round(message.duration));
     message.scheduledStartDate !== undefined &&
-      (obj.scheduledStartDate = Math.round(message.scheduledStartDate));
+      (obj.scheduledStartDate = message.scheduledStartDate);
     message.scheduledEndDate !== undefined &&
-      (obj.scheduledEndDate = Math.round(message.scheduledEndDate));
+      (obj.scheduledEndDate = message.scheduledEndDate);
     message.actualStartDate !== undefined &&
-      (obj.actualStartDate = Math.round(message.actualStartDate));
+      (obj.actualStartDate = message.actualStartDate);
     message.actualEndDate !== undefined &&
-      (obj.actualEndDate = Math.round(message.actualEndDate));
-    message.name !== undefined && (obj.name = phaseNameToJSON(message.name));
+      (obj.actualEndDate = message.actualEndDate);
+    message.name !== undefined && (obj.name = message.name);
     message.phaseId !== undefined && (obj.phaseId = message.phaseId);
     message.id !== undefined && (obj.id = message.id);
     message.isOpen !== undefined && (obj.isOpen = message.isOpen);
@@ -2055,7 +1400,7 @@ export const Challenge_Phase = {
     message.scheduledEndDate = object.scheduledEndDate ?? undefined;
     message.actualStartDate = object.actualStartDate ?? undefined;
     message.actualEndDate = object.actualEndDate ?? undefined;
-    message.name = object.name ?? PhaseName.PHASE_NAME_UNSPECIFIED;
+    message.name = object.name ?? "";
     message.phaseId = object.phaseId ?? "";
     message.id = object.id ?? "";
     message.isOpen = object.isOpen ?? false;
@@ -2526,7 +1871,7 @@ function createBaseCreateChallengeInput(): CreateChallengeInput {
     projectId: undefined,
     startDate: undefined,
     endDate: undefined,
-    status: Challenge_ChallengeStatus.CHALLENGE_STATUS_UNSPECIFIED,
+    status: "",
     attachments: [],
     groups: [],
     discussions: [],
@@ -2578,7 +1923,7 @@ export const CreateChallengeInput = {
       Challenge_Task.encode(message.task, writer.uint32(90).fork()).ldelim();
     }
     for (const v of message.phases) {
-      CreateChallengeInput_Phase.encode(v!, writer.uint32(98).fork()).ldelim();
+      Challenge_Phase.encode(v!, writer.uint32(98).fork()).ldelim();
     }
     for (const v of message.events) {
       Challenge_Event.encode(v!, writer.uint32(106).fork()).ldelim();
@@ -2601,12 +1946,8 @@ export const CreateChallengeInput = {
     if (message.endDate !== undefined) {
       writer.uint32(152).int64(message.endDate);
     }
-    if (
-      message.status !== Challenge_ChallengeStatus.CHALLENGE_STATUS_UNSPECIFIED
-    ) {
-      writer
-        .uint32(160)
-        .int32(challenge_ChallengeStatusToNumber(message.status));
+    if (message.status !== "") {
+      writer.uint32(162).string(message.status);
     }
     for (const v of message.attachments) {
       writer.uint32(170).string(v!);
@@ -2666,9 +2007,7 @@ export const CreateChallengeInput = {
           message.task = Challenge_Task.decode(reader, reader.uint32());
           break;
         case 12:
-          message.phases.push(
-            CreateChallengeInput_Phase.decode(reader, reader.uint32())
-          );
+          message.phases.push(Challenge_Phase.decode(reader, reader.uint32()));
           break;
         case 13:
           message.events.push(Challenge_Event.decode(reader, reader.uint32()));
@@ -2694,7 +2033,7 @@ export const CreateChallengeInput = {
           message.endDate = longToNumber(reader.int64() as Long);
           break;
         case 20:
-          message.status = challenge_ChallengeStatusFromJSON(reader.int32());
+          message.status = reader.string();
           break;
         case 21:
           message.attachments.push(reader.string());
@@ -2743,7 +2082,7 @@ export const CreateChallengeInput = {
         ? Challenge_Task.fromJSON(object.task)
         : undefined,
       phases: Array.isArray(object?.phases)
-        ? object.phases.map((e: any) => CreateChallengeInput_Phase.fromJSON(e))
+        ? object.phases.map((e: any) => Challenge_Phase.fromJSON(e))
         : [],
       events: Array.isArray(object?.events)
         ? object.events.map((e: any) => Challenge_Event.fromJSON(e))
@@ -2760,9 +2099,7 @@ export const CreateChallengeInput = {
       projectId: isSet(object.projectId) ? Number(object.projectId) : undefined,
       startDate: isSet(object.startDate) ? Number(object.startDate) : undefined,
       endDate: isSet(object.endDate) ? Number(object.endDate) : undefined,
-      status: isSet(object.status)
-        ? challenge_ChallengeStatusFromJSON(object.status)
-        : Challenge_ChallengeStatus.CHALLENGE_STATUS_UNSPECIFIED,
+      status: isSet(object.status) ? String(object.status) : "",
       attachments: Array.isArray(object?.attachments)
         ? object.attachments.map((e: any) => String(e))
         : [],
@@ -2809,7 +2146,7 @@ export const CreateChallengeInput = {
         : undefined);
     if (message.phases) {
       obj.phases = message.phases.map((e) =>
-        e ? CreateChallengeInput_Phase.toJSON(e) : undefined
+        e ? Challenge_Phase.toJSON(e) : undefined
       );
     } else {
       obj.phases = [];
@@ -2846,8 +2183,7 @@ export const CreateChallengeInput = {
       (obj.startDate = Math.round(message.startDate));
     message.endDate !== undefined &&
       (obj.endDate = Math.round(message.endDate));
-    message.status !== undefined &&
-      (obj.status = challenge_ChallengeStatusToJSON(message.status));
+    message.status !== undefined && (obj.status = message.status);
     if (message.attachments) {
       obj.attachments = message.attachments.map((e) => e);
     } else {
@@ -2900,8 +2236,7 @@ export const CreateChallengeInput = {
         ? Challenge_Task.fromPartial(object.task)
         : undefined;
     message.phases =
-      object.phases?.map((e) => CreateChallengeInput_Phase.fromPartial(e)) ||
-      [];
+      object.phases?.map((e) => Challenge_Phase.fromPartial(e)) || [];
     message.events =
       object.events?.map((e) => Challenge_Event.fromPartial(e)) || [];
     message.terms =
@@ -2912,97 +2247,11 @@ export const CreateChallengeInput = {
     message.projectId = object.projectId ?? undefined;
     message.startDate = object.startDate ?? undefined;
     message.endDate = object.endDate ?? undefined;
-    message.status =
-      object.status ?? Challenge_ChallengeStatus.CHALLENGE_STATUS_UNSPECIFIED;
+    message.status = object.status ?? "";
     message.attachments = object.attachments?.map((e) => e) || [];
     message.groups = object.groups?.map((e) => e) || [];
     message.discussions =
       object.discussions?.map((e) => Challenge_Discussion.fromPartial(e)) || [];
-    return message;
-  },
-};
-
-function createBaseCreateChallengeInput_Phase(): CreateChallengeInput_Phase {
-  return { defaultDuration: 0, phaseId: "", predecessor: "" };
-}
-
-export const CreateChallengeInput_Phase = {
-  encode(
-    message: CreateChallengeInput_Phase,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.defaultDuration !== 0) {
-      writer.uint32(8).int32(message.defaultDuration);
-    }
-    if (message.phaseId !== "") {
-      writer.uint32(18).string(message.phaseId);
-    }
-    if (message.predecessor !== "") {
-      writer.uint32(26).string(message.predecessor);
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): CreateChallengeInput_Phase {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCreateChallengeInput_Phase();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.defaultDuration = reader.int32();
-          break;
-        case 2:
-          message.phaseId = reader.string();
-          break;
-        case 3:
-          message.predecessor = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CreateChallengeInput_Phase {
-    return {
-      defaultDuration: isSet(object.defaultDuration)
-        ? Number(object.defaultDuration)
-        : 0,
-      phaseId: isSet(object.phaseId) ? String(object.phaseId) : "",
-      predecessor: isSet(object.predecessor) ? String(object.predecessor) : "",
-    };
-  },
-
-  toJSON(message: CreateChallengeInput_Phase): unknown {
-    const obj: any = {};
-    message.defaultDuration !== undefined &&
-      (obj.defaultDuration = Math.round(message.defaultDuration));
-    message.phaseId !== undefined && (obj.phaseId = message.phaseId);
-    message.predecessor !== undefined &&
-      (obj.predecessor = message.predecessor);
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<CreateChallengeInput_Phase>, I>>(
-    base?: I
-  ): CreateChallengeInput_Phase {
-    return CreateChallengeInput_Phase.fromPartial(base ?? {});
-  },
-
-  fromPartial<I extends Exact<DeepPartial<CreateChallengeInput_Phase>, I>>(
-    object: I
-  ): CreateChallengeInput_Phase {
-    const message = createBaseCreateChallengeInput_Phase();
-    message.defaultDuration = object.defaultDuration ?? 0;
-    message.phaseId = object.phaseId ?? "";
-    message.predecessor = object.predecessor ?? "";
     return message;
   },
 };
@@ -3126,6 +2375,19 @@ type Exact<P, I extends P> = P extends Builtin
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
       [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
     };
+
+function toTimestamp(dateStr: string): Timestamp {
+  const date = new Date(dateStr);
+  const seconds = date.getTime() / 1_000;
+  const nanos = (date.getTime() % 1_000) * 1_000_000;
+  return { seconds, nanos };
+}
+
+function fromTimestamp(t: Timestamp): string {
+  let millis = t.seconds * 1_000;
+  millis += t.nanos / 1_000_000;
+  return new Date(millis).toISOString();
+}
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {
