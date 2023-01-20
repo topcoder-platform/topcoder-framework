@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.es.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "dist-es",
+    "rootDir": "src",
+    "composite": true
+  },
+  "include": ["typings/global.d.ts", "src"],
+  "exclude": ["node_modules", "src/models"]
+}
