@@ -1,4 +1,5 @@
 /* eslint-disable */
+import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { Struct, Value } from "../google/protobuf/struct";
 import { Timestamp } from "../google/protobuf/timestamp";
@@ -261,6 +262,12 @@ export interface ScanResult {
   items: { [key: string]: any }[];
 }
 
+export interface CreateResult {
+  kind?:
+    | { $case: "integerId"; integerId: number }
+    | { $case: "stringId"; stringId: string };
+}
+
 export interface LookupCriteria {
   key: string;
   value?: any;
@@ -508,6 +515,95 @@ export const ScanResult = {
   },
 };
 
+function createBaseCreateResult(): CreateResult {
+  return { kind: undefined };
+}
+
+export const CreateResult = {
+  encode(
+    message: CreateResult,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.kind?.$case === "integerId") {
+      writer.uint32(8).int64(message.kind.integerId);
+    }
+    if (message.kind?.$case === "stringId") {
+      writer.uint32(18).string(message.kind.stringId);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CreateResult {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCreateResult();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.kind = {
+            $case: "integerId",
+            integerId: longToNumber(reader.int64() as Long),
+          };
+          break;
+        case 2:
+          message.kind = { $case: "stringId", stringId: reader.string() };
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CreateResult {
+    return {
+      kind: isSet(object.integerId)
+        ? { $case: "integerId", integerId: Number(object.integerId) }
+        : isSet(object.stringId)
+        ? { $case: "stringId", stringId: String(object.stringId) }
+        : undefined,
+    };
+  },
+
+  toJSON(message: CreateResult): unknown {
+    const obj: any = {};
+    message.kind?.$case === "integerId" &&
+      (obj.integerId = Math.round(message.kind?.integerId));
+    message.kind?.$case === "stringId" &&
+      (obj.stringId = message.kind?.stringId);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<CreateResult>, I>>(
+    base?: I
+  ): CreateResult {
+    return CreateResult.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<CreateResult>, I>>(
+    object: I
+  ): CreateResult {
+    const message = createBaseCreateResult();
+    if (
+      object.kind?.$case === "integerId" &&
+      object.kind?.integerId !== undefined &&
+      object.kind?.integerId !== null
+    ) {
+      message.kind = { $case: "integerId", integerId: object.kind.integerId };
+    }
+    if (
+      object.kind?.$case === "stringId" &&
+      object.kind?.stringId !== undefined &&
+      object.kind?.stringId !== null
+    ) {
+      message.kind = { $case: "stringId", stringId: object.kind.stringId };
+    }
+    return message;
+  },
+};
+
 function createBaseLookupCriteria(): LookupCriteria {
   return { key: "", value: undefined };
 }
@@ -648,6 +744,25 @@ export const GoogleProtobufTypesPlaceholder = {
   },
 };
 
+declare var self: any | undefined;
+declare var window: any | undefined;
+declare var global: any | undefined;
+var tsProtoGlobalThis: any = (() => {
+  if (typeof globalThis !== "undefined") {
+    return globalThis;
+  }
+  if (typeof self !== "undefined") {
+    return self;
+  }
+  if (typeof window !== "undefined") {
+    return window;
+  }
+  if (typeof global !== "undefined") {
+    return global;
+  }
+  throw "Unable to locate global object";
+})();
+
 type Builtin =
   | Date
   | Function
@@ -689,6 +804,20 @@ function fromTimestamp(t: Timestamp): string {
   let millis = t.seconds * 1_000;
   millis += t.nanos / 1_000_000;
   return new Date(millis).toISOString();
+}
+
+function longToNumber(long: Long): number {
+  if (long.gt(Number.MAX_SAFE_INTEGER)) {
+    throw new tsProtoGlobalThis.Error(
+      "Value is larger than Number.MAX_SAFE_INTEGER"
+    );
+  }
+  return long.toNumber();
+}
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
 }
 
 function isSet(value: any): boolean {
