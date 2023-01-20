@@ -36,6 +36,15 @@ export class SubmissionDomain {
     )(param, metadata);
   }
 
+  public async lookup(
+    param: LookupCriteria,
+    metadata: Metadata = new Metadata()
+  ) {
+    return promisify<LookupCriteria, Metadata, Submission>(
+      this.client.lookup.bind(this.client)
+    )(param, metadata);
+  }
+
   public async create(
     param: CreateSubmissionInput,
     metadata: Metadata = new Metadata()

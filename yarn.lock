@@ -1397,8 +1397,8 @@
 
 "@topcoder-framework/lib-common@^0.2.1":
   version "0.4.1-ci.0"
-  resolved "http://localhost:4873/@topcoder-framework%2flib-common/-/lib-common-0.4.1-ci.0.tgz#3b6b0876a84084a7be185b2911b9a207688a48ba"
-  integrity sha512-0P5dyuDwsONLhZuoOQV7+JOBsVXBbIhDcagJzc9E4mni3Cde59K2BcgHJr27/6VUi1P27/BlDMKQOL8aiVso2w==
+  resolved "http://localhost:4873/@topcoder-framework%2flib-common/-/lib-common-0.4.1-ci.0.tgz#759a640827035365b67d9d501c2a189e63943c1a"
+  integrity sha512-Y7i4BdQj134wOhudq+LCt361JwYZvOKvBhsj16XQBEg4xRczm2IXvvDGubFOw3iBIOWWM4bHdBxvPWjpR6HdUQ==
   dependencies:
     "@grpc/grpc-js" "^1.8.0"
     rimraf "^3.0.2"
