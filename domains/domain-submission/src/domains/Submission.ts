@@ -8,9 +8,13 @@ import {
   SubmissionList,
   CreateSubmissionInput,
 } from "../models/domain-layer/submission/submission";
-import { LookupCriteria } from "@topcoder-framework/lib-common";
+import {
+  LookupCriteria,
+  ScanRequest,
+  ScanResult,
+} from "@topcoder-framework/lib-common";
 
-export class AttachmentDomain {
+export class SubmissionDomain {
   constructor(
     protected grpcServerHost: string,
     protected grpcServerPort: string
@@ -22,6 +26,15 @@ export class AttachmentDomain {
       GrpcClient.credentials,
       GrpcClient.clientOptions
     );
+
+  public async scan(
+    param: ScanRequest,
+    metadata: Metadata = new Metadata()
+  ): Promise<ScanResult> {
+    return promisify<ScanRequest, Metadata, ScanResult>(
+      this.client.scan.bind(this.client)
+    )(param, metadata);
+  }
 
   public async create(
     param: CreateSubmissionInput,
