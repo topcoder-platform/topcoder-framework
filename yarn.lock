@@ -1397,12 +1397,12 @@
 
 "@topcoder-framework/lib-common@^0.2.1":
   version "0.4.1-ci.0"
-  resolved "http://localhost:4873/@topcoder-framework%2flib-common/-/lib-common-0.4.1-ci.0.tgz#bf57ff298648c5c304d6f7bce0c5ea57bf3ecedf"
-  integrity sha512-qJ4yIYQgJlJGO1obFeYAK1oXsKFnuN+mLRMU1yHdEzWS0NVwmvEO3fCphWG4zjHIkFXxySlDBrMC4Ot3sOXp8g==
+  resolved "http://localhost:4873/@topcoder-framework%2flib-common/-/lib-common-0.4.1-ci.0.tgz#4bd9b9105a4bf65ead015466d7651f2da4679a70"
+  integrity sha512-0lvHEvO9+R+UWfdCUAkLqqMUn7EBbQLzklPkfw57bQNa85eHD9CBAS5oDuuEaKv+cMmWVytV5+1+qdDFa4QPxQ==
   dependencies:
     "@grpc/grpc-js" "^1.8.0"
     rimraf "^3.0.2"
-    topcoder-interface "github:topcoder-platform/plat-interface-definition#v0.0.7"
+    topcoder-interface "file:../plat-interface-definition"
     tslib "^2.4.1"
 
 "@tsconfig/node10@^1.0.7":
@@ -5704,12 +5704,12 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-"topcoder-interface@file:../plat-interface-definition":
+"topcoder-interface@file:/Users/hamidtavakoli/topcoder/plat-interface-definition":
   version "1.0.0"
 
-"topcoder-interface@github:topcoder-platform/plat-interface-definition#v0.0.7":
+"topcoder-interface@github:topcoder-platform/plat-interface-definition#v0.0.10":
   version "1.0.0"
-  resolved "https://codeload.github.com/topcoder-platform/plat-interface-definition/tar.gz/6c0ef6bb00fcb599eb3e606502e386e15971d43c"
+  resolved "https://codeload.github.com/topcoder-platform/plat-interface-definition/tar.gz/83db3ad5ac053393f8d9aa975dfe067fd8942add"
 
 tr46@~0.0.3:
   version "0.0.3"
