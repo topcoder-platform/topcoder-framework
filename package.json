@@ -11,8 +11,8 @@
     "format": "scripty",
     "clean": "scripty",
     "local-publish": "scripty",
-    "prepare": "husky install",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "yarn build",
+    "prepare": "husky install"
   },
   "scripty": {
     "path": "./scripts/workspace"

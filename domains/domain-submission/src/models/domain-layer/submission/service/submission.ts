@@ -20,12 +20,13 @@ import {
   CreateSubmissionInput,
   Submission,
   SubmissionList,
+  UpdateSubmissionInput,
 } from "../submission";
 
-export type SubmissionServiceService = typeof SubmissionServiceService;
-export const SubmissionServiceService = {
+export type SubmissionService = typeof SubmissionService;
+export const SubmissionService = {
   scan: {
-    path: "/topcoder.domain.submission_service.SubmissionService/Scan",
+    path: "/topcoder.domain.service.submission.Submission/Scan",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: ScanRequest) =>
@@ -36,7 +37,7 @@ export const SubmissionServiceService = {
     responseDeserialize: (value: Buffer) => ScanResult.decode(value),
   },
   lookup: {
-    path: "/topcoder.domain.submission_service.SubmissionService/Lookup",
+    path: "/topcoder.domain.service.submission.Submission/Lookup",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: LookupCriteria) =>
@@ -46,9 +47,8 @@ export const SubmissionServiceService = {
       Buffer.from(Submission.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Submission.decode(value),
   },
-  /** rpc Update(UpdateResourceRequest) returns (MutationResult); */
   create: {
-    path: "/topcoder.domain.submission_service.SubmissionService/Create",
+    path: "/topcoder.domain.service.submission.Submission/Create",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: CreateSubmissionInput) =>
@@ -58,8 +58,19 @@ export const SubmissionServiceService = {
       Buffer.from(Submission.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Submission.decode(value),
   },
+  update: {
+    path: "/topcoder.domain.service.submission.Submission/Update",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: UpdateSubmissionInput) =>
+      Buffer.from(UpdateSubmissionInput.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => UpdateSubmissionInput.decode(value),
+    responseSerialize: (value: Submission) =>
+      Buffer.from(Submission.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => Submission.decode(value),
+  },
   delete: {
-    path: "/topcoder.domain.submission_service.SubmissionService/Delete",
+    path: "/topcoder.domain.service.submission.Submission/Delete",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: LookupCriteria) =>
@@ -71,15 +82,15 @@ export const SubmissionServiceService = {
   },
 } as const;
 
-export interface SubmissionServiceServer extends UntypedServiceImplementation {
+export interface SubmissionServer extends UntypedServiceImplementation {
   scan: handleUnaryCall<ScanRequest, ScanResult>;
   lookup: handleUnaryCall<LookupCriteria, Submission>;
-  /** rpc Update(UpdateResourceRequest) returns (MutationResult); */
   create: handleUnaryCall<CreateSubmissionInput, Submission>;
+  update: handleUnaryCall<UpdateSubmissionInput, Submission>;
   delete: handleUnaryCall<LookupCriteria, SubmissionList>;
 }
 
-export interface SubmissionServiceClient extends Client {
+export interface SubmissionClient extends Client {
   scan(
     request: ScanRequest,
     callback: (error: ServiceError | null, response: ScanResult) => void
@@ -110,7 +121,6 @@ export interface SubmissionServiceClient extends Client {
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Submission) => void
   ): ClientUnaryCall;
-  /** rpc Update(UpdateResourceRequest) returns (MutationResult); */
   create(
     request: CreateSubmissionInput,
     callback: (error: ServiceError | null, response: Submission) => void
@@ -122,6 +132,21 @@ export interface SubmissionServiceClient extends Client {
   ): ClientUnaryCall;
   create(
     request: CreateSubmissionInput,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: Submission) => void
+  ): ClientUnaryCall;
+  update(
+    request: UpdateSubmissionInput,
+    callback: (error: ServiceError | null, response: Submission) => void
+  ): ClientUnaryCall;
+  update(
+    request: UpdateSubmissionInput,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: Submission) => void
+  ): ClientUnaryCall;
+  update(
+    request: UpdateSubmissionInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Submission) => void
@@ -143,14 +168,14 @@ export interface SubmissionServiceClient extends Client {
   ): ClientUnaryCall;
 }
 
-export const SubmissionServiceClient = makeGenericClientConstructor(
-  SubmissionServiceService,
-  "topcoder.domain.submission_service.SubmissionService"
+export const SubmissionClient = makeGenericClientConstructor(
+  SubmissionService,
+  "topcoder.domain.service.submission.Submission"
 ) as unknown as {
   new (
     address: string,
     credentials: ChannelCredentials,
     options?: Partial<ClientOptions>
-  ): SubmissionServiceClient;
-  service: typeof SubmissionServiceService;
+  ): SubmissionClient;
+  service: typeof SubmissionService;
 };

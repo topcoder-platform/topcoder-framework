@@ -113,6 +113,7 @@ export enum Domain {
   DOMAIN_CHALLENGE_TRACK = 7,
   DOMAIN_CHALLENGE_PHASE = 8,
   DOMAIN_CHALLENGE_TIMELINE_TEMPLATE = 9,
+  DOMAIN_SUBMISSION = 10,
   UNRECOGNIZED = -1,
 }
 
@@ -148,6 +149,9 @@ export function domainFromJSON(object: any): Domain {
     case 9:
     case "DOMAIN_CHALLENGE_TIMELINE_TEMPLATE":
       return Domain.DOMAIN_CHALLENGE_TIMELINE_TEMPLATE;
+    case 10:
+    case "DOMAIN_SUBMISSION":
+      return Domain.DOMAIN_SUBMISSION;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -177,6 +181,8 @@ export function domainToJSON(object: Domain): string {
       return "DOMAIN_CHALLENGE_PHASE";
     case Domain.DOMAIN_CHALLENGE_TIMELINE_TEMPLATE:
       return "DOMAIN_CHALLENGE_TIMELINE_TEMPLATE";
+    case Domain.DOMAIN_SUBMISSION:
+      return "DOMAIN_SUBMISSION";
     case Domain.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

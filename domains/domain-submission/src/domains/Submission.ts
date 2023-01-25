@@ -2,7 +2,7 @@ import { promisify } from "util";
 import { Metadata } from "@grpc/grpc-js";
 
 import { GrpcClient } from "../common/GrpcClient";
-import { SubmissionServiceClient } from "../models/domain-layer/submission/service/submission";
+import { SubmissionClient } from "../models/domain-layer/submission/service/submission";
 import {
   Submission,
   SubmissionList,
@@ -20,12 +20,11 @@ export class SubmissionDomain {
     protected grpcServerPort: string
   ) {}
 
-  protected readonly client: SubmissionServiceClient =
-    new SubmissionServiceClient(
-      `${this.grpcServerHost}:${this.grpcServerPort}`,
-      GrpcClient.credentials,
-      GrpcClient.clientOptions
-    );
+  protected readonly client: SubmissionClient = new SubmissionClient(
+    `${this.grpcServerHost}:${this.grpcServerPort}`,
+    GrpcClient.credentials,
+    GrpcClient.clientOptions
+  );
 
   public async scan(
     param: ScanRequest,

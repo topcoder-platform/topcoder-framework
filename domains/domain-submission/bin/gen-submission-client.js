@@ -4,7 +4,8 @@ const path = require("path");
 const { execSync } = require("child_process");
 const rimraf = require("rimraf");
 
-const PROTO_DIR = process.env.SUBMISSION_DOMAIN_PROTO_PATH;
+// const PROTO_DIR = process.env.SUBMISSION_DOMAIN_PROTO_PATH;
+const PROTO_DIR = "/Users/hamidtavakoli/topcoder/topcoder-framework/domains/domain-submission/node_modules/topcoder-interface";
 const MODEL_DIR = path.join(__dirname, "../src/models/");
 
 console.log("PROTO_DIR", PROTO_DIR)

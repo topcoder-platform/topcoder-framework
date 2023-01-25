@@ -44,6 +44,29 @@ export interface CreateSubmissionInput_entity {
   submittedDate?: string | undefined;
 }
 
+export interface UpdateSubmissionInput {
+  submissionId: string;
+}
+
+export interface UpdateSubmissionInput_authUser {
+  handle: string;
+  sub: string;
+  roles: string[];
+  scopes: string[];
+}
+
+export interface UpdateSubmissionInput_entity {
+  url?: string | undefined;
+  fileType?: string | undefined;
+  challengeId?: string | undefined;
+  type?: string | undefined;
+  memberId?: string | undefined;
+  legacyUploadId?: number | undefined;
+  legacySubmissionId?: number | undefined;
+  submissionPhaseId?: string | undefined;
+  submittedDate?: string | undefined;
+}
+
 export interface SubmissionList {
   id: string[];
 }
@@ -620,6 +643,334 @@ export const CreateSubmissionInput_entity = {
     message.challengeId = object.challengeId ?? "";
     message.type = object.type ?? "";
     message.memberId = object.memberId ?? "";
+    message.legacyUploadId = object.legacyUploadId ?? undefined;
+    message.legacySubmissionId = object.legacySubmissionId ?? undefined;
+    message.submissionPhaseId = object.submissionPhaseId ?? undefined;
+    message.submittedDate = object.submittedDate ?? undefined;
+    return message;
+  },
+};
+
+function createBaseUpdateSubmissionInput(): UpdateSubmissionInput {
+  return { submissionId: "" };
+}
+
+export const UpdateSubmissionInput = {
+  encode(
+    message: UpdateSubmissionInput,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.submissionId !== "") {
+      writer.uint32(10).string(message.submissionId);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): UpdateSubmissionInput {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUpdateSubmissionInput();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.submissionId = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UpdateSubmissionInput {
+    return {
+      submissionId: isSet(object.submissionId)
+        ? String(object.submissionId)
+        : "",
+    };
+  },
+
+  toJSON(message: UpdateSubmissionInput): unknown {
+    const obj: any = {};
+    message.submissionId !== undefined &&
+      (obj.submissionId = message.submissionId);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<UpdateSubmissionInput>, I>>(
+    base?: I
+  ): UpdateSubmissionInput {
+    return UpdateSubmissionInput.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<UpdateSubmissionInput>, I>>(
+    object: I
+  ): UpdateSubmissionInput {
+    const message = createBaseUpdateSubmissionInput();
+    message.submissionId = object.submissionId ?? "";
+    return message;
+  },
+};
+
+function createBaseUpdateSubmissionInput_authUser(): UpdateSubmissionInput_authUser {
+  return { handle: "", sub: "", roles: [], scopes: [] };
+}
+
+export const UpdateSubmissionInput_authUser = {
+  encode(
+    message: UpdateSubmissionInput_authUser,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.handle !== "") {
+      writer.uint32(10).string(message.handle);
+    }
+    if (message.sub !== "") {
+      writer.uint32(18).string(message.sub);
+    }
+    for (const v of message.roles) {
+      writer.uint32(26).string(v!);
+    }
+    for (const v of message.scopes) {
+      writer.uint32(34).string(v!);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): UpdateSubmissionInput_authUser {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUpdateSubmissionInput_authUser();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.handle = reader.string();
+          break;
+        case 2:
+          message.sub = reader.string();
+          break;
+        case 3:
+          message.roles.push(reader.string());
+          break;
+        case 4:
+          message.scopes.push(reader.string());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UpdateSubmissionInput_authUser {
+    return {
+      handle: isSet(object.handle) ? String(object.handle) : "",
+      sub: isSet(object.sub) ? String(object.sub) : "",
+      roles: Array.isArray(object?.roles)
+        ? object.roles.map((e: any) => String(e))
+        : [],
+      scopes: Array.isArray(object?.scopes)
+        ? object.scopes.map((e: any) => String(e))
+        : [],
+    };
+  },
+
+  toJSON(message: UpdateSubmissionInput_authUser): unknown {
+    const obj: any = {};
+    message.handle !== undefined && (obj.handle = message.handle);
+    message.sub !== undefined && (obj.sub = message.sub);
+    if (message.roles) {
+      obj.roles = message.roles.map((e) => e);
+    } else {
+      obj.roles = [];
+    }
+    if (message.scopes) {
+      obj.scopes = message.scopes.map((e) => e);
+    } else {
+      obj.scopes = [];
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<UpdateSubmissionInput_authUser>, I>>(
+    base?: I
+  ): UpdateSubmissionInput_authUser {
+    return UpdateSubmissionInput_authUser.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<UpdateSubmissionInput_authUser>, I>>(
+    object: I
+  ): UpdateSubmissionInput_authUser {
+    const message = createBaseUpdateSubmissionInput_authUser();
+    message.handle = object.handle ?? "";
+    message.sub = object.sub ?? "";
+    message.roles = object.roles?.map((e) => e) || [];
+    message.scopes = object.scopes?.map((e) => e) || [];
+    return message;
+  },
+};
+
+function createBaseUpdateSubmissionInput_entity(): UpdateSubmissionInput_entity {
+  return {
+    url: undefined,
+    fileType: undefined,
+    challengeId: undefined,
+    type: undefined,
+    memberId: undefined,
+    legacyUploadId: undefined,
+    legacySubmissionId: undefined,
+    submissionPhaseId: undefined,
+    submittedDate: undefined,
+  };
+}
+
+export const UpdateSubmissionInput_entity = {
+  encode(
+    message: UpdateSubmissionInput_entity,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.url !== undefined) {
+      writer.uint32(10).string(message.url);
+    }
+    if (message.fileType !== undefined) {
+      writer.uint32(18).string(message.fileType);
+    }
+    if (message.challengeId !== undefined) {
+      writer.uint32(26).string(message.challengeId);
+    }
+    if (message.type !== undefined) {
+      writer.uint32(34).string(message.type);
+    }
+    if (message.memberId !== undefined) {
+      writer.uint32(42).string(message.memberId);
+    }
+    if (message.legacyUploadId !== undefined) {
+      writer.uint32(48).int64(message.legacyUploadId);
+    }
+    if (message.legacySubmissionId !== undefined) {
+      writer.uint32(56).int64(message.legacySubmissionId);
+    }
+    if (message.submissionPhaseId !== undefined) {
+      writer.uint32(66).string(message.submissionPhaseId);
+    }
+    if (message.submittedDate !== undefined) {
+      writer.uint32(74).string(message.submittedDate);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): UpdateSubmissionInput_entity {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUpdateSubmissionInput_entity();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.url = reader.string();
+          break;
+        case 2:
+          message.fileType = reader.string();
+          break;
+        case 3:
+          message.challengeId = reader.string();
+          break;
+        case 4:
+          message.type = reader.string();
+          break;
+        case 5:
+          message.memberId = reader.string();
+          break;
+        case 6:
+          message.legacyUploadId = longToNumber(reader.int64() as Long);
+          break;
+        case 7:
+          message.legacySubmissionId = longToNumber(reader.int64() as Long);
+          break;
+        case 8:
+          message.submissionPhaseId = reader.string();
+          break;
+        case 9:
+          message.submittedDate = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UpdateSubmissionInput_entity {
+    return {
+      url: isSet(object.url) ? String(object.url) : undefined,
+      fileType: isSet(object.fileType) ? String(object.fileType) : undefined,
+      challengeId: isSet(object.challengeId)
+        ? String(object.challengeId)
+        : undefined,
+      type: isSet(object.type) ? String(object.type) : undefined,
+      memberId: isSet(object.memberId) ? String(object.memberId) : undefined,
+      legacyUploadId: isSet(object.legacyUploadId)
+        ? Number(object.legacyUploadId)
+        : undefined,
+      legacySubmissionId: isSet(object.legacySubmissionId)
+        ? Number(object.legacySubmissionId)
+        : undefined,
+      submissionPhaseId: isSet(object.submissionPhaseId)
+        ? String(object.submissionPhaseId)
+        : undefined,
+      submittedDate: isSet(object.submittedDate)
+        ? String(object.submittedDate)
+        : undefined,
+    };
+  },
+
+  toJSON(message: UpdateSubmissionInput_entity): unknown {
+    const obj: any = {};
+    message.url !== undefined && (obj.url = message.url);
+    message.fileType !== undefined && (obj.fileType = message.fileType);
+    message.challengeId !== undefined &&
+      (obj.challengeId = message.challengeId);
+    message.type !== undefined && (obj.type = message.type);
+    message.memberId !== undefined && (obj.memberId = message.memberId);
+    message.legacyUploadId !== undefined &&
+      (obj.legacyUploadId = Math.round(message.legacyUploadId));
+    message.legacySubmissionId !== undefined &&
+      (obj.legacySubmissionId = Math.round(message.legacySubmissionId));
+    message.submissionPhaseId !== undefined &&
+      (obj.submissionPhaseId = message.submissionPhaseId);
+    message.submittedDate !== undefined &&
+      (obj.submittedDate = message.submittedDate);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<UpdateSubmissionInput_entity>, I>>(
+    base?: I
+  ): UpdateSubmissionInput_entity {
+    return UpdateSubmissionInput_entity.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<UpdateSubmissionInput_entity>, I>>(
+    object: I
+  ): UpdateSubmissionInput_entity {
+    const message = createBaseUpdateSubmissionInput_entity();
+    message.url = object.url ?? undefined;
+    message.fileType = object.fileType ?? undefined;
+    message.challengeId = object.challengeId ?? undefined;
+    message.type = object.type ?? undefined;
+    message.memberId = object.memberId ?? undefined;
     message.legacyUploadId = object.legacyUploadId ?? undefined;
     message.legacySubmissionId = object.legacySubmissionId ?? undefined;
     message.submissionPhaseId = object.submissionPhaseId ?? undefined;
