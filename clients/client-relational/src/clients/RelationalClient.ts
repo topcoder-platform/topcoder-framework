@@ -1,5 +1,3 @@
-import "source-map-support/register";
-
 import { credentials, Metadata } from "@grpc/grpc-js";
 import { promisify } from "util";
 import {
@@ -8,8 +6,8 @@ import {
   QueryServiceClient,
 } from "../models/data-access-layer/relational/relational";
 
-export default class RelationalClient {
-  constructor(public host: number, public port: number) {}
+export class RelationalClient {
+  constructor(public host: string, public port: number) {}
 
   private readonly client: QueryServiceClient = new QueryServiceClient(
     `${this.host}:${this.port}`, // 9090
