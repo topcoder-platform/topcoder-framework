@@ -1,6 +1,7 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
+import { Empty } from "../google/protobuf/empty";
 import { Struct, Value } from "../google/protobuf/struct";
 import { Timestamp } from "../google/protobuf/timestamp";
 
@@ -148,6 +149,7 @@ export enum Domain {
   DOMAIN_CHALLENGE_TRACK = "DOMAIN_CHALLENGE_TRACK",
   DOMAIN_CHALLENGE_PHASE = "DOMAIN_CHALLENGE_PHASE",
   DOMAIN_CHALLENGE_TIMELINE_TEMPLATE = "DOMAIN_CHALLENGE_TIMELINE_TEMPLATE",
+  DOMAIN_SUBMISSION = "DOMAIN_SUBMISSION",
   UNRECOGNIZED = "UNRECOGNIZED",
 }
 
@@ -183,6 +185,9 @@ export function domainFromJSON(object: any): Domain {
     case 9:
     case "DOMAIN_CHALLENGE_TIMELINE_TEMPLATE":
       return Domain.DOMAIN_CHALLENGE_TIMELINE_TEMPLATE;
+    case 10:
+    case "DOMAIN_SUBMISSION":
+      return Domain.DOMAIN_SUBMISSION;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -212,6 +217,8 @@ export function domainToJSON(object: Domain): string {
       return "DOMAIN_CHALLENGE_PHASE";
     case Domain.DOMAIN_CHALLENGE_TIMELINE_TEMPLATE:
       return "DOMAIN_CHALLENGE_TIMELINE_TEMPLATE";
+    case Domain.DOMAIN_SUBMISSION:
+      return "DOMAIN_SUBMISSION";
     case Domain.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -240,6 +247,8 @@ export function domainToNumber(object: Domain): number {
       return 8;
     case Domain.DOMAIN_CHALLENGE_TIMELINE_TEMPLATE:
       return 9;
+    case Domain.DOMAIN_SUBMISSION:
+      return 10;
     case Domain.UNRECOGNIZED:
     default:
       return -1;
@@ -273,8 +282,10 @@ export interface LookupCriteria {
   value?: any;
 }
 
+/** TODO: There has to be a better way to do this. */
 export interface GoogleProtobufTypesPlaceholder {
   timestamp?: string;
+  empty?: Empty;
 }
 
 function createBaseScanCriteria(): ScanCriteria {
@@ -677,7 +688,7 @@ export const LookupCriteria = {
 };
 
 function createBaseGoogleProtobufTypesPlaceholder(): GoogleProtobufTypesPlaceholder {
-  return { timestamp: undefined };
+  return { timestamp: undefined, empty: undefined };
 }
 
 export const GoogleProtobufTypesPlaceholder = {
@@ -690,6 +701,9 @@ export const GoogleProtobufTypesPlaceholder = {
         toTimestamp(message.timestamp),
         writer.uint32(10).fork()
       ).ldelim();
+    }
+    if (message.empty !== undefined) {
+      Empty.encode(message.empty, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -709,6 +723,9 @@ export const GoogleProtobufTypesPlaceholder = {
             Timestamp.decode(reader, reader.uint32())
           );
           break;
+        case 2:
+          message.empty = Empty.decode(reader, reader.uint32());
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -720,12 +737,15 @@ export const GoogleProtobufTypesPlaceholder = {
   fromJSON(object: any): GoogleProtobufTypesPlaceholder {
     return {
       timestamp: isSet(object.timestamp) ? String(object.timestamp) : undefined,
+      empty: isSet(object.empty) ? Empty.fromJSON(object.empty) : undefined,
     };
   },
 
   toJSON(message: GoogleProtobufTypesPlaceholder): unknown {
     const obj: any = {};
     message.timestamp !== undefined && (obj.timestamp = message.timestamp);
+    message.empty !== undefined &&
+      (obj.empty = message.empty ? Empty.toJSON(message.empty) : undefined);
     return obj;
   },
 
@@ -740,6 +760,10 @@ export const GoogleProtobufTypesPlaceholder = {
   ): GoogleProtobufTypesPlaceholder {
     const message = createBaseGoogleProtobufTypesPlaceholder();
     message.timestamp = object.timestamp ?? undefined;
+    message.empty =
+      object.empty !== undefined && object.empty !== null
+        ? Empty.fromPartial(object.empty)
+        : undefined;
     return message;
   },
 };
