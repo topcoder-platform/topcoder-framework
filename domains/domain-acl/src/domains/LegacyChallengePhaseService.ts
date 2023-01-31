@@ -21,15 +21,4 @@ export class LegacyChallengePhaseDomain {
       GrpcClient.credentials,
       GrpcClient.clientOptions
     );
-
-  public async create(
-    param: CreateLegacyChallengePhaseInput,
-    metadata: Metadata = new Metadata()
-  ) {
-    return promisify<
-      CreateLegacyChallengePhaseInput,
-      Metadata,
-      LegacyChallengePhase
-    >(this.client.create.bind(this.client))(param, metadata);
-  }
 }

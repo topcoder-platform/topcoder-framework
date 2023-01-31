@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.es.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "../../dist-es"
+  },
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules"]
+}
