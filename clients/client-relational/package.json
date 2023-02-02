@@ -1,7 +1,7 @@
 {
-  "name": "@topcoder-framework/domain-acl",
-  "version": "0.4.0",
-  "description": "Topcoder Anti-Corruption Layer",
+  "name": "@topcoder-framework/client-relational",
+  "version": "0.4.23-ci.0",
+  "description": "Topcoder gRPC client stub for relational gRPC service",
   "main": "./dist-cjs/index.js",
   "types": "./dist-es/index.d.ts",
   "module": "./dist-es/index.js",
@@ -24,8 +24,7 @@
   "license": "ISC",
   "dependencies": {
     "@grpc/grpc-js": "^1.8.0",
-    "@topcoder-framework/client-relational": "^0.4.22-ci.0",
-    "@topcoder-framework/lib-common": "^0.4.0",
+    "@topcoder-framework/lib-common": "0.4.23-ci.0",
     "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.10",
     "tslib": "^2.4.1"
   },
@@ -44,5 +43,6 @@
   },
   "files": [
     "dist-*"
-  ]
+  ],
+  "gitHead": "0ac2446dae898416b081dcb8fbae11c558e84b46"
 }

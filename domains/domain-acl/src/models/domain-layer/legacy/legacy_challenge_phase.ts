@@ -13,14 +13,28 @@ export interface LegacyChallengePhase {
   actualStartTime?: string | undefined;
   actualEndTime?: string | undefined;
   duration: number;
-  createUser: number;
-  createDate: string;
+  createUser?: number | undefined;
+  createDate?: string | undefined;
+  modifyUser?: number | undefined;
+  modifyDate?: string | undefined;
+}
+
+export interface PhaseType {
+  phaseTypeId: number;
+  name: string;
+  description?: string | undefined;
+  createUser?: number | undefined;
+  createDate?: string | undefined;
   modifyUser?: number | undefined;
   modifyDate?: string | undefined;
 }
 
 export interface LegacyChallengePhaseList {
   phases: LegacyChallengePhase[];
+}
+
+export interface PhaseTypeList {
+  items: PhaseType[];
 }
 
 export interface CreateLegacyChallengePhaseInput {
@@ -49,8 +63,8 @@ function createBaseLegacyChallengePhase(): LegacyChallengePhase {
     actualStartTime: undefined,
     actualEndTime: undefined,
     duration: 0,
-    createUser: 0,
-    createDate: "",
+    createUser: undefined,
+    createDate: undefined,
     modifyUser: undefined,
     modifyDate: undefined,
   };
@@ -91,10 +105,10 @@ export const LegacyChallengePhase = {
     if (message.duration !== 0) {
       writer.uint32(80).int32(message.duration);
     }
-    if (message.createUser !== 0) {
+    if (message.createUser !== undefined) {
       writer.uint32(88).int32(message.createUser);
     }
-    if (message.createDate !== "") {
+    if (message.createDate !== undefined) {
       writer.uint32(98).string(message.createDate);
     }
     if (message.modifyUser !== undefined) {
@@ -192,8 +206,12 @@ export const LegacyChallengePhase = {
         ? String(object.actualEndTime)
         : undefined,
       duration: isSet(object.duration) ? Number(object.duration) : 0,
-      createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
-      createDate: isSet(object.createDate) ? String(object.createDate) : "",
+      createUser: isSet(object.createUser)
+        ? Number(object.createUser)
+        : undefined,
+      createDate: isSet(object.createDate)
+        ? String(object.createDate)
+        : undefined,
       modifyUser: isSet(object.modifyUser)
         ? Number(object.modifyUser)
         : undefined,
@@ -254,8 +272,142 @@ export const LegacyChallengePhase = {
     message.actualStartTime = object.actualStartTime ?? undefined;
     message.actualEndTime = object.actualEndTime ?? undefined;
     message.duration = object.duration ?? 0;
-    message.createUser = object.createUser ?? 0;
-    message.createDate = object.createDate ?? "";
+    message.createUser = object.createUser ?? undefined;
+    message.createDate = object.createDate ?? undefined;
+    message.modifyUser = object.modifyUser ?? undefined;
+    message.modifyDate = object.modifyDate ?? undefined;
+    return message;
+  },
+};
+
+function createBasePhaseType(): PhaseType {
+  return {
+    phaseTypeId: 0,
+    name: "",
+    description: undefined,
+    createUser: undefined,
+    createDate: undefined,
+    modifyUser: undefined,
+    modifyDate: undefined,
+  };
+}
+
+export const PhaseType = {
+  encode(
+    message: PhaseType,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.phaseTypeId !== 0) {
+      writer.uint32(8).int64(message.phaseTypeId);
+    }
+    if (message.name !== "") {
+      writer.uint32(18).string(message.name);
+    }
+    if (message.description !== undefined) {
+      writer.uint32(26).string(message.description);
+    }
+    if (message.createUser !== undefined) {
+      writer.uint32(32).int32(message.createUser);
+    }
+    if (message.createDate !== undefined) {
+      writer.uint32(42).string(message.createDate);
+    }
+    if (message.modifyUser !== undefined) {
+      writer.uint32(48).int32(message.modifyUser);
+    }
+    if (message.modifyDate !== undefined) {
+      writer.uint32(58).string(message.modifyDate);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): PhaseType {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBasePhaseType();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.phaseTypeId = longToNumber(reader.int64() as Long);
+          break;
+        case 2:
+          message.name = reader.string();
+          break;
+        case 3:
+          message.description = reader.string();
+          break;
+        case 4:
+          message.createUser = reader.int32();
+          break;
+        case 5:
+          message.createDate = reader.string();
+          break;
+        case 6:
+          message.modifyUser = reader.int32();
+          break;
+        case 7:
+          message.modifyDate = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): PhaseType {
+    return {
+      phaseTypeId: isSet(object.phaseTypeId) ? Number(object.phaseTypeId) : 0,
+      name: isSet(object.name) ? String(object.name) : "",
+      description: isSet(object.description)
+        ? String(object.description)
+        : undefined,
+      createUser: isSet(object.createUser)
+        ? Number(object.createUser)
+        : undefined,
+      createDate: isSet(object.createDate)
+        ? String(object.createDate)
+        : undefined,
+      modifyUser: isSet(object.modifyUser)
+        ? Number(object.modifyUser)
+        : undefined,
+      modifyDate: isSet(object.modifyDate)
+        ? String(object.modifyDate)
+        : undefined,
+    };
+  },
+
+  toJSON(message: PhaseType): unknown {
+    const obj: any = {};
+    message.phaseTypeId !== undefined &&
+      (obj.phaseTypeId = Math.round(message.phaseTypeId));
+    message.name !== undefined && (obj.name = message.name);
+    message.description !== undefined &&
+      (obj.description = message.description);
+    message.createUser !== undefined &&
+      (obj.createUser = Math.round(message.createUser));
+    message.createDate !== undefined && (obj.createDate = message.createDate);
+    message.modifyUser !== undefined &&
+      (obj.modifyUser = Math.round(message.modifyUser));
+    message.modifyDate !== undefined && (obj.modifyDate = message.modifyDate);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<PhaseType>, I>>(base?: I): PhaseType {
+    return PhaseType.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<PhaseType>, I>>(
+    object: I
+  ): PhaseType {
+    const message = createBasePhaseType();
+    message.phaseTypeId = object.phaseTypeId ?? 0;
+    message.name = object.name ?? "";
+    message.description = object.description ?? undefined;
+    message.createUser = object.createUser ?? undefined;
+    message.createDate = object.createDate ?? undefined;
     message.modifyUser = object.modifyUser ?? undefined;
     message.modifyDate = object.modifyDate ?? undefined;
     return message;
@@ -332,6 +484,74 @@ export const LegacyChallengePhaseList = {
     const message = createBaseLegacyChallengePhaseList();
     message.phases =
       object.phases?.map((e) => LegacyChallengePhase.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBasePhaseTypeList(): PhaseTypeList {
+  return { items: [] };
+}
+
+export const PhaseTypeList = {
+  encode(
+    message: PhaseTypeList,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    for (const v of message.items) {
+      PhaseType.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): PhaseTypeList {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBasePhaseTypeList();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.items.push(PhaseType.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): PhaseTypeList {
+    return {
+      items: Array.isArray(object?.items)
+        ? object.items.map((e: any) => PhaseType.fromJSON(e))
+        : [],
+    };
+  },
+
+  toJSON(message: PhaseTypeList): unknown {
+    const obj: any = {};
+    if (message.items) {
+      obj.items = message.items.map((e) =>
+        e ? PhaseType.toJSON(e) : undefined
+      );
+    } else {
+      obj.items = [];
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<PhaseTypeList>, I>>(
+    base?: I
+  ): PhaseTypeList {
+    return PhaseTypeList.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<PhaseTypeList>, I>>(
+    object: I
+  ): PhaseTypeList {
+    const message = createBasePhaseTypeList();
+    message.items = object.items?.map((e) => PhaseType.fromPartial(e)) || [];
     return message;
   },
 };
