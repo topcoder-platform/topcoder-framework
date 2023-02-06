@@ -30,11 +30,9 @@ export class RelationalClient {
     )(param, metadata);
   }
 
-  public async startTransactionStream(
+  public startTransactionStream(
     metadata: Metadata = new Metadata()
-  ): Promise<ClientDuplexStream<QueryRequest, QueryResponse>> {
-    return promisify<Metadata, ClientDuplexStream<QueryRequest, QueryResponse>>(
-      this.client.streamQuery.bind(this.client)
-    )(metadata);
+  ): ClientDuplexStream<QueryRequest, QueryResponse> {
+    return this.client.streamQuery(metadata);
   }
 }

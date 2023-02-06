@@ -3,11 +3,19 @@ import { RelationalClient } from "../client/RelationalClient";
 import {
   Query,
   QueryResponse,
+  Row,
 } from "../models/data-access-layer/relational/relational";
 
-export interface QueryTransaction {
-  run(query: Query, metadata: Metadata): Promise<QueryResponse | Error>;
+export interface Transaction {
+  add(query: Query): Promise<QueryResult | Error>;
   commit(): void;
+  rollback(): void;
+}
+
+export interface QueryResult {
+  rows?: Row[];
+  lastInsertId?: number;
+  affectedRows?: number;
 }
 
 export class QueryRunner {
@@ -20,23 +28,21 @@ export class QueryRunner {
   async run(
     query: Query,
     metadata: Metadata = new Metadata()
-  ): Promise<QueryResponse> {
-    return this.#client.query({ query }, metadata);
+  ): Promise<QueryResult> {
+    return this.getQueryResult(await this.#client.query({ query }, metadata));
   }
 
-  async beginTransaction(metadata = new Metadata()): Promise<QueryTransaction> {
-    const transactionStream = await this.#client.startTransactionStream(
-      metadata
-    );
+  beginTransaction(metadata = new Metadata()): Transaction {
+    const transactionStream = this.#client.startTransactionStream(metadata);
 
     return {
-      run: async (query: Query): Promise<QueryResponse | Error> =>
+      add: async (query: Query): Promise<QueryResult | Error> =>
         new Promise((resolve, reject) => {
           transactionStream.write({ query });
 
           transactionStream
-            .once("data", (data: QueryResponse) => {
-              resolve(data);
+            .once("data", (queryResponse: QueryResponse) => {
+              resolve(this.getQueryResult(queryResponse));
             })
             .once("error", (err: Error) => {
               reject(err);
@@ -45,6 +51,25 @@ export class QueryRunner {
       commit: () => {
         transactionStream.end();
       },
+      rollback: () => {
+        // TODO: Implement rollback - possibly send a rollback query to the server
+        transactionStream.end();
+      },
     };
+  }
+
+  private getQueryResult(queryResponse: QueryResponse): QueryResult {
+    switch (queryResponse.result?.$case) {
+      case "selectResult":
+        return { rows: queryResponse.result.selectResult.rows };
+      case "insertResult":
+        return { lastInsertId: queryResponse.result.insertResult.lastInsertId };
+      case "updateResult":
+        return { affectedRows: queryResponse.result.updateResult.affectedRows };
+      case "deleteResult":
+        return { affectedRows: queryResponse.result.deleteResult.affectedRows };
+      default:
+        throw new Error("Unexpected query result");
+    }
   }
 }

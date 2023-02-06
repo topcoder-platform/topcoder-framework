@@ -1,6 +1,6 @@
 {
   "name": "@topcoder-framework/client-relational",
-  "version": "0.4.23-ci.0",
+  "version": "0.4.24-ci.0",
   "description": "Topcoder gRPC client stub for relational gRPC service",
   "main": "./dist-cjs/index.js",
   "types": "./dist-es/index.d.ts",
@@ -44,5 +44,5 @@
   "files": [
     "dist-*"
   ],
-  "gitHead": "0ac2446dae898416b081dcb8fbae11c558e84b46"
+  "gitHead": "246d4ff9ddbe501dac63172458b132a327589e5b"
 }

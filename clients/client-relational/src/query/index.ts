@@ -1,2 +1,2 @@
 export * from "./QueryRunner";
-export * from "./SelectQuery";
+export * from "./QueryBuilder";
