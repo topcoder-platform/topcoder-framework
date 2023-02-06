@@ -1,4 +1,4 @@
-import { credentials, Metadata } from "@grpc/grpc-js";
+import { ClientDuplexStream, credentials, Metadata } from "@grpc/grpc-js";
 import { promisify } from "util";
 import {
   QueryRequest,
@@ -28,5 +28,13 @@ export class RelationalClient {
     return promisify<QueryRequest, Metadata, QueryResponse>(
       this.client.query.bind(this.client)
     )(param, metadata);
+  }
+
+  public async startTransactionStream(
+    metadata: Metadata = new Metadata()
+  ): Promise<ClientDuplexStream<QueryRequest, QueryResponse>> {
+    return promisify<Metadata, ClientDuplexStream<QueryRequest, QueryResponse>>(
+      this.client.streamQuery.bind(this.client)
+    )(metadata);
   }
 }

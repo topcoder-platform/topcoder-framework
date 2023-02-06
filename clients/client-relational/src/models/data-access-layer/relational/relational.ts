@@ -3,8 +3,10 @@ import {
   CallOptions,
   ChannelCredentials,
   Client,
+  ClientDuplexStream,
   ClientOptions,
   ClientUnaryCall,
+  handleBidiStreamingCall,
   handleUnaryCall,
   makeGenericClientConstructor,
   Metadata,
@@ -2519,10 +2521,22 @@ export const QueryServiceService = {
       Buffer.from(QueryResponse.encode(value).finish()),
     responseDeserialize: (value: Buffer) => QueryResponse.decode(value),
   },
+  streamQuery: {
+    path: "/topcoder.dal.rdb.QueryService/StreamQuery",
+    requestStream: true,
+    responseStream: true,
+    requestSerialize: (value: QueryRequest) =>
+      Buffer.from(QueryRequest.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => QueryRequest.decode(value),
+    responseSerialize: (value: QueryResponse) =>
+      Buffer.from(QueryResponse.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => QueryResponse.decode(value),
+  },
 } as const;
 
 export interface QueryServiceServer extends UntypedServiceImplementation {
   query: handleUnaryCall<QueryRequest, QueryResponse>;
+  streamQuery: handleBidiStreamingCall<QueryRequest, QueryResponse>;
 }
 
 export interface QueryServiceClient extends Client {
@@ -2541,6 +2555,14 @@ export interface QueryServiceClient extends Client {
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: QueryResponse) => void
   ): ClientUnaryCall;
+  streamQuery(): ClientDuplexStream<QueryRequest, QueryResponse>;
+  streamQuery(
+    options: Partial<CallOptions>
+  ): ClientDuplexStream<QueryRequest, QueryResponse>;
+  streamQuery(
+    metadata: Metadata,
+    options?: Partial<CallOptions>
+  ): ClientDuplexStream<QueryRequest, QueryResponse>;
 }
 
 export const QueryServiceClient = makeGenericClientConstructor(
