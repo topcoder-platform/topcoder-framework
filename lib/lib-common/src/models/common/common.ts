@@ -535,11 +535,13 @@ export const CreateResult = {
     message: CreateResult,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.kind?.$case === "integerId") {
-      writer.uint32(8).int64(message.kind.integerId);
-    }
-    if (message.kind?.$case === "stringId") {
-      writer.uint32(18).string(message.kind.stringId);
+    switch (message.kind?.$case) {
+      case "integerId":
+        writer.uint32(8).int64(message.kind.integerId);
+        break;
+      case "stringId":
+        writer.uint32(18).string(message.kind.stringId);
+        break;
     }
     return writer;
   },

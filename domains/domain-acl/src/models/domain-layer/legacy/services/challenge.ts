@@ -16,12 +16,12 @@ import {
   CheckChallengeExistsResponse,
   LegacyChallengeId,
   LegacyChallengeList,
-} from "../legacy_challenge";
+} from "../challenge";
 
 export type LegacyChallengeService = typeof LegacyChallengeService;
 export const LegacyChallengeService = {
   checkChallengeExists: {
-    path: "/topcoder.domain.legacy_challenge_service.LegacyChallenge/CheckChallengeExists",
+    path: "/topcoder.domain.challenge_service.LegacyChallenge/CheckChallengeExists",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: LegacyChallengeId) =>
@@ -33,7 +33,7 @@ export const LegacyChallengeService = {
       CheckChallengeExistsResponse.decode(value),
   },
   lookup: {
-    path: "/topcoder.domain.legacy_challenge_service.LegacyChallenge/Lookup",
+    path: "/topcoder.domain.challenge_service.LegacyChallenge/Lookup",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: LookupCriteria) =>
@@ -106,7 +106,7 @@ export interface LegacyChallengeClient extends Client {
 
 export const LegacyChallengeClient = makeGenericClientConstructor(
   LegacyChallengeService,
-  "topcoder.domain.legacy_challenge_service.LegacyChallenge"
+  "topcoder.domain.challenge_service.LegacyChallenge"
 ) as unknown as {
   new (
     address: string,

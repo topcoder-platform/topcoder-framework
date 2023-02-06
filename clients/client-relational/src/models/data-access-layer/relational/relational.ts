@@ -460,32 +460,34 @@ function createBaseValue(): Value {
 
 export const Value = {
   encode(message: Value, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.value?.$case === "stringValue") {
-      writer.uint32(26).string(message.value.stringValue);
-    }
-    if (message.value?.$case === "intValue") {
-      writer.uint32(32).int32(message.value.intValue);
-    }
-    if (message.value?.$case === "longValue") {
-      writer.uint32(40).int64(message.value.longValue);
-    }
-    if (message.value?.$case === "floatValue") {
-      writer.uint32(53).float(message.value.floatValue);
-    }
-    if (message.value?.$case === "doubleValue") {
-      writer.uint32(57).double(message.value.doubleValue);
-    }
-    if (message.value?.$case === "booleanValue") {
-      writer.uint32(64).bool(message.value.booleanValue);
-    }
-    if (message.value?.$case === "dateValue") {
-      writer.uint32(74).string(message.value.dateValue);
-    }
-    if (message.value?.$case === "datetimeValue") {
-      writer.uint32(82).string(message.value.datetimeValue);
-    }
-    if (message.value?.$case === "blobValue") {
-      writer.uint32(90).bytes(message.value.blobValue);
+    switch (message.value?.$case) {
+      case "stringValue":
+        writer.uint32(26).string(message.value.stringValue);
+        break;
+      case "intValue":
+        writer.uint32(32).int32(message.value.intValue);
+        break;
+      case "longValue":
+        writer.uint32(40).int64(message.value.longValue);
+        break;
+      case "floatValue":
+        writer.uint32(53).float(message.value.floatValue);
+        break;
+      case "doubleValue":
+        writer.uint32(57).double(message.value.doubleValue);
+        break;
+      case "booleanValue":
+        writer.uint32(64).bool(message.value.booleanValue);
+        break;
+      case "dateValue":
+        writer.uint32(74).string(message.value.dateValue);
+        break;
+      case "datetimeValue":
+        writer.uint32(82).string(message.value.datetimeValue);
+        break;
+      case "blobValue":
+        writer.uint32(90).bytes(message.value.blobValue);
+        break;
     }
     return writer;
   },
@@ -1683,32 +1685,34 @@ function createBaseQuery(): Query {
 
 export const Query = {
   encode(message: Query, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.query?.$case === "raw") {
-      RawQuery.encode(message.query.raw, writer.uint32(10).fork()).ldelim();
-    }
-    if (message.query?.$case === "select") {
-      SelectQuery.encode(
-        message.query.select,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.query?.$case === "insert") {
-      InsertQuery.encode(
-        message.query.insert,
-        writer.uint32(26).fork()
-      ).ldelim();
-    }
-    if (message.query?.$case === "update") {
-      UpdateQuery.encode(
-        message.query.update,
-        writer.uint32(34).fork()
-      ).ldelim();
-    }
-    if (message.query?.$case === "delete") {
-      DeleteQuery.encode(
-        message.query.delete,
-        writer.uint32(42).fork()
-      ).ldelim();
+    switch (message.query?.$case) {
+      case "raw":
+        RawQuery.encode(message.query.raw, writer.uint32(10).fork()).ldelim();
+        break;
+      case "select":
+        SelectQuery.encode(
+          message.query.select,
+          writer.uint32(18).fork()
+        ).ldelim();
+        break;
+      case "insert":
+        InsertQuery.encode(
+          message.query.insert,
+          writer.uint32(26).fork()
+        ).ldelim();
+        break;
+      case "update":
+        UpdateQuery.encode(
+          message.query.update,
+          writer.uint32(34).fork()
+        ).ldelim();
+        break;
+      case "delete":
+        DeleteQuery.encode(
+          message.query.delete,
+          writer.uint32(42).fork()
+        ).ldelim();
+        break;
     }
     return writer;
   },
@@ -2339,29 +2343,31 @@ export const QueryResponse = {
     message: QueryResponse,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.result?.$case === "selectResult") {
-      SelectQueryResult.encode(
-        message.result.selectResult,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.result?.$case === "insertResult") {
-      InsertQueryResult.encode(
-        message.result.insertResult,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.result?.$case === "updateResult") {
-      UpdateQueryResult.encode(
-        message.result.updateResult,
-        writer.uint32(26).fork()
-      ).ldelim();
-    }
-    if (message.result?.$case === "deleteResult") {
-      DeleteQueryResult.encode(
-        message.result.deleteResult,
-        writer.uint32(34).fork()
-      ).ldelim();
+    switch (message.result?.$case) {
+      case "selectResult":
+        SelectQueryResult.encode(
+          message.result.selectResult,
+          writer.uint32(10).fork()
+        ).ldelim();
+        break;
+      case "insertResult":
+        InsertQueryResult.encode(
+          message.result.insertResult,
+          writer.uint32(18).fork()
+        ).ldelim();
+        break;
+      case "updateResult":
+        UpdateQueryResult.encode(
+          message.result.updateResult,
+          writer.uint32(26).fork()
+        ).ldelim();
+        break;
+      case "deleteResult":
+        DeleteQueryResult.encode(
+          message.result.deleteResult,
+          writer.uint32(34).fork()
+        ).ldelim();
+        break;
     }
     return writer;
   },
