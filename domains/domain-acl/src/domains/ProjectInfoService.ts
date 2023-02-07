@@ -15,7 +15,7 @@ import {
 import { GrpcClient } from "../common/GrpcClient";
 import { Empty } from "src/models/google/protobuf/empty";
 
-export class ChallengeDomain {
+export class ProjectInfoDomain {
   constructor(
     protected grpcServerHost: string,
     protected grpcServerPort: string

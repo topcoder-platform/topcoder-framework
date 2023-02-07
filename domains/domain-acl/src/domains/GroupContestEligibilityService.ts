@@ -16,7 +16,7 @@ import {
 } from "src/models/domain-layer/legacy/group_contest_eligibility";
 import { Empty } from "src/models/google/protobuf/empty";
 
-export class ChallengeDomain {
+export class GroupContestEligibilityDomain {
   constructor(
     protected grpcServerHost: string,
     protected grpcServerPort: string

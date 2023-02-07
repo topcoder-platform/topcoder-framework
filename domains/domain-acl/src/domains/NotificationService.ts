@@ -11,7 +11,7 @@ import {
 } from "src/models/domain-layer/legacy/notification";
 import { Empty } from "src/models/google/protobuf/empty";
 
-export class ChallengeDomain {
+export class NotificationDomain {
   constructor(
     protected grpcServerHost: string,
     protected grpcServerPort: string

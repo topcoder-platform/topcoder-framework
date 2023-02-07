@@ -13,7 +13,7 @@ import {
   Submission,
 } from "src/models/domain-layer/legacy/review";
 
-export class ChallengeDomain {
+export class ReviewDomain {
   constructor(
     protected grpcServerHost: string,
     protected grpcServerPort: string

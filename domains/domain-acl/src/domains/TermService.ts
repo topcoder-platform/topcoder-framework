@@ -7,13 +7,14 @@ import { GrpcClient } from "../common/GrpcClient";
 
 import {
   CreateProjectRoleTermsOfUseXrefInput,
+  DeleteProjectRoleTermsOfUseXrefInput,
   GetProjectRoleTermsOfUseXrefInput,
   ProjectRoleTermsOfUseXref,
   ProjectRoleTermsOfUseXrefList,
 } from "src/models/domain-layer/legacy/term";
 import { Empty } from "src/models/google/protobuf/empty";
 
-export class ChallengeDomain {
+export class TermDomain {
   constructor(
     protected grpcServerHost: string,
     protected grpcServerPort: string

@@ -21,7 +21,7 @@ import {
   PhaseDependency,
 } from "src/models/domain-layer/legacy/phase";
 
-export class ChallengeDomain {
+export class PhaseDomain {
   constructor(
     protected grpcServerHost: string,
     protected grpcServerPort: string

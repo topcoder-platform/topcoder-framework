@@ -20,7 +20,7 @@ import {
 } from "src/models/domain-layer/legacy/payment";
 import { Empty } from "src/models/google/protobuf/empty";
 
-export class ChallengeDomain {
+export class PaymentDomain {
   constructor(
     protected grpcServerHost: string,
     protected grpcServerPort: string

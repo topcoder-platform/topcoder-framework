@@ -14,7 +14,7 @@ import {
   UpdateResourceInfoInput,
 } from "src/models/domain-layer/legacy/resource";
 
-export class ChallengeDomain {
+export class ResourceDomain {
   constructor(
     protected grpcServerHost: string,
     protected grpcServerPort: string
