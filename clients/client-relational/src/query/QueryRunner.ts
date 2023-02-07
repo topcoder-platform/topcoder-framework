@@ -3,8 +3,10 @@ import { RelationalClient } from "../client/RelationalClient";
 import {
   Query,
   QueryResponse,
-  Row,
+  Column,
+  Value,
 } from "../models/data-access-layer/relational/relational";
+import _ from "lodash";
 
 export interface Transaction {
   add(query: Query): Promise<QueryResult | Error>;
@@ -13,10 +15,14 @@ export interface Transaction {
 }
 
 export interface QueryResult {
-  rows?: Row[];
+  rows?: { [key: string]: any }[];
   lastInsertId?: number;
   affectedRows?: number;
 }
+
+// TODO
+// 1 - Move unwrapValue to @topcoder-framework/lib-common
+// 2 - Add a generic to "run" method so it returns instances of the model
 
 export class QueryRunner {
   #client: RelationalClient;
@@ -29,7 +35,10 @@ export class QueryRunner {
     query: Query,
     metadata: Metadata = new Metadata()
   ): Promise<QueryResult> {
-    return this.getQueryResult(await this.#client.query({ query }, metadata));
+    return this.getQueryResult(
+      await this.#client.query({ query }, metadata),
+      query.query?.$case === "select" ? query.query.select.column : undefined
+    );
   }
 
   beginTransaction(metadata = new Metadata()): Transaction {
@@ -42,7 +51,14 @@ export class QueryRunner {
 
           transactionStream
             .once("data", (queryResponse: QueryResponse) => {
-              resolve(this.getQueryResult(queryResponse));
+              resolve(
+                this.getQueryResult(
+                  queryResponse,
+                  query.query?.$case === "select"
+                    ? query.query.select.column
+                    : undefined
+                )
+              );
             })
             .once("error", (err: Error) => {
               reject(err);
@@ -58,10 +74,44 @@ export class QueryRunner {
     };
   }
 
-  private getQueryResult(queryResponse: QueryResponse): QueryResult {
+  private unwrapValue(value: Value): number | string | boolean {
+    switch (value.value?.$case) {
+      case "intValue":
+        return value.value.intValue;
+      case "stringValue":
+        return value.value.stringValue;
+      case "floatValue":
+        return value.value.floatValue;
+      case "booleanValue":
+        return value.value.booleanValue;
+      case "dateValue":
+        return new Date(value.value.dateValue).getTime();
+      case "datetimeValue":
+        return new Date(value.value.datetimeValue).getTime();
+    }
+
+    throw new Error("Unexpected value");
+  }
+
+  private getQueryResult(
+    queryResponse: QueryResponse,
+    column: Column[] = []
+  ): QueryResult {
     switch (queryResponse.result?.$case) {
       case "selectResult":
-        return { rows: queryResponse.result.selectResult.rows };
+        return {
+          rows: queryResponse.result.selectResult.rows.map(({ values }) => {
+            const retObject: { [key: string]: any } = {};
+
+            column.forEach((col) => {
+              retObject[_.camelCase(col.name)] = this.unwrapValue(
+                values[col.name]
+              );
+            });
+
+            return retObject;
+          }),
+        };
       case "insertResult":
         return { lastInsertId: queryResponse.result.insertResult.lastInsertId };
       case "updateResult":
