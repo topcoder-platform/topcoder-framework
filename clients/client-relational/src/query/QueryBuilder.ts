@@ -24,8 +24,13 @@ interface Where {
   build: () => Query;
 }
 
+interface UpdateWhere {
+  andWhere: (column: TableColumn, operator: Operator, value: Value) => Where;
+  build: () => Query;
+}
+
 interface Select {
-  where: (column: TableColumn, operator: Operator, value: Value) => Where;
+  where: (column: TableColumn, operator: Operator, value: Value) => any;
   limit: (limit: number) => Limit;
   offset: (offset: number) => Build;
   build: () => Query;
@@ -66,7 +71,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     };
   }
 
-  insert<CreateInput extends Record<string, unknown>>(
+  public insert<CreateInput extends Record<string, unknown>>(
     input: CreateInput
   ): Build {
     this.#query = {
@@ -113,25 +118,71 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     };
   }
 
-  // private orderBy(column: TableColumn, direction: "asc" | "desc") {}
-
-  private where(column: TableColumn, operator: Operator, value: Value): Where {
-    if (this.#query?.query?.$case != "select") {
-      throw new Error("Cannot set where on a non-select query");
-    }
-    this.#query.query.select.where.push({
-      key: column.name,
-      operator,
-      value,
-    });
+  update<UpdateInput extends Record<string, unknown>>(input: UpdateInput) {
+    this.#query = {
+      query: {
+        $case: "update",
+        update: {
+          schema: this.schema.dbSchema,
+          table: this.schema.tableName,
+          columnValue: [
+            {
+              column: "modify_date",
+              value: {
+                value: {
+                  $case: "datetimeValue",
+                  datetimeValue: "CURRENT",
+                },
+              },
+            },
+            ...Object.entries(input)
+              .filter(([, value]) => value !== undefined)
+              .map(([key, value]) => ({
+                column: this.schema.columns[key]?.name ?? key,
+                value: this.toValue(key, value),
+              })),
+          ],
+          where: [],
+        },
+      },
+    };
 
     return {
-      andWhere: this.where.bind(this),
-      //   orderBy: this.orderBy.bind(this),
-      limit: this.limit.bind(this),
-      offset: this.offset.bind(this),
+      where: this.where.bind(this),
       build: this.build.bind(this),
     };
+  }
+
+  // private orderBy(column: TableColumn, direction: "asc" | "desc") {}
+
+  private where(column: TableColumn, operator: Operator, value: Value) {
+    if (this.#query?.query?.$case === "select") {
+      this.#query.query.select.where.push({
+        key: column.name,
+        operator,
+        value,
+      });
+
+      return {
+        // andWhere: this.where.bind(this),
+        //   orderBy: this.orderBy.bind(this),
+        limit: this.limit.bind(this),
+        offset: this.offset.bind(this),
+        build: this.build.bind(this),
+      };
+    }
+    if (this.#query?.query?.$case === "update") {
+      this.#query.query.update.where.push({
+        key: column.name,
+        operator,
+        value,
+      });
+
+      return {
+        // andWhere: this.where.bind(this),
+        build: this.build.bind(this),
+      };
+    }
   }
 
   private limit(limit: number): Limit {
