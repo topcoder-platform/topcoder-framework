@@ -24,7 +24,7 @@ interface Where {
   build: () => Query;
 }
 
-interface UpdateWhere {
+interface DeleteWhere {
   andWhere: (column: TableColumn, operator: Operator, value: Value) => Where;
   build: () => Query;
 }
@@ -153,9 +153,27 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     };
   }
 
+  delete() {
+    this.#query = {
+      query: {
+        $case: "delete",
+        delete: {
+          schema: this.schema.dbSchema,
+          table: this.schema.tableName,
+          where: [],
+        },
+      },
+    };
+
+    return {
+      where: this.where.bind(this),
+      build: this.build.bind(this),
+    };
+  }
+
   // private orderBy(column: TableColumn, direction: "asc" | "desc") {}
 
-  private where(column: TableColumn, operator: Operator, value: Value) {
+  private where(column: TableColumn, operator: Operator, value: Value): any {
     if (this.#query?.query?.$case === "select") {
       this.#query.query.select.where.push({
         key: column.name,
@@ -164,7 +182,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
       });
 
       return {
-        // andWhere: this.where.bind(this),
+        andWhere: this.where.bind(this),
         //   orderBy: this.orderBy.bind(this),
         limit: this.limit.bind(this),
         offset: this.offset.bind(this),
@@ -183,6 +201,21 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
         build: this.build.bind(this),
       };
     }
+    if (this.#query?.query?.$case === "delete") {
+      this.#query.query.delete.where.push({
+        key: column.name,
+        operator,
+        value,
+      });
+
+      return {
+        andWhere: this.where.bind(this),
+        build: this.build.bind(this),
+      };
+    }
+    throw new Error(
+      "Cannot use where on a non-select or non-update or non-delete query"
+    );
   }
 
   private limit(limit: number): Limit {
