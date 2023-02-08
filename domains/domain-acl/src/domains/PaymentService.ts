@@ -10,7 +10,7 @@ import {
   GetLegacyChallengePaymentInput,
   LegacyChallengePaymentList,
   UpdateLegacyChallengePaymentInput,
-} from "src/models/domain-layer/legacy/challenge_payment";
+} from "../models/domain-layer/legacy/challenge_payment";
 import {
   CreateResult,
   Empty,

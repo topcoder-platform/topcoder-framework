@@ -14,7 +14,9 @@ import {
 import {
   CheckExistsResult,
   CreateResult,
+  Empty,
   LookupCriteria,
+  UpdateResult,
 } from "@topcoder-framework/lib-common";
 import {
   CloseChallengeInput,
@@ -67,9 +69,9 @@ export const LegacyChallengeService = {
     requestSerialize: (value: UpdateChallengeInput) =>
       Buffer.from(UpdateChallengeInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) => UpdateChallengeInput.decode(value),
-    responseSerialize: (value: LegacyChallenge) =>
-      Buffer.from(LegacyChallenge.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => LegacyChallenge.decode(value),
+    responseSerialize: (value: UpdateResult) =>
+      Buffer.from(UpdateResult.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => UpdateResult.decode(value),
   },
   get: {
     path: "/topcoder.domain.service.legacy_challenge_service.LegacyChallenge/Get",
@@ -89,9 +91,9 @@ export const LegacyChallengeService = {
     requestSerialize: (value: LegacyChallengeId) =>
       Buffer.from(LegacyChallengeId.encode(value).finish()),
     requestDeserialize: (value: Buffer) => LegacyChallengeId.decode(value),
-    responseSerialize: (value: LegacyChallenge) =>
-      Buffer.from(LegacyChallenge.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => LegacyChallenge.decode(value),
+    responseSerialize: (value: Empty) =>
+      Buffer.from(Empty.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
   closeChallenge: {
     path: "/topcoder.domain.service.legacy_challenge_service.LegacyChallenge/CloseChallenge",
@@ -110,9 +112,9 @@ export interface LegacyChallengeServer extends UntypedServiceImplementation {
   checkExists: handleUnaryCall<LegacyChallengeId, CheckExistsResult>;
   lookup: handleUnaryCall<LookupCriteria, LegacyChallengeList>;
   create: handleUnaryCall<CreateChallengeInput, CreateResult>;
-  update: handleUnaryCall<UpdateChallengeInput, LegacyChallenge>;
+  update: handleUnaryCall<UpdateChallengeInput, UpdateResult>;
   get: handleUnaryCall<LegacyChallengeId, LegacyChallenge>;
-  activate: handleUnaryCall<LegacyChallengeId, LegacyChallenge>;
+  activate: handleUnaryCall<LegacyChallengeId, Empty>;
   closeChallenge: handleUnaryCall<CloseChallengeInput, LegacyChallenge>;
 }
 
@@ -173,18 +175,18 @@ export interface LegacyChallengeClient extends Client {
   ): ClientUnaryCall;
   update(
     request: UpdateChallengeInput,
-    callback: (error: ServiceError | null, response: LegacyChallenge) => void
+    callback: (error: ServiceError | null, response: UpdateResult) => void
   ): ClientUnaryCall;
   update(
     request: UpdateChallengeInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: LegacyChallenge) => void
+    callback: (error: ServiceError | null, response: UpdateResult) => void
   ): ClientUnaryCall;
   update(
     request: UpdateChallengeInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: LegacyChallenge) => void
+    callback: (error: ServiceError | null, response: UpdateResult) => void
   ): ClientUnaryCall;
   get(
     request: LegacyChallengeId,
@@ -203,18 +205,18 @@ export interface LegacyChallengeClient extends Client {
   ): ClientUnaryCall;
   activate(
     request: LegacyChallengeId,
-    callback: (error: ServiceError | null, response: LegacyChallenge) => void
+    callback: (error: ServiceError | null, response: Empty) => void
   ): ClientUnaryCall;
   activate(
     request: LegacyChallengeId,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: LegacyChallenge) => void
+    callback: (error: ServiceError | null, response: Empty) => void
   ): ClientUnaryCall;
   activate(
     request: LegacyChallengeId,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: LegacyChallenge) => void
+    callback: (error: ServiceError | null, response: Empty) => void
   ): ClientUnaryCall;
   closeChallenge(
     request: CloseChallengeInput,

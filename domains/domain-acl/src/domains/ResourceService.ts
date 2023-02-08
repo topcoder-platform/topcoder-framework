@@ -3,11 +3,7 @@ import { promisify } from "util";
 
 import { LegacyResourceClient } from "../models/domain-layer/legacy/services/resource";
 
-import {
-  CreateResult,
-  Empty,
-  UpdateResult,
-} from "@topcoder-framework/lib-common";
+import { CreateResult, Empty } from "@topcoder-framework/lib-common";
 import { GrpcClient } from "../common/GrpcClient";
 import {
   CreateResourceInfoInput,
