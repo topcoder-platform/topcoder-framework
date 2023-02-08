@@ -6,10 +6,13 @@ import { LegacyChallengeClient } from "../models/domain-layer/legacy/services/ch
 import { GrpcClient } from "../common/GrpcClient";
 import {
   CheckChallengeExistsResponse,
+  LegacyChallenge,
   LegacyChallengeId,
   LegacyChallengeList,
+  UpdateChallengeInput,
+  CloseChallengeInput,
 } from "src/models/domain-layer/legacy/challenge";
-import { LookupCriteria } from "@topcoder-framework/lib-common";
+import { Empty, LookupCriteria } from "@topcoder-framework/lib-common";
 
 export class ChallengeDomain {
   constructor(
@@ -38,6 +41,42 @@ export class ChallengeDomain {
   ) {
     return promisify<LookupCriteria, Metadata, LegacyChallengeList>(
       this.client.lookup.bind(this.client)
+    )(param, metadata);
+  }
+
+  public async getLegacyChallenge(
+    param: LegacyChallengeId,
+    metadata: Metadata = new Metadata()
+  ) {
+    return promisify<LegacyChallengeId, Metadata, LegacyChallenge>(
+      this.client.getLegacyChallenge.bind(this.client)
+    )(param, metadata);
+  }
+
+  public async update(
+    param: UpdateChallengeInput,
+    metadata: Metadata = new Metadata()
+  ) {
+    return promisify<UpdateChallengeInput, Metadata, Empty>(
+      this.client.update.bind(this.client)
+    )(param, metadata);
+  }
+
+  public async activateChallenge(
+    param: LegacyChallengeId,
+    metadata: Metadata = new Metadata()
+  ) {
+    return promisify<LegacyChallengeId, Metadata, LegacyChallenge>(
+      this.client.activateChallenge.bind(this.client)
+    )(param, metadata);
+  }
+
+  public async closeChallenge(
+    param: CloseChallengeInput,
+    metadata: Metadata = new Metadata()
+  ) {
+    return promisify<CloseChallengeInput, Metadata, LegacyChallenge>(
+      this.client.closeChallenge.bind(this.client)
     )(param, metadata);
   }
 }

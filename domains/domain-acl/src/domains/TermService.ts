@@ -9,10 +9,10 @@ import {
   CreateProjectRoleTermsOfUseXrefInput,
   DeleteProjectRoleTermsOfUseXrefInput,
   GetProjectRoleTermsOfUseXrefInput,
-  ProjectRoleTermsOfUseXref,
   ProjectRoleTermsOfUseXrefList,
 } from "src/models/domain-layer/legacy/term";
 import { Empty } from "src/models/google/protobuf/empty";
+import { CreateResult } from "@topcoder-framework/lib-common";
 
 export class TermDomain {
   constructor(
@@ -47,7 +47,7 @@ export class TermDomain {
     return promisify<
       CreateProjectRoleTermsOfUseXrefInput,
       Metadata,
-      ProjectRoleTermsOfUseXref
+      CreateResult
     >(this.client.createProjectRoleTermsOfUseXref.bind(this.client))(
       param,
       metadata

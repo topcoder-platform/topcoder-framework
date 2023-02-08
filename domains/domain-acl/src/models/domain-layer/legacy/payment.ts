@@ -38,6 +38,8 @@ export interface CreateProjectPaymentsInput {
 }
 
 export interface UpdateProjectPaymentsInput {
+  resourceId: number;
+  projectPaymentTypeId: number;
   amount: number;
   modifyUser: number;
   modifyDate: number;
@@ -586,7 +588,13 @@ export const CreateProjectPaymentsInput = {
 };
 
 function createBaseUpdateProjectPaymentsInput(): UpdateProjectPaymentsInput {
-  return { amount: 0, modifyUser: 0, modifyDate: 0 };
+  return {
+    resourceId: 0,
+    projectPaymentTypeId: 0,
+    amount: 0,
+    modifyUser: 0,
+    modifyDate: 0,
+  };
 }
 
 export const UpdateProjectPaymentsInput = {
@@ -594,14 +602,20 @@ export const UpdateProjectPaymentsInput = {
     message: UpdateProjectPaymentsInput,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
+    if (message.resourceId !== 0) {
+      writer.uint32(8).int32(message.resourceId);
+    }
+    if (message.projectPaymentTypeId !== 0) {
+      writer.uint32(16).int32(message.projectPaymentTypeId);
+    }
     if (message.amount !== 0) {
-      writer.uint32(13).float(message.amount);
+      writer.uint32(29).float(message.amount);
     }
     if (message.modifyUser !== 0) {
-      writer.uint32(16).int32(message.modifyUser);
+      writer.uint32(32).int32(message.modifyUser);
     }
     if (message.modifyDate !== 0) {
-      writer.uint32(24).int64(message.modifyDate);
+      writer.uint32(40).int64(message.modifyDate);
     }
     return writer;
   },
@@ -617,12 +631,18 @@ export const UpdateProjectPaymentsInput = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.amount = reader.float();
+          message.resourceId = reader.int32();
           break;
         case 2:
-          message.modifyUser = reader.int32();
+          message.projectPaymentTypeId = reader.int32();
           break;
         case 3:
+          message.amount = reader.float();
+          break;
+        case 4:
+          message.modifyUser = reader.int32();
+          break;
+        case 5:
           message.modifyDate = longToNumber(reader.int64() as Long);
           break;
         default:
@@ -635,6 +655,10 @@ export const UpdateProjectPaymentsInput = {
 
   fromJSON(object: any): UpdateProjectPaymentsInput {
     return {
+      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
+      projectPaymentTypeId: isSet(object.projectPaymentTypeId)
+        ? Number(object.projectPaymentTypeId)
+        : 0,
       amount: isSet(object.amount) ? Number(object.amount) : 0,
       modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : 0,
       modifyDate: isSet(object.modifyDate) ? Number(object.modifyDate) : 0,
@@ -643,6 +667,10 @@ export const UpdateProjectPaymentsInput = {
 
   toJSON(message: UpdateProjectPaymentsInput): unknown {
     const obj: any = {};
+    message.resourceId !== undefined &&
+      (obj.resourceId = Math.round(message.resourceId));
+    message.projectPaymentTypeId !== undefined &&
+      (obj.projectPaymentTypeId = Math.round(message.projectPaymentTypeId));
     message.amount !== undefined && (obj.amount = message.amount);
     message.modifyUser !== undefined &&
       (obj.modifyUser = Math.round(message.modifyUser));
@@ -661,6 +689,8 @@ export const UpdateProjectPaymentsInput = {
     object: I
   ): UpdateProjectPaymentsInput {
     const message = createBaseUpdateProjectPaymentsInput();
+    message.resourceId = object.resourceId ?? 0;
+    message.projectPaymentTypeId = object.projectPaymentTypeId ?? 0;
     message.amount = object.amount ?? 0;
     message.modifyUser = object.modifyUser ?? 0;
     message.modifyDate = object.modifyDate ?? 0;

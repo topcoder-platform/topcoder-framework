@@ -11,6 +11,7 @@ import {
   ServiceError,
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
+import { CreateResult } from "@topcoder-framework/lib-common";
 import { Empty } from "../../../google/protobuf/empty";
 import {
   CreatePrizeInput,
@@ -19,9 +20,7 @@ import {
   DeleteProjectPaymentsInput,
   GetPrizesInput,
   GetProjectPaymentsInput,
-  Prize,
   PrizeList,
-  ProjectPayment,
   ProjectPaymentList,
   UpdatePrizeInput,
   UpdateProjectPaymentsInput,
@@ -49,9 +48,9 @@ export const LegacyPaymentService = {
       Buffer.from(CreateProjectPaymentsInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) =>
       CreateProjectPaymentsInput.decode(value),
-    responseSerialize: (value: ProjectPayment) =>
-      Buffer.from(ProjectPayment.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => ProjectPayment.decode(value),
+    responseSerialize: (value: CreateResult) =>
+      Buffer.from(CreateResult.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => CreateResult.decode(value),
   },
   updateProjectPayment: {
     path: "/topcoder.domain.service.payment.LegacyPayment/UpdateProjectPayment",
@@ -61,9 +60,9 @@ export const LegacyPaymentService = {
       Buffer.from(UpdateProjectPaymentsInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) =>
       UpdateProjectPaymentsInput.decode(value),
-    responseSerialize: (value: ProjectPayment) =>
-      Buffer.from(ProjectPayment.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => ProjectPayment.decode(value),
+    responseSerialize: (value: Empty) =>
+      Buffer.from(Empty.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
   deleteProjectPayment: {
     path: "/topcoder.domain.service.payment.LegacyPayment/DeleteProjectPayment",
@@ -95,9 +94,9 @@ export const LegacyPaymentService = {
     requestSerialize: (value: CreatePrizeInput) =>
       Buffer.from(CreatePrizeInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) => CreatePrizeInput.decode(value),
-    responseSerialize: (value: Prize) =>
-      Buffer.from(Prize.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => Prize.decode(value),
+    responseSerialize: (value: CreateResult) =>
+      Buffer.from(CreateResult.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => CreateResult.decode(value),
   },
   updateProjectPrize: {
     path: "/topcoder.domain.service.payment.LegacyPayment/UpdateProjectPrize",
@@ -106,9 +105,9 @@ export const LegacyPaymentService = {
     requestSerialize: (value: UpdatePrizeInput) =>
       Buffer.from(UpdatePrizeInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) => UpdatePrizeInput.decode(value),
-    responseSerialize: (value: Prize) =>
-      Buffer.from(Prize.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => Prize.decode(value),
+    responseSerialize: (value: Empty) =>
+      Buffer.from(Empty.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
   deleteProjectPrize: {
     path: "/topcoder.domain.service.payment.LegacyPayment/DeleteProjectPrize",
@@ -130,16 +129,13 @@ export interface LegacyPaymentServer extends UntypedServiceImplementation {
   >;
   createProjectPayment: handleUnaryCall<
     CreateProjectPaymentsInput,
-    ProjectPayment
+    CreateResult
   >;
-  updateProjectPayment: handleUnaryCall<
-    UpdateProjectPaymentsInput,
-    ProjectPayment
-  >;
+  updateProjectPayment: handleUnaryCall<UpdateProjectPaymentsInput, Empty>;
   deleteProjectPayment: handleUnaryCall<DeleteProjectPaymentsInput, Empty>;
   getProjectPrizes: handleUnaryCall<GetPrizesInput, PrizeList>;
-  createProjectPrize: handleUnaryCall<CreatePrizeInput, Prize>;
-  updateProjectPrize: handleUnaryCall<UpdatePrizeInput, Prize>;
+  createProjectPrize: handleUnaryCall<CreatePrizeInput, CreateResult>;
+  updateProjectPrize: handleUnaryCall<UpdatePrizeInput, Empty>;
   deleteProjectPrize: handleUnaryCall<DeletePrizeInput, Empty>;
 }
 
@@ -161,33 +157,33 @@ export interface LegacyPaymentClient extends Client {
   ): ClientUnaryCall;
   createProjectPayment(
     request: CreateProjectPaymentsInput,
-    callback: (error: ServiceError | null, response: ProjectPayment) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   createProjectPayment(
     request: CreateProjectPaymentsInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: ProjectPayment) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   createProjectPayment(
     request: CreateProjectPaymentsInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: ProjectPayment) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   updateProjectPayment(
     request: UpdateProjectPaymentsInput,
-    callback: (error: ServiceError | null, response: ProjectPayment) => void
+    callback: (error: ServiceError | null, response: Empty) => void
   ): ClientUnaryCall;
   updateProjectPayment(
     request: UpdateProjectPaymentsInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: ProjectPayment) => void
+    callback: (error: ServiceError | null, response: Empty) => void
   ): ClientUnaryCall;
   updateProjectPayment(
     request: UpdateProjectPaymentsInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: ProjectPayment) => void
+    callback: (error: ServiceError | null, response: Empty) => void
   ): ClientUnaryCall;
   deleteProjectPayment(
     request: DeleteProjectPaymentsInput,
@@ -221,33 +217,33 @@ export interface LegacyPaymentClient extends Client {
   ): ClientUnaryCall;
   createProjectPrize(
     request: CreatePrizeInput,
-    callback: (error: ServiceError | null, response: Prize) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   createProjectPrize(
     request: CreatePrizeInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: Prize) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   createProjectPrize(
     request: CreatePrizeInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: Prize) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   updateProjectPrize(
     request: UpdatePrizeInput,
-    callback: (error: ServiceError | null, response: Prize) => void
+    callback: (error: ServiceError | null, response: Empty) => void
   ): ClientUnaryCall;
   updateProjectPrize(
     request: UpdatePrizeInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: Prize) => void
+    callback: (error: ServiceError | null, response: Empty) => void
   ): ClientUnaryCall;
   updateProjectPrize(
     request: UpdatePrizeInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: Prize) => void
+    callback: (error: ServiceError | null, response: Empty) => void
   ): ClientUnaryCall;
   deleteProjectPrize(
     request: DeletePrizeInput,

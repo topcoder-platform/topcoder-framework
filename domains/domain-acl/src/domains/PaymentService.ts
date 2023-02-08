@@ -13,12 +13,12 @@ import {
   GetProjectPaymentsInput,
   Prize,
   PrizeList,
-  ProjectPayment,
   ProjectPaymentList,
   UpdatePrizeInput,
   UpdateProjectPaymentsInput,
 } from "src/models/domain-layer/legacy/payment";
 import { Empty } from "src/models/google/protobuf/empty";
+import { CreateResult } from "@topcoder-framework/lib-common";
 
 export class PaymentDomain {
   constructor(
@@ -45,7 +45,7 @@ export class PaymentDomain {
     param: CreateProjectPaymentsInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<CreateProjectPaymentsInput, Metadata, ProjectPayment>(
+    return promisify<CreateProjectPaymentsInput, Metadata, CreateResult>(
       this.client.createProjectPayment.bind(this.client)
     )(param, metadata);
   }
@@ -54,7 +54,7 @@ export class PaymentDomain {
     param: UpdateProjectPaymentsInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<UpdateProjectPaymentsInput, Metadata, ProjectPayment>(
+    return promisify<UpdateProjectPaymentsInput, Metadata, Empty>(
       this.client.updateProjectPayment.bind(this.client)
     )(param, metadata);
   }
@@ -81,7 +81,7 @@ export class PaymentDomain {
     param: CreatePrizeInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<CreatePrizeInput, Metadata, Prize>(
+    return promisify<CreatePrizeInput, Metadata, CreateResult>(
       this.client.createProjectPrize.bind(this.client)
     )(param, metadata);
   }
@@ -90,7 +90,7 @@ export class PaymentDomain {
     param: UpdatePrizeInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<UpdatePrizeInput, Metadata, Prize>(
+    return promisify<UpdatePrizeInput, Metadata, Empty>(
       this.client.updateProjectPrize.bind(this.client)
     )(param, metadata);
   }

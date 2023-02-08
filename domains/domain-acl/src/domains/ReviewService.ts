@@ -8,10 +8,9 @@ import {
   CreateReviewInput,
   CreateReviewItemInput,
   GetSubmissionInput,
-  Review,
-  ReviewItem,
   Submission,
 } from "src/models/domain-layer/legacy/review";
+import { CreateResult } from "@topcoder-framework/lib-common";
 
 export class ReviewDomain {
   constructor(
@@ -29,7 +28,7 @@ export class ReviewDomain {
     param: CreateReviewInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<CreateReviewInput, Metadata, Review>(
+    return promisify<CreateReviewInput, Metadata, CreateResult>(
       this.client.createReview.bind(this.client)
     )(param, metadata);
   }
@@ -38,7 +37,7 @@ export class ReviewDomain {
     param: CreateReviewItemInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<CreateReviewItemInput, Metadata, ReviewItem>(
+    return promisify<CreateReviewItemInput, Metadata, CreateResult>(
       this.client.createReviewItem.bind(this.client)
     )(param, metadata);
   }

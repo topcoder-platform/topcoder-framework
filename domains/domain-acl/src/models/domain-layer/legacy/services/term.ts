@@ -11,12 +11,12 @@ import {
   ServiceError,
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
+import { CreateResult } from "@topcoder-framework/lib-common";
 import { Empty } from "../../../google/protobuf/empty";
 import {
   CreateProjectRoleTermsOfUseXrefInput,
   DeleteProjectRoleTermsOfUseXrefInput,
   GetProjectRoleTermsOfUseXrefInput,
-  ProjectRoleTermsOfUseXref,
   ProjectRoleTermsOfUseXrefList,
 } from "../term";
 
@@ -43,10 +43,9 @@ export const LegacyTermService = {
       Buffer.from(CreateProjectRoleTermsOfUseXrefInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) =>
       CreateProjectRoleTermsOfUseXrefInput.decode(value),
-    responseSerialize: (value: ProjectRoleTermsOfUseXref) =>
-      Buffer.from(ProjectRoleTermsOfUseXref.encode(value).finish()),
-    responseDeserialize: (value: Buffer) =>
-      ProjectRoleTermsOfUseXref.decode(value),
+    responseSerialize: (value: CreateResult) =>
+      Buffer.from(CreateResult.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => CreateResult.decode(value),
   },
   deleteProjectRoleTermsOfUseXref: {
     path: "/topcoder.domain.service.term.LegacyTerm/DeleteProjectRoleTermsOfUseXref",
@@ -69,7 +68,7 @@ export interface LegacyTermServer extends UntypedServiceImplementation {
   >;
   createProjectRoleTermsOfUseXref: handleUnaryCall<
     CreateProjectRoleTermsOfUseXrefInput,
-    ProjectRoleTermsOfUseXref
+    CreateResult
   >;
   deleteProjectRoleTermsOfUseXref: handleUnaryCall<
     DeleteProjectRoleTermsOfUseXrefInput,
@@ -104,27 +103,18 @@ export interface LegacyTermClient extends Client {
   ): ClientUnaryCall;
   createProjectRoleTermsOfUseXref(
     request: CreateProjectRoleTermsOfUseXrefInput,
-    callback: (
-      error: ServiceError | null,
-      response: ProjectRoleTermsOfUseXref
-    ) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   createProjectRoleTermsOfUseXref(
     request: CreateProjectRoleTermsOfUseXrefInput,
     metadata: Metadata,
-    callback: (
-      error: ServiceError | null,
-      response: ProjectRoleTermsOfUseXref
-    ) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   createProjectRoleTermsOfUseXref(
     request: CreateProjectRoleTermsOfUseXrefInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (
-      error: ServiceError | null,
-      response: ProjectRoleTermsOfUseXref
-    ) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   deleteProjectRoleTermsOfUseXref(
     request: DeleteProjectRoleTermsOfUseXrefInput,

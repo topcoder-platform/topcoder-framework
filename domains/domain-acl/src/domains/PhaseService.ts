@@ -9,7 +9,6 @@ import {
   CreatePhaseCriteriaInput,
   PhaseTypeList,
   DeletePhaseCriteriaInput,
-  PhaseCriteria,
   PhaseCriteriaList,
   GetProjectPhasesInput,
   ProjectPhaseList,
@@ -20,6 +19,7 @@ import {
   CreatePhaseDependencyInput,
   PhaseDependency,
 } from "src/models/domain-layer/legacy/phase";
+import { CreateResult } from "@topcoder-framework/lib-common";
 
 export class PhaseDomain {
   constructor(
@@ -46,7 +46,7 @@ export class PhaseDomain {
     param: CreatePhaseCriteriaInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<CreatePhaseCriteriaInput, Metadata, PhaseCriteria>(
+    return promisify<CreatePhaseCriteriaInput, Metadata, CreateResult>(
       this.client.createPhaseCriteria.bind(this.client)
     )(param, metadata);
   }
@@ -91,7 +91,7 @@ export class PhaseDomain {
     param: CreateProjectPhaseInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<CreateProjectPhaseInput, Metadata, ProjectPhase>(
+    return promisify<CreateProjectPhaseInput, Metadata, CreateResult>(
       this.client.createProjectPhase.bind(this.client)
     )(param, metadata);
   }
@@ -100,7 +100,7 @@ export class PhaseDomain {
     param: UpdateProjectPhaseInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<UpdateProjectPhaseInput, Metadata, ProjectPhase>(
+    return promisify<UpdateProjectPhaseInput, Metadata, Empty>(
       this.client.updateProjectPhase.bind(this.client)
     )(param, metadata);
   }
@@ -109,7 +109,7 @@ export class PhaseDomain {
     param: CreatePhaseDependencyInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<CreatePhaseDependencyInput, Metadata, PhaseDependency>(
+    return promisify<CreatePhaseDependencyInput, Metadata, CreateResult>(
       this.client.createPhaseDependency.bind(this.client)
     )(param, metadata);
   }
