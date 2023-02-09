@@ -1396,13 +1396,13 @@
   integrity sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==
 
 "@topcoder-framework/lib-common@^0.2.1":
-  version "0.4.1-ci.0"
-  resolved "http://localhost:4873/@topcoder-framework%2flib-common/-/lib-common-0.4.1-ci.0.tgz#4bd9b9105a4bf65ead015466d7651f2da4679a70"
-  integrity sha512-0lvHEvO9+R+UWfdCUAkLqqMUn7EBbQLzklPkfw57bQNa85eHD9CBAS5oDuuEaKv+cMmWVytV5+1+qdDFa4QPxQ==
+  version "0.4.18-ci.0"
+  resolved "http://localhost:4873/@topcoder-framework%2flib-common/-/lib-common-0.4.18-ci.0.tgz#aa2cfad142fc6507035a405585b61a8c3c00a2d1"
+  integrity sha512-yE3xAjWU1/MZYuJn8QT8/iepkMjH5T9/Ctyim1alHae/OP5l9RkpidZVuLdxm8MXHQDmERWCzNWn/O1YLuwBgw==
   dependencies:
     "@grpc/grpc-js" "^1.8.0"
     rimraf "^3.0.2"
-    topcoder-interface "file:../plat-interface-definition"
+    topcoder-interface "github:topcoder-platform/plat-interface-definition#v0.0.10"
     tslib "^2.4.1"
 
 "@tsconfig/node10@^1.0.7":
@@ -5703,9 +5703,6 @@ to-regex-range@^5.0.1:
   integrity sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==
   dependencies:
     is-number "^7.0.0"
-
-"topcoder-interface@file:/Users/hamidtavakoli/topcoder/plat-interface-definition":
-  version "1.0.0"
 
 "topcoder-interface@github:topcoder-platform/plat-interface-definition#v0.0.10":
   version "1.0.0"

@@ -22,7 +22,8 @@
   "workspaces": [
     "domains/*",
     "lib/*",
-    "packages/*"
+    "packages/*",
+    "clients/*"
   ],
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",

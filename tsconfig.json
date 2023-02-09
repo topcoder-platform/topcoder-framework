@@ -10,9 +10,10 @@
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@topcoder-framework/*": ["packages/*"],
+      "@topcoder-framework/client-*": ["clients/client-*"],
       "@topcoder-framework/domain-*": ["domains/domain-*"],
-      "@topcoder-framework/lib-*": ["lib/lib-*"]
+      "@topcoder-framework/lib-*": ["lib/lib-*"],
+      "@topcoder-framework/*": ["packages/*"]
     },
     "preserveConstEnums": true,
     "removeComments": true,
@@ -23,6 +24,6 @@
     "skipLibCheck": true,
     "importHelpers": true
   },
-  "include": ["packages/", "lib/", "domains/"],
+  "include": ["packages/", "lib/", "domains/", "clients/"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
