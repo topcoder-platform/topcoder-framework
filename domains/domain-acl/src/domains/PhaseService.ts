@@ -18,6 +18,7 @@ import {
   UpdateProjectPhaseInput,
   CreatePhaseDependencyInput,
   PhaseDependency,
+  GetPhaseCriteriaInput,
 } from "src/models/domain-layer/legacy/phase";
 import { CreateResult } from "@topcoder-framework/lib-common";
 
@@ -34,10 +35,10 @@ export class PhaseDomain {
   );
 
   public async getPhaseCriteria(
-    param: Empty,
+    param: GetPhaseCriteriaInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<Empty, Metadata, PhaseCriteriaList>(
+    return promisify<GetPhaseCriteriaInput, Metadata, PhaseCriteriaList>(
       this.client.getPhaseCriteria.bind(this.client)
     )(param, metadata);
   }

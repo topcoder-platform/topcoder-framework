@@ -36,6 +36,12 @@ export interface CreatePrizeInput {
   projectId: number;
 }
 
+export interface GetSinglePrizeInput {
+  projectId: number;
+  prizeTypeId: number;
+  place: number;
+}
+
 function createBasePrize(): Prize {
   return {
     prizeId: 0,
@@ -500,6 +506,86 @@ export const CreatePrizeInput = {
     message.prizeTypeId = object.prizeTypeId ?? 0;
     message.numberOfSubmissions = object.numberOfSubmissions ?? undefined;
     message.projectId = object.projectId ?? 0;
+    return message;
+  },
+};
+
+function createBaseGetSinglePrizeInput(): GetSinglePrizeInput {
+  return { projectId: 0, prizeTypeId: 0, place: 0 };
+}
+
+export const GetSinglePrizeInput = {
+  encode(
+    message: GetSinglePrizeInput,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.projectId !== 0) {
+      writer.uint32(8).int32(message.projectId);
+    }
+    if (message.prizeTypeId !== 0) {
+      writer.uint32(16).int32(message.prizeTypeId);
+    }
+    if (message.place !== 0) {
+      writer.uint32(24).int32(message.place);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): GetSinglePrizeInput {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetSinglePrizeInput();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.projectId = reader.int32();
+          break;
+        case 2:
+          message.prizeTypeId = reader.int32();
+          break;
+        case 3:
+          message.place = reader.int32();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GetSinglePrizeInput {
+    return {
+      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
+      prizeTypeId: isSet(object.prizeTypeId) ? Number(object.prizeTypeId) : 0,
+      place: isSet(object.place) ? Number(object.place) : 0,
+    };
+  },
+
+  toJSON(message: GetSinglePrizeInput): unknown {
+    const obj: any = {};
+    message.projectId !== undefined &&
+      (obj.projectId = Math.round(message.projectId));
+    message.prizeTypeId !== undefined &&
+      (obj.prizeTypeId = Math.round(message.prizeTypeId));
+    message.place !== undefined && (obj.place = Math.round(message.place));
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<GetSinglePrizeInput>, I>>(
+    base?: I
+  ): GetSinglePrizeInput {
+    return GetSinglePrizeInput.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<GetSinglePrizeInput>, I>>(
+    object: I
+  ): GetSinglePrizeInput {
+    const message = createBaseGetSinglePrizeInput();
+    message.projectId = object.projectId ?? 0;
+    message.prizeTypeId = object.prizeTypeId ?? 0;
+    message.place = object.place ?? 0;
     return message;
   },
 };
