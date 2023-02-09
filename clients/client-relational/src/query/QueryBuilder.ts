@@ -1,39 +1,49 @@
+import { ScanCriteria, Value } from "@topcoder-framework/lib-common";
 import { TableColumn } from "../interfaces/TableColumns";
 import {
   ColumnType,
   Operator,
   Query,
-  Value,
+  Value as RelationalValue,
 } from "../models/data-access-layer/relational/relational";
 
 import { BaseQuery } from "./BaseQuery";
+
+export type WhereCondition =
+  | [column: TableColumn, operator: Operator, value: RelationalValue]
+  | ScanCriteria[];
 
 interface Build {
   build: () => Query;
 }
 
-interface Limit {
+interface Limit extends Build {
   offset: (offset: number) => Build;
   build: () => Query;
 }
 
-interface Where {
-  andWhere: (column: TableColumn, operator: Operator, value: Value) => Where;
+interface Where extends Build {
+  andWhere: (...inputs: WhereCondition) => Where;
   limit: (limit: number) => Limit;
   offset: (offset: number) => Build;
-  build: () => Query;
 }
 
-interface DeleteWhere {
-  andWhere: (column: TableColumn, operator: Operator, value: Value) => Where;
-  build: () => Query;
+interface WhereForModify extends Build {
+  andWhere: (...inputs: WhereCondition) => WhereForModify;
 }
 
-interface Select {
-  where: (column: TableColumn, operator: Operator, value: Value) => any;
+interface Select extends Build {
+  where: (...inputs: WhereCondition) => Where;
   limit: (limit: number) => Limit;
   offset: (offset: number) => Build;
-  build: () => Query;
+}
+
+interface Update extends Build {
+  where: (...inputs: WhereCondition) => WhereForModify;
+}
+
+interface Delete {
+  where: (...inputs: WhereCondition) => WhereForModify;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -103,7 +113,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
               .filter(([, value]) => value !== undefined)
               .map(([key, value]) => ({
                 column: this.schema.columns[key]?.name ?? key,
-                value: this.toValue(key, value),
+                value: this.toRelationalValue(key, value),
               })),
           ],
           idTable: this.schema.tableName,
@@ -118,7 +128,9 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     };
   }
 
-  update<UpdateInput extends Record<string, unknown>>(input: UpdateInput) {
+  public update<UpdateInput extends Record<string, unknown>>(
+    input: UpdateInput
+  ): Update {
     this.#query = {
       query: {
         $case: "update",
@@ -139,7 +151,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
               .filter(([, value]) => value !== undefined)
               .map(([key, value]) => ({
                 column: this.schema.columns[key]?.name ?? key,
-                value: this.toValue(key, value),
+                value: this.toRelationalValue(key, value),
               })),
           ],
           where: [],
@@ -148,12 +160,12 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     };
 
     return {
-      where: this.where.bind(this),
+      where: this.whereForModify.bind(this),
       build: this.build.bind(this),
     };
   }
 
-  delete() {
+  public delete(): Delete {
     this.#query = {
       query: {
         $case: "delete",
@@ -166,21 +178,30 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     };
 
     return {
-      where: this.where.bind(this),
-      build: this.build.bind(this),
+      where: this.whereForModify.bind(this),
     };
   }
 
   // private orderBy(column: TableColumn, direction: "asc" | "desc") {}
 
-  private where(column: TableColumn, operator: Operator, value: Value): any {
-    if (this.#query?.query?.$case === "select") {
-      this.#query.query.select.where.push({
-        key: column.name,
-        operator,
-        value,
-      });
+  private where(...inputs: WhereCondition): Where {
+    if (this.#query?.query?.$case !== "select") {
+      throw new Error("Where can only be used in select queries");
+    }
 
+    if (!inputs.length) {
+      throw new Error("Where requires at least one argument");
+    }
+
+    if (this.isScanCriteria(inputs[0])) {
+      for (const input of inputs) {
+        this.isScanCriteria(input) &&
+          this.#query.query.select.where.push({
+            key: this.schema.columns[input.key].name,
+            operator: Operator.OPERATOR_EQUAL, // TODO: map from @topcoder-framework/lib-common Operator to RelationalOperator
+            value: this.toRelationalValue(input.key, input.value),
+          });
+      }
       return {
         andWhere: this.where.bind(this),
         //   orderBy: this.orderBy.bind(this),
@@ -189,33 +210,48 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
         build: this.build.bind(this),
       };
     }
-    if (this.#query?.query?.$case === "update") {
-      this.#query.query.update.where.push({
-        key: column.name,
-        operator,
-        value,
-      });
 
-      return {
-        // andWhere: this.where.bind(this),
-        build: this.build.bind(this),
-      };
-    }
-    if (this.#query?.query?.$case === "delete") {
-      this.#query.query.delete.where.push({
-        key: column.name,
-        operator,
-        value,
-      });
+    const [column, operator, value] = inputs as [
+      TableColumn,
+      Operator,
+      RelationalValue
+    ];
 
-      return {
-        andWhere: this.where.bind(this),
-        build: this.build.bind(this),
-      };
-    }
-    throw new Error(
-      "Cannot use where on a non-select or non-update or non-delete query"
-    );
+    this.#query.query.select.where.push({
+      key: column.name,
+      operator,
+      value,
+    });
+
+    return {
+      andWhere: this.where.bind(this),
+      //   orderBy: this.orderBy.bind(this),
+      limit: this.limit.bind(this),
+      offset: this.offset.bind(this),
+      build: this.build.bind(this),
+    };
+  }
+
+  private whereForModify(...inputs: WhereCondition): WhereForModify {
+    // if (this.#query?.query?.$case === "update") {
+    //   this.#query.query.update.where.push({
+    //     key: column.name,
+    //     operator,
+    //     value,
+    //   });
+    // }
+    // if (this.#query?.query?.$case === "delete") {
+    //   this.#query.query.delete.where.push({
+    //     key: column.name,
+    //     operator,
+    //     value,
+    //   });
+    // }
+
+    return {
+      andWhere: this.whereForModify.bind(this),
+      build: this.build.bind(this),
+    };
   }
 
   private limit(limit: number): Limit {
@@ -249,8 +285,32 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     return this.#query;
   }
 
-  private toValue(key: string, value: unknown): Value {
+  private isScanCriteria(criteria: unknown): criteria is ScanCriteria {
+    return (
+      criteria != null &&
+      typeof criteria === "object" &&
+      typeof (criteria as ScanCriteria).key === "string" &&
+      this.isWKTValue((criteria as ScanCriteria).value)
+    );
+  }
+
+  private isWKTValue(value: unknown): value is Value {
+    return (
+      typeof value === "object" &&
+      value != null &&
+      typeof (value as Value)?.kind != undefined &&
+      typeof (value as Value)?.kind?.$case === "string"
+    );
+  }
+
+  private toRelationalValue(key: string, value: unknown): RelationalValue {
     const dataType: ColumnType = this.schema.columns[key].type;
+    console.log("key", key);
+    console.log("value", value);
+
+    if (this.isWKTValue(value)) {
+      value = Value.unwrap(value);
+    }
 
     if (dataType == null) {
       throw new Error(`Unknown column ${key}`);
