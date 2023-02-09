@@ -66,7 +66,7 @@ export class ChallengeDomain {
     param: LegacyChallengeId,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<LegacyChallengeId, Metadata, LegacyChallenge>(
+    return promisify<LegacyChallengeId, Metadata, Empty>(
       this.client.activateChallenge.bind(this.client)
     )(param, metadata);
   }
@@ -75,7 +75,7 @@ export class ChallengeDomain {
     param: CloseChallengeInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<CloseChallengeInput, Metadata, LegacyChallenge>(
+    return promisify<CloseChallengeInput, Metadata, Empty>(
       this.client.closeChallenge.bind(this.client)
     )(param, metadata);
   }
