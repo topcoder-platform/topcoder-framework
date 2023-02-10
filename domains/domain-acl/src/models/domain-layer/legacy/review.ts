@@ -134,13 +134,15 @@ export interface ReviewItemComment {
   reviewItemId: number;
   commentTypeId: number;
   content: string;
+  sort: number;
 }
 
-export interface CreateReviewItemComment {
+export interface CreateReviewItemCommentInput {
   resourceId: number;
   reviewItemId: number;
   commentTypeId: number;
   content: string;
+  sort: number;
 }
 
 export interface ScorecardGroup {
@@ -183,6 +185,15 @@ export interface ScorecardSectionList {
 
 export interface GetScorecardSectionsInput {
   scorecardGroupId: number;
+}
+
+export interface CreateResourceSubmissionInput {
+  resourceId: number;
+  submissionId: number;
+  createUser?: number | undefined;
+  createDate?: number | undefined;
+  modifyUser?: number | undefined;
+  modifyDate?: number | undefined;
 }
 
 function createBaseReview(): Review {
@@ -1895,6 +1906,7 @@ function createBaseReviewItemComment(): ReviewItemComment {
     reviewItemId: 0,
     commentTypeId: 0,
     content: "",
+    sort: 0,
   };
 }
 
@@ -1917,6 +1929,9 @@ export const ReviewItemComment = {
     }
     if (message.content !== "") {
       writer.uint32(42).string(message.content);
+    }
+    if (message.sort !== 0) {
+      writer.uint32(48).int32(message.sort);
     }
     return writer;
   },
@@ -1943,6 +1958,9 @@ export const ReviewItemComment = {
         case 5:
           message.content = reader.string();
           break;
+        case 6:
+          message.sort = reader.int32();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1964,6 +1982,7 @@ export const ReviewItemComment = {
         ? Number(object.commentTypeId)
         : 0,
       content: isSet(object.content) ? String(object.content) : "",
+      sort: isSet(object.sort) ? Number(object.sort) : 0,
     };
   },
 
@@ -1978,6 +1997,7 @@ export const ReviewItemComment = {
     message.commentTypeId !== undefined &&
       (obj.commentTypeId = Math.round(message.commentTypeId));
     message.content !== undefined && (obj.content = message.content);
+    message.sort !== undefined && (obj.sort = Math.round(message.sort));
     return obj;
   },
 
@@ -1996,17 +2016,24 @@ export const ReviewItemComment = {
     message.reviewItemId = object.reviewItemId ?? 0;
     message.commentTypeId = object.commentTypeId ?? 0;
     message.content = object.content ?? "";
+    message.sort = object.sort ?? 0;
     return message;
   },
 };
 
-function createBaseCreateReviewItemComment(): CreateReviewItemComment {
-  return { resourceId: 0, reviewItemId: 0, commentTypeId: 0, content: "" };
+function createBaseCreateReviewItemCommentInput(): CreateReviewItemCommentInput {
+  return {
+    resourceId: 0,
+    reviewItemId: 0,
+    commentTypeId: 0,
+    content: "",
+    sort: 0,
+  };
 }
 
-export const CreateReviewItemComment = {
+export const CreateReviewItemCommentInput = {
   encode(
-    message: CreateReviewItemComment,
+    message: CreateReviewItemCommentInput,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.resourceId !== 0) {
@@ -2021,16 +2048,19 @@ export const CreateReviewItemComment = {
     if (message.content !== "") {
       writer.uint32(42).string(message.content);
     }
+    if (message.sort !== 0) {
+      writer.uint32(48).int32(message.sort);
+    }
     return writer;
   },
 
   decode(
     input: _m0.Reader | Uint8Array,
     length?: number
-  ): CreateReviewItemComment {
+  ): CreateReviewItemCommentInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCreateReviewItemComment();
+    const message = createBaseCreateReviewItemCommentInput();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2046,6 +2076,9 @@ export const CreateReviewItemComment = {
         case 5:
           message.content = reader.string();
           break;
+        case 6:
+          message.sort = reader.int32();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -2054,7 +2087,7 @@ export const CreateReviewItemComment = {
     return message;
   },
 
-  fromJSON(object: any): CreateReviewItemComment {
+  fromJSON(object: any): CreateReviewItemCommentInput {
     return {
       resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
       reviewItemId: isSet(object.reviewItemId)
@@ -2064,10 +2097,11 @@ export const CreateReviewItemComment = {
         ? Number(object.commentTypeId)
         : 0,
       content: isSet(object.content) ? String(object.content) : "",
+      sort: isSet(object.sort) ? Number(object.sort) : 0,
     };
   },
 
-  toJSON(message: CreateReviewItemComment): unknown {
+  toJSON(message: CreateReviewItemCommentInput): unknown {
     const obj: any = {};
     message.resourceId !== undefined &&
       (obj.resourceId = Math.round(message.resourceId));
@@ -2076,23 +2110,25 @@ export const CreateReviewItemComment = {
     message.commentTypeId !== undefined &&
       (obj.commentTypeId = Math.round(message.commentTypeId));
     message.content !== undefined && (obj.content = message.content);
+    message.sort !== undefined && (obj.sort = Math.round(message.sort));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateReviewItemComment>, I>>(
+  create<I extends Exact<DeepPartial<CreateReviewItemCommentInput>, I>>(
     base?: I
-  ): CreateReviewItemComment {
-    return CreateReviewItemComment.fromPartial(base ?? {});
+  ): CreateReviewItemCommentInput {
+    return CreateReviewItemCommentInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateReviewItemComment>, I>>(
+  fromPartial<I extends Exact<DeepPartial<CreateReviewItemCommentInput>, I>>(
     object: I
-  ): CreateReviewItemComment {
-    const message = createBaseCreateReviewItemComment();
+  ): CreateReviewItemCommentInput {
+    const message = createBaseCreateReviewItemCommentInput();
     message.resourceId = object.resourceId ?? 0;
     message.reviewItemId = object.reviewItemId ?? 0;
     message.commentTypeId = object.commentTypeId ?? 0;
     message.content = object.content ?? "";
+    message.sort = object.sort ?? 0;
     return message;
   },
 };
@@ -2704,6 +2740,137 @@ export const GetScorecardSectionsInput = {
   ): GetScorecardSectionsInput {
     const message = createBaseGetScorecardSectionsInput();
     message.scorecardGroupId = object.scorecardGroupId ?? 0;
+    return message;
+  },
+};
+
+function createBaseCreateResourceSubmissionInput(): CreateResourceSubmissionInput {
+  return {
+    resourceId: 0,
+    submissionId: 0,
+    createUser: undefined,
+    createDate: undefined,
+    modifyUser: undefined,
+    modifyDate: undefined,
+  };
+}
+
+export const CreateResourceSubmissionInput = {
+  encode(
+    message: CreateResourceSubmissionInput,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.resourceId !== 0) {
+      writer.uint32(8).int32(message.resourceId);
+    }
+    if (message.submissionId !== 0) {
+      writer.uint32(16).int32(message.submissionId);
+    }
+    if (message.createUser !== undefined) {
+      writer.uint32(24).int32(message.createUser);
+    }
+    if (message.createDate !== undefined) {
+      writer.uint32(32).int64(message.createDate);
+    }
+    if (message.modifyUser !== undefined) {
+      writer.uint32(40).int32(message.modifyUser);
+    }
+    if (message.modifyDate !== undefined) {
+      writer.uint32(48).int64(message.modifyDate);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): CreateResourceSubmissionInput {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCreateResourceSubmissionInput();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.resourceId = reader.int32();
+          break;
+        case 2:
+          message.submissionId = reader.int32();
+          break;
+        case 3:
+          message.createUser = reader.int32();
+          break;
+        case 4:
+          message.createDate = longToNumber(reader.int64() as Long);
+          break;
+        case 5:
+          message.modifyUser = reader.int32();
+          break;
+        case 6:
+          message.modifyDate = longToNumber(reader.int64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CreateResourceSubmissionInput {
+    return {
+      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
+      submissionId: isSet(object.submissionId)
+        ? Number(object.submissionId)
+        : 0,
+      createUser: isSet(object.createUser)
+        ? Number(object.createUser)
+        : undefined,
+      createDate: isSet(object.createDate)
+        ? Number(object.createDate)
+        : undefined,
+      modifyUser: isSet(object.modifyUser)
+        ? Number(object.modifyUser)
+        : undefined,
+      modifyDate: isSet(object.modifyDate)
+        ? Number(object.modifyDate)
+        : undefined,
+    };
+  },
+
+  toJSON(message: CreateResourceSubmissionInput): unknown {
+    const obj: any = {};
+    message.resourceId !== undefined &&
+      (obj.resourceId = Math.round(message.resourceId));
+    message.submissionId !== undefined &&
+      (obj.submissionId = Math.round(message.submissionId));
+    message.createUser !== undefined &&
+      (obj.createUser = Math.round(message.createUser));
+    message.createDate !== undefined &&
+      (obj.createDate = Math.round(message.createDate));
+    message.modifyUser !== undefined &&
+      (obj.modifyUser = Math.round(message.modifyUser));
+    message.modifyDate !== undefined &&
+      (obj.modifyDate = Math.round(message.modifyDate));
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<CreateResourceSubmissionInput>, I>>(
+    base?: I
+  ): CreateResourceSubmissionInput {
+    return CreateResourceSubmissionInput.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<CreateResourceSubmissionInput>, I>>(
+    object: I
+  ): CreateResourceSubmissionInput {
+    const message = createBaseCreateResourceSubmissionInput();
+    message.resourceId = object.resourceId ?? 0;
+    message.submissionId = object.submissionId ?? 0;
+    message.createUser = object.createUser ?? undefined;
+    message.createDate = object.createDate ?? undefined;
+    message.modifyUser = object.modifyUser ?? undefined;
+    message.modifyDate = object.modifyDate ?? undefined;
     return message;
   },
 };
