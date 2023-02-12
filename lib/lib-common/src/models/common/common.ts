@@ -277,6 +277,11 @@ export interface CreateResult {
     | { $case: "stringId"; stringId: string };
 }
 
+export interface UpdateResult {
+  updatedCount: number;
+  message?: string | undefined;
+}
+
 export interface LookupCriteria {
   key: string;
   value?: any;
@@ -535,13 +540,11 @@ export const CreateResult = {
     message: CreateResult,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    switch (message.kind?.$case) {
-      case "integerId":
-        writer.uint32(8).int64(message.kind.integerId);
-        break;
-      case "stringId":
-        writer.uint32(18).string(message.kind.stringId);
-        break;
+    if (message.kind?.$case === "integerId") {
+      writer.uint32(8).int64(message.kind.integerId);
+    }
+    if (message.kind?.$case === "stringId") {
+      writer.uint32(18).string(message.kind.stringId);
     }
     return writer;
   },
@@ -613,6 +616,78 @@ export const CreateResult = {
     ) {
       message.kind = { $case: "stringId", stringId: object.kind.stringId };
     }
+    return message;
+  },
+};
+
+function createBaseUpdateResult(): UpdateResult {
+  return { updatedCount: 0, message: undefined };
+}
+
+export const UpdateResult = {
+  encode(
+    message: UpdateResult,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.updatedCount !== 0) {
+      writer.uint32(8).int64(message.updatedCount);
+    }
+    if (message.message !== undefined) {
+      writer.uint32(18).string(message.message);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateResult {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUpdateResult();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.updatedCount = longToNumber(reader.int64() as Long);
+          break;
+        case 2:
+          message.message = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UpdateResult {
+    return {
+      updatedCount: isSet(object.updatedCount)
+        ? Number(object.updatedCount)
+        : 0,
+      message: isSet(object.message) ? String(object.message) : undefined,
+    };
+  },
+
+  toJSON(message: UpdateResult): unknown {
+    const obj: any = {};
+    message.updatedCount !== undefined &&
+      (obj.updatedCount = Math.round(message.updatedCount));
+    message.message !== undefined && (obj.message = message.message);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<UpdateResult>, I>>(
+    base?: I
+  ): UpdateResult {
+    return UpdateResult.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<UpdateResult>, I>>(
+    object: I
+  ): UpdateResult {
+    const message = createBaseUpdateResult();
+    message.updatedCount = object.updatedCount ?? 0;
+    message.message = object.message ?? undefined;
     return message;
   },
 };
