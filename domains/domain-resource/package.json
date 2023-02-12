@@ -14,7 +14,7 @@
   "author": "Rakib Ansary <rakibansary@topcoder.com>",
   "license": "ISC",
   "dependencies": {
-    "@topcoder-framework/client-relational": "^0.4.22-ci.0",
+    "@topcoder-framework/client-relational": "^0.4.0",
     "@topcoder-framework/lib-common": "^0.4.0",
     "dotenv": "^16.0.3",
     "tslib": "^2.4.1"
