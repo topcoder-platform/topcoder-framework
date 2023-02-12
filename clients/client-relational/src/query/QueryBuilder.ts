@@ -194,13 +194,12 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     }
 
     if (this.isScanCriteria(inputs[0])) {
-      for (const input of inputs) {
-        this.isScanCriteria(input) &&
-          this.#query.query.select.where.push({
-            key: this.schema.columns[input.key].name,
-            operator: Operator.OPERATOR_EQUAL, // TODO: map from @topcoder-framework/lib-common Operator to RelationalOperator
-            value: this.toRelationalValue(input.key, input.value),
-          });
+      for (const input of inputs as ScanCriteria[]) {
+        this.#query.query.select.where.push({
+          key: this.schema.columns[input.key].name,
+          operator: Operator.OPERATOR_EQUAL, // TODO: map from @topcoder-framework/lib-common Operator to RelationalOperator
+          value: this.toRelationalValue(input.key, input.value),
+        });
       }
       return {
         andWhere: this.where.bind(this),
@@ -233,20 +232,75 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
   }
 
   private whereForModify(...inputs: WhereCondition): WhereForModify {
-    // if (this.#query?.query?.$case === "update") {
-    //   this.#query.query.update.where.push({
-    //     key: column.name,
-    //     operator,
-    //     value,
-    //   });
-    // }
-    // if (this.#query?.query?.$case === "delete") {
-    //   this.#query.query.delete.where.push({
-    //     key: column.name,
-    //     operator,
-    //     value,
-    //   });
-    // }
+    if (!inputs.length) {
+      throw new Error("Where requires at least one argument");
+    }
+
+    if (this.#query?.query?.$case === "update") {
+      if (this.isScanCriteria(inputs[0])) {
+        for (const input of inputs as ScanCriteria[]) {
+          this.#query.query.update.where.push({
+            key: this.schema.columns[input.key].name,
+            operator: Operator.OPERATOR_EQUAL, // TODO: map from @topcoder-framework/lib-common Operator to RelationalOperator
+            value: this.toRelationalValue(input.key, input.value),
+          });
+        }
+        return {
+          andWhere: this.whereForModify.bind(this),
+          build: this.build.bind(this),
+        };
+      }
+
+      const [column, operator, value] = inputs as [
+        TableColumn,
+        Operator,
+        RelationalValue
+      ];
+
+      this.#query.query.update.where.push({
+        key: column.name,
+        operator,
+        value,
+      });
+
+      return {
+        andWhere: this.whereForModify.bind(this),
+        build: this.build.bind(this),
+      };
+    }
+
+    if (this.#query?.query?.$case === "delete") {
+      if (this.isScanCriteria(inputs[0])) {
+        for (const input of inputs as ScanCriteria[]) {
+          this.#query.query.delete.where.push({
+            key: this.schema.columns[input.key].name,
+            operator: Operator.OPERATOR_EQUAL, // TODO: map from @topcoder-framework/lib-common Operator to RelationalOperator
+            value: this.toRelationalValue(input.key, input.value),
+          });
+        }
+        return {
+          andWhere: this.whereForModify.bind(this),
+          build: this.build.bind(this),
+        };
+      }
+
+      const [column, operator, value] = inputs as [
+        TableColumn,
+        Operator,
+        RelationalValue
+      ];
+
+      this.#query.query.delete.where.push({
+        key: column.name,
+        operator,
+        value,
+      });
+
+      return {
+        andWhere: this.whereForModify.bind(this),
+        build: this.build.bind(this),
+      };
+    }
 
     return {
       andWhere: this.whereForModify.bind(this),
@@ -290,11 +344,12 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
       criteria != null &&
       typeof criteria === "object" &&
       typeof (criteria as ScanCriteria).key === "string" &&
-      this.isWKTValue((criteria as ScanCriteria).value)
+      typeof (criteria as ScanCriteria).operator !== "undefined"
     );
   }
 
   private isWKTValue(value: unknown): value is Value {
+    console.log("checking if value is WKTValue", value);
     return (
       typeof value === "object" &&
       value != null &&
@@ -305,8 +360,6 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
 
   private toRelationalValue(key: string, value: unknown): RelationalValue {
     const dataType: ColumnType = this.schema.columns[key].type;
-    console.log("key", key);
-    console.log("value", value);
 
     if (this.isWKTValue(value)) {
       value = Value.unwrap(value);

@@ -17,20 +17,20 @@ import Long from "long";
 import _m0 from "protobufjs/minimal";
 
 export enum Operator {
-  OPERATOR_UNSPECIFIED = "OPERATOR_UNSPECIFIED",
-  OPERATOR_EQUAL = "OPERATOR_EQUAL",
-  OPERATOR_NOT_EQUAL = "OPERATOR_NOT_EQUAL",
-  OPERATOR_GREATER_THAN = "OPERATOR_GREATER_THAN",
-  OPERATOR_GREATER_THAN_OR_EQUAL = "OPERATOR_GREATER_THAN_OR_EQUAL",
-  OPERATOR_LESS_THAN = "OPERATOR_LESS_THAN",
-  OPERATOR_LESS_THAN_OR_EQUAL = "OPERATOR_LESS_THAN_OR_EQUAL",
-  OPERATOR_IN = "OPERATOR_IN",
-  OPERATOR_NOT_IN = "OPERATOR_NOT_IN",
-  OPERATOR_LIKE = "OPERATOR_LIKE",
-  OPERATOR_NOT_LIKE = "OPERATOR_NOT_LIKE",
-  OPERATOR_IS_NULL = "OPERATOR_IS_NULL",
-  OPERATOR_IS_NOT_NULL = "OPERATOR_IS_NOT_NULL",
-  UNRECOGNIZED = "UNRECOGNIZED",
+  OPERATOR_UNSPECIFIED = 0,
+  OPERATOR_EQUAL = 1,
+  OPERATOR_NOT_EQUAL = 2,
+  OPERATOR_GREATER_THAN = 3,
+  OPERATOR_GREATER_THAN_OR_EQUAL = 4,
+  OPERATOR_LESS_THAN = 5,
+  OPERATOR_LESS_THAN_OR_EQUAL = 6,
+  OPERATOR_IN = 7,
+  OPERATOR_NOT_IN = 8,
+  OPERATOR_LIKE = 9,
+  OPERATOR_NOT_LIKE = 10,
+  OPERATOR_IS_NULL = 11,
+  OPERATOR_IS_NOT_NULL = 12,
+  UNRECOGNIZED = -1,
 }
 
 export function operatorFromJSON(object: any): Operator {
@@ -115,47 +115,13 @@ export function operatorToJSON(object: Operator): string {
   }
 }
 
-export function operatorToNumber(object: Operator): number {
-  switch (object) {
-    case Operator.OPERATOR_UNSPECIFIED:
-      return 0;
-    case Operator.OPERATOR_EQUAL:
-      return 1;
-    case Operator.OPERATOR_NOT_EQUAL:
-      return 2;
-    case Operator.OPERATOR_GREATER_THAN:
-      return 3;
-    case Operator.OPERATOR_GREATER_THAN_OR_EQUAL:
-      return 4;
-    case Operator.OPERATOR_LESS_THAN:
-      return 5;
-    case Operator.OPERATOR_LESS_THAN_OR_EQUAL:
-      return 6;
-    case Operator.OPERATOR_IN:
-      return 7;
-    case Operator.OPERATOR_NOT_IN:
-      return 8;
-    case Operator.OPERATOR_LIKE:
-      return 9;
-    case Operator.OPERATOR_NOT_LIKE:
-      return 10;
-    case Operator.OPERATOR_IS_NULL:
-      return 11;
-    case Operator.OPERATOR_IS_NOT_NULL:
-      return 12;
-    case Operator.UNRECOGNIZED:
-    default:
-      return -1;
-  }
-}
-
 export enum JoinType {
-  JOIN_TYPE_UNSPECIFIED = "JOIN_TYPE_UNSPECIFIED",
-  JOIN_TYPE_INNER = "JOIN_TYPE_INNER",
-  JOIN_TYPE_LEFT = "JOIN_TYPE_LEFT",
-  JOIN_TYPE_RIGHT = "JOIN_TYPE_RIGHT",
-  JOIN_TYPE_FULL = "JOIN_TYPE_FULL",
-  UNRECOGNIZED = "UNRECOGNIZED",
+  JOIN_TYPE_UNSPECIFIED = 0,
+  JOIN_TYPE_INNER = 1,
+  JOIN_TYPE_LEFT = 2,
+  JOIN_TYPE_RIGHT = 3,
+  JOIN_TYPE_FULL = 4,
+  UNRECOGNIZED = -1,
 }
 
 export function joinTypeFromJSON(object: any): JoinType {
@@ -200,36 +166,18 @@ export function joinTypeToJSON(object: JoinType): string {
   }
 }
 
-export function joinTypeToNumber(object: JoinType): number {
-  switch (object) {
-    case JoinType.JOIN_TYPE_UNSPECIFIED:
-      return 0;
-    case JoinType.JOIN_TYPE_INNER:
-      return 1;
-    case JoinType.JOIN_TYPE_LEFT:
-      return 2;
-    case JoinType.JOIN_TYPE_RIGHT:
-      return 3;
-    case JoinType.JOIN_TYPE_FULL:
-      return 4;
-    case JoinType.UNRECOGNIZED:
-    default:
-      return -1;
-  }
-}
-
 export enum ColumnType {
-  COLUMN_TYPE_UNSPECIFIED = "COLUMN_TYPE_UNSPECIFIED",
-  COLUMN_TYPE_STRING = "COLUMN_TYPE_STRING",
-  COLUMN_TYPE_INT = "COLUMN_TYPE_INT",
-  COLUMN_TYPE_LONG = "COLUMN_TYPE_LONG",
-  COLUMN_TYPE_FLOAT = "COLUMN_TYPE_FLOAT",
-  COLUMN_TYPE_DOUBLE = "COLUMN_TYPE_DOUBLE",
-  COLUMN_TYPE_BOOLEAN = "COLUMN_TYPE_BOOLEAN",
-  COLUMN_TYPE_DATE = "COLUMN_TYPE_DATE",
-  COLUMN_TYPE_DATETIME = "COLUMN_TYPE_DATETIME",
-  COLUMN_TYPE_BLOB = "COLUMN_TYPE_BLOB",
-  UNRECOGNIZED = "UNRECOGNIZED",
+  COLUMN_TYPE_UNSPECIFIED = 0,
+  COLUMN_TYPE_STRING = 1,
+  COLUMN_TYPE_INT = 2,
+  COLUMN_TYPE_LONG = 3,
+  COLUMN_TYPE_FLOAT = 4,
+  COLUMN_TYPE_DOUBLE = 5,
+  COLUMN_TYPE_BOOLEAN = 6,
+  COLUMN_TYPE_DATE = 7,
+  COLUMN_TYPE_DATETIME = 8,
+  COLUMN_TYPE_BLOB = 9,
+  UNRECOGNIZED = -1,
 }
 
 export function columnTypeFromJSON(object: any): ColumnType {
@@ -296,34 +244,6 @@ export function columnTypeToJSON(object: ColumnType): string {
     case ColumnType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
-  }
-}
-
-export function columnTypeToNumber(object: ColumnType): number {
-  switch (object) {
-    case ColumnType.COLUMN_TYPE_UNSPECIFIED:
-      return 0;
-    case ColumnType.COLUMN_TYPE_STRING:
-      return 1;
-    case ColumnType.COLUMN_TYPE_INT:
-      return 2;
-    case ColumnType.COLUMN_TYPE_LONG:
-      return 3;
-    case ColumnType.COLUMN_TYPE_FLOAT:
-      return 4;
-    case ColumnType.COLUMN_TYPE_DOUBLE:
-      return 5;
-    case ColumnType.COLUMN_TYPE_BOOLEAN:
-      return 6;
-    case ColumnType.COLUMN_TYPE_DATE:
-      return 7;
-    case ColumnType.COLUMN_TYPE_DATETIME:
-      return 8;
-    case ColumnType.COLUMN_TYPE_BLOB:
-      return 9;
-    case ColumnType.UNRECOGNIZED:
-    default:
-      return -1;
   }
 }
 
@@ -462,32 +382,34 @@ function createBaseValue(): Value {
 
 export const Value = {
   encode(message: Value, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.value?.$case === "stringValue") {
-      writer.uint32(26).string(message.value.stringValue);
-    }
-    if (message.value?.$case === "intValue") {
-      writer.uint32(32).int32(message.value.intValue);
-    }
-    if (message.value?.$case === "longValue") {
-      writer.uint32(40).int64(message.value.longValue);
-    }
-    if (message.value?.$case === "floatValue") {
-      writer.uint32(53).float(message.value.floatValue);
-    }
-    if (message.value?.$case === "doubleValue") {
-      writer.uint32(57).double(message.value.doubleValue);
-    }
-    if (message.value?.$case === "booleanValue") {
-      writer.uint32(64).bool(message.value.booleanValue);
-    }
-    if (message.value?.$case === "dateValue") {
-      writer.uint32(74).string(message.value.dateValue);
-    }
-    if (message.value?.$case === "datetimeValue") {
-      writer.uint32(82).string(message.value.datetimeValue);
-    }
-    if (message.value?.$case === "blobValue") {
-      writer.uint32(90).bytes(message.value.blobValue);
+    switch (message.value?.$case) {
+      case "stringValue":
+        writer.uint32(26).string(message.value.stringValue);
+        break;
+      case "intValue":
+        writer.uint32(32).int32(message.value.intValue);
+        break;
+      case "longValue":
+        writer.uint32(40).int64(message.value.longValue);
+        break;
+      case "floatValue":
+        writer.uint32(53).float(message.value.floatValue);
+        break;
+      case "doubleValue":
+        writer.uint32(57).double(message.value.doubleValue);
+        break;
+      case "booleanValue":
+        writer.uint32(64).bool(message.value.booleanValue);
+        break;
+      case "dateValue":
+        writer.uint32(74).string(message.value.dateValue);
+        break;
+      case "datetimeValue":
+        writer.uint32(82).string(message.value.datetimeValue);
+        break;
+      case "blobValue":
+        writer.uint32(90).bytes(message.value.blobValue);
+        break;
     }
     return writer;
   },
@@ -712,7 +634,7 @@ export const Column = {
       writer.uint32(18).string(message.name);
     }
     if (message.type !== undefined) {
-      writer.uint32(24).int32(columnTypeToNumber(message.type));
+      writer.uint32(24).int32(message.type);
     }
     return writer;
   },
@@ -731,7 +653,7 @@ export const Column = {
           message.name = reader.string();
           break;
         case 3:
-          message.type = columnTypeFromJSON(reader.int32());
+          message.type = reader.int32() as any;
           break;
         default:
           reader.skipType(tag & 7);
@@ -775,7 +697,7 @@ export const Column = {
 };
 
 function createBaseWhereCriteria(): WhereCriteria {
-  return { operator: Operator.OPERATOR_UNSPECIFIED, key: "", value: undefined };
+  return { operator: 0, key: "", value: undefined };
 }
 
 export const WhereCriteria = {
@@ -783,8 +705,8 @@ export const WhereCriteria = {
     message: WhereCriteria,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.operator !== Operator.OPERATOR_UNSPECIFIED) {
-      writer.uint32(8).int32(operatorToNumber(message.operator));
+    if (message.operator !== 0) {
+      writer.uint32(8).int32(message.operator);
     }
     if (message.key !== "") {
       writer.uint32(18).string(message.key);
@@ -803,7 +725,7 @@ export const WhereCriteria = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.operator = operatorFromJSON(reader.int32());
+          message.operator = reader.int32() as any;
           break;
         case 2:
           message.key = reader.string();
@@ -821,9 +743,7 @@ export const WhereCriteria = {
 
   fromJSON(object: any): WhereCriteria {
     return {
-      operator: isSet(object.operator)
-        ? operatorFromJSON(object.operator)
-        : Operator.OPERATOR_UNSPECIFIED,
+      operator: isSet(object.operator) ? operatorFromJSON(object.operator) : 0,
       key: isSet(object.key) ? String(object.key) : "",
       value: isSet(object.value) ? Value.fromJSON(object.value) : undefined,
     };
@@ -849,7 +769,7 @@ export const WhereCriteria = {
     object: I
   ): WhereCriteria {
     const message = createBaseWhereCriteria();
-    message.operator = object.operator ?? Operator.OPERATOR_UNSPECIFIED;
+    message.operator = object.operator ?? 0;
     message.key = object.key ?? "";
     message.value =
       object.value !== undefined && object.value !== null
@@ -934,7 +854,7 @@ export const RawQuery = {
 
 function createBaseJoin(): Join {
   return {
-    type: JoinType.JOIN_TYPE_UNSPECIFIED,
+    type: 0,
     fromTableSchema: undefined,
     joinTableSchema: undefined,
     fromTable: "",
@@ -946,8 +866,8 @@ function createBaseJoin(): Join {
 
 export const Join = {
   encode(message: Join, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.type !== JoinType.JOIN_TYPE_UNSPECIFIED) {
-      writer.uint32(8).int32(joinTypeToNumber(message.type));
+    if (message.type !== 0) {
+      writer.uint32(8).int32(message.type);
     }
     if (message.fromTableSchema !== undefined) {
       writer.uint32(18).string(message.fromTableSchema);
@@ -978,7 +898,7 @@ export const Join = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.type = joinTypeFromJSON(reader.int32());
+          message.type = reader.int32() as any;
           break;
         case 2:
           message.fromTableSchema = reader.string();
@@ -1008,9 +928,7 @@ export const Join = {
 
   fromJSON(object: any): Join {
     return {
-      type: isSet(object.type)
-        ? joinTypeFromJSON(object.type)
-        : JoinType.JOIN_TYPE_UNSPECIFIED,
+      type: isSet(object.type) ? joinTypeFromJSON(object.type) : 0,
       fromTableSchema: isSet(object.fromTableSchema)
         ? String(object.fromTableSchema)
         : undefined,
@@ -1044,7 +962,7 @@ export const Join = {
 
   fromPartial<I extends Exact<DeepPartial<Join>, I>>(object: I): Join {
     const message = createBaseJoin();
-    message.type = object.type ?? JoinType.JOIN_TYPE_UNSPECIFIED;
+    message.type = object.type ?? 0;
     message.fromTableSchema = object.fromTableSchema ?? undefined;
     message.joinTableSchema = object.joinTableSchema ?? undefined;
     message.fromTable = object.fromTable ?? "";
@@ -1685,32 +1603,34 @@ function createBaseQuery(): Query {
 
 export const Query = {
   encode(message: Query, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.query?.$case === "raw") {
-      RawQuery.encode(message.query.raw, writer.uint32(10).fork()).ldelim();
-    }
-    if (message.query?.$case === "select") {
-      SelectQuery.encode(
-        message.query.select,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.query?.$case === "insert") {
-      InsertQuery.encode(
-        message.query.insert,
-        writer.uint32(26).fork()
-      ).ldelim();
-    }
-    if (message.query?.$case === "update") {
-      UpdateQuery.encode(
-        message.query.update,
-        writer.uint32(34).fork()
-      ).ldelim();
-    }
-    if (message.query?.$case === "delete") {
-      DeleteQuery.encode(
-        message.query.delete,
-        writer.uint32(42).fork()
-      ).ldelim();
+    switch (message.query?.$case) {
+      case "raw":
+        RawQuery.encode(message.query.raw, writer.uint32(10).fork()).ldelim();
+        break;
+      case "select":
+        SelectQuery.encode(
+          message.query.select,
+          writer.uint32(18).fork()
+        ).ldelim();
+        break;
+      case "insert":
+        InsertQuery.encode(
+          message.query.insert,
+          writer.uint32(26).fork()
+        ).ldelim();
+        break;
+      case "update":
+        UpdateQuery.encode(
+          message.query.update,
+          writer.uint32(34).fork()
+        ).ldelim();
+        break;
+      case "delete":
+        DeleteQuery.encode(
+          message.query.delete,
+          writer.uint32(42).fork()
+        ).ldelim();
+        break;
     }
     return writer;
   },
@@ -2341,29 +2261,31 @@ export const QueryResponse = {
     message: QueryResponse,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.result?.$case === "selectResult") {
-      SelectQueryResult.encode(
-        message.result.selectResult,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.result?.$case === "insertResult") {
-      InsertQueryResult.encode(
-        message.result.insertResult,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.result?.$case === "updateResult") {
-      UpdateQueryResult.encode(
-        message.result.updateResult,
-        writer.uint32(26).fork()
-      ).ldelim();
-    }
-    if (message.result?.$case === "deleteResult") {
-      DeleteQueryResult.encode(
-        message.result.deleteResult,
-        writer.uint32(34).fork()
-      ).ldelim();
+    switch (message.result?.$case) {
+      case "selectResult":
+        SelectQueryResult.encode(
+          message.result.selectResult,
+          writer.uint32(10).fork()
+        ).ldelim();
+        break;
+      case "insertResult":
+        InsertQueryResult.encode(
+          message.result.insertResult,
+          writer.uint32(18).fork()
+        ).ldelim();
+        break;
+      case "updateResult":
+        UpdateQueryResult.encode(
+          message.result.updateResult,
+          writer.uint32(26).fork()
+        ).ldelim();
+        break;
+      case "deleteResult":
+        DeleteQueryResult.encode(
+          message.result.deleteResult,
+          writer.uint32(34).fork()
+        ).ldelim();
+        break;
     }
     return writer;
   },

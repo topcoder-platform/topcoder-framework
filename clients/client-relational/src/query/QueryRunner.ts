@@ -41,6 +41,9 @@ export class QueryRunner {
     );
   }
 
+  isQueryRunning = true;
+  queue = [];
+
   beginTransaction(metadata = new Metadata()): Transaction {
     const transactionStream = this.#client.startTransactionStream(metadata);
 
