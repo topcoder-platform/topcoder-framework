@@ -5,11 +5,13 @@ import { LegacyChallengeClient } from "../models/domain-layer/legacy/services/ch
 
 import { GrpcClient } from "../common/GrpcClient";
 import {
-  CheckChallengeExistsResponse,
   LegacyChallengeId,
   LegacyChallengeList,
 } from "src/models/domain-layer/legacy/challenge";
-import { LookupCriteria } from "@topcoder-framework/lib-common";
+import {
+  LookupCriteria,
+  CheckExistsResult,
+} from "@topcoder-framework/lib-common";
 
 export class ChallengeDomain {
   constructor(
@@ -27,8 +29,8 @@ export class ChallengeDomain {
     param: LegacyChallengeId,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<LegacyChallengeId, Metadata, CheckChallengeExistsResponse>(
-      this.client.checkChallengeExists.bind(this.client)
+    return promisify<LegacyChallengeId, Metadata, CheckExistsResult>(
+      this.client.checkExists.bind(this.client)
     )(param, metadata);
   }
 

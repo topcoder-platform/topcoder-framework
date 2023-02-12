@@ -11,19 +11,17 @@ import {
   ServiceError,
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
-import { Empty } from "../../../google/protobuf/empty";
+import { CreateResult, Empty } from "@topcoder-framework/lib-common";
 import {
   CreatePhaseCriteriaInput,
   CreatePhaseDependencyInput,
   CreateProjectPhaseInput,
   DeletePhaseCriteriaInput,
   DeleteProjectPhasesInput,
+  GetPhaseCriteriaInput,
   GetProjectPhasesInput,
-  PhaseCriteria,
   PhaseCriteriaList,
-  PhaseDependency,
   PhaseTypeList,
-  ProjectPhase,
   ProjectPhaseList,
   UpdateProjectPhaseInput,
 } from "../phase";
@@ -34,9 +32,9 @@ export const LegacyPhaseService = {
     path: "/topcoder.domain.service.phase.LegacyPhase/GetPhaseCriteria",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: Empty) =>
-      Buffer.from(Empty.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => Empty.decode(value),
+    requestSerialize: (value: GetPhaseCriteriaInput) =>
+      Buffer.from(GetPhaseCriteriaInput.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => GetPhaseCriteriaInput.decode(value),
     responseSerialize: (value: PhaseCriteriaList) =>
       Buffer.from(PhaseCriteriaList.encode(value).finish()),
     responseDeserialize: (value: Buffer) => PhaseCriteriaList.decode(value),
@@ -49,9 +47,9 @@ export const LegacyPhaseService = {
       Buffer.from(CreatePhaseCriteriaInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) =>
       CreatePhaseCriteriaInput.decode(value),
-    responseSerialize: (value: PhaseCriteria) =>
-      Buffer.from(PhaseCriteria.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => PhaseCriteria.decode(value),
+    responseSerialize: (value: CreateResult) =>
+      Buffer.from(CreateResult.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => CreateResult.decode(value),
   },
   deletePhaseCriteria: {
     path: "/topcoder.domain.service.phase.LegacyPhase/DeletePhaseCriteria",
@@ -107,9 +105,9 @@ export const LegacyPhaseService = {
       Buffer.from(CreateProjectPhaseInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) =>
       CreateProjectPhaseInput.decode(value),
-    responseSerialize: (value: ProjectPhase) =>
-      Buffer.from(ProjectPhase.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => ProjectPhase.decode(value),
+    responseSerialize: (value: CreateResult) =>
+      Buffer.from(CreateResult.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => CreateResult.decode(value),
   },
   updateProjectPhase: {
     path: "/topcoder.domain.service.phase.LegacyPhase/UpdateProjectPhase",
@@ -119,9 +117,9 @@ export const LegacyPhaseService = {
       Buffer.from(UpdateProjectPhaseInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) =>
       UpdateProjectPhaseInput.decode(value),
-    responseSerialize: (value: ProjectPhase) =>
-      Buffer.from(ProjectPhase.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => ProjectPhase.decode(value),
+    responseSerialize: (value: Empty) =>
+      Buffer.from(Empty.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
   createPhaseDependency: {
     path: "/topcoder.domain.service.phase.LegacyPhase/CreatePhaseDependency",
@@ -131,57 +129,57 @@ export const LegacyPhaseService = {
       Buffer.from(CreatePhaseDependencyInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) =>
       CreatePhaseDependencyInput.decode(value),
-    responseSerialize: (value: PhaseDependency) =>
-      Buffer.from(PhaseDependency.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => PhaseDependency.decode(value),
+    responseSerialize: (value: CreateResult) =>
+      Buffer.from(CreateResult.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => CreateResult.decode(value),
   },
 } as const;
 
 export interface LegacyPhaseServer extends UntypedServiceImplementation {
-  getPhaseCriteria: handleUnaryCall<Empty, PhaseCriteriaList>;
-  createPhaseCriteria: handleUnaryCall<CreatePhaseCriteriaInput, PhaseCriteria>;
+  getPhaseCriteria: handleUnaryCall<GetPhaseCriteriaInput, PhaseCriteriaList>;
+  createPhaseCriteria: handleUnaryCall<CreatePhaseCriteriaInput, CreateResult>;
   deletePhaseCriteria: handleUnaryCall<DeletePhaseCriteriaInput, Empty>;
   getPhaseTypes: handleUnaryCall<Empty, PhaseTypeList>;
   getProjectPhases: handleUnaryCall<GetProjectPhasesInput, ProjectPhaseList>;
   deleteProjectPhases: handleUnaryCall<DeleteProjectPhasesInput, Empty>;
-  createProjectPhase: handleUnaryCall<CreateProjectPhaseInput, ProjectPhase>;
-  updateProjectPhase: handleUnaryCall<UpdateProjectPhaseInput, ProjectPhase>;
+  createProjectPhase: handleUnaryCall<CreateProjectPhaseInput, CreateResult>;
+  updateProjectPhase: handleUnaryCall<UpdateProjectPhaseInput, Empty>;
   createPhaseDependency: handleUnaryCall<
     CreatePhaseDependencyInput,
-    PhaseDependency
+    CreateResult
   >;
 }
 
 export interface LegacyPhaseClient extends Client {
   getPhaseCriteria(
-    request: Empty,
+    request: GetPhaseCriteriaInput,
     callback: (error: ServiceError | null, response: PhaseCriteriaList) => void
   ): ClientUnaryCall;
   getPhaseCriteria(
-    request: Empty,
+    request: GetPhaseCriteriaInput,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: PhaseCriteriaList) => void
   ): ClientUnaryCall;
   getPhaseCriteria(
-    request: Empty,
+    request: GetPhaseCriteriaInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: PhaseCriteriaList) => void
   ): ClientUnaryCall;
   createPhaseCriteria(
     request: CreatePhaseCriteriaInput,
-    callback: (error: ServiceError | null, response: PhaseCriteria) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   createPhaseCriteria(
     request: CreatePhaseCriteriaInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: PhaseCriteria) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   createPhaseCriteria(
     request: CreatePhaseCriteriaInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: PhaseCriteria) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   deletePhaseCriteria(
     request: DeletePhaseCriteriaInput,
@@ -245,48 +243,48 @@ export interface LegacyPhaseClient extends Client {
   ): ClientUnaryCall;
   createProjectPhase(
     request: CreateProjectPhaseInput,
-    callback: (error: ServiceError | null, response: ProjectPhase) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   createProjectPhase(
     request: CreateProjectPhaseInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: ProjectPhase) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   createProjectPhase(
     request: CreateProjectPhaseInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: ProjectPhase) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   updateProjectPhase(
     request: UpdateProjectPhaseInput,
-    callback: (error: ServiceError | null, response: ProjectPhase) => void
+    callback: (error: ServiceError | null, response: Empty) => void
   ): ClientUnaryCall;
   updateProjectPhase(
     request: UpdateProjectPhaseInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: ProjectPhase) => void
+    callback: (error: ServiceError | null, response: Empty) => void
   ): ClientUnaryCall;
   updateProjectPhase(
     request: UpdateProjectPhaseInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: ProjectPhase) => void
+    callback: (error: ServiceError | null, response: Empty) => void
   ): ClientUnaryCall;
   createPhaseDependency(
     request: CreatePhaseDependencyInput,
-    callback: (error: ServiceError | null, response: PhaseDependency) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   createPhaseDependency(
     request: CreatePhaseDependencyInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: PhaseDependency) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   createPhaseDependency(
     request: CreatePhaseDependencyInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: PhaseDependency) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
 }
 

@@ -11,7 +11,7 @@ import {
   ServiceError,
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
-import { Empty } from "../../../google/protobuf/empty";
+import { Empty } from "@topcoder-framework/lib-common";
 import {
   ContestEligibility,
   ContestEligibilityList,

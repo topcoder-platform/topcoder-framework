@@ -1,7 +1,6 @@
-import { promisify } from "util";
 import { Metadata } from "@grpc/grpc-js";
+import { promisify } from "util";
 
-import { LegacyProjectInfoClient } from "../models/domain-layer/legacy/services/project_info";
 import {
   CreateProjectInfoInput,
   DeleteProjectInfoInput,
@@ -11,9 +10,10 @@ import {
   ProjectInfoTypeList,
   UpdateProjectInfoInput,
 } from "../models/domain-layer/legacy/project_info";
+import { LegacyProjectInfoClient } from "../models/domain-layer/legacy/services/project_info";
 
+import { Empty } from "@topcoder-framework/lib-common";
 import { GrpcClient } from "../common/GrpcClient";
-import { Empty } from "src/models/google/protobuf/empty";
 
 export class ProjectInfoDomain {
   constructor(

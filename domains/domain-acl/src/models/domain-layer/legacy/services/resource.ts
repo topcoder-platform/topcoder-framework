@@ -11,11 +11,11 @@ import {
   ServiceError,
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
+import { CreateResult, Empty } from "@topcoder-framework/lib-common";
 import {
   CreateResourceInfoInput,
   GetResourceInfosInput,
   GetResourcesInput,
-  ResourceInfo,
   ResourceInfoList,
   ResourceList,
   UpdateResourceInfoInput,
@@ -53,9 +53,9 @@ export const LegacyResourceService = {
       Buffer.from(CreateResourceInfoInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) =>
       CreateResourceInfoInput.decode(value),
-    responseSerialize: (value: ResourceInfo) =>
-      Buffer.from(ResourceInfo.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => ResourceInfo.decode(value),
+    responseSerialize: (value: CreateResult) =>
+      Buffer.from(CreateResult.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => CreateResult.decode(value),
   },
   updateResourceInfos: {
     path: "/topcoder.domain.service.resource.LegacyResource/UpdateResourceInfos",
@@ -65,17 +65,17 @@ export const LegacyResourceService = {
       Buffer.from(UpdateResourceInfoInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) =>
       UpdateResourceInfoInput.decode(value),
-    responseSerialize: (value: ResourceInfo) =>
-      Buffer.from(ResourceInfo.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => ResourceInfo.decode(value),
+    responseSerialize: (value: Empty) =>
+      Buffer.from(Empty.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
 } as const;
 
 export interface LegacyResourceServer extends UntypedServiceImplementation {
   getResources: handleUnaryCall<GetResourcesInput, ResourceList>;
   getResourceInfos: handleUnaryCall<GetResourceInfosInput, ResourceInfoList>;
-  createResourceInfos: handleUnaryCall<CreateResourceInfoInput, ResourceInfo>;
-  updateResourceInfos: handleUnaryCall<UpdateResourceInfoInput, ResourceInfo>;
+  createResourceInfos: handleUnaryCall<CreateResourceInfoInput, CreateResult>;
+  updateResourceInfos: handleUnaryCall<UpdateResourceInfoInput, Empty>;
 }
 
 export interface LegacyResourceClient extends Client {
@@ -111,33 +111,33 @@ export interface LegacyResourceClient extends Client {
   ): ClientUnaryCall;
   createResourceInfos(
     request: CreateResourceInfoInput,
-    callback: (error: ServiceError | null, response: ResourceInfo) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   createResourceInfos(
     request: CreateResourceInfoInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: ResourceInfo) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   createResourceInfos(
     request: CreateResourceInfoInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: ResourceInfo) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   updateResourceInfos(
     request: UpdateResourceInfoInput,
-    callback: (error: ServiceError | null, response: ResourceInfo) => void
+    callback: (error: ServiceError | null, response: Empty) => void
   ): ClientUnaryCall;
   updateResourceInfos(
     request: UpdateResourceInfoInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: ResourceInfo) => void
+    callback: (error: ServiceError | null, response: Empty) => void
   ): ClientUnaryCall;
   updateResourceInfos(
     request: UpdateResourceInfoInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: ResourceInfo) => void
+    callback: (error: ServiceError | null, response: Empty) => void
   ): ClientUnaryCall;
 }
 

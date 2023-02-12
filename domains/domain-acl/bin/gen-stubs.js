@@ -30,11 +30,12 @@ const protoConfig = [
   `--ts_proto_opt=addGrpcMetadata=true`,
   `--ts_proto_opt=outputServerImpl=false`,
   `--ts_proto_out=${MODEL_DIR}`,
-  `--ts_proto_opt=stringEnums=true`,
   `--ts_proto_opt=useDate=string`,
   `--ts_proto_opt=Mcommon/common.proto=@topcoder-framework/lib-common`,
   `--ts_proto_opt=Mgoogle/protobuf/struct.proto=@topcoder-framework/lib-common`,
   `--ts_proto_opt=Mgoogle/protobuf/timestamp.proto=@topcoder-framework/lib-common`,
+  `--ts_proto_opt=Mgoogle/protobuf/empty.proto=@topcoder-framework/lib-common`,
+  `--proto_path ${PROTO_DIR} ${PROTO_DIR}/domain-layer/legacy/*.proto`,
   `--proto_path ${PROTO_DIR} ${PROTO_DIR}/domain-layer/legacy/**/*.proto`,
 ];
 

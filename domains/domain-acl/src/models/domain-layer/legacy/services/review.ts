@@ -11,12 +11,11 @@ import {
   ServiceError,
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
+import { CreateResult } from "@topcoder-framework/lib-common";
 import {
   CreateReviewInput,
   CreateReviewItemInput,
   GetSubmissionInput,
-  Review,
-  ReviewItem,
   Submission,
 } from "../review";
 
@@ -29,9 +28,9 @@ export const LegacyReviewService = {
     requestSerialize: (value: CreateReviewInput) =>
       Buffer.from(CreateReviewInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) => CreateReviewInput.decode(value),
-    responseSerialize: (value: Review) =>
-      Buffer.from(Review.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => Review.decode(value),
+    responseSerialize: (value: CreateResult) =>
+      Buffer.from(CreateResult.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => CreateResult.decode(value),
   },
   createReviewItem: {
     path: "/topcoder.domain.service.review.LegacyReview/CreateReviewItem",
@@ -40,9 +39,9 @@ export const LegacyReviewService = {
     requestSerialize: (value: CreateReviewItemInput) =>
       Buffer.from(CreateReviewItemInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) => CreateReviewItemInput.decode(value),
-    responseSerialize: (value: ReviewItem) =>
-      Buffer.from(ReviewItem.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => ReviewItem.decode(value),
+    responseSerialize: (value: CreateResult) =>
+      Buffer.from(CreateResult.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => CreateResult.decode(value),
   },
   getSubmission: {
     path: "/topcoder.domain.service.review.LegacyReview/GetSubmission",
@@ -58,41 +57,41 @@ export const LegacyReviewService = {
 } as const;
 
 export interface LegacyReviewServer extends UntypedServiceImplementation {
-  createReview: handleUnaryCall<CreateReviewInput, Review>;
-  createReviewItem: handleUnaryCall<CreateReviewItemInput, ReviewItem>;
+  createReview: handleUnaryCall<CreateReviewInput, CreateResult>;
+  createReviewItem: handleUnaryCall<CreateReviewItemInput, CreateResult>;
   getSubmission: handleUnaryCall<GetSubmissionInput, Submission>;
 }
 
 export interface LegacyReviewClient extends Client {
   createReview(
     request: CreateReviewInput,
-    callback: (error: ServiceError | null, response: Review) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   createReview(
     request: CreateReviewInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: Review) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   createReview(
     request: CreateReviewInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: Review) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   createReviewItem(
     request: CreateReviewItemInput,
-    callback: (error: ServiceError | null, response: ReviewItem) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   createReviewItem(
     request: CreateReviewItemInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: ReviewItem) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   createReviewItem(
     request: CreateReviewItemInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: ReviewItem) => void
+    callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   getSubmission(
     request: GetSubmissionInput,

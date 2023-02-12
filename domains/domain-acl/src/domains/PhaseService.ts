@@ -1,25 +1,23 @@
-import { promisify } from "util";
 import { Metadata } from "@grpc/grpc-js";
+import { CreateResult, Empty } from "@topcoder-framework/lib-common";
+import { promisify } from "util";
 
 import { LegacyPhaseClient } from "../models/domain-layer/legacy/services/phase";
 
 import { GrpcClient } from "../common/GrpcClient";
-import { Empty } from "src/models/google/protobuf/empty";
 import {
   CreatePhaseCriteriaInput,
-  PhaseTypeList,
-  DeletePhaseCriteriaInput,
-  PhaseCriteria,
-  PhaseCriteriaList,
-  GetProjectPhasesInput,
-  ProjectPhaseList,
-  DeleteProjectPhasesInput,
-  CreateProjectPhaseInput,
-  ProjectPhase,
-  UpdateProjectPhaseInput,
   CreatePhaseDependencyInput,
-  PhaseDependency,
-} from "src/models/domain-layer/legacy/phase";
+  CreateProjectPhaseInput,
+  DeletePhaseCriteriaInput,
+  DeleteProjectPhasesInput,
+  GetPhaseCriteriaInput,
+  GetProjectPhasesInput,
+  PhaseCriteriaList,
+  PhaseTypeList,
+  ProjectPhaseList,
+  UpdateProjectPhaseInput,
+} from "../models/domain-layer/legacy/phase";
 
 export class PhaseDomain {
   constructor(
@@ -34,10 +32,10 @@ export class PhaseDomain {
   );
 
   public async getPhaseCriteria(
-    param: Empty,
+    param: GetPhaseCriteriaInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<Empty, Metadata, PhaseCriteriaList>(
+    return promisify<GetPhaseCriteriaInput, Metadata, PhaseCriteriaList>(
       this.client.getPhaseCriteria.bind(this.client)
     )(param, metadata);
   }
@@ -46,7 +44,7 @@ export class PhaseDomain {
     param: CreatePhaseCriteriaInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<CreatePhaseCriteriaInput, Metadata, PhaseCriteria>(
+    return promisify<CreatePhaseCriteriaInput, Metadata, CreateResult>(
       this.client.createPhaseCriteria.bind(this.client)
     )(param, metadata);
   }
@@ -91,7 +89,7 @@ export class PhaseDomain {
     param: CreateProjectPhaseInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<CreateProjectPhaseInput, Metadata, ProjectPhase>(
+    return promisify<CreateProjectPhaseInput, Metadata, CreateResult>(
       this.client.createProjectPhase.bind(this.client)
     )(param, metadata);
   }
@@ -100,7 +98,7 @@ export class PhaseDomain {
     param: UpdateProjectPhaseInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<UpdateProjectPhaseInput, Metadata, ProjectPhase>(
+    return promisify<UpdateProjectPhaseInput, Metadata, Empty>(
       this.client.updateProjectPhase.bind(this.client)
     )(param, metadata);
   }
@@ -109,7 +107,7 @@ export class PhaseDomain {
     param: CreatePhaseDependencyInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<CreatePhaseDependencyInput, Metadata, PhaseDependency>(
+    return promisify<CreatePhaseDependencyInput, Metadata, CreateResult>(
       this.client.createPhaseDependency.bind(this.client)
     )(param, metadata);
   }

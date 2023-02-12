@@ -1,9 +1,8 @@
-import { promisify } from "util";
 import { Metadata } from "@grpc/grpc-js";
+import { promisify } from "util";
 
 import { LegacyGroupContestEligibilityClient } from "../models/domain-layer/legacy/services/group_contest_eligibility";
 
-import { GrpcClient } from "../common/GrpcClient";
 import {
   ContestEligibility,
   ContestEligibilityList,
@@ -14,7 +13,8 @@ import {
   GroupContestEligibility,
   GroupContestEligibilityList,
 } from "src/models/domain-layer/legacy/group_contest_eligibility";
-import { Empty } from "src/models/google/protobuf/empty";
+import { GrpcClient } from "../common/GrpcClient";
+import { Empty } from "@topcoder-framework/lib-common";
 
 export class GroupContestEligibilityDomain {
   constructor(

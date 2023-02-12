@@ -11,14 +11,13 @@ import {
   ServiceError,
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
-import { CreateResult } from "@topcoder-framework/lib-common";
-import { Empty } from "../../../google/protobuf/empty";
+import { CreateResult, Empty } from "@topcoder-framework/lib-common";
 import { CreatePhaseInput, PhaseTypeList } from "../challenge_phase";
 
 export type LegacyChallengePhaseService = typeof LegacyChallengePhaseService;
 export const LegacyChallengePhaseService = {
   create: {
-    path: "/topcoder.domain.challenge_phase_service.LegacyChallengePhase/Create",
+    path: "/topcoder.domain.service.challenge_phase_service.LegacyChallengePhase/Create",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: CreatePhaseInput) =>
@@ -29,7 +28,7 @@ export const LegacyChallengePhaseService = {
     responseDeserialize: (value: Buffer) => CreateResult.decode(value),
   },
   getPhaseTypes: {
-    path: "/topcoder.domain.challenge_phase_service.LegacyChallengePhase/GetPhaseTypes",
+    path: "/topcoder.domain.service.challenge_phase_service.LegacyChallengePhase/GetPhaseTypes",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: Empty) =>
@@ -82,7 +81,7 @@ export interface LegacyChallengePhaseClient extends Client {
 
 export const LegacyChallengePhaseClient = makeGenericClientConstructor(
   LegacyChallengePhaseService,
-  "topcoder.domain.challenge_phase_service.LegacyChallengePhase"
+  "topcoder.domain.service.challenge_phase_service.LegacyChallengePhase"
 ) as unknown as {
   new (
     address: string,

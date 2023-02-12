@@ -1,24 +1,21 @@
 import { promisify } from "util";
 import { Metadata } from "@grpc/grpc-js";
 
-import { LegacyPaymentClient } from "../models/domain-layer/legacy/services/payment";
+import { LegacyChallengePaymentClient } from "../models/domain-layer/legacy/services/challenge_payment";
 
 import { GrpcClient } from "../common/GrpcClient";
 import {
-  CreatePrizeInput,
-  CreateProjectPaymentsInput,
-  DeletePrizeInput,
-  DeleteProjectPaymentsInput,
-  GetPrizesInput,
-  GetProjectPaymentsInput,
-  Prize,
-  PrizeList,
-  ProjectPayment,
-  ProjectPaymentList,
-  UpdatePrizeInput,
-  UpdateProjectPaymentsInput,
-} from "src/models/domain-layer/legacy/payment";
-import { Empty } from "src/models/google/protobuf/empty";
+  CreateLegacyChallengePaymentInput,
+  DeleteLegacyChallengePaymentInput,
+  GetLegacyChallengePaymentInput,
+  LegacyChallengePaymentList,
+  UpdateLegacyChallengePaymentInput,
+} from "src/models/domain-layer/legacy/challenge_payment";
+import {
+  CreateResult,
+  Empty,
+  UpdateResult,
+} from "@topcoder-framework/lib-common";
 
 export class PaymentDomain {
   constructor(
@@ -26,81 +23,48 @@ export class PaymentDomain {
     protected grpcServerPort: string
   ) {}
 
-  protected readonly client: LegacyPaymentClient = new LegacyPaymentClient(
-    `${this.grpcServerHost}:${this.grpcServerPort}`,
-    GrpcClient.credentials,
-    GrpcClient.clientOptions
-  );
+  protected readonly client: LegacyChallengePaymentClient =
+    new LegacyChallengePaymentClient(
+      `${this.grpcServerHost}:${this.grpcServerPort}`,
+      GrpcClient.credentials,
+      GrpcClient.clientOptions
+    );
 
-  public async getProjectPayments(
-    param: GetProjectPaymentsInput,
+  public async get(
+    param: GetLegacyChallengePaymentInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<GetProjectPaymentsInput, Metadata, ProjectPaymentList>(
-      this.client.getProjectPayments.bind(this.client)
+    return promisify<
+      GetLegacyChallengePaymentInput,
+      Metadata,
+      LegacyChallengePaymentList
+    >(this.client.get.bind(this.client))(param, metadata);
+  }
+
+  public async create(
+    param: CreateLegacyChallengePaymentInput,
+    metadata: Metadata = new Metadata()
+  ) {
+    return promisify<CreateLegacyChallengePaymentInput, Metadata, CreateResult>(
+      this.client.create.bind(this.client)
     )(param, metadata);
   }
 
-  public async createProjectPayment(
-    param: CreateProjectPaymentsInput,
+  public async update(
+    param: UpdateLegacyChallengePaymentInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<CreateProjectPaymentsInput, Metadata, ProjectPayment>(
-      this.client.createProjectPayment.bind(this.client)
+    return promisify<UpdateLegacyChallengePaymentInput, Metadata, UpdateResult>(
+      this.client.update.bind(this.client)
     )(param, metadata);
   }
 
-  public async updateProjectPayment(
-    param: UpdateProjectPaymentsInput,
+  public async delete(
+    param: DeleteLegacyChallengePaymentInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<UpdateProjectPaymentsInput, Metadata, ProjectPayment>(
-      this.client.updateProjectPayment.bind(this.client)
-    )(param, metadata);
-  }
-
-  public async deleteProjectPayment(
-    param: DeleteProjectPaymentsInput,
-    metadata: Metadata = new Metadata()
-  ) {
-    return promisify<DeleteProjectPaymentsInput, Metadata, Empty>(
-      this.client.deleteProjectPayment.bind(this.client)
-    )(param, metadata);
-  }
-
-  public async getProjectPrizes(
-    param: GetPrizesInput,
-    metadata: Metadata = new Metadata()
-  ) {
-    return promisify<GetPrizesInput, Metadata, PrizeList>(
-      this.client.getProjectPrizes.bind(this.client)
-    )(param, metadata);
-  }
-
-  public async createProjectPrize(
-    param: CreatePrizeInput,
-    metadata: Metadata = new Metadata()
-  ) {
-    return promisify<CreatePrizeInput, Metadata, Prize>(
-      this.client.createProjectPrize.bind(this.client)
-    )(param, metadata);
-  }
-
-  public async updateProjectPrize(
-    param: UpdatePrizeInput,
-    metadata: Metadata = new Metadata()
-  ) {
-    return promisify<UpdatePrizeInput, Metadata, Prize>(
-      this.client.updateProjectPrize.bind(this.client)
-    )(param, metadata);
-  }
-
-  public async deleteProjectPrize(
-    param: DeletePrizeInput,
-    metadata: Metadata = new Metadata()
-  ) {
-    return promisify<DeletePrizeInput, Metadata, Empty>(
-      this.client.deleteProjectPrize.bind(this.client)
+    return promisify<DeleteLegacyChallengePaymentInput, Metadata, Empty>(
+      this.client.delete.bind(this.client)
     )(param, metadata);
   }
 }

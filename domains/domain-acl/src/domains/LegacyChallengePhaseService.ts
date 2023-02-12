@@ -6,10 +6,9 @@ import {
   CreatePhaseInput,
   PhaseTypeList,
 } from "../models/domain-layer/legacy/challenge_phase";
-import { CreateResult } from "@topcoder-framework/lib-common";
+import { CreateResult, Empty } from "@topcoder-framework/lib-common";
 
 import { GrpcClient } from "../common/GrpcClient";
-import { Empty } from "src/models/google/protobuf/empty";
 
 export class LegacyChallengePhaseDomain {
   constructor(

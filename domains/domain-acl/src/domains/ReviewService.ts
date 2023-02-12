@@ -1,17 +1,16 @@
-import { promisify } from "util";
 import { Metadata } from "@grpc/grpc-js";
+import { promisify } from "util";
 
 import { LegacyReviewClient } from "../models/domain-layer/legacy/services/review";
 
+import { CreateResult } from "@topcoder-framework/lib-common";
 import { GrpcClient } from "../common/GrpcClient";
 import {
   CreateReviewInput,
   CreateReviewItemInput,
   GetSubmissionInput,
-  Review,
-  ReviewItem,
   Submission,
-} from "src/models/domain-layer/legacy/review";
+} from "../models/domain-layer/legacy/review";
 
 export class ReviewDomain {
   constructor(
@@ -29,7 +28,7 @@ export class ReviewDomain {
     param: CreateReviewInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<CreateReviewInput, Metadata, Review>(
+    return promisify<CreateReviewInput, Metadata, CreateResult>(
       this.client.createReview.bind(this.client)
     )(param, metadata);
   }
@@ -38,7 +37,7 @@ export class ReviewDomain {
     param: CreateReviewItemInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<CreateReviewItemInput, Metadata, ReviewItem>(
+    return promisify<CreateReviewItemInput, Metadata, CreateResult>(
       this.client.createReviewItem.bind(this.client)
     )(param, metadata);
   }

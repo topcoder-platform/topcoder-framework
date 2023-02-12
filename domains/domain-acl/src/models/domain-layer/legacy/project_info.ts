@@ -12,7 +12,7 @@ export interface ProjectInfo {
 }
 
 export interface ProjectInfoList {
-  projectInfo: ProjectInfo[];
+  projectInfos: ProjectInfo[];
 }
 
 export interface GetProjectInfoInput {
@@ -190,7 +190,7 @@ export const ProjectInfo = {
 };
 
 function createBaseProjectInfoList(): ProjectInfoList {
-  return { projectInfo: [] };
+  return { projectInfos: [] };
 }
 
 export const ProjectInfoList = {
@@ -198,7 +198,7 @@ export const ProjectInfoList = {
     message: ProjectInfoList,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    for (const v of message.projectInfo) {
+    for (const v of message.projectInfos) {
       ProjectInfo.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
@@ -212,7 +212,9 @@ export const ProjectInfoList = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.projectInfo.push(ProjectInfo.decode(reader, reader.uint32()));
+          message.projectInfos.push(
+            ProjectInfo.decode(reader, reader.uint32())
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -224,20 +226,20 @@ export const ProjectInfoList = {
 
   fromJSON(object: any): ProjectInfoList {
     return {
-      projectInfo: Array.isArray(object?.projectInfo)
-        ? object.projectInfo.map((e: any) => ProjectInfo.fromJSON(e))
+      projectInfos: Array.isArray(object?.projectInfos)
+        ? object.projectInfos.map((e: any) => ProjectInfo.fromJSON(e))
         : [],
     };
   },
 
   toJSON(message: ProjectInfoList): unknown {
     const obj: any = {};
-    if (message.projectInfo) {
-      obj.projectInfo = message.projectInfo.map((e) =>
+    if (message.projectInfos) {
+      obj.projectInfos = message.projectInfos.map((e) =>
         e ? ProjectInfo.toJSON(e) : undefined
       );
     } else {
-      obj.projectInfo = [];
+      obj.projectInfos = [];
     }
     return obj;
   },
@@ -252,8 +254,8 @@ export const ProjectInfoList = {
     object: I
   ): ProjectInfoList {
     const message = createBaseProjectInfoList();
-    message.projectInfo =
-      object.projectInfo?.map((e) => ProjectInfo.fromPartial(e)) || [];
+    message.projectInfos =
+      object.projectInfos?.map((e) => ProjectInfo.fromPartial(e)) || [];
     return message;
   },
 };

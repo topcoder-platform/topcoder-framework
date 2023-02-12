@@ -1,18 +1,22 @@
-import { promisify } from "util";
 import { Metadata } from "@grpc/grpc-js";
+import { promisify } from "util";
 
 import { LegacyResourceClient } from "../models/domain-layer/legacy/services/resource";
 
+import {
+  CreateResult,
+  Empty,
+  UpdateResult,
+} from "@topcoder-framework/lib-common";
 import { GrpcClient } from "../common/GrpcClient";
 import {
   CreateResourceInfoInput,
   GetResourceInfosInput,
   GetResourcesInput,
-  ResourceInfo,
   ResourceInfoList,
   ResourceList,
   UpdateResourceInfoInput,
-} from "src/models/domain-layer/legacy/resource";
+} from "../models/domain-layer/legacy/resource";
 
 export class ResourceDomain {
   constructor(
@@ -48,7 +52,7 @@ export class ResourceDomain {
     param: CreateResourceInfoInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<CreateResourceInfoInput, Metadata, ResourceInfo>(
+    return promisify<CreateResourceInfoInput, Metadata, CreateResult>(
       this.client.createResourceInfos.bind(this.client)
     )(param, metadata);
   }
@@ -57,7 +61,7 @@ export class ResourceDomain {
     param: UpdateResourceInfoInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<UpdateResourceInfoInput, Metadata, ResourceInfo>(
+    return promisify<UpdateResourceInfoInput, Metadata, Empty>(
       this.client.updateResourceInfos.bind(this.client)
     )(param, metadata);
   }
