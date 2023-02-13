@@ -349,7 +349,6 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
   }
 
   private isWKTValue(value: unknown): value is Value {
-    console.log("checking if value is WKTValue", value);
     return (
       typeof value === "object" &&
       value != null &&

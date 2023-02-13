@@ -274,7 +274,6 @@ export interface WhereCriteria {
 
 export interface RawQuery {
   query: string;
-  columns: Column[];
 }
 
 export interface Join {
@@ -356,6 +355,10 @@ export interface SelectQueryResult {
   rows: Row[];
 }
 
+export interface RawQueryResult {
+  rows: Row[];
+}
+
 export interface InsertQueryResult {
   lastInsertId: number;
 }
@@ -373,7 +376,8 @@ export interface QueryResponse {
     | { $case: "selectResult"; selectResult: SelectQueryResult }
     | { $case: "insertResult"; insertResult: InsertQueryResult }
     | { $case: "updateResult"; updateResult: UpdateQueryResult }
-    | { $case: "deleteResult"; deleteResult: DeleteQueryResult };
+    | { $case: "deleteResult"; deleteResult: DeleteQueryResult }
+    | { $case: "rawResult"; rawResult: RawQueryResult };
 }
 
 function createBaseValue(): Value {
@@ -780,7 +784,7 @@ export const WhereCriteria = {
 };
 
 function createBaseRawQuery(): RawQuery {
-  return { query: "", columns: [] };
+  return { query: "" };
 }
 
 export const RawQuery = {
@@ -790,9 +794,6 @@ export const RawQuery = {
   ): _m0.Writer {
     if (message.query !== "") {
       writer.uint32(10).string(message.query);
-    }
-    for (const v of message.columns) {
-      Column.encode(v!, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -807,9 +808,6 @@ export const RawQuery = {
         case 1:
           message.query = reader.string();
           break;
-        case 2:
-          message.columns.push(Column.decode(reader, reader.uint32()));
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -819,24 +817,12 @@ export const RawQuery = {
   },
 
   fromJSON(object: any): RawQuery {
-    return {
-      query: isSet(object.query) ? String(object.query) : "",
-      columns: Array.isArray(object?.columns)
-        ? object.columns.map((e: any) => Column.fromJSON(e))
-        : [],
-    };
+    return { query: isSet(object.query) ? String(object.query) : "" };
   },
 
   toJSON(message: RawQuery): unknown {
     const obj: any = {};
     message.query !== undefined && (obj.query = message.query);
-    if (message.columns) {
-      obj.columns = message.columns.map((e) =>
-        e ? Column.toJSON(e) : undefined
-      );
-    } else {
-      obj.columns = [];
-    }
     return obj;
   },
 
@@ -847,7 +833,6 @@ export const RawQuery = {
   fromPartial<I extends Exact<DeepPartial<RawQuery>, I>>(object: I): RawQuery {
     const message = createBaseRawQuery();
     message.query = object.query ?? "";
-    message.columns = object.columns?.map((e) => Column.fromPartial(e)) || [];
     return message;
   },
 };
@@ -2063,6 +2048,72 @@ export const SelectQueryResult = {
   },
 };
 
+function createBaseRawQueryResult(): RawQueryResult {
+  return { rows: [] };
+}
+
+export const RawQueryResult = {
+  encode(
+    message: RawQueryResult,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    for (const v of message.rows) {
+      Row.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): RawQueryResult {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseRawQueryResult();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.rows.push(Row.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): RawQueryResult {
+    return {
+      rows: Array.isArray(object?.rows)
+        ? object.rows.map((e: any) => Row.fromJSON(e))
+        : [],
+    };
+  },
+
+  toJSON(message: RawQueryResult): unknown {
+    const obj: any = {};
+    if (message.rows) {
+      obj.rows = message.rows.map((e) => (e ? Row.toJSON(e) : undefined));
+    } else {
+      obj.rows = [];
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<RawQueryResult>, I>>(
+    base?: I
+  ): RawQueryResult {
+    return RawQueryResult.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<RawQueryResult>, I>>(
+    object: I
+  ): RawQueryResult {
+    const message = createBaseRawQueryResult();
+    message.rows = object.rows?.map((e) => Row.fromPartial(e)) || [];
+    return message;
+  },
+};
+
 function createBaseInsertQueryResult(): InsertQueryResult {
   return { lastInsertId: 0 };
 }
@@ -2286,6 +2337,12 @@ export const QueryResponse = {
           writer.uint32(34).fork()
         ).ldelim();
         break;
+      case "rawResult":
+        RawQueryResult.encode(
+          message.result.rawResult,
+          writer.uint32(42).fork()
+        ).ldelim();
+        break;
     }
     return writer;
   },
@@ -2321,6 +2378,12 @@ export const QueryResponse = {
             deleteResult: DeleteQueryResult.decode(reader, reader.uint32()),
           };
           break;
+        case 5:
+          message.result = {
+            $case: "rawResult",
+            rawResult: RawQueryResult.decode(reader, reader.uint32()),
+          };
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -2351,6 +2414,11 @@ export const QueryResponse = {
             $case: "deleteResult",
             deleteResult: DeleteQueryResult.fromJSON(object.deleteResult),
           }
+        : isSet(object.rawResult)
+        ? {
+            $case: "rawResult",
+            rawResult: RawQueryResult.fromJSON(object.rawResult),
+          }
         : undefined,
     };
   },
@@ -2372,6 +2440,10 @@ export const QueryResponse = {
     message.result?.$case === "deleteResult" &&
       (obj.deleteResult = message.result?.deleteResult
         ? DeleteQueryResult.toJSON(message.result?.deleteResult)
+        : undefined);
+    message.result?.$case === "rawResult" &&
+      (obj.rawResult = message.result?.rawResult
+        ? RawQueryResult.toJSON(message.result?.rawResult)
         : undefined);
     return obj;
   },
@@ -2424,6 +2496,16 @@ export const QueryResponse = {
       message.result = {
         $case: "deleteResult",
         deleteResult: DeleteQueryResult.fromPartial(object.result.deleteResult),
+      };
+    }
+    if (
+      object.result?.$case === "rawResult" &&
+      object.result?.rawResult !== undefined &&
+      object.result?.rawResult !== null
+    ) {
+      message.result = {
+        $case: "rawResult",
+        rawResult: RawQueryResult.fromPartial(object.result.rawResult),
       };
     }
     return message;

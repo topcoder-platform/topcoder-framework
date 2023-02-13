@@ -101,6 +101,21 @@ export class QueryRunner {
     column: Column[] = []
   ): QueryResult {
     switch (queryResponse.result?.$case) {
+      case "rawResult": {
+        const rows = queryResponse.result.rawResult?.rows.forEach(
+          ({ values }) => {
+            const retObject: { [key: string]: any } = {};
+            Object.entries(values).forEach(([key, value]) => {
+              retObject[key] = this.unwrapValue(value);
+            });
+            return retObject;
+          }
+        );
+
+        return {
+          rows: rows != null ? rows : [],
+        };
+      }
       case "selectResult":
         return {
           rows: queryResponse.result.selectResult.rows.map(({ values }) => {
