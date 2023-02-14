@@ -19,6 +19,7 @@ import {
 } from "@topcoder-framework/lib-common";
 import {
   CreatePrizeInput,
+  DeletePrizeInput,
   PrizeList,
   PrizeTypeList,
   UpdatePrizeInput,
@@ -70,6 +71,17 @@ export const LegacyPrizeServiceService = {
       Buffer.from(PrizeTypeList.encode(value).finish()),
     responseDeserialize: (value: Buffer) => PrizeTypeList.decode(value),
   },
+  delete: {
+    path: "/topcoder.domain.service.legacy_prize_service.LegacyPrizeService/Delete",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: DeletePrizeInput) =>
+      Buffer.from(DeletePrizeInput.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => DeletePrizeInput.decode(value),
+    responseSerialize: (value: Empty) =>
+      Buffer.from(Empty.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => Empty.decode(value),
+  },
 } as const;
 
 export interface LegacyPrizeServiceServer extends UntypedServiceImplementation {
@@ -77,6 +89,7 @@ export interface LegacyPrizeServiceServer extends UntypedServiceImplementation {
   scan: handleUnaryCall<ScanRequest, PrizeList>;
   update: handleUnaryCall<UpdatePrizeInput, UpdateResult>;
   getPrizeTypes: handleUnaryCall<Empty, PrizeTypeList>;
+  delete: handleUnaryCall<DeletePrizeInput, Empty>;
 }
 
 export interface LegacyPrizeServiceClient extends Client {
@@ -139,6 +152,21 @@ export interface LegacyPrizeServiceClient extends Client {
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: PrizeTypeList) => void
+  ): ClientUnaryCall;
+  delete(
+    request: DeletePrizeInput,
+    callback: (error: ServiceError | null, response: Empty) => void
+  ): ClientUnaryCall;
+  delete(
+    request: DeletePrizeInput,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: Empty) => void
+  ): ClientUnaryCall;
+  delete(
+    request: DeletePrizeInput,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: Empty) => void
   ): ClientUnaryCall;
 }
 

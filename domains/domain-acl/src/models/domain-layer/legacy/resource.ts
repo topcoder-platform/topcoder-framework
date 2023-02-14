@@ -57,8 +57,8 @@ export interface UpdateResourceInfoInput {
   resourceId: number;
   resourceInfoTypeId: number;
   value: string;
-  modifyUser: number;
-  modifyDate: number;
+  modifyUser?: number | undefined;
+  modifyDate?: number | undefined;
 }
 
 export interface DeleteResourceInfoInput {
@@ -791,8 +791,8 @@ function createBaseUpdateResourceInfoInput(): UpdateResourceInfoInput {
     resourceId: 0,
     resourceInfoTypeId: 0,
     value: "",
-    modifyUser: 0,
-    modifyDate: 0,
+    modifyUser: undefined,
+    modifyDate: undefined,
   };
 }
 
@@ -810,10 +810,10 @@ export const UpdateResourceInfoInput = {
     if (message.value !== "") {
       writer.uint32(26).string(message.value);
     }
-    if (message.modifyUser !== 0) {
+    if (message.modifyUser !== undefined) {
       writer.uint32(48).int32(message.modifyUser);
     }
-    if (message.modifyDate !== 0) {
+    if (message.modifyDate !== undefined) {
       writer.uint32(56).int64(message.modifyDate);
     }
     return writer;
@@ -859,8 +859,12 @@ export const UpdateResourceInfoInput = {
         ? Number(object.resourceInfoTypeId)
         : 0,
       value: isSet(object.value) ? String(object.value) : "",
-      modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : 0,
-      modifyDate: isSet(object.modifyDate) ? Number(object.modifyDate) : 0,
+      modifyUser: isSet(object.modifyUser)
+        ? Number(object.modifyUser)
+        : undefined,
+      modifyDate: isSet(object.modifyDate)
+        ? Number(object.modifyDate)
+        : undefined,
     };
   },
 
@@ -891,8 +895,8 @@ export const UpdateResourceInfoInput = {
     message.resourceId = object.resourceId ?? 0;
     message.resourceInfoTypeId = object.resourceInfoTypeId ?? 0;
     message.value = object.value ?? "";
-    message.modifyUser = object.modifyUser ?? 0;
-    message.modifyDate = object.modifyDate ?? 0;
+    message.modifyUser = object.modifyUser ?? undefined;
+    message.modifyDate = object.modifyDate ?? undefined;
     return message;
   },
 };

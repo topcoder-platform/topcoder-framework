@@ -24,10 +24,10 @@ export interface CreateProjectRoleTermsOfUseXrefInput {
   projectId: number;
   resourceRoleId: number;
   termsOfUseId: number;
-  createDate: number;
-  modifyDate: number;
-  sortOrder: number;
-  groupInd: number;
+  createDate?: number | undefined;
+  modifyDate?: number | undefined;
+  sortOrder?: number | undefined;
+  groupInd?: number | undefined;
 }
 
 export interface DeleteProjectRoleTermsOfUseXrefInput {
@@ -315,10 +315,10 @@ function createBaseCreateProjectRoleTermsOfUseXrefInput(): CreateProjectRoleTerm
     projectId: 0,
     resourceRoleId: 0,
     termsOfUseId: 0,
-    createDate: 0,
-    modifyDate: 0,
-    sortOrder: 0,
-    groupInd: 0,
+    createDate: undefined,
+    modifyDate: undefined,
+    sortOrder: undefined,
+    groupInd: undefined,
   };
 }
 
@@ -336,16 +336,16 @@ export const CreateProjectRoleTermsOfUseXrefInput = {
     if (message.termsOfUseId !== 0) {
       writer.uint32(24).int32(message.termsOfUseId);
     }
-    if (message.createDate !== 0) {
+    if (message.createDate !== undefined) {
       writer.uint32(32).int64(message.createDate);
     }
-    if (message.modifyDate !== 0) {
+    if (message.modifyDate !== undefined) {
       writer.uint32(40).int64(message.modifyDate);
     }
-    if (message.sortOrder !== 0) {
+    if (message.sortOrder !== undefined) {
       writer.uint32(48).int32(message.sortOrder);
     }
-    if (message.groupInd !== 0) {
+    if (message.groupInd !== undefined) {
       writer.uint32(56).int32(message.groupInd);
     }
     return writer;
@@ -399,10 +399,14 @@ export const CreateProjectRoleTermsOfUseXrefInput = {
       termsOfUseId: isSet(object.termsOfUseId)
         ? Number(object.termsOfUseId)
         : 0,
-      createDate: isSet(object.createDate) ? Number(object.createDate) : 0,
-      modifyDate: isSet(object.modifyDate) ? Number(object.modifyDate) : 0,
-      sortOrder: isSet(object.sortOrder) ? Number(object.sortOrder) : 0,
-      groupInd: isSet(object.groupInd) ? Number(object.groupInd) : 0,
+      createDate: isSet(object.createDate)
+        ? Number(object.createDate)
+        : undefined,
+      modifyDate: isSet(object.modifyDate)
+        ? Number(object.modifyDate)
+        : undefined,
+      sortOrder: isSet(object.sortOrder) ? Number(object.sortOrder) : undefined,
+      groupInd: isSet(object.groupInd) ? Number(object.groupInd) : undefined,
     };
   },
 
@@ -438,10 +442,10 @@ export const CreateProjectRoleTermsOfUseXrefInput = {
     message.projectId = object.projectId ?? 0;
     message.resourceRoleId = object.resourceRoleId ?? 0;
     message.termsOfUseId = object.termsOfUseId ?? 0;
-    message.createDate = object.createDate ?? 0;
-    message.modifyDate = object.modifyDate ?? 0;
-    message.sortOrder = object.sortOrder ?? 0;
-    message.groupInd = object.groupInd ?? 0;
+    message.createDate = object.createDate ?? undefined;
+    message.modifyDate = object.modifyDate ?? undefined;
+    message.sortOrder = object.sortOrder ?? undefined;
+    message.groupInd = object.groupInd ?? undefined;
     return message;
   },
 };
