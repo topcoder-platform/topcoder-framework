@@ -12,7 +12,7 @@ import {
   GetGroupContestEligibilityInput,
   GroupContestEligibility,
   GroupContestEligibilityList,
-} from "src/models/domain-layer/legacy/group_contest_eligibility";
+} from "../models/domain-layer/legacy/group_contest_eligibility";
 import { GrpcClient } from "../common/GrpcClient";
 import { Empty } from "@topcoder-framework/lib-common";
 
