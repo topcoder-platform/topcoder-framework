@@ -4,7 +4,7 @@ import {
   Query,
   QueryResponse,
   Column,
-  Value,
+  Value as RelationalValue,
 } from "../models/data-access-layer/relational/relational";
 import _ from "lodash";
 
@@ -41,9 +41,6 @@ export class QueryRunner {
     );
   }
 
-  isQueryRunning = true;
-  queue = [];
-
   beginTransaction(metadata = new Metadata()): Transaction {
     const transactionStream = this.#client.startTransactionStream(metadata);
 
@@ -52,20 +49,26 @@ export class QueryRunner {
         new Promise((resolve, reject) => {
           transactionStream.write({ query });
 
-          transactionStream
-            .once("data", (queryResponse: QueryResponse) => {
-              resolve(
-                this.getQueryResult(
-                  queryResponse,
-                  query.query?.$case === "select"
-                    ? query.query.select.column
-                    : undefined
-                )
-              );
-            })
-            .once("error", (err: Error) => {
-              reject(err);
-            });
+          const errorListener = (err: Error) => {
+            transactionStream.removeListener("data", successListener);
+            reject(err);
+          };
+
+          const successListener = (queryResponse: QueryResponse) => {
+            transactionStream.removeListener("error", errorListener);
+
+            resolve(
+              this.getQueryResult(
+                queryResponse,
+                query.query?.$case === "select"
+                  ? query.query.select.column
+                  : undefined
+              )
+            );
+          };
+
+          transactionStream.once("data", successListener);
+          transactionStream.once("error", errorListener);
         }),
       commit: () => {
         transactionStream.end();
@@ -77,7 +80,7 @@ export class QueryRunner {
     };
   }
 
-  private unwrapValue(value: Value): number | string | boolean {
+  private unwrapValue(value: RelationalValue): number | string | boolean {
     switch (value.value?.$case) {
       case "intValue":
         return value.value.intValue;
@@ -102,15 +105,13 @@ export class QueryRunner {
   ): QueryResult {
     switch (queryResponse.result?.$case) {
       case "rawResult": {
-        const rows = queryResponse.result.rawResult?.rows.forEach(
-          ({ values }) => {
-            const retObject: { [key: string]: any } = {};
-            Object.entries(values).forEach(([key, value]) => {
-              retObject[key] = this.unwrapValue(value);
-            });
-            return retObject;
-          }
-        );
+        const rows = queryResponse.result.rawResult?.rows.map(({ values }) => {
+          const retObject: { [key: string]: number | string | boolean } = {};
+          Object.entries(values).forEach(([key, value]) => {
+            retObject[key] = this.unwrapValue(value);
+          });
+          return retObject;
+        });
 
         return {
           rows: rows != null ? rows : [],
@@ -119,7 +120,7 @@ export class QueryRunner {
       case "selectResult":
         return {
           rows: queryResponse.result.selectResult.rows.map(({ values }) => {
-            const retObject: { [key: string]: any } = {};
+            const retObject: { [key: string]: number | string | boolean } = {};
 
             column.forEach((col) => {
               retObject[_.camelCase(col.name)] = this.unwrapValue(
