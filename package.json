@@ -62,7 +62,7 @@
     "@topcoder-framework:registry": "https://topcoder-409275337247.d.codeartifact.us-east-1.amazonaws.com/npm/topcoder-framework/"
   },
   "volta": {
-    "lerna": "6.3.0",
+    "lerna": "6.5.1",
     "node": "18.14.1",
     "yarn": "1.22.19"
   }
