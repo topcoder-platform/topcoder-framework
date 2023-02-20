@@ -19,7 +19,7 @@
   "author": "Rakib Ansary <rakibansary@topcoder.com>",
   "license": "ISC",
   "volta": {
-    "node": "18.12.1",
+    "node": "18.14.1",
     "typescript": "4.9.3",
     "npm": "9.1.2"
   },

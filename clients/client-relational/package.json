@@ -36,7 +36,7 @@
     "typescript": "^4.9.4"
   },
   "volta": {
-    "node": "18.12.1",
+    "node": "18.14.1",
     "typescript": "4.9.4",
     "npm": "9.2.0",
     "yarn": "1.22.19"
@@ -44,5 +44,5 @@
   "files": [
     "dist-*"
   ],
-  "gitHead": "5608d23e33f918f10b8d4f30271bb9f8de8ee312"
+  "gitHead": "317d03ecb8a80ec76d94135a3b0b8f613bc3538a"
 }
