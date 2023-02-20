@@ -13,7 +13,8 @@
     "clean": "scripty",
     "local-publish": "scripty",
     "prepare": "husky install",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "yarn build",
+    "npm-registry:login": "scripty"
   },
   "scripty": {
     "path": "./scripts/workspace"
@@ -56,6 +57,9 @@
     "*.{json,md,yml}": [
       "npx prettier --write"
     ]
+  },
+  "publishConfig": {
+    "@topcoder-framework:registry": "https://topcoder-409275337247.d.codeartifact.us-east-1.amazonaws.com/npm/topcoder-framework/"
   },
   "volta": {
     "lerna": "6.3.0",
