@@ -11,7 +11,7 @@ import {
   ServiceError,
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
-import { Empty } from "@topcoder-framework/lib-common";
+import { Empty, UpdateResult } from "@topcoder-framework/lib-common";
 import {
   CreateProjectInfoInput,
   DeleteProjectInfoInput,
@@ -42,9 +42,9 @@ export const LegacyProjectInfoService = {
     requestSerialize: (value: UpdateProjectInfoInput) =>
       Buffer.from(UpdateProjectInfoInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) => UpdateProjectInfoInput.decode(value),
-    responseSerialize: (value: ProjectInfo) =>
-      Buffer.from(ProjectInfo.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => ProjectInfo.decode(value),
+    responseSerialize: (value: UpdateResult) =>
+      Buffer.from(UpdateResult.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => UpdateResult.decode(value),
   },
   delete: {
     path: "/topcoder.domain.service.project_info.LegacyProjectInfo/Delete",
@@ -83,7 +83,7 @@ export const LegacyProjectInfoService = {
 
 export interface LegacyProjectInfoServer extends UntypedServiceImplementation {
   create: handleUnaryCall<CreateProjectInfoInput, ProjectInfo>;
-  update: handleUnaryCall<UpdateProjectInfoInput, ProjectInfo>;
+  update: handleUnaryCall<UpdateProjectInfoInput, UpdateResult>;
   delete: handleUnaryCall<DeleteProjectInfoInput, Empty>;
   getProjectInfo: handleUnaryCall<GetProjectInfoInput, ProjectInfoList>;
   getProjectInfoTypes: handleUnaryCall<Empty, ProjectInfoTypeList>;
@@ -107,18 +107,18 @@ export interface LegacyProjectInfoClient extends Client {
   ): ClientUnaryCall;
   update(
     request: UpdateProjectInfoInput,
-    callback: (error: ServiceError | null, response: ProjectInfo) => void
+    callback: (error: ServiceError | null, response: UpdateResult) => void
   ): ClientUnaryCall;
   update(
     request: UpdateProjectInfoInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: ProjectInfo) => void
+    callback: (error: ServiceError | null, response: UpdateResult) => void
   ): ClientUnaryCall;
   update(
     request: UpdateProjectInfoInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: ProjectInfo) => void
+    callback: (error: ServiceError | null, response: UpdateResult) => void
   ): ClientUnaryCall;
   delete(
     request: DeleteProjectInfoInput,

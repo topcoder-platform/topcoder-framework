@@ -12,7 +12,7 @@ import {
 } from "../models/domain-layer/legacy/project_info";
 import { LegacyProjectInfoClient } from "../models/domain-layer/legacy/services/project_info";
 
-import { Empty } from "@topcoder-framework/lib-common";
+import { Empty, UpdateResult } from "@topcoder-framework/lib-common";
 import { GrpcClient } from "../common/GrpcClient";
 
 export class ProjectInfoDomain {
@@ -41,7 +41,7 @@ export class ProjectInfoDomain {
     param: UpdateProjectInfoInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<UpdateProjectInfoInput, Metadata, ProjectInfo>(
+    return promisify<UpdateProjectInfoInput, Metadata, UpdateResult>(
       this.client.update.bind(this.client)
     )(param, metadata);
   }
