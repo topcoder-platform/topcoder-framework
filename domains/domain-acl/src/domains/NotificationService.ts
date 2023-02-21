@@ -8,7 +8,7 @@ import {
   DeleteNotificationsInput,
   GetNotificationsInput,
   NotificationList,
-} from "src/models/domain-layer/legacy/notification";
+} from "../models/domain-layer/legacy/notification";
 import { Empty } from "@topcoder-framework/lib-common";
 
 export class NotificationDomain {

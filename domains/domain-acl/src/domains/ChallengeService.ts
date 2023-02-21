@@ -1,6 +1,7 @@
 import { Metadata } from "@grpc/grpc-js";
 import {
   CheckExistsResult,
+  CreateResult,
   Empty,
   LookupCriteria,
   UpdateResult,
@@ -9,6 +10,7 @@ import { promisify } from "util";
 import { GrpcClient } from "../common/GrpcClient";
 import {
   CloseChallengeInput,
+  CreateChallengeInput,
   LegacyChallenge,
   LegacyChallengeId,
   LegacyChallengeList,
@@ -27,6 +29,15 @@ export class ChallengeDomain {
     GrpcClient.credentials,
     GrpcClient.clientOptions
   );
+
+  public async create(
+    param: CreateChallengeInput,
+    metadata: Metadata = new Metadata()
+  ) {
+    return promisify<CreateChallengeInput, Metadata, CreateResult>(
+      this.client.create.bind(this.client)
+    )(param, metadata);
+  }
 
   public async checkChallengeExists(
     param: LegacyChallengeId,

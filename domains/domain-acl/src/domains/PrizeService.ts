@@ -1,22 +1,22 @@
-import { promisify } from "util";
 import { Metadata } from "@grpc/grpc-js";
+import { promisify } from "util";
 
 import { LegacyPrizeServiceClient } from "../models/domain-layer/legacy/services/prize";
 
-import { GrpcClient } from "../common/GrpcClient";
 import {
   CreateResult,
   Empty,
   ScanRequest,
   UpdateResult,
 } from "@topcoder-framework/lib-common";
+import { GrpcClient } from "../common/GrpcClient";
 import {
   CreatePrizeInput,
   DeletePrizeInput,
   PrizeList,
   PrizeTypeList,
   UpdatePrizeInput,
-} from "src/models/domain-layer/legacy/prize";
+} from "../models/domain-layer/legacy/prize";
 
 export class PrizeDomain {
   constructor(
