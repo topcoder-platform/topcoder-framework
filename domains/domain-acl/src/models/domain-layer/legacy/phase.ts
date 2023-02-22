@@ -75,16 +75,16 @@ export interface ProjectPhase {
   projectId: number;
   phaseTypeId: number;
   phaseStatusId: number;
-  fixedStartTime?: string | undefined;
-  scheduledStartTime?: string | undefined;
-  scheduledEndTime?: string | undefined;
-  actualStartTime?: string | undefined;
-  actualEndTime?: string | undefined;
+  fixedStartTime?: number | undefined;
+  scheduledStartTime?: number | undefined;
+  scheduledEndTime?: number | undefined;
+  actualStartTime?: number | undefined;
+  actualEndTime?: number | undefined;
   duration: number;
   createUser?: number | undefined;
-  createDate?: string | undefined;
+  createDate?: number | undefined;
   modifyUser?: number | undefined;
-  modifyDate?: string | undefined;
+  modifyDate?: number | undefined;
 }
 
 export interface GetProjectPhasesInput {
@@ -1141,19 +1141,19 @@ export const ProjectPhase = {
       writer.uint32(32).int64(message.phaseStatusId);
     }
     if (message.fixedStartTime !== undefined) {
-      writer.uint32(42).string(message.fixedStartTime);
+      writer.uint32(40).int64(message.fixedStartTime);
     }
     if (message.scheduledStartTime !== undefined) {
-      writer.uint32(50).string(message.scheduledStartTime);
+      writer.uint32(48).int64(message.scheduledStartTime);
     }
     if (message.scheduledEndTime !== undefined) {
-      writer.uint32(58).string(message.scheduledEndTime);
+      writer.uint32(56).int64(message.scheduledEndTime);
     }
     if (message.actualStartTime !== undefined) {
-      writer.uint32(66).string(message.actualStartTime);
+      writer.uint32(64).int64(message.actualStartTime);
     }
     if (message.actualEndTime !== undefined) {
-      writer.uint32(74).string(message.actualEndTime);
+      writer.uint32(72).int64(message.actualEndTime);
     }
     if (message.duration !== 0) {
       writer.uint32(80).int32(message.duration);
@@ -1162,13 +1162,13 @@ export const ProjectPhase = {
       writer.uint32(88).int32(message.createUser);
     }
     if (message.createDate !== undefined) {
-      writer.uint32(98).string(message.createDate);
+      writer.uint32(96).int64(message.createDate);
     }
     if (message.modifyUser !== undefined) {
       writer.uint32(104).int32(message.modifyUser);
     }
     if (message.modifyDate !== undefined) {
-      writer.uint32(114).string(message.modifyDate);
+      writer.uint32(112).int64(message.modifyDate);
     }
     return writer;
   },
@@ -1193,19 +1193,19 @@ export const ProjectPhase = {
           message.phaseStatusId = longToNumber(reader.int64() as Long);
           break;
         case 5:
-          message.fixedStartTime = reader.string();
+          message.fixedStartTime = longToNumber(reader.int64() as Long);
           break;
         case 6:
-          message.scheduledStartTime = reader.string();
+          message.scheduledStartTime = longToNumber(reader.int64() as Long);
           break;
         case 7:
-          message.scheduledEndTime = reader.string();
+          message.scheduledEndTime = longToNumber(reader.int64() as Long);
           break;
         case 8:
-          message.actualStartTime = reader.string();
+          message.actualStartTime = longToNumber(reader.int64() as Long);
           break;
         case 9:
-          message.actualEndTime = reader.string();
+          message.actualEndTime = longToNumber(reader.int64() as Long);
           break;
         case 10:
           message.duration = reader.int32();
@@ -1214,13 +1214,13 @@ export const ProjectPhase = {
           message.createUser = reader.int32();
           break;
         case 12:
-          message.createDate = reader.string();
+          message.createDate = longToNumber(reader.int64() as Long);
           break;
         case 13:
           message.modifyUser = reader.int32();
           break;
         case 14:
-          message.modifyDate = reader.string();
+          message.modifyDate = longToNumber(reader.int64() as Long);
           break;
         default:
           reader.skipType(tag & 7);
@@ -1241,32 +1241,32 @@ export const ProjectPhase = {
         ? Number(object.phaseStatusId)
         : 0,
       fixedStartTime: isSet(object.fixedStartTime)
-        ? String(object.fixedStartTime)
+        ? Number(object.fixedStartTime)
         : undefined,
       scheduledStartTime: isSet(object.scheduledStartTime)
-        ? String(object.scheduledStartTime)
+        ? Number(object.scheduledStartTime)
         : undefined,
       scheduledEndTime: isSet(object.scheduledEndTime)
-        ? String(object.scheduledEndTime)
+        ? Number(object.scheduledEndTime)
         : undefined,
       actualStartTime: isSet(object.actualStartTime)
-        ? String(object.actualStartTime)
+        ? Number(object.actualStartTime)
         : undefined,
       actualEndTime: isSet(object.actualEndTime)
-        ? String(object.actualEndTime)
+        ? Number(object.actualEndTime)
         : undefined,
       duration: isSet(object.duration) ? Number(object.duration) : 0,
       createUser: isSet(object.createUser)
         ? Number(object.createUser)
         : undefined,
       createDate: isSet(object.createDate)
-        ? String(object.createDate)
+        ? Number(object.createDate)
         : undefined,
       modifyUser: isSet(object.modifyUser)
         ? Number(object.modifyUser)
         : undefined,
       modifyDate: isSet(object.modifyDate)
-        ? String(object.modifyDate)
+        ? Number(object.modifyDate)
         : undefined,
     };
   },
@@ -1282,23 +1282,25 @@ export const ProjectPhase = {
     message.phaseStatusId !== undefined &&
       (obj.phaseStatusId = Math.round(message.phaseStatusId));
     message.fixedStartTime !== undefined &&
-      (obj.fixedStartTime = message.fixedStartTime);
+      (obj.fixedStartTime = Math.round(message.fixedStartTime));
     message.scheduledStartTime !== undefined &&
-      (obj.scheduledStartTime = message.scheduledStartTime);
+      (obj.scheduledStartTime = Math.round(message.scheduledStartTime));
     message.scheduledEndTime !== undefined &&
-      (obj.scheduledEndTime = message.scheduledEndTime);
+      (obj.scheduledEndTime = Math.round(message.scheduledEndTime));
     message.actualStartTime !== undefined &&
-      (obj.actualStartTime = message.actualStartTime);
+      (obj.actualStartTime = Math.round(message.actualStartTime));
     message.actualEndTime !== undefined &&
-      (obj.actualEndTime = message.actualEndTime);
+      (obj.actualEndTime = Math.round(message.actualEndTime));
     message.duration !== undefined &&
       (obj.duration = Math.round(message.duration));
     message.createUser !== undefined &&
       (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined && (obj.createDate = message.createDate);
+    message.createDate !== undefined &&
+      (obj.createDate = Math.round(message.createDate));
     message.modifyUser !== undefined &&
       (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined && (obj.modifyDate = message.modifyDate);
+    message.modifyDate !== undefined &&
+      (obj.modifyDate = Math.round(message.modifyDate));
     return obj;
   },
 
