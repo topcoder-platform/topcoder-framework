@@ -14,6 +14,7 @@ import {
   LookupCriteria,
   ScanRequest,
   ScanResult,
+  UpdateResult,
 } from "@topcoder-framework/lib-common";
 
 export class ChallengeDomain {
@@ -59,7 +60,7 @@ export class ChallengeDomain {
     param: UpdateChallengeInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<UpdateChallengeInput, Metadata, ChallengeList>(
+    return promisify<UpdateChallengeInput, Metadata, UpdateResult>(
       this.client.update.bind(this.client)
     )(param, metadata);
   }

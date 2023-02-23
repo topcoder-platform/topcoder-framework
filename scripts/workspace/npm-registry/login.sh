@@ -1,0 +1,1 @@
+aws codeartifact login --tool npm --repository topcoder-framework --domain topcoder --domain-owner 409275337247 --region us-east-1 --namespace @topcoder-framework

@@ -15,6 +15,7 @@ import {
   LookupCriteria,
   ScanRequest,
   ScanResult,
+  UpdateResult,
 } from "@topcoder-framework/lib-common";
 import {
   Challenge,
@@ -65,9 +66,9 @@ export const ChallengeService = {
     requestSerialize: (value: UpdateChallengeInput) =>
       Buffer.from(UpdateChallengeInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) => UpdateChallengeInput.decode(value),
-    responseSerialize: (value: ChallengeList) =>
-      Buffer.from(ChallengeList.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => ChallengeList.decode(value),
+    responseSerialize: (value: UpdateResult) =>
+      Buffer.from(UpdateResult.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => UpdateResult.decode(value),
   },
   delete: {
     path: "/topcoder.domain.service.challenge.Challenge/Delete",
@@ -86,7 +87,7 @@ export interface ChallengeServer extends UntypedServiceImplementation {
   create: handleUnaryCall<CreateChallengeInput, Challenge>;
   scan: handleUnaryCall<ScanRequest, ScanResult>;
   lookup: handleUnaryCall<LookupCriteria, Challenge>;
-  update: handleUnaryCall<UpdateChallengeInput, ChallengeList>;
+  update: handleUnaryCall<UpdateChallengeInput, UpdateResult>;
   delete: handleUnaryCall<LookupCriteria, ChallengeList>;
 }
 
@@ -138,18 +139,18 @@ export interface ChallengeClient extends Client {
   ): ClientUnaryCall;
   update(
     request: UpdateChallengeInput,
-    callback: (error: ServiceError | null, response: ChallengeList) => void
+    callback: (error: ServiceError | null, response: UpdateResult) => void
   ): ClientUnaryCall;
   update(
     request: UpdateChallengeInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: ChallengeList) => void
+    callback: (error: ServiceError | null, response: UpdateResult) => void
   ): ClientUnaryCall;
   update(
     request: UpdateChallengeInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: ChallengeList) => void
+    callback: (error: ServiceError | null, response: UpdateResult) => void
   ): ClientUnaryCall;
   delete(
     request: LookupCriteria,

@@ -37,7 +37,7 @@ export interface PhaseTypeList {
   items: PhaseType[];
 }
 
-export interface CreateLegacyChallengePhaseInput {
+export interface CreatePhaseInput {
   projectId: number;
   phaseTypeId: number;
   phaseStatusId: number;
@@ -556,7 +556,7 @@ export const PhaseTypeList = {
   },
 };
 
-function createBaseCreateLegacyChallengePhaseInput(): CreateLegacyChallengePhaseInput {
+function createBaseCreatePhaseInput(): CreatePhaseInput {
   return {
     projectId: 0,
     phaseTypeId: 0,
@@ -572,9 +572,9 @@ function createBaseCreateLegacyChallengePhaseInput(): CreateLegacyChallengePhase
   };
 }
 
-export const CreateLegacyChallengePhaseInput = {
+export const CreatePhaseInput = {
   encode(
-    message: CreateLegacyChallengePhaseInput,
+    message: CreatePhaseInput,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.projectId !== 0) {
@@ -613,13 +613,10 @@ export const CreateLegacyChallengePhaseInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): CreateLegacyChallengePhaseInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CreatePhaseInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCreateLegacyChallengePhaseInput();
+    const message = createBaseCreatePhaseInput();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -664,7 +661,7 @@ export const CreateLegacyChallengePhaseInput = {
     return message;
   },
 
-  fromJSON(object: any): CreateLegacyChallengePhaseInput {
+  fromJSON(object: any): CreatePhaseInput {
     return {
       projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
       phaseTypeId: isSet(object.phaseTypeId) ? Number(object.phaseTypeId) : 0,
@@ -694,7 +691,7 @@ export const CreateLegacyChallengePhaseInput = {
     };
   },
 
-  toJSON(message: CreateLegacyChallengePhaseInput): unknown {
+  toJSON(message: CreatePhaseInput): unknown {
     const obj: any = {};
     message.projectId !== undefined &&
       (obj.projectId = Math.round(message.projectId));
@@ -721,16 +718,16 @@ export const CreateLegacyChallengePhaseInput = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateLegacyChallengePhaseInput>, I>>(
+  create<I extends Exact<DeepPartial<CreatePhaseInput>, I>>(
     base?: I
-  ): CreateLegacyChallengePhaseInput {
-    return CreateLegacyChallengePhaseInput.fromPartial(base ?? {});
+  ): CreatePhaseInput {
+    return CreatePhaseInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateLegacyChallengePhaseInput>, I>>(
+  fromPartial<I extends Exact<DeepPartial<CreatePhaseInput>, I>>(
     object: I
-  ): CreateLegacyChallengePhaseInput {
-    const message = createBaseCreateLegacyChallengePhaseInput();
+  ): CreatePhaseInput {
+    const message = createBaseCreatePhaseInput();
     message.projectId = object.projectId ?? 0;
     message.phaseTypeId = object.phaseTypeId ?? 0;
     message.phaseStatusId = object.phaseStatusId ?? 0;

@@ -11,29 +11,24 @@ import {
   ServiceError,
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
-import { CreateResult } from "@topcoder-framework/lib-common";
-import { Empty } from "../../../google/protobuf/empty";
-import {
-  CreateLegacyChallengePhaseInput,
-  PhaseTypeList,
-} from "../legacy_challenge_phase";
+import { CreateResult, Empty } from "@topcoder-framework/lib-common";
+import { CreatePhaseInput, PhaseTypeList } from "../challenge_phase";
 
 export type LegacyChallengePhaseService = typeof LegacyChallengePhaseService;
 export const LegacyChallengePhaseService = {
   create: {
-    path: "/topcoder.domain.legacy_challenge_phase_service.LegacyChallengePhase/Create",
+    path: "/topcoder.domain.service.challenge_phase_service.LegacyChallengePhase/Create",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: CreateLegacyChallengePhaseInput) =>
-      Buffer.from(CreateLegacyChallengePhaseInput.encode(value).finish()),
-    requestDeserialize: (value: Buffer) =>
-      CreateLegacyChallengePhaseInput.decode(value),
+    requestSerialize: (value: CreatePhaseInput) =>
+      Buffer.from(CreatePhaseInput.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => CreatePhaseInput.decode(value),
     responseSerialize: (value: CreateResult) =>
       Buffer.from(CreateResult.encode(value).finish()),
     responseDeserialize: (value: Buffer) => CreateResult.decode(value),
   },
   getPhaseTypes: {
-    path: "/topcoder.domain.legacy_challenge_phase_service.LegacyChallengePhase/GetPhaseTypes",
+    path: "/topcoder.domain.service.challenge_phase_service.LegacyChallengePhase/GetPhaseTypes",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: Empty) =>
@@ -47,22 +42,22 @@ export const LegacyChallengePhaseService = {
 
 export interface LegacyChallengePhaseServer
   extends UntypedServiceImplementation {
-  create: handleUnaryCall<CreateLegacyChallengePhaseInput, CreateResult>;
+  create: handleUnaryCall<CreatePhaseInput, CreateResult>;
   getPhaseTypes: handleUnaryCall<Empty, PhaseTypeList>;
 }
 
 export interface LegacyChallengePhaseClient extends Client {
   create(
-    request: CreateLegacyChallengePhaseInput,
+    request: CreatePhaseInput,
     callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   create(
-    request: CreateLegacyChallengePhaseInput,
+    request: CreatePhaseInput,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   create(
-    request: CreateLegacyChallengePhaseInput,
+    request: CreatePhaseInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: CreateResult) => void
@@ -86,7 +81,7 @@ export interface LegacyChallengePhaseClient extends Client {
 
 export const LegacyChallengePhaseClient = makeGenericClientConstructor(
   LegacyChallengePhaseService,
-  "topcoder.domain.legacy_challenge_phase_service.LegacyChallengePhase"
+  "topcoder.domain.service.challenge_phase_service.LegacyChallengePhase"
 ) as unknown as {
   new (
     address: string,
