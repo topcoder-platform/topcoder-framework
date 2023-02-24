@@ -29,10 +29,6 @@ export interface CreateReviewInput {
   committed: number;
   score: number;
   initialScore: number;
-  createUser?: number | undefined;
-  createDate?: number | undefined;
-  modifyUser?: number | undefined;
-  modifyDate?: number | undefined;
 }
 
 export interface ReviewItem {
@@ -54,10 +50,6 @@ export interface CreateReviewItemInput {
   uploadId?: number | undefined;
   answer: string;
   sort: number;
-  createUser?: number | undefined;
-  createDate?: number | undefined;
-  modifyUser?: number | undefined;
-  modifyDate?: number | undefined;
 }
 
 export interface Submission {
@@ -445,10 +437,6 @@ function createBaseCreateReviewInput(): CreateReviewInput {
     committed: 0,
     score: 0,
     initialScore: 0,
-    createUser: undefined,
-    createDate: undefined,
-    modifyUser: undefined,
-    modifyDate: undefined,
   };
 }
 
@@ -477,18 +465,6 @@ export const CreateReviewInput = {
     }
     if (message.initialScore !== 0) {
       writer.uint32(69).float(message.initialScore);
-    }
-    if (message.createUser !== undefined) {
-      writer.uint32(72).int32(message.createUser);
-    }
-    if (message.createDate !== undefined) {
-      writer.uint32(80).int64(message.createDate);
-    }
-    if (message.modifyUser !== undefined) {
-      writer.uint32(88).int32(message.modifyUser);
-    }
-    if (message.modifyDate !== undefined) {
-      writer.uint32(96).int64(message.modifyDate);
     }
     return writer;
   },
@@ -521,18 +497,6 @@ export const CreateReviewInput = {
         case 8:
           message.initialScore = reader.float();
           break;
-        case 9:
-          message.createUser = reader.int32();
-          break;
-        case 10:
-          message.createDate = longToNumber(reader.int64() as Long);
-          break;
-        case 11:
-          message.modifyUser = reader.int32();
-          break;
-        case 12:
-          message.modifyDate = longToNumber(reader.int64() as Long);
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -556,18 +520,6 @@ export const CreateReviewInput = {
       initialScore: isSet(object.initialScore)
         ? Number(object.initialScore)
         : 0,
-      createUser: isSet(object.createUser)
-        ? Number(object.createUser)
-        : undefined,
-      createDate: isSet(object.createDate)
-        ? Number(object.createDate)
-        : undefined,
-      modifyUser: isSet(object.modifyUser)
-        ? Number(object.modifyUser)
-        : undefined,
-      modifyDate: isSet(object.modifyDate)
-        ? Number(object.modifyDate)
-        : undefined,
     };
   },
 
@@ -586,14 +538,6 @@ export const CreateReviewInput = {
     message.score !== undefined && (obj.score = message.score);
     message.initialScore !== undefined &&
       (obj.initialScore = message.initialScore);
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
     return obj;
   },
 
@@ -614,10 +558,6 @@ export const CreateReviewInput = {
     message.committed = object.committed ?? 0;
     message.score = object.score ?? 0;
     message.initialScore = object.initialScore ?? 0;
-    message.createUser = object.createUser ?? undefined;
-    message.createDate = object.createDate ?? undefined;
-    message.modifyUser = object.modifyUser ?? undefined;
-    message.modifyDate = object.modifyDate ?? undefined;
     return message;
   },
 };
@@ -799,10 +739,6 @@ function createBaseCreateReviewItemInput(): CreateReviewItemInput {
     uploadId: undefined,
     answer: "",
     sort: 0,
-    createUser: undefined,
-    createDate: undefined,
-    modifyUser: undefined,
-    modifyDate: undefined,
   };
 }
 
@@ -825,18 +761,6 @@ export const CreateReviewItemInput = {
     }
     if (message.sort !== 0) {
       writer.uint32(48).int32(message.sort);
-    }
-    if (message.createUser !== undefined) {
-      writer.uint32(56).int32(message.createUser);
-    }
-    if (message.createDate !== undefined) {
-      writer.uint32(64).int64(message.createDate);
-    }
-    if (message.modifyUser !== undefined) {
-      writer.uint32(72).int32(message.modifyUser);
-    }
-    if (message.modifyDate !== undefined) {
-      writer.uint32(80).int64(message.modifyDate);
     }
     return writer;
   },
@@ -866,18 +790,6 @@ export const CreateReviewItemInput = {
         case 6:
           message.sort = reader.int32();
           break;
-        case 7:
-          message.createUser = reader.int32();
-          break;
-        case 8:
-          message.createDate = longToNumber(reader.int64() as Long);
-          break;
-        case 9:
-          message.modifyUser = reader.int32();
-          break;
-        case 10:
-          message.modifyDate = longToNumber(reader.int64() as Long);
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -895,18 +807,6 @@ export const CreateReviewItemInput = {
       uploadId: isSet(object.uploadId) ? Number(object.uploadId) : undefined,
       answer: isSet(object.answer) ? String(object.answer) : "",
       sort: isSet(object.sort) ? Number(object.sort) : 0,
-      createUser: isSet(object.createUser)
-        ? Number(object.createUser)
-        : undefined,
-      createDate: isSet(object.createDate)
-        ? Number(object.createDate)
-        : undefined,
-      modifyUser: isSet(object.modifyUser)
-        ? Number(object.modifyUser)
-        : undefined,
-      modifyDate: isSet(object.modifyDate)
-        ? Number(object.modifyDate)
-        : undefined,
     };
   },
 
@@ -920,14 +820,6 @@ export const CreateReviewItemInput = {
       (obj.uploadId = Math.round(message.uploadId));
     message.answer !== undefined && (obj.answer = message.answer);
     message.sort !== undefined && (obj.sort = Math.round(message.sort));
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
     return obj;
   },
 
@@ -946,10 +838,6 @@ export const CreateReviewItemInput = {
     message.uploadId = object.uploadId ?? undefined;
     message.answer = object.answer ?? "";
     message.sort = object.sort ?? 0;
-    message.createUser = object.createUser ?? undefined;
-    message.createDate = object.createDate ?? undefined;
-    message.modifyUser = object.modifyUser ?? undefined;
-    message.modifyDate = object.modifyDate ?? undefined;
     return message;
   },
 };
