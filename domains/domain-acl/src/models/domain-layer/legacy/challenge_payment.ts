@@ -31,18 +31,12 @@ export interface CreateLegacyChallengePaymentInput {
   submissionId?: number | undefined;
   amount: number;
   pactsPaymentId?: number | undefined;
-  createUser?: number | undefined;
-  createDate?: number | undefined;
-  modifyUser?: number | undefined;
-  modifyDate?: number | undefined;
 }
 
 export interface UpdateLegacyChallengePaymentInput {
   resourceId: number;
   projectPaymentTypeId: number;
   amount: number;
-  modifyUser?: number | undefined;
-  modifyDate?: number | undefined;
 }
 
 export interface DeleteLegacyChallengePaymentInput {
@@ -384,10 +378,6 @@ function createBaseCreateLegacyChallengePaymentInput(): CreateLegacyChallengePay
     submissionId: undefined,
     amount: 0,
     pactsPaymentId: undefined,
-    createUser: undefined,
-    createDate: undefined,
-    modifyUser: undefined,
-    modifyDate: undefined,
   };
 }
 
@@ -413,18 +403,6 @@ export const CreateLegacyChallengePaymentInput = {
     }
     if (message.pactsPaymentId !== undefined) {
       writer.uint32(48).int32(message.pactsPaymentId);
-    }
-    if (message.createUser !== undefined) {
-      writer.uint32(56).int32(message.createUser);
-    }
-    if (message.createDate !== undefined) {
-      writer.uint32(64).int64(message.createDate);
-    }
-    if (message.modifyUser !== undefined) {
-      writer.uint32(72).int32(message.modifyUser);
-    }
-    if (message.modifyDate !== undefined) {
-      writer.uint32(80).int64(message.modifyDate);
     }
     return writer;
   },
@@ -457,18 +435,6 @@ export const CreateLegacyChallengePaymentInput = {
         case 6:
           message.pactsPaymentId = reader.int32();
           break;
-        case 7:
-          message.createUser = reader.int32();
-          break;
-        case 8:
-          message.createDate = longToNumber(reader.int64() as Long);
-          break;
-        case 9:
-          message.modifyUser = reader.int32();
-          break;
-        case 10:
-          message.modifyDate = longToNumber(reader.int64() as Long);
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -493,18 +459,6 @@ export const CreateLegacyChallengePaymentInput = {
       pactsPaymentId: isSet(object.pactsPaymentId)
         ? Number(object.pactsPaymentId)
         : undefined,
-      createUser: isSet(object.createUser)
-        ? Number(object.createUser)
-        : undefined,
-      createDate: isSet(object.createDate)
-        ? Number(object.createDate)
-        : undefined,
-      modifyUser: isSet(object.modifyUser)
-        ? Number(object.modifyUser)
-        : undefined,
-      modifyDate: isSet(object.modifyDate)
-        ? Number(object.modifyDate)
-        : undefined,
     };
   },
 
@@ -521,14 +475,6 @@ export const CreateLegacyChallengePaymentInput = {
     message.amount !== undefined && (obj.amount = message.amount);
     message.pactsPaymentId !== undefined &&
       (obj.pactsPaymentId = Math.round(message.pactsPaymentId));
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
     return obj;
   },
 
@@ -548,22 +494,12 @@ export const CreateLegacyChallengePaymentInput = {
     message.submissionId = object.submissionId ?? undefined;
     message.amount = object.amount ?? 0;
     message.pactsPaymentId = object.pactsPaymentId ?? undefined;
-    message.createUser = object.createUser ?? undefined;
-    message.createDate = object.createDate ?? undefined;
-    message.modifyUser = object.modifyUser ?? undefined;
-    message.modifyDate = object.modifyDate ?? undefined;
     return message;
   },
 };
 
 function createBaseUpdateLegacyChallengePaymentInput(): UpdateLegacyChallengePaymentInput {
-  return {
-    resourceId: 0,
-    projectPaymentTypeId: 0,
-    amount: 0,
-    modifyUser: undefined,
-    modifyDate: undefined,
-  };
+  return { resourceId: 0, projectPaymentTypeId: 0, amount: 0 };
 }
 
 export const UpdateLegacyChallengePaymentInput = {
@@ -579,12 +515,6 @@ export const UpdateLegacyChallengePaymentInput = {
     }
     if (message.amount !== 0) {
       writer.uint32(29).float(message.amount);
-    }
-    if (message.modifyUser !== undefined) {
-      writer.uint32(32).int32(message.modifyUser);
-    }
-    if (message.modifyDate !== undefined) {
-      writer.uint32(40).int64(message.modifyDate);
     }
     return writer;
   },
@@ -608,12 +538,6 @@ export const UpdateLegacyChallengePaymentInput = {
         case 3:
           message.amount = reader.float();
           break;
-        case 4:
-          message.modifyUser = reader.int32();
-          break;
-        case 5:
-          message.modifyDate = longToNumber(reader.int64() as Long);
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -629,12 +553,6 @@ export const UpdateLegacyChallengePaymentInput = {
         ? Number(object.projectPaymentTypeId)
         : 0,
       amount: isSet(object.amount) ? Number(object.amount) : 0,
-      modifyUser: isSet(object.modifyUser)
-        ? Number(object.modifyUser)
-        : undefined,
-      modifyDate: isSet(object.modifyDate)
-        ? Number(object.modifyDate)
-        : undefined,
     };
   },
 
@@ -645,10 +563,6 @@ export const UpdateLegacyChallengePaymentInput = {
     message.projectPaymentTypeId !== undefined &&
       (obj.projectPaymentTypeId = Math.round(message.projectPaymentTypeId));
     message.amount !== undefined && (obj.amount = message.amount);
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
     return obj;
   },
 
@@ -665,8 +579,6 @@ export const UpdateLegacyChallengePaymentInput = {
     message.resourceId = object.resourceId ?? 0;
     message.projectPaymentTypeId = object.projectPaymentTypeId ?? 0;
     message.amount = object.amount ?? 0;
-    message.modifyUser = object.modifyUser ?? undefined;
-    message.modifyDate = object.modifyDate ?? undefined;
     return message;
   },
 };
