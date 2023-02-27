@@ -1,6 +1,6 @@
 {
   "name": "@topcoder-framework/lib-common",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "",
   "main": "./dist-cjs/index.js",
   "types": "./dist-es/index.d.ts",
@@ -24,9 +24,8 @@
   "license": "ISC",
   "dependencies": {
     "@grpc/grpc-js": "^1.8.0",
-    "@topcoder-framework/client-relational": "^0.4.22-ci.0",
     "rimraf": "^3.0.2",
-    "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.10",
+    "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.18",
     "tslib": "^2.4.1"
   },
   "devDependencies": {
@@ -36,11 +35,13 @@
     "typescript": "^4.9.4"
   },
   "volta": {
-    "node": "18.12.1",
+    "node": "18.14.1",
     "typescript": "4.9.4",
-    "npm": "9.2.0"
+    "npm": "9.2.0",
+    "yarn": "1.22.19"
   },
   "files": [
     "dist-*"
-  ]
+  ],
+  "gitHead": "8c19fdcd36bcccc5e952aa909e4a30caf2943340"
 }

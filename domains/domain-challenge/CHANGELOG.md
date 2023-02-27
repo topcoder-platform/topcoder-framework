@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.4.0...v0.5.0) (2023-02-23)
+
+### Bug Fixes
+
+- date serialization ([2aed988](https://github.com/topcoder-platform/topcoder-framework/commit/2aed988366a1f72df0c240962e391bbfd9440903))
+
+### Features
+
+- add create interface to challenge client ([5376aab](https://github.com/topcoder-platform/topcoder-framework/commit/5376aabca0d0dd26c9a0634729bbcd1bebe20041))
+- add legacy challenge phase:create ([#11](https://github.com/topcoder-platform/topcoder-framework/issues/11)) ([c285c84](https://github.com/topcoder-platform/topcoder-framework/commit/c285c84169381885f692ac8d5d33bd8c7e7a9a28))
+- add relational client ([#13](https://github.com/topcoder-platform/topcoder-framework/issues/13)) ([82c7d1b](https://github.com/topcoder-platform/topcoder-framework/commit/82c7d1b9f4419480a713b0e59ad43ccbc857158a))
+- challenge domain ([32446cd](https://github.com/topcoder-platform/topcoder-framework/commit/32446cdd9cd8ca3a7604e31f46ab9c88697246c6))
+- **domain-acl:** add interfaces for anticorruption layer ([#19](https://github.com/topcoder-platform/topcoder-framework/issues/19)) ([27b542a](https://github.com/topcoder-platform/topcoder-framework/commit/27b542aa436979b9e7909c2a460d5b4f0d4d0d24)), closes [#18](https://github.com/topcoder-platform/topcoder-framework/issues/18)
+
 # [0.4.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.2.0...v0.4.0) (2023-01-12)
 
 ### Features
