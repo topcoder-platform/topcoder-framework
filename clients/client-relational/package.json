@@ -24,8 +24,8 @@
   "license": "ISC",
   "dependencies": {
     "@grpc/grpc-js": "^1.8.0",
-    "@topcoder-framework/lib-common": "0.5.1-ci.0",
-    "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.18",
+    "@topcoder-framework/lib-common": "^0.5.2",
+    "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.20",
     "tslib": "^2.4.1"
   },
   "devDependencies": {

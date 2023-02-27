@@ -60,7 +60,7 @@ export interface Challenge_Billing {
 }
 
 export interface Challenge_Event {
-  id: number;
+  id?: number | undefined;
   name: string;
   key: string;
 }
@@ -78,7 +78,7 @@ export interface Challenge_Metadata {
 export interface Challenge_Discussion {
   id?: string | undefined;
   name: string;
-  /** Challenge */
+  /** challenge */
   type: string;
   provider: string;
   url?: string | undefined;
@@ -135,7 +135,7 @@ export interface CreateChallengeInput {
   timelineTemplateId?: string | undefined;
   legacy?: Challenge_Legacy;
   billing?: Challenge_Billing;
-  description: string;
+  description?: string | undefined;
   privateDescription?: string | undefined;
   descriptionFormat?: string | undefined;
   metadata: Challenge_Metadata[];
@@ -955,7 +955,7 @@ export const Challenge_Billing = {
 };
 
 function createBaseChallenge_Event(): Challenge_Event {
-  return { id: 0, name: "", key: "" };
+  return { id: undefined, name: "", key: "" };
 }
 
 export const Challenge_Event = {
@@ -963,7 +963,7 @@ export const Challenge_Event = {
     message: Challenge_Event,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.id !== 0) {
+    if (message.id !== undefined) {
       writer.uint32(8).int32(message.id);
     }
     if (message.name !== "") {
@@ -1001,7 +1001,7 @@ export const Challenge_Event = {
 
   fromJSON(object: any): Challenge_Event {
     return {
-      id: isSet(object.id) ? Number(object.id) : 0,
+      id: isSet(object.id) ? Number(object.id) : undefined,
       name: isSet(object.name) ? String(object.name) : "",
       key: isSet(object.key) ? String(object.key) : "",
     };
@@ -1025,7 +1025,7 @@ export const Challenge_Event = {
     object: I
   ): Challenge_Event {
     const message = createBaseChallenge_Event();
-    message.id = object.id ?? 0;
+    message.id = object.id ?? undefined;
     message.name = object.name ?? "";
     message.key = object.key ?? "";
     return message;
@@ -1903,7 +1903,7 @@ function createBaseCreateChallengeInput(): CreateChallengeInput {
     timelineTemplateId: undefined,
     legacy: undefined,
     billing: undefined,
-    description: "",
+    description: undefined,
     privateDescription: undefined,
     descriptionFormat: undefined,
     metadata: [],
@@ -1952,7 +1952,7 @@ export const CreateChallengeInput = {
         writer.uint32(50).fork()
       ).ldelim();
     }
-    if (message.description !== "") {
+    if (message.description !== undefined) {
       writer.uint32(58).string(message.description);
     }
     if (message.privateDescription !== undefined) {
@@ -2113,7 +2113,9 @@ export const CreateChallengeInput = {
       billing: isSet(object.billing)
         ? Challenge_Billing.fromJSON(object.billing)
         : undefined,
-      description: isSet(object.description) ? String(object.description) : "",
+      description: isSet(object.description)
+        ? String(object.description)
+        : undefined,
       privateDescription: isSet(object.privateDescription)
         ? String(object.privateDescription)
         : undefined,
@@ -2271,7 +2273,7 @@ export const CreateChallengeInput = {
       object.billing !== undefined && object.billing !== null
         ? Challenge_Billing.fromPartial(object.billing)
         : undefined;
-    message.description = object.description ?? "";
+    message.description = object.description ?? undefined;
     message.privateDescription = object.privateDescription ?? undefined;
     message.descriptionFormat = object.descriptionFormat ?? undefined;
     message.metadata =
