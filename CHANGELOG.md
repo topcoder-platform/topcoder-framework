@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.3](https://github.com/topcoder-platform/topcoder-framework/compare/v0.5.2...v0.5.3) (2023-03-01)
+
+### Bug Fixes
+
+- export challenge types ([57dfdf9](https://github.com/topcoder-platform/topcoder-framework/commit/57dfdf91f58159c51dea0fc8c9285bcd3bfcba09))
+
 ## [0.5.2](https://github.com/topcoder-platform/topcoder-framework/compare/v0.5.1...v0.5.2) (2023-02-26)
 
 **Note:** Version bump only for package topcoder-framework
