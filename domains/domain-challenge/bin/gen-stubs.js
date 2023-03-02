@@ -36,7 +36,8 @@ const protoConfig = [
   `--ts_proto_opt=Mgoogle/protobuf/struct.proto=@topcoder-framework/lib-common`,
   `--ts_proto_opt=Mgoogle/protobuf/timestamp.proto=@topcoder-framework/lib-common`,
   // `--proto_path ${PROTO_DIR} ${PROTO_DIR}/common/*.proto`,
-  `--proto_path ${PROTO_DIR} ${PROTO_DIR}/domain-layer/challenge/**/*.proto`,
+  `--proto_path ${PROTO_DIR} ${PROTO_DIR}/domain-layer/challenge/*.proto`,
+  `--proto_path ${PROTO_DIR} ${PROTO_DIR}/domain-layer/challenge/services/*.proto`,
 ];
 
 // https://github.com/stephenh/ts-proto#usage
