@@ -7,6 +7,7 @@ import {
   ChallengeList,
   CreateChallengeInput,
   UpdateChallengeInput,
+  UpdateChallengeInputForACL,
 } from "../models/domain-layer/challenge/challenge";
 
 import { GrpcClient } from "../common/GrpcClient";
@@ -16,6 +17,7 @@ import {
   ScanResult,
   UpdateResult,
 } from "@topcoder-framework/lib-common";
+import { Empty } from "src/models/google/protobuf/empty";
 
 export class ChallengeDomain {
   constructor(
@@ -62,6 +64,15 @@ export class ChallengeDomain {
   ) {
     return promisify<UpdateChallengeInput, Metadata, UpdateResult>(
       this.client.update.bind(this.client)
+    )(param, metadata);
+  }
+
+  public async updateForACL(
+    param: UpdateChallengeInputForACL,
+    metadata: Metadata = new Metadata()
+  ) {
+    return promisify<UpdateChallengeInputForACL, Metadata, Empty>(
+      this.client.updateForAcl.bind(this.client)
     )(param, metadata);
   }
 
