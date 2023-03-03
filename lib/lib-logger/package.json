@@ -14,7 +14,7 @@
   },
   "scripty": {
     "path": "../../scripts/packages",
-    "format": "scripty"
+    "windowsPath": "../../scripts-win/packages"
   },
   "author": "Rakib Ansary <rakibansary@topcoder.com>",
   "license": "ISC",

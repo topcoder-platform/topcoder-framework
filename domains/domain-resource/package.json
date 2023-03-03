@@ -9,7 +9,8 @@
     "format": "scripty"
   },
   "scripty": {
-    "path": "../../scripts/packages"
+    "path": "../../scripts/packages",
+    "windowsPath": "../../scripts-win/packages"
   },
   "author": "Rakib Ansary <rakibansary@topcoder.com>",
   "license": "ISC",

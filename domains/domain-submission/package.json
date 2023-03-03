@@ -23,7 +23,7 @@
     "path": "../../scripts/packages"
   },
   "dependencies": {
-    "@topcoder-framework/lib-common": "^0.2.1",
+    "@topcoder-framework/lib-common": "^0.5.2",
     "dotenv": "^16.0.3",
     "tslib": "^2.4.1"
   },
