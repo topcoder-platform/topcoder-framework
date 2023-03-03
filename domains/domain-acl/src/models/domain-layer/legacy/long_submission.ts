@@ -13,7 +13,7 @@ export interface LongSubmission {
   example: boolean;
 }
 
-export interface CreateLongComponentStateInput {
+export interface CreateLongSubmissionInput {
   submissionNumber: number;
   submissionText: string;
   openTime: number;
@@ -170,7 +170,7 @@ export const LongSubmission = {
   },
 };
 
-function createBaseCreateLongComponentStateInput(): CreateLongComponentStateInput {
+function createBaseCreateLongSubmissionInput(): CreateLongSubmissionInput {
   return {
     submissionNumber: 0,
     submissionText: "",
@@ -182,9 +182,9 @@ function createBaseCreateLongComponentStateInput(): CreateLongComponentStateInpu
   };
 }
 
-export const CreateLongComponentStateInput = {
+export const CreateLongSubmissionInput = {
   encode(
-    message: CreateLongComponentStateInput,
+    message: CreateLongSubmissionInput,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.submissionNumber !== 0) {
@@ -214,10 +214,10 @@ export const CreateLongComponentStateInput = {
   decode(
     input: _m0.Reader | Uint8Array,
     length?: number
-  ): CreateLongComponentStateInput {
+  ): CreateLongSubmissionInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCreateLongComponentStateInput();
+    const message = createBaseCreateLongSubmissionInput();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -250,7 +250,7 @@ export const CreateLongComponentStateInput = {
     return message;
   },
 
-  fromJSON(object: any): CreateLongComponentStateInput {
+  fromJSON(object: any): CreateLongSubmissionInput {
     return {
       submissionNumber: isSet(object.submissionNumber)
         ? Number(object.submissionNumber)
@@ -268,7 +268,7 @@ export const CreateLongComponentStateInput = {
     };
   },
 
-  toJSON(message: CreateLongComponentStateInput): unknown {
+  toJSON(message: CreateLongSubmissionInput): unknown {
     const obj: any = {};
     message.submissionNumber !== undefined &&
       (obj.submissionNumber = Math.round(message.submissionNumber));
@@ -286,16 +286,16 @@ export const CreateLongComponentStateInput = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateLongComponentStateInput>, I>>(
+  create<I extends Exact<DeepPartial<CreateLongSubmissionInput>, I>>(
     base?: I
-  ): CreateLongComponentStateInput {
-    return CreateLongComponentStateInput.fromPartial(base ?? {});
+  ): CreateLongSubmissionInput {
+    return CreateLongSubmissionInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateLongComponentStateInput>, I>>(
+  fromPartial<I extends Exact<DeepPartial<CreateLongSubmissionInput>, I>>(
     object: I
-  ): CreateLongComponentStateInput {
-    const message = createBaseCreateLongComponentStateInput();
+  ): CreateLongSubmissionInput {
+    const message = createBaseCreateLongSubmissionInput();
     message.submissionNumber = object.submissionNumber ?? 0;
     message.submissionText = object.submissionText ?? "";
     message.openTime = object.openTime ?? 0;
