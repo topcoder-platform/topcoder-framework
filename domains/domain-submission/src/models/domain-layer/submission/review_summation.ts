@@ -65,10 +65,7 @@ function createBaseReviewSummation(): ReviewSummation {
 }
 
 export const ReviewSummation = {
-  encode(
-    message: ReviewSummation,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ReviewSummation, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -91,10 +88,7 @@ export const ReviewSummation = {
       writer.uint32(56).bool(message.isPassing);
     }
     if (message.metadata !== undefined) {
-      Struct.encode(
-        Struct.wrap(message.metadata),
-        writer.uint32(66).fork()
-      ).ldelim();
+      Struct.encode(Struct.wrap(message.metadata), writer.uint32(66).fork()).ldelim();
     }
     if (message.created !== 0) {
       writer.uint32(72).int64(message.created);
@@ -140,9 +134,7 @@ export const ReviewSummation = {
           message.isPassing = reader.bool();
           break;
         case 8:
-          message.metadata = Struct.unwrap(
-            Struct.decode(reader, reader.uint32())
-          );
+          message.metadata = Struct.unwrap(Struct.decode(reader, reader.uint32()));
           break;
         case 9:
           message.created = longToNumber(reader.int64() as Long);
@@ -168,16 +160,10 @@ export const ReviewSummation = {
     return {
       id: isSet(object.id) ? String(object.id) : "",
       isFinal: isSet(object.isFinal) ? Boolean(object.isFinal) : undefined,
-      reviewedDate: isSet(object.reviewedDate)
-        ? String(object.reviewedDate)
-        : undefined,
+      reviewedDate: isSet(object.reviewedDate) ? String(object.reviewedDate) : undefined,
       scoreCardId: isSet(object.scoreCardId) ? String(object.scoreCardId) : "",
-      submissionId: isSet(object.submissionId)
-        ? String(object.submissionId)
-        : "",
-      aggregateScore: isSet(object.aggregateScore)
-        ? Number(object.aggregateScore)
-        : 0,
+      submissionId: isSet(object.submissionId) ? String(object.submissionId) : "",
+      aggregateScore: isSet(object.aggregateScore) ? Number(object.aggregateScore) : 0,
       isPassing: isSet(object.isPassing) ? Boolean(object.isPassing) : false,
       metadata: isObject(object.metadata) ? object.metadata : undefined,
       created: isSet(object.created) ? Number(object.created) : 0,
@@ -191,34 +177,24 @@ export const ReviewSummation = {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     message.isFinal !== undefined && (obj.isFinal = message.isFinal);
-    message.reviewedDate !== undefined &&
-      (obj.reviewedDate = message.reviewedDate);
-    message.scoreCardId !== undefined &&
-      (obj.scoreCardId = message.scoreCardId);
-    message.submissionId !== undefined &&
-      (obj.submissionId = message.submissionId);
-    message.aggregateScore !== undefined &&
-      (obj.aggregateScore = message.aggregateScore);
+    message.reviewedDate !== undefined && (obj.reviewedDate = message.reviewedDate);
+    message.scoreCardId !== undefined && (obj.scoreCardId = message.scoreCardId);
+    message.submissionId !== undefined && (obj.submissionId = message.submissionId);
+    message.aggregateScore !== undefined && (obj.aggregateScore = message.aggregateScore);
     message.isPassing !== undefined && (obj.isPassing = message.isPassing);
     message.metadata !== undefined && (obj.metadata = message.metadata);
-    message.created !== undefined &&
-      (obj.created = Math.round(message.created));
-    message.updated !== undefined &&
-      (obj.updated = Math.round(message.updated));
+    message.created !== undefined && (obj.created = Math.round(message.created));
+    message.updated !== undefined && (obj.updated = Math.round(message.updated));
     message.createdBy !== undefined && (obj.createdBy = message.createdBy);
     message.updatedBy !== undefined && (obj.updatedBy = message.updatedBy);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ReviewSummation>, I>>(
-    base?: I
-  ): ReviewSummation {
+  create<I extends Exact<DeepPartial<ReviewSummation>, I>>(base?: I): ReviewSummation {
     return ReviewSummation.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ReviewSummation>, I>>(
-    object: I
-  ): ReviewSummation {
+  fromPartial<I extends Exact<DeepPartial<ReviewSummation>, I>>(object: I): ReviewSummation {
     const message = createBaseReviewSummation();
     message.id = object.id ?? "";
     message.isFinal = object.isFinal ?? undefined;
@@ -249,10 +225,7 @@ function createBaseCreateReviewSummationInput(): CreateReviewSummationInput {
 }
 
 export const CreateReviewSummationInput = {
-  encode(
-    message: CreateReviewSummationInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CreateReviewSummationInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.scoreCardId !== "") {
       writer.uint32(10).string(message.scoreCardId);
     }
@@ -266,10 +239,7 @@ export const CreateReviewSummationInput = {
       writer.uint32(32).bool(message.isPassing);
     }
     if (message.metadata !== undefined) {
-      Struct.encode(
-        Struct.wrap(message.metadata),
-        writer.uint32(42).fork()
-      ).ldelim();
+      Struct.encode(Struct.wrap(message.metadata), writer.uint32(42).fork()).ldelim();
     }
     if (message.isFinal !== undefined) {
       writer.uint32(48).bool(message.isFinal);
@@ -280,10 +250,7 @@ export const CreateReviewSummationInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): CreateReviewSummationInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CreateReviewSummationInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateReviewSummationInput();
@@ -303,9 +270,7 @@ export const CreateReviewSummationInput = {
           message.isPassing = reader.bool();
           break;
         case 5:
-          message.metadata = Struct.unwrap(
-            Struct.decode(reader, reader.uint32())
-          );
+          message.metadata = Struct.unwrap(Struct.decode(reader, reader.uint32()));
           break;
         case 6:
           message.isFinal = reader.bool();
@@ -324,46 +289,32 @@ export const CreateReviewSummationInput = {
   fromJSON(object: any): CreateReviewSummationInput {
     return {
       scoreCardId: isSet(object.scoreCardId) ? String(object.scoreCardId) : "",
-      submissionId: isSet(object.submissionId)
-        ? String(object.submissionId)
-        : "",
-      aggregateScore: isSet(object.aggregateScore)
-        ? Number(object.aggregateScore)
-        : 0,
+      submissionId: isSet(object.submissionId) ? String(object.submissionId) : "",
+      aggregateScore: isSet(object.aggregateScore) ? Number(object.aggregateScore) : 0,
       isPassing: isSet(object.isPassing) ? Boolean(object.isPassing) : false,
       metadata: isObject(object.metadata) ? object.metadata : undefined,
       isFinal: isSet(object.isFinal) ? Boolean(object.isFinal) : undefined,
-      reviewedDate: isSet(object.reviewedDate)
-        ? String(object.reviewedDate)
-        : undefined,
+      reviewedDate: isSet(object.reviewedDate) ? String(object.reviewedDate) : undefined,
     };
   },
 
   toJSON(message: CreateReviewSummationInput): unknown {
     const obj: any = {};
-    message.scoreCardId !== undefined &&
-      (obj.scoreCardId = message.scoreCardId);
-    message.submissionId !== undefined &&
-      (obj.submissionId = message.submissionId);
-    message.aggregateScore !== undefined &&
-      (obj.aggregateScore = message.aggregateScore);
+    message.scoreCardId !== undefined && (obj.scoreCardId = message.scoreCardId);
+    message.submissionId !== undefined && (obj.submissionId = message.submissionId);
+    message.aggregateScore !== undefined && (obj.aggregateScore = message.aggregateScore);
     message.isPassing !== undefined && (obj.isPassing = message.isPassing);
     message.metadata !== undefined && (obj.metadata = message.metadata);
     message.isFinal !== undefined && (obj.isFinal = message.isFinal);
-    message.reviewedDate !== undefined &&
-      (obj.reviewedDate = message.reviewedDate);
+    message.reviewedDate !== undefined && (obj.reviewedDate = message.reviewedDate);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateReviewSummationInput>, I>>(
-    base?: I
-  ): CreateReviewSummationInput {
+  create<I extends Exact<DeepPartial<CreateReviewSummationInput>, I>>(base?: I): CreateReviewSummationInput {
     return CreateReviewSummationInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateReviewSummationInput>, I>>(
-    object: I
-  ): CreateReviewSummationInput {
+  fromPartial<I extends Exact<DeepPartial<CreateReviewSummationInput>, I>>(object: I): CreateReviewSummationInput {
     const message = createBaseCreateReviewSummationInput();
     message.scoreCardId = object.scoreCardId ?? "";
     message.submissionId = object.submissionId ?? "";
@@ -381,26 +332,17 @@ function createBaseUpdateReviewSummationInput(): UpdateReviewSummationInput {
 }
 
 export const UpdateReviewSummationInput = {
-  encode(
-    message: UpdateReviewSummationInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: UpdateReviewSummationInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.filterCriteria) {
       ScanCriteria.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     if (message.updateInput !== undefined) {
-      UpdateReviewSummationInput_UpdateInput.encode(
-        message.updateInput,
-        writer.uint32(26).fork()
-      ).ldelim();
+      UpdateReviewSummationInput_UpdateInput.encode(message.updateInput, writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateReviewSummationInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateReviewSummationInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateReviewSummationInput();
@@ -408,15 +350,10 @@ export const UpdateReviewSummationInput = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.filterCriteria.push(
-            ScanCriteria.decode(reader, reader.uint32())
-          );
+          message.filterCriteria.push(ScanCriteria.decode(reader, reader.uint32()));
           break;
         case 3:
-          message.updateInput = UpdateReviewSummationInput_UpdateInput.decode(
-            reader,
-            reader.uint32()
-          );
+          message.updateInput = UpdateReviewSummationInput_UpdateInput.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -440,35 +377,26 @@ export const UpdateReviewSummationInput = {
   toJSON(message: UpdateReviewSummationInput): unknown {
     const obj: any = {};
     if (message.filterCriteria) {
-      obj.filterCriteria = message.filterCriteria.map((e) =>
-        e ? ScanCriteria.toJSON(e) : undefined
-      );
+      obj.filterCriteria = message.filterCriteria.map((e) => e ? ScanCriteria.toJSON(e) : undefined);
     } else {
       obj.filterCriteria = [];
     }
-    message.updateInput !== undefined &&
-      (obj.updateInput = message.updateInput
-        ? UpdateReviewSummationInput_UpdateInput.toJSON(message.updateInput)
-        : undefined);
+    message.updateInput !== undefined && (obj.updateInput = message.updateInput
+      ? UpdateReviewSummationInput_UpdateInput.toJSON(message.updateInput)
+      : undefined);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdateReviewSummationInput>, I>>(
-    base?: I
-  ): UpdateReviewSummationInput {
+  create<I extends Exact<DeepPartial<UpdateReviewSummationInput>, I>>(base?: I): UpdateReviewSummationInput {
     return UpdateReviewSummationInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdateReviewSummationInput>, I>>(
-    object: I
-  ): UpdateReviewSummationInput {
+  fromPartial<I extends Exact<DeepPartial<UpdateReviewSummationInput>, I>>(object: I): UpdateReviewSummationInput {
     const message = createBaseUpdateReviewSummationInput();
-    message.filterCriteria =
-      object.filterCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
-    message.updateInput =
-      object.updateInput !== undefined && object.updateInput !== null
-        ? UpdateReviewSummationInput_UpdateInput.fromPartial(object.updateInput)
-        : undefined;
+    message.filterCriteria = object.filterCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
+    message.updateInput = (object.updateInput !== undefined && object.updateInput !== null)
+      ? UpdateReviewSummationInput_UpdateInput.fromPartial(object.updateInput)
+      : undefined;
     return message;
   },
 };
@@ -486,10 +414,7 @@ function createBaseUpdateReviewSummationInput_UpdateInput(): UpdateReviewSummati
 }
 
 export const UpdateReviewSummationInput_UpdateInput = {
-  encode(
-    message: UpdateReviewSummationInput_UpdateInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: UpdateReviewSummationInput_UpdateInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.scoreCardId !== undefined) {
       writer.uint32(10).string(message.scoreCardId);
     }
@@ -503,10 +428,7 @@ export const UpdateReviewSummationInput_UpdateInput = {
       writer.uint32(32).bool(message.isPassing);
     }
     if (message.metadata !== undefined) {
-      Struct.encode(
-        Struct.wrap(message.metadata),
-        writer.uint32(42).fork()
-      ).ldelim();
+      Struct.encode(Struct.wrap(message.metadata), writer.uint32(42).fork()).ldelim();
     }
     if (message.isFinal !== undefined) {
       writer.uint32(48).bool(message.isFinal);
@@ -517,10 +439,7 @@ export const UpdateReviewSummationInput_UpdateInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateReviewSummationInput_UpdateInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateReviewSummationInput_UpdateInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateReviewSummationInput_UpdateInput();
@@ -540,9 +459,7 @@ export const UpdateReviewSummationInput_UpdateInput = {
           message.isPassing = reader.bool();
           break;
         case 5:
-          message.metadata = Struct.unwrap(
-            Struct.decode(reader, reader.uint32())
-          );
+          message.metadata = Struct.unwrap(Struct.decode(reader, reader.uint32()));
           break;
         case 6:
           message.isFinal = reader.bool();
@@ -560,51 +477,37 @@ export const UpdateReviewSummationInput_UpdateInput = {
 
   fromJSON(object: any): UpdateReviewSummationInput_UpdateInput {
     return {
-      scoreCardId: isSet(object.scoreCardId)
-        ? String(object.scoreCardId)
-        : undefined,
-      submissionId: isSet(object.submissionId)
-        ? String(object.submissionId)
-        : undefined,
-      aggregateScore: isSet(object.aggregateScore)
-        ? Number(object.aggregateScore)
-        : undefined,
-      isPassing: isSet(object.isPassing)
-        ? Boolean(object.isPassing)
-        : undefined,
+      scoreCardId: isSet(object.scoreCardId) ? String(object.scoreCardId) : undefined,
+      submissionId: isSet(object.submissionId) ? String(object.submissionId) : undefined,
+      aggregateScore: isSet(object.aggregateScore) ? Number(object.aggregateScore) : undefined,
+      isPassing: isSet(object.isPassing) ? Boolean(object.isPassing) : undefined,
       metadata: isObject(object.metadata) ? object.metadata : undefined,
       isFinal: isSet(object.isFinal) ? Boolean(object.isFinal) : undefined,
-      reviewedDate: isSet(object.reviewedDate)
-        ? String(object.reviewedDate)
-        : undefined,
+      reviewedDate: isSet(object.reviewedDate) ? String(object.reviewedDate) : undefined,
     };
   },
 
   toJSON(message: UpdateReviewSummationInput_UpdateInput): unknown {
     const obj: any = {};
-    message.scoreCardId !== undefined &&
-      (obj.scoreCardId = message.scoreCardId);
-    message.submissionId !== undefined &&
-      (obj.submissionId = message.submissionId);
-    message.aggregateScore !== undefined &&
-      (obj.aggregateScore = message.aggregateScore);
+    message.scoreCardId !== undefined && (obj.scoreCardId = message.scoreCardId);
+    message.submissionId !== undefined && (obj.submissionId = message.submissionId);
+    message.aggregateScore !== undefined && (obj.aggregateScore = message.aggregateScore);
     message.isPassing !== undefined && (obj.isPassing = message.isPassing);
     message.metadata !== undefined && (obj.metadata = message.metadata);
     message.isFinal !== undefined && (obj.isFinal = message.isFinal);
-    message.reviewedDate !== undefined &&
-      (obj.reviewedDate = message.reviewedDate);
+    message.reviewedDate !== undefined && (obj.reviewedDate = message.reviewedDate);
     return obj;
   },
 
-  create<
-    I extends Exact<DeepPartial<UpdateReviewSummationInput_UpdateInput>, I>
-  >(base?: I): UpdateReviewSummationInput_UpdateInput {
+  create<I extends Exact<DeepPartial<UpdateReviewSummationInput_UpdateInput>, I>>(
+    base?: I,
+  ): UpdateReviewSummationInput_UpdateInput {
     return UpdateReviewSummationInput_UpdateInput.fromPartial(base ?? {});
   },
 
-  fromPartial<
-    I extends Exact<DeepPartial<UpdateReviewSummationInput_UpdateInput>, I>
-  >(object: I): UpdateReviewSummationInput_UpdateInput {
+  fromPartial<I extends Exact<DeepPartial<UpdateReviewSummationInput_UpdateInput>, I>>(
+    object: I,
+  ): UpdateReviewSummationInput_UpdateInput {
     const message = createBaseUpdateReviewSummationInput_UpdateInput();
     message.scoreCardId = object.scoreCardId ?? undefined;
     message.submissionId = object.submissionId ?? undefined;
@@ -622,10 +525,7 @@ function createBaseReviewSummationList(): ReviewSummationList {
 }
 
 export const ReviewSummationList = {
-  encode(
-    message: ReviewSummationList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ReviewSummationList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.id) {
       writer.uint32(10).string(v!);
     }
@@ -651,9 +551,7 @@ export const ReviewSummationList = {
   },
 
   fromJSON(object: any): ReviewSummationList {
-    return {
-      id: Array.isArray(object?.id) ? object.id.map((e: any) => String(e)) : [],
-    };
+    return { id: Array.isArray(object?.id) ? object.id.map((e: any) => String(e)) : [] };
   },
 
   toJSON(message: ReviewSummationList): unknown {
@@ -666,15 +564,11 @@ export const ReviewSummationList = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ReviewSummationList>, I>>(
-    base?: I
-  ): ReviewSummationList {
+  create<I extends Exact<DeepPartial<ReviewSummationList>, I>>(base?: I): ReviewSummationList {
     return ReviewSummationList.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ReviewSummationList>, I>>(
-    object: I
-  ): ReviewSummationList {
+  fromPartial<I extends Exact<DeepPartial<ReviewSummationList>, I>>(object: I): ReviewSummationList {
     const message = createBaseReviewSummationList();
     message.id = object.id?.map((e) => e) || [];
     return message;
@@ -700,41 +594,21 @@ var tsProtoGlobalThis: any = (() => {
   throw "Unable to locate global object";
 })();
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
-    }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
-      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
-    };
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

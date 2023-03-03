@@ -208,9 +208,7 @@ export interface ScanResult {
 }
 
 export interface CreateResult {
-  kind?:
-    | { $case: "integerId"; integerId: number }
-    | { $case: "stringId"; stringId: string };
+  kind?: { $case: "integerId"; integerId: number } | { $case: "stringId"; stringId: string };
 }
 
 export interface UpdateResult {
@@ -238,10 +236,7 @@ function createBaseScanCriteria(): ScanCriteria {
 }
 
 export const ScanCriteria = {
-  encode(
-    message: ScanCriteria,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ScanCriteria, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -249,10 +244,7 @@ export const ScanCriteria = {
       writer.uint32(16).int32(message.operator);
     }
     if (message.value !== undefined) {
-      Value.encode(
-        Value.wrap(message.value),
-        writer.uint32(26).fork()
-      ).ldelim();
+      Value.encode(Value.wrap(message.value), writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
@@ -284,9 +276,7 @@ export const ScanCriteria = {
   fromJSON(object: any): ScanCriteria {
     return {
       key: isSet(object.key) ? String(object.key) : "",
-      operator: isSet(object.operator)
-        ? operatorFromJSON(object.operator)
-        : undefined,
+      operator: isSet(object.operator) ? operatorFromJSON(object.operator) : undefined,
       value: isSet(object?.value) ? object.value : undefined,
     };
   },
@@ -295,23 +285,16 @@ export const ScanCriteria = {
     const obj: any = {};
     message.key !== undefined && (obj.key = message.key);
     message.operator !== undefined &&
-      (obj.operator =
-        message.operator !== undefined
-          ? operatorToJSON(message.operator)
-          : undefined);
+      (obj.operator = message.operator !== undefined ? operatorToJSON(message.operator) : undefined);
     message.value !== undefined && (obj.value = message.value);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ScanCriteria>, I>>(
-    base?: I
-  ): ScanCriteria {
+  create<I extends Exact<DeepPartial<ScanCriteria>, I>>(base?: I): ScanCriteria {
     return ScanCriteria.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ScanCriteria>, I>>(
-    object: I
-  ): ScanCriteria {
+  fromPartial<I extends Exact<DeepPartial<ScanCriteria>, I>>(object: I): ScanCriteria {
     const message = createBaseScanCriteria();
     message.key = object.key ?? "";
     message.operator = object.operator ?? undefined;
@@ -325,10 +308,7 @@ function createBaseScanRequest(): ScanRequest {
 }
 
 export const ScanRequest = {
-  encode(
-    message: ScanRequest,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ScanRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.criteria) {
       ScanCriteria.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -361,9 +341,7 @@ export const ScanRequest = {
 
   fromJSON(object: any): ScanRequest {
     return {
-      criteria: Array.isArray(object?.criteria)
-        ? object.criteria.map((e: any) => ScanCriteria.fromJSON(e))
-        : [],
+      criteria: Array.isArray(object?.criteria) ? object.criteria.map((e: any) => ScanCriteria.fromJSON(e)) : [],
       nextToken: isSet(object.nextToken) ? String(object.nextToken) : undefined,
     };
   },
@@ -371,9 +349,7 @@ export const ScanRequest = {
   toJSON(message: ScanRequest): unknown {
     const obj: any = {};
     if (message.criteria) {
-      obj.criteria = message.criteria.map((e) =>
-        e ? ScanCriteria.toJSON(e) : undefined
-      );
+      obj.criteria = message.criteria.map((e) => e ? ScanCriteria.toJSON(e) : undefined);
     } else {
       obj.criteria = [];
     }
@@ -385,12 +361,9 @@ export const ScanRequest = {
     return ScanRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ScanRequest>, I>>(
-    object: I
-  ): ScanRequest {
+  fromPartial<I extends Exact<DeepPartial<ScanRequest>, I>>(object: I): ScanRequest {
     const message = createBaseScanRequest();
-    message.criteria =
-      object.criteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
+    message.criteria = object.criteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
     message.nextToken = object.nextToken ?? undefined;
     return message;
   },
@@ -401,10 +374,7 @@ function createBaseScanResult(): ScanResult {
 }
 
 export const ScanResult = {
-  encode(
-    message: ScanResult,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ScanResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.nextToken !== undefined) {
       writer.uint32(10).string(message.nextToken);
     }
@@ -425,9 +395,7 @@ export const ScanResult = {
           message.nextToken = reader.string();
           break;
         case 2:
-          message.items.push(
-            Struct.unwrap(Struct.decode(reader, reader.uint32()))
-          );
+          message.items.push(Struct.unwrap(Struct.decode(reader, reader.uint32())));
           break;
         default:
           reader.skipType(tag & 7);
@@ -459,9 +427,7 @@ export const ScanResult = {
     return ScanResult.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ScanResult>, I>>(
-    object: I
-  ): ScanResult {
+  fromPartial<I extends Exact<DeepPartial<ScanResult>, I>>(object: I): ScanResult {
     const message = createBaseScanResult();
     message.nextToken = object.nextToken ?? undefined;
     message.items = object.items?.map((e) => e) || [];
@@ -474,10 +440,7 @@ function createBaseCreateResult(): CreateResult {
 }
 
 export const CreateResult = {
-  encode(
-    message: CreateResult,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CreateResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     switch (message.kind?.$case) {
       case "integerId":
         writer.uint32(8).int64(message.kind.integerId);
@@ -497,10 +460,7 @@ export const CreateResult = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.kind = {
-            $case: "integerId",
-            integerId: longToNumber(reader.int64() as Long),
-          };
+          message.kind = { $case: "integerId", integerId: longToNumber(reader.int64() as Long) };
           break;
         case 2:
           message.kind = { $case: "stringId", stringId: reader.string() };
@@ -525,35 +485,21 @@ export const CreateResult = {
 
   toJSON(message: CreateResult): unknown {
     const obj: any = {};
-    message.kind?.$case === "integerId" &&
-      (obj.integerId = Math.round(message.kind?.integerId));
-    message.kind?.$case === "stringId" &&
-      (obj.stringId = message.kind?.stringId);
+    message.kind?.$case === "integerId" && (obj.integerId = Math.round(message.kind?.integerId));
+    message.kind?.$case === "stringId" && (obj.stringId = message.kind?.stringId);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateResult>, I>>(
-    base?: I
-  ): CreateResult {
+  create<I extends Exact<DeepPartial<CreateResult>, I>>(base?: I): CreateResult {
     return CreateResult.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateResult>, I>>(
-    object: I
-  ): CreateResult {
+  fromPartial<I extends Exact<DeepPartial<CreateResult>, I>>(object: I): CreateResult {
     const message = createBaseCreateResult();
-    if (
-      object.kind?.$case === "integerId" &&
-      object.kind?.integerId !== undefined &&
-      object.kind?.integerId !== null
-    ) {
+    if (object.kind?.$case === "integerId" && object.kind?.integerId !== undefined && object.kind?.integerId !== null) {
       message.kind = { $case: "integerId", integerId: object.kind.integerId };
     }
-    if (
-      object.kind?.$case === "stringId" &&
-      object.kind?.stringId !== undefined &&
-      object.kind?.stringId !== null
-    ) {
+    if (object.kind?.$case === "stringId" && object.kind?.stringId !== undefined && object.kind?.stringId !== null) {
       message.kind = { $case: "stringId", stringId: object.kind.stringId };
     }
     return message;
@@ -565,10 +511,7 @@ function createBaseUpdateResult(): UpdateResult {
 }
 
 export const UpdateResult = {
-  encode(
-    message: UpdateResult,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: UpdateResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.updatedCount !== 0) {
       writer.uint32(8).int64(message.updatedCount);
     }
@@ -601,30 +544,23 @@ export const UpdateResult = {
 
   fromJSON(object: any): UpdateResult {
     return {
-      updatedCount: isSet(object.updatedCount)
-        ? Number(object.updatedCount)
-        : 0,
+      updatedCount: isSet(object.updatedCount) ? Number(object.updatedCount) : 0,
       message: isSet(object.message) ? String(object.message) : undefined,
     };
   },
 
   toJSON(message: UpdateResult): unknown {
     const obj: any = {};
-    message.updatedCount !== undefined &&
-      (obj.updatedCount = Math.round(message.updatedCount));
+    message.updatedCount !== undefined && (obj.updatedCount = Math.round(message.updatedCount));
     message.message !== undefined && (obj.message = message.message);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdateResult>, I>>(
-    base?: I
-  ): UpdateResult {
+  create<I extends Exact<DeepPartial<UpdateResult>, I>>(base?: I): UpdateResult {
     return UpdateResult.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdateResult>, I>>(
-    object: I
-  ): UpdateResult {
+  fromPartial<I extends Exact<DeepPartial<UpdateResult>, I>>(object: I): UpdateResult {
     const message = createBaseUpdateResult();
     message.updatedCount = object.updatedCount ?? 0;
     message.message = object.message ?? undefined;
@@ -637,10 +573,7 @@ function createBaseCheckExistsResult(): CheckExistsResult {
 }
 
 export const CheckExistsResult = {
-  encode(
-    message: CheckExistsResult,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CheckExistsResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.exists === true) {
       writer.uint32(8).bool(message.exists);
     }
@@ -675,15 +608,11 @@ export const CheckExistsResult = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CheckExistsResult>, I>>(
-    base?: I
-  ): CheckExistsResult {
+  create<I extends Exact<DeepPartial<CheckExistsResult>, I>>(base?: I): CheckExistsResult {
     return CheckExistsResult.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CheckExistsResult>, I>>(
-    object: I
-  ): CheckExistsResult {
+  fromPartial<I extends Exact<DeepPartial<CheckExistsResult>, I>>(object: I): CheckExistsResult {
     const message = createBaseCheckExistsResult();
     message.exists = object.exists ?? false;
     return message;
@@ -695,18 +624,12 @@ function createBaseLookupCriteria(): LookupCriteria {
 }
 
 export const LookupCriteria = {
-  encode(
-    message: LookupCriteria,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: LookupCriteria, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
     if (message.value !== undefined) {
-      Value.encode(
-        Value.wrap(message.value),
-        writer.uint32(26).fork()
-      ).ldelim();
+      Value.encode(Value.wrap(message.value), writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
@@ -733,10 +656,7 @@ export const LookupCriteria = {
   },
 
   fromJSON(object: any): LookupCriteria {
-    return {
-      key: isSet(object.key) ? String(object.key) : "",
-      value: isSet(object?.value) ? object.value : undefined,
-    };
+    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object?.value) ? object.value : undefined };
   },
 
   toJSON(message: LookupCriteria): unknown {
@@ -746,15 +666,11 @@ export const LookupCriteria = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<LookupCriteria>, I>>(
-    base?: I
-  ): LookupCriteria {
+  create<I extends Exact<DeepPartial<LookupCriteria>, I>>(base?: I): LookupCriteria {
     return LookupCriteria.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<LookupCriteria>, I>>(
-    object: I
-  ): LookupCriteria {
+  fromPartial<I extends Exact<DeepPartial<LookupCriteria>, I>>(object: I): LookupCriteria {
     const message = createBaseLookupCriteria();
     message.key = object.key ?? "";
     message.value = object.value ?? undefined;
@@ -767,15 +683,9 @@ function createBaseGoogleProtobufTypesPlaceholder(): GoogleProtobufTypesPlacehol
 }
 
 export const GoogleProtobufTypesPlaceholder = {
-  encode(
-    message: GoogleProtobufTypesPlaceholder,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: GoogleProtobufTypesPlaceholder, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.timestamp !== undefined) {
-      Timestamp.encode(
-        toTimestamp(message.timestamp),
-        writer.uint32(10).fork()
-      ).ldelim();
+      Timestamp.encode(toTimestamp(message.timestamp), writer.uint32(10).fork()).ldelim();
     }
     if (message.empty !== undefined) {
       Empty.encode(message.empty, writer.uint32(18).fork()).ldelim();
@@ -783,10 +693,7 @@ export const GoogleProtobufTypesPlaceholder = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): GoogleProtobufTypesPlaceholder {
+  decode(input: _m0.Reader | Uint8Array, length?: number): GoogleProtobufTypesPlaceholder {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGoogleProtobufTypesPlaceholder();
@@ -794,9 +701,7 @@ export const GoogleProtobufTypesPlaceholder = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.timestamp = fromTimestamp(
-            Timestamp.decode(reader, reader.uint32())
-          );
+          message.timestamp = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
           break;
         case 2:
           message.empty = Empty.decode(reader, reader.uint32());
@@ -819,26 +724,20 @@ export const GoogleProtobufTypesPlaceholder = {
   toJSON(message: GoogleProtobufTypesPlaceholder): unknown {
     const obj: any = {};
     message.timestamp !== undefined && (obj.timestamp = message.timestamp);
-    message.empty !== undefined &&
-      (obj.empty = message.empty ? Empty.toJSON(message.empty) : undefined);
+    message.empty !== undefined && (obj.empty = message.empty ? Empty.toJSON(message.empty) : undefined);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<GoogleProtobufTypesPlaceholder>, I>>(
-    base?: I
-  ): GoogleProtobufTypesPlaceholder {
+  create<I extends Exact<DeepPartial<GoogleProtobufTypesPlaceholder>, I>>(base?: I): GoogleProtobufTypesPlaceholder {
     return GoogleProtobufTypesPlaceholder.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<GoogleProtobufTypesPlaceholder>, I>>(
-    object: I
+    object: I,
   ): GoogleProtobufTypesPlaceholder {
     const message = createBaseGoogleProtobufTypesPlaceholder();
     message.timestamp = object.timestamp ?? undefined;
-    message.empty =
-      object.empty !== undefined && object.empty !== null
-        ? Empty.fromPartial(object.empty)
-        : undefined;
+    message.empty = (object.empty !== undefined && object.empty !== null) ? Empty.fromPartial(object.empty) : undefined;
     return message;
   },
 };
@@ -862,35 +761,17 @@ var tsProtoGlobalThis: any = (() => {
   throw "Unable to locate global object";
 })();
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
-    }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
-      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
-    };
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function toTimestamp(dateStr: string): Timestamp {
   const date = new Date(dateStr);
@@ -907,9 +788,7 @@ function fromTimestamp(t: Timestamp): string {
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

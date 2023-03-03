@@ -17,10 +17,7 @@ function createBaseSyncInput(): SyncInput {
 }
 
 export const SyncInput = {
-  encode(
-    message: SyncInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: SyncInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.projectId !== 0) {
       writer.uint32(8).int32(message.projectId);
     }
@@ -62,12 +59,9 @@ export const SyncInput = {
 
   toJSON(message: SyncInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
+    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
     if (message.updatedTables) {
-      obj.updatedTables = message.updatedTables.map((e) =>
-        e ? Table.toJSON(e) : undefined
-      );
+      obj.updatedTables = message.updatedTables.map((e) => e ? Table.toJSON(e) : undefined);
     } else {
       obj.updatedTables = [];
     }
@@ -78,13 +72,10 @@ export const SyncInput = {
     return SyncInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<SyncInput>, I>>(
-    object: I
-  ): SyncInput {
+  fromPartial<I extends Exact<DeepPartial<SyncInput>, I>>(object: I): SyncInput {
     const message = createBaseSyncInput();
     message.projectId = object.projectId ?? 0;
-    message.updatedTables =
-      object.updatedTables?.map((e) => Table.fromPartial(e)) || [];
+    message.updatedTables = object.updatedTables?.map((e) => Table.fromPartial(e)) || [];
     return message;
   },
 };
@@ -135,9 +126,7 @@ export const Table = {
     return {
       table: isSet(object.table) ? String(object.table) : "",
       primaryKey: isSet(object.primaryKey) ? String(object.primaryKey) : "",
-      value: Array.isArray(object?.value)
-        ? object.value.map((e: any) => String(e))
-        : [],
+      value: Array.isArray(object?.value) ? object.value.map((e: any) => String(e)) : [],
     };
   },
 
@@ -166,35 +155,17 @@ export const Table = {
   },
 };
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
-    }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
-      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
-    };
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

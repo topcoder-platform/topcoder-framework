@@ -27,10 +27,7 @@ function createBaseLegacyChallengePaymentAdjustment(): LegacyChallengePaymentAdj
 }
 
 export const LegacyChallengePaymentAdjustment = {
-  encode(
-    message: LegacyChallengePaymentAdjustment,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: LegacyChallengePaymentAdjustment, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.projectId !== 0) {
       writer.uint32(8).int32(message.projectId);
     }
@@ -58,10 +55,7 @@ export const LegacyChallengePaymentAdjustment = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): LegacyChallengePaymentAdjustment {
+  decode(input: _m0.Reader | Uint8Array, length?: number): LegacyChallengePaymentAdjustment {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseLegacyChallengePaymentAdjustment();
@@ -103,9 +97,7 @@ export const LegacyChallengePaymentAdjustment = {
   fromJSON(object: any): LegacyChallengePaymentAdjustment {
     return {
       projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      resourceRoleId: isSet(object.resourceRoleId)
-        ? Number(object.resourceRoleId)
-        : 0,
+      resourceRoleId: isSet(object.resourceRoleId) ? Number(object.resourceRoleId) : 0,
       multiplier: isSet(object.multiplier) ? Number(object.multiplier) : 0,
       fixedAmount: isSet(object.fixedAmount) ? Number(object.fixedAmount) : 0,
       createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
@@ -117,34 +109,26 @@ export const LegacyChallengePaymentAdjustment = {
 
   toJSON(message: LegacyChallengePaymentAdjustment): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.resourceRoleId !== undefined &&
-      (obj.resourceRoleId = Math.round(message.resourceRoleId));
-    message.multiplier !== undefined &&
-      (obj.multiplier = Math.round(message.multiplier));
-    message.fixedAmount !== undefined &&
-      (obj.fixedAmount = message.fixedAmount);
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
+    message.resourceRoleId !== undefined && (obj.resourceRoleId = Math.round(message.resourceRoleId));
+    message.multiplier !== undefined && (obj.multiplier = Math.round(message.multiplier));
+    message.fixedAmount !== undefined && (obj.fixedAmount = message.fixedAmount);
+    message.createUser !== undefined && (obj.createUser = Math.round(message.createUser));
+    message.createDate !== undefined && (obj.createDate = Math.round(message.createDate));
+    message.modifyUser !== undefined && (obj.modifyUser = Math.round(message.modifyUser));
+    message.modifyDate !== undefined && (obj.modifyDate = Math.round(message.modifyDate));
     return obj;
   },
 
   create<I extends Exact<DeepPartial<LegacyChallengePaymentAdjustment>, I>>(
-    base?: I
+    base?: I,
   ): LegacyChallengePaymentAdjustment {
     return LegacyChallengePaymentAdjustment.fromPartial(base ?? {});
   },
 
-  fromPartial<
-    I extends Exact<DeepPartial<LegacyChallengePaymentAdjustment>, I>
-  >(object: I): LegacyChallengePaymentAdjustment {
+  fromPartial<I extends Exact<DeepPartial<LegacyChallengePaymentAdjustment>, I>>(
+    object: I,
+  ): LegacyChallengePaymentAdjustment {
     const message = createBaseLegacyChallengePaymentAdjustment();
     message.projectId = object.projectId ?? 0;
     message.resourceRoleId = object.resourceRoleId ?? 0;
@@ -177,41 +161,21 @@ var tsProtoGlobalThis: any = (() => {
   throw "Unable to locate global object";
 })();
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
-    }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
-      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
-    };
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

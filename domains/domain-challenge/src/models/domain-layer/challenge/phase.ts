@@ -35,13 +35,7 @@ export interface UpdatePhaseInput_UpdateInput {
 }
 
 function createBasePhase(): Phase {
-  return {
-    id: "",
-    name: "",
-    description: undefined,
-    isOpen: false,
-    duration: 0,
-  };
+  return { id: "", name: "", description: undefined, isOpen: false, duration: 0 };
 }
 
 export const Phase = {
@@ -98,9 +92,7 @@ export const Phase = {
     return {
       id: isSet(object.id) ? String(object.id) : "",
       name: isSet(object.name) ? String(object.name) : "",
-      description: isSet(object.description)
-        ? String(object.description)
-        : undefined,
+      description: isSet(object.description) ? String(object.description) : undefined,
       isOpen: isSet(object.isOpen) ? Boolean(object.isOpen) : false,
       duration: isSet(object.duration) ? Number(object.duration) : 0,
     };
@@ -110,11 +102,9 @@ export const Phase = {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined &&
-      (obj.description = message.description);
+    message.description !== undefined && (obj.description = message.description);
     message.isOpen !== undefined && (obj.isOpen = message.isOpen);
-    message.duration !== undefined &&
-      (obj.duration = Math.round(message.duration));
+    message.duration !== undefined && (obj.duration = Math.round(message.duration));
     return obj;
   },
 
@@ -138,10 +128,7 @@ function createBasePhaseList(): PhaseList {
 }
 
 export const PhaseList = {
-  encode(
-    message: PhaseList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: PhaseList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.items) {
       Phase.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -167,17 +154,13 @@ export const PhaseList = {
   },
 
   fromJSON(object: any): PhaseList {
-    return {
-      items: Array.isArray(object?.items)
-        ? object.items.map((e: any) => Phase.fromJSON(e))
-        : [],
-    };
+    return { items: Array.isArray(object?.items) ? object.items.map((e: any) => Phase.fromJSON(e)) : [] };
   },
 
   toJSON(message: PhaseList): unknown {
     const obj: any = {};
     if (message.items) {
-      obj.items = message.items.map((e) => (e ? Phase.toJSON(e) : undefined));
+      obj.items = message.items.map((e) => e ? Phase.toJSON(e) : undefined);
     } else {
       obj.items = [];
     }
@@ -188,9 +171,7 @@ export const PhaseList = {
     return PhaseList.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<PhaseList>, I>>(
-    object: I
-  ): PhaseList {
+  fromPartial<I extends Exact<DeepPartial<PhaseList>, I>>(object: I): PhaseList {
     const message = createBasePhaseList();
     message.items = object.items?.map((e) => Phase.fromPartial(e)) || [];
     return message;
@@ -202,10 +183,7 @@ function createBaseCreatePhaseInput(): CreatePhaseInput {
 }
 
 export const CreatePhaseInput = {
-  encode(
-    message: CreatePhaseInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CreatePhaseInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -251,9 +229,7 @@ export const CreatePhaseInput = {
   fromJSON(object: any): CreatePhaseInput {
     return {
       name: isSet(object.name) ? String(object.name) : "",
-      description: isSet(object.description)
-        ? String(object.description)
-        : undefined,
+      description: isSet(object.description) ? String(object.description) : undefined,
       isOpen: isSet(object.isOpen) ? Boolean(object.isOpen) : false,
       duration: isSet(object.duration) ? Number(object.duration) : 0,
     };
@@ -262,23 +238,17 @@ export const CreatePhaseInput = {
   toJSON(message: CreatePhaseInput): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined &&
-      (obj.description = message.description);
+    message.description !== undefined && (obj.description = message.description);
     message.isOpen !== undefined && (obj.isOpen = message.isOpen);
-    message.duration !== undefined &&
-      (obj.duration = Math.round(message.duration));
+    message.duration !== undefined && (obj.duration = Math.round(message.duration));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreatePhaseInput>, I>>(
-    base?: I
-  ): CreatePhaseInput {
+  create<I extends Exact<DeepPartial<CreatePhaseInput>, I>>(base?: I): CreatePhaseInput {
     return CreatePhaseInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreatePhaseInput>, I>>(
-    object: I
-  ): CreatePhaseInput {
+  fromPartial<I extends Exact<DeepPartial<CreatePhaseInput>, I>>(object: I): CreatePhaseInput {
     const message = createBaseCreatePhaseInput();
     message.name = object.name ?? "";
     message.description = object.description ?? undefined;
@@ -293,18 +263,12 @@ function createBaseUpdatePhaseInput(): UpdatePhaseInput {
 }
 
 export const UpdatePhaseInput = {
-  encode(
-    message: UpdatePhaseInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: UpdatePhaseInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.filterCriteria) {
       ScanCriteria.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     if (message.updateInput !== undefined) {
-      UpdatePhaseInput_UpdateInput.encode(
-        message.updateInput,
-        writer.uint32(18).fork()
-      ).ldelim();
+      UpdatePhaseInput_UpdateInput.encode(message.updateInput, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -317,15 +281,10 @@ export const UpdatePhaseInput = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.filterCriteria.push(
-            ScanCriteria.decode(reader, reader.uint32())
-          );
+          message.filterCriteria.push(ScanCriteria.decode(reader, reader.uint32()));
           break;
         case 2:
-          message.updateInput = UpdatePhaseInput_UpdateInput.decode(
-            reader,
-            reader.uint32()
-          );
+          message.updateInput = UpdatePhaseInput_UpdateInput.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -340,44 +299,32 @@ export const UpdatePhaseInput = {
       filterCriteria: Array.isArray(object?.filterCriteria)
         ? object.filterCriteria.map((e: any) => ScanCriteria.fromJSON(e))
         : [],
-      updateInput: isSet(object.updateInput)
-        ? UpdatePhaseInput_UpdateInput.fromJSON(object.updateInput)
-        : undefined,
+      updateInput: isSet(object.updateInput) ? UpdatePhaseInput_UpdateInput.fromJSON(object.updateInput) : undefined,
     };
   },
 
   toJSON(message: UpdatePhaseInput): unknown {
     const obj: any = {};
     if (message.filterCriteria) {
-      obj.filterCriteria = message.filterCriteria.map((e) =>
-        e ? ScanCriteria.toJSON(e) : undefined
-      );
+      obj.filterCriteria = message.filterCriteria.map((e) => e ? ScanCriteria.toJSON(e) : undefined);
     } else {
       obj.filterCriteria = [];
     }
     message.updateInput !== undefined &&
-      (obj.updateInput = message.updateInput
-        ? UpdatePhaseInput_UpdateInput.toJSON(message.updateInput)
-        : undefined);
+      (obj.updateInput = message.updateInput ? UpdatePhaseInput_UpdateInput.toJSON(message.updateInput) : undefined);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdatePhaseInput>, I>>(
-    base?: I
-  ): UpdatePhaseInput {
+  create<I extends Exact<DeepPartial<UpdatePhaseInput>, I>>(base?: I): UpdatePhaseInput {
     return UpdatePhaseInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdatePhaseInput>, I>>(
-    object: I
-  ): UpdatePhaseInput {
+  fromPartial<I extends Exact<DeepPartial<UpdatePhaseInput>, I>>(object: I): UpdatePhaseInput {
     const message = createBaseUpdatePhaseInput();
-    message.filterCriteria =
-      object.filterCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
-    message.updateInput =
-      object.updateInput !== undefined && object.updateInput !== null
-        ? UpdatePhaseInput_UpdateInput.fromPartial(object.updateInput)
-        : undefined;
+    message.filterCriteria = object.filterCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
+    message.updateInput = (object.updateInput !== undefined && object.updateInput !== null)
+      ? UpdatePhaseInput_UpdateInput.fromPartial(object.updateInput)
+      : undefined;
     return message;
   },
 };
@@ -387,10 +334,7 @@ function createBaseUpdatePhaseInput_UpdateInput(): UpdatePhaseInput_UpdateInput 
 }
 
 export const UpdatePhaseInput_UpdateInput = {
-  encode(
-    message: UpdatePhaseInput_UpdateInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: UpdatePhaseInput_UpdateInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.name !== "") {
       writer.uint32(18).string(message.name);
     }
@@ -406,10 +350,7 @@ export const UpdatePhaseInput_UpdateInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdatePhaseInput_UpdateInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdatePhaseInput_UpdateInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdatePhaseInput_UpdateInput();
@@ -439,9 +380,7 @@ export const UpdatePhaseInput_UpdateInput = {
   fromJSON(object: any): UpdatePhaseInput_UpdateInput {
     return {
       name: isSet(object.name) ? String(object.name) : "",
-      description: isSet(object.description)
-        ? String(object.description)
-        : undefined,
+      description: isSet(object.description) ? String(object.description) : undefined,
       isOpen: isSet(object.isOpen) ? Boolean(object.isOpen) : false,
       duration: isSet(object.duration) ? Number(object.duration) : 0,
     };
@@ -450,23 +389,17 @@ export const UpdatePhaseInput_UpdateInput = {
   toJSON(message: UpdatePhaseInput_UpdateInput): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined &&
-      (obj.description = message.description);
+    message.description !== undefined && (obj.description = message.description);
     message.isOpen !== undefined && (obj.isOpen = message.isOpen);
-    message.duration !== undefined &&
-      (obj.duration = Math.round(message.duration));
+    message.duration !== undefined && (obj.duration = Math.round(message.duration));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdatePhaseInput_UpdateInput>, I>>(
-    base?: I
-  ): UpdatePhaseInput_UpdateInput {
+  create<I extends Exact<DeepPartial<UpdatePhaseInput_UpdateInput>, I>>(base?: I): UpdatePhaseInput_UpdateInput {
     return UpdatePhaseInput_UpdateInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdatePhaseInput_UpdateInput>, I>>(
-    object: I
-  ): UpdatePhaseInput_UpdateInput {
+  fromPartial<I extends Exact<DeepPartial<UpdatePhaseInput_UpdateInput>, I>>(object: I): UpdatePhaseInput_UpdateInput {
     const message = createBaseUpdatePhaseInput_UpdateInput();
     message.name = object.name ?? "";
     message.description = object.description ?? undefined;
@@ -495,41 +428,21 @@ var tsProtoGlobalThis: any = (() => {
   throw "Unable to locate global object";
 })();
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
-    }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
-      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
-    };
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

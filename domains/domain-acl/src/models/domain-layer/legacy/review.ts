@@ -197,10 +197,7 @@ function createBaseReview(): Review {
 }
 
 export const Review = {
-  encode(
-    message: Review,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Review, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.reviewId !== 0) {
       writer.uint32(8).int32(message.reviewId);
     }
@@ -295,18 +292,12 @@ export const Review = {
     return {
       reviewId: isSet(object.reviewId) ? Number(object.reviewId) : 0,
       resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
-      submissionId: isSet(object.submissionId)
-        ? Number(object.submissionId)
-        : 0,
-      projectPhaseId: isSet(object.projectPhaseId)
-        ? Number(object.projectPhaseId)
-        : 0,
+      submissionId: isSet(object.submissionId) ? Number(object.submissionId) : 0,
+      projectPhaseId: isSet(object.projectPhaseId) ? Number(object.projectPhaseId) : 0,
       scorecardId: isSet(object.scorecardId) ? Number(object.scorecardId) : 0,
       committed: isSet(object.committed) ? Number(object.committed) : 0,
       score: isSet(object.score) ? Number(object.score) : 0,
-      initialScore: isSet(object.initialScore)
-        ? Number(object.initialScore)
-        : 0,
+      initialScore: isSet(object.initialScore) ? Number(object.initialScore) : 0,
       createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
       createDate: isSet(object.createDate) ? Number(object.createDate) : 0,
       modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : 0,
@@ -316,29 +307,18 @@ export const Review = {
 
   toJSON(message: Review): unknown {
     const obj: any = {};
-    message.reviewId !== undefined &&
-      (obj.reviewId = Math.round(message.reviewId));
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.submissionId !== undefined &&
-      (obj.submissionId = Math.round(message.submissionId));
-    message.projectPhaseId !== undefined &&
-      (obj.projectPhaseId = Math.round(message.projectPhaseId));
-    message.scorecardId !== undefined &&
-      (obj.scorecardId = Math.round(message.scorecardId));
-    message.committed !== undefined &&
-      (obj.committed = Math.round(message.committed));
+    message.reviewId !== undefined && (obj.reviewId = Math.round(message.reviewId));
+    message.resourceId !== undefined && (obj.resourceId = Math.round(message.resourceId));
+    message.submissionId !== undefined && (obj.submissionId = Math.round(message.submissionId));
+    message.projectPhaseId !== undefined && (obj.projectPhaseId = Math.round(message.projectPhaseId));
+    message.scorecardId !== undefined && (obj.scorecardId = Math.round(message.scorecardId));
+    message.committed !== undefined && (obj.committed = Math.round(message.committed));
     message.score !== undefined && (obj.score = message.score);
-    message.initialScore !== undefined &&
-      (obj.initialScore = message.initialScore);
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    message.initialScore !== undefined && (obj.initialScore = message.initialScore);
+    message.createUser !== undefined && (obj.createUser = Math.round(message.createUser));
+    message.createDate !== undefined && (obj.createDate = Math.round(message.createDate));
+    message.modifyUser !== undefined && (obj.modifyUser = Math.round(message.modifyUser));
+    message.modifyDate !== undefined && (obj.modifyDate = Math.round(message.modifyDate));
     return obj;
   },
 
@@ -369,10 +349,7 @@ function createBaseReviewList(): ReviewList {
 }
 
 export const ReviewList = {
-  encode(
-    message: ReviewList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ReviewList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.items) {
       Review.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -398,17 +375,13 @@ export const ReviewList = {
   },
 
   fromJSON(object: any): ReviewList {
-    return {
-      items: Array.isArray(object?.items)
-        ? object.items.map((e: any) => Review.fromJSON(e))
-        : [],
-    };
+    return { items: Array.isArray(object?.items) ? object.items.map((e: any) => Review.fromJSON(e)) : [] };
   },
 
   toJSON(message: ReviewList): unknown {
     const obj: any = {};
     if (message.items) {
-      obj.items = message.items.map((e) => (e ? Review.toJSON(e) : undefined));
+      obj.items = message.items.map((e) => e ? Review.toJSON(e) : undefined);
     } else {
       obj.items = [];
     }
@@ -419,9 +392,7 @@ export const ReviewList = {
     return ReviewList.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ReviewList>, I>>(
-    object: I
-  ): ReviewList {
+  fromPartial<I extends Exact<DeepPartial<ReviewList>, I>>(object: I): ReviewList {
     const message = createBaseReviewList();
     message.items = object.items?.map((e) => Review.fromPartial(e)) || [];
     return message;
@@ -429,22 +400,11 @@ export const ReviewList = {
 };
 
 function createBaseCreateReviewInput(): CreateReviewInput {
-  return {
-    resourceId: 0,
-    submissionId: 0,
-    projectPhaseId: 0,
-    scorecardId: 0,
-    committed: 0,
-    score: 0,
-    initialScore: 0,
-  };
+  return { resourceId: 0, submissionId: 0, projectPhaseId: 0, scorecardId: 0, committed: 0, score: 0, initialScore: 0 };
 }
 
 export const CreateReviewInput = {
-  encode(
-    message: CreateReviewInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CreateReviewInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.resourceId !== 0) {
       writer.uint32(16).int32(message.resourceId);
     }
@@ -508,48 +468,32 @@ export const CreateReviewInput = {
   fromJSON(object: any): CreateReviewInput {
     return {
       resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
-      submissionId: isSet(object.submissionId)
-        ? Number(object.submissionId)
-        : 0,
-      projectPhaseId: isSet(object.projectPhaseId)
-        ? Number(object.projectPhaseId)
-        : 0,
+      submissionId: isSet(object.submissionId) ? Number(object.submissionId) : 0,
+      projectPhaseId: isSet(object.projectPhaseId) ? Number(object.projectPhaseId) : 0,
       scorecardId: isSet(object.scorecardId) ? Number(object.scorecardId) : 0,
       committed: isSet(object.committed) ? Number(object.committed) : 0,
       score: isSet(object.score) ? Number(object.score) : 0,
-      initialScore: isSet(object.initialScore)
-        ? Number(object.initialScore)
-        : 0,
+      initialScore: isSet(object.initialScore) ? Number(object.initialScore) : 0,
     };
   },
 
   toJSON(message: CreateReviewInput): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.submissionId !== undefined &&
-      (obj.submissionId = Math.round(message.submissionId));
-    message.projectPhaseId !== undefined &&
-      (obj.projectPhaseId = Math.round(message.projectPhaseId));
-    message.scorecardId !== undefined &&
-      (obj.scorecardId = Math.round(message.scorecardId));
-    message.committed !== undefined &&
-      (obj.committed = Math.round(message.committed));
+    message.resourceId !== undefined && (obj.resourceId = Math.round(message.resourceId));
+    message.submissionId !== undefined && (obj.submissionId = Math.round(message.submissionId));
+    message.projectPhaseId !== undefined && (obj.projectPhaseId = Math.round(message.projectPhaseId));
+    message.scorecardId !== undefined && (obj.scorecardId = Math.round(message.scorecardId));
+    message.committed !== undefined && (obj.committed = Math.round(message.committed));
     message.score !== undefined && (obj.score = message.score);
-    message.initialScore !== undefined &&
-      (obj.initialScore = message.initialScore);
+    message.initialScore !== undefined && (obj.initialScore = message.initialScore);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateReviewInput>, I>>(
-    base?: I
-  ): CreateReviewInput {
+  create<I extends Exact<DeepPartial<CreateReviewInput>, I>>(base?: I): CreateReviewInput {
     return CreateReviewInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateReviewInput>, I>>(
-    object: I
-  ): CreateReviewInput {
+  fromPartial<I extends Exact<DeepPartial<CreateReviewInput>, I>>(object: I): CreateReviewInput {
     const message = createBaseCreateReviewInput();
     message.resourceId = object.resourceId ?? 0;
     message.submissionId = object.submissionId ?? 0;
@@ -578,10 +522,7 @@ function createBaseReviewItem(): ReviewItem {
 }
 
 export const ReviewItem = {
-  encode(
-    message: ReviewItem,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ReviewItem, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.reviewItemId !== 0) {
       writer.uint32(8).int32(message.reviewItemId);
     }
@@ -662,51 +603,31 @@ export const ReviewItem = {
 
   fromJSON(object: any): ReviewItem {
     return {
-      reviewItemId: isSet(object.reviewItemId)
-        ? Number(object.reviewItemId)
-        : 0,
+      reviewItemId: isSet(object.reviewItemId) ? Number(object.reviewItemId) : 0,
       reviewId: isSet(object.reviewId) ? Number(object.reviewId) : 0,
-      scorecardQuestionId: isSet(object.scorecardQuestionId)
-        ? Number(object.scorecardQuestionId)
-        : 0,
+      scorecardQuestionId: isSet(object.scorecardQuestionId) ? Number(object.scorecardQuestionId) : 0,
       uploadId: isSet(object.uploadId) ? Number(object.uploadId) : undefined,
       answer: isSet(object.answer) ? String(object.answer) : "",
       sort: isSet(object.sort) ? Number(object.sort) : 0,
-      createUser: isSet(object.createUser)
-        ? Number(object.createUser)
-        : undefined,
-      createDate: isSet(object.createDate)
-        ? Number(object.createDate)
-        : undefined,
-      modifyUser: isSet(object.modifyUser)
-        ? Number(object.modifyUser)
-        : undefined,
-      modifyDate: isSet(object.modifyDate)
-        ? Number(object.modifyDate)
-        : undefined,
+      createUser: isSet(object.createUser) ? Number(object.createUser) : undefined,
+      createDate: isSet(object.createDate) ? Number(object.createDate) : undefined,
+      modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : undefined,
+      modifyDate: isSet(object.modifyDate) ? Number(object.modifyDate) : undefined,
     };
   },
 
   toJSON(message: ReviewItem): unknown {
     const obj: any = {};
-    message.reviewItemId !== undefined &&
-      (obj.reviewItemId = Math.round(message.reviewItemId));
-    message.reviewId !== undefined &&
-      (obj.reviewId = Math.round(message.reviewId));
-    message.scorecardQuestionId !== undefined &&
-      (obj.scorecardQuestionId = Math.round(message.scorecardQuestionId));
-    message.uploadId !== undefined &&
-      (obj.uploadId = Math.round(message.uploadId));
+    message.reviewItemId !== undefined && (obj.reviewItemId = Math.round(message.reviewItemId));
+    message.reviewId !== undefined && (obj.reviewId = Math.round(message.reviewId));
+    message.scorecardQuestionId !== undefined && (obj.scorecardQuestionId = Math.round(message.scorecardQuestionId));
+    message.uploadId !== undefined && (obj.uploadId = Math.round(message.uploadId));
     message.answer !== undefined && (obj.answer = message.answer);
     message.sort !== undefined && (obj.sort = Math.round(message.sort));
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    message.createUser !== undefined && (obj.createUser = Math.round(message.createUser));
+    message.createDate !== undefined && (obj.createDate = Math.round(message.createDate));
+    message.modifyUser !== undefined && (obj.modifyUser = Math.round(message.modifyUser));
+    message.modifyDate !== undefined && (obj.modifyDate = Math.round(message.modifyDate));
     return obj;
   },
 
@@ -714,9 +635,7 @@ export const ReviewItem = {
     return ReviewItem.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ReviewItem>, I>>(
-    object: I
-  ): ReviewItem {
+  fromPartial<I extends Exact<DeepPartial<ReviewItem>, I>>(object: I): ReviewItem {
     const message = createBaseReviewItem();
     message.reviewItemId = object.reviewItemId ?? 0;
     message.reviewId = object.reviewId ?? 0;
@@ -733,20 +652,11 @@ export const ReviewItem = {
 };
 
 function createBaseCreateReviewItemInput(): CreateReviewItemInput {
-  return {
-    reviewId: 0,
-    scorecardQuestionId: 0,
-    uploadId: undefined,
-    answer: "",
-    sort: 0,
-  };
+  return { reviewId: 0, scorecardQuestionId: 0, uploadId: undefined, answer: "", sort: 0 };
 }
 
 export const CreateReviewItemInput = {
-  encode(
-    message: CreateReviewItemInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CreateReviewItemInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.reviewId !== 0) {
       writer.uint32(16).int32(message.reviewId);
     }
@@ -765,10 +675,7 @@ export const CreateReviewItemInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): CreateReviewItemInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CreateReviewItemInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateReviewItemInput();
@@ -801,9 +708,7 @@ export const CreateReviewItemInput = {
   fromJSON(object: any): CreateReviewItemInput {
     return {
       reviewId: isSet(object.reviewId) ? Number(object.reviewId) : 0,
-      scorecardQuestionId: isSet(object.scorecardQuestionId)
-        ? Number(object.scorecardQuestionId)
-        : 0,
+      scorecardQuestionId: isSet(object.scorecardQuestionId) ? Number(object.scorecardQuestionId) : 0,
       uploadId: isSet(object.uploadId) ? Number(object.uploadId) : undefined,
       answer: isSet(object.answer) ? String(object.answer) : "",
       sort: isSet(object.sort) ? Number(object.sort) : 0,
@@ -812,26 +717,19 @@ export const CreateReviewItemInput = {
 
   toJSON(message: CreateReviewItemInput): unknown {
     const obj: any = {};
-    message.reviewId !== undefined &&
-      (obj.reviewId = Math.round(message.reviewId));
-    message.scorecardQuestionId !== undefined &&
-      (obj.scorecardQuestionId = Math.round(message.scorecardQuestionId));
-    message.uploadId !== undefined &&
-      (obj.uploadId = Math.round(message.uploadId));
+    message.reviewId !== undefined && (obj.reviewId = Math.round(message.reviewId));
+    message.scorecardQuestionId !== undefined && (obj.scorecardQuestionId = Math.round(message.scorecardQuestionId));
+    message.uploadId !== undefined && (obj.uploadId = Math.round(message.uploadId));
     message.answer !== undefined && (obj.answer = message.answer);
     message.sort !== undefined && (obj.sort = Math.round(message.sort));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateReviewItemInput>, I>>(
-    base?: I
-  ): CreateReviewItemInput {
+  create<I extends Exact<DeepPartial<CreateReviewItemInput>, I>>(base?: I): CreateReviewItemInput {
     return CreateReviewItemInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateReviewItemInput>, I>>(
-    object: I
-  ): CreateReviewItemInput {
+  fromPartial<I extends Exact<DeepPartial<CreateReviewItemInput>, I>>(object: I): CreateReviewItemInput {
     const message = createBaseCreateReviewItemInput();
     message.reviewId = object.reviewId ?? 0;
     message.scorecardQuestionId = object.scorecardQuestionId ?? 0;
@@ -856,10 +754,7 @@ function createBaseSubmission(): Submission {
 }
 
 export const Submission = {
-  encode(
-    message: Submission,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Submission, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.submissionId !== 0) {
       writer.uint32(8).int32(message.submissionId);
     }
@@ -928,45 +823,27 @@ export const Submission = {
 
   fromJSON(object: any): Submission {
     return {
-      submissionId: isSet(object.submissionId)
-        ? Number(object.submissionId)
-        : 0,
+      submissionId: isSet(object.submissionId) ? Number(object.submissionId) : 0,
       uploadId: isSet(object.uploadId) ? Number(object.uploadId) : 0,
-      initialScore: isSet(object.initialScore)
-        ? Number(object.initialScore)
-        : undefined,
-      finalScore: isSet(object.finalScore)
-        ? Number(object.finalScore)
-        : undefined,
+      initialScore: isSet(object.initialScore) ? Number(object.initialScore) : undefined,
+      finalScore: isSet(object.finalScore) ? Number(object.finalScore) : undefined,
       placement: isSet(object.placement) ? Number(object.placement) : undefined,
       prizeId: isSet(object.prizeId) ? Number(object.prizeId) : undefined,
-      submissionStatusId: isSet(object.submissionStatusId)
-        ? Number(object.submissionStatusId)
-        : 0,
-      submissionTypeId: isSet(object.submissionTypeId)
-        ? Number(object.submissionTypeId)
-        : 0,
+      submissionStatusId: isSet(object.submissionStatusId) ? Number(object.submissionStatusId) : 0,
+      submissionTypeId: isSet(object.submissionTypeId) ? Number(object.submissionTypeId) : 0,
     };
   },
 
   toJSON(message: Submission): unknown {
     const obj: any = {};
-    message.submissionId !== undefined &&
-      (obj.submissionId = Math.round(message.submissionId));
-    message.uploadId !== undefined &&
-      (obj.uploadId = Math.round(message.uploadId));
-    message.initialScore !== undefined &&
-      (obj.initialScore = Math.round(message.initialScore));
-    message.finalScore !== undefined &&
-      (obj.finalScore = Math.round(message.finalScore));
-    message.placement !== undefined &&
-      (obj.placement = Math.round(message.placement));
-    message.prizeId !== undefined &&
-      (obj.prizeId = Math.round(message.prizeId));
-    message.submissionStatusId !== undefined &&
-      (obj.submissionStatusId = Math.round(message.submissionStatusId));
-    message.submissionTypeId !== undefined &&
-      (obj.submissionTypeId = Math.round(message.submissionTypeId));
+    message.submissionId !== undefined && (obj.submissionId = Math.round(message.submissionId));
+    message.uploadId !== undefined && (obj.uploadId = Math.round(message.uploadId));
+    message.initialScore !== undefined && (obj.initialScore = Math.round(message.initialScore));
+    message.finalScore !== undefined && (obj.finalScore = Math.round(message.finalScore));
+    message.placement !== undefined && (obj.placement = Math.round(message.placement));
+    message.prizeId !== undefined && (obj.prizeId = Math.round(message.prizeId));
+    message.submissionStatusId !== undefined && (obj.submissionStatusId = Math.round(message.submissionStatusId));
+    message.submissionTypeId !== undefined && (obj.submissionTypeId = Math.round(message.submissionTypeId));
     return obj;
   },
 
@@ -974,9 +851,7 @@ export const Submission = {
     return Submission.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<Submission>, I>>(
-    object: I
-  ): Submission {
+  fromPartial<I extends Exact<DeepPartial<Submission>, I>>(object: I): Submission {
     const message = createBaseSubmission();
     message.submissionId = object.submissionId ?? 0;
     message.uploadId = object.uploadId ?? 0;
@@ -991,19 +866,11 @@ export const Submission = {
 };
 
 function createBaseGetSubmissionInput(): GetSubmissionInput {
-  return {
-    projectId: 0,
-    submissionStatusId: undefined,
-    uploadStatusId: undefined,
-    resourceId: 0,
-  };
+  return { projectId: 0, submissionStatusId: undefined, uploadStatusId: undefined, resourceId: 0 };
 }
 
 export const GetSubmissionInput = {
-  encode(
-    message: GetSubmissionInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: GetSubmissionInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.projectId !== 0) {
       writer.uint32(8).int32(message.projectId);
     }
@@ -1049,38 +916,26 @@ export const GetSubmissionInput = {
   fromJSON(object: any): GetSubmissionInput {
     return {
       projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      submissionStatusId: isSet(object.submissionStatusId)
-        ? Number(object.submissionStatusId)
-        : undefined,
-      uploadStatusId: isSet(object.uploadStatusId)
-        ? Number(object.uploadStatusId)
-        : undefined,
+      submissionStatusId: isSet(object.submissionStatusId) ? Number(object.submissionStatusId) : undefined,
+      uploadStatusId: isSet(object.uploadStatusId) ? Number(object.uploadStatusId) : undefined,
       resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
     };
   },
 
   toJSON(message: GetSubmissionInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.submissionStatusId !== undefined &&
-      (obj.submissionStatusId = Math.round(message.submissionStatusId));
-    message.uploadStatusId !== undefined &&
-      (obj.uploadStatusId = Math.round(message.uploadStatusId));
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
+    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
+    message.submissionStatusId !== undefined && (obj.submissionStatusId = Math.round(message.submissionStatusId));
+    message.uploadStatusId !== undefined && (obj.uploadStatusId = Math.round(message.uploadStatusId));
+    message.resourceId !== undefined && (obj.resourceId = Math.round(message.resourceId));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<GetSubmissionInput>, I>>(
-    base?: I
-  ): GetSubmissionInput {
+  create<I extends Exact<DeepPartial<GetSubmissionInput>, I>>(base?: I): GetSubmissionInput {
     return GetSubmissionInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<GetSubmissionInput>, I>>(
-    object: I
-  ): GetSubmissionInput {
+  fromPartial<I extends Exact<DeepPartial<GetSubmissionInput>, I>>(object: I): GetSubmissionInput {
     const message = createBaseGetSubmissionInput();
     message.projectId = object.projectId ?? 0;
     message.submissionStatusId = object.submissionStatusId ?? undefined;
@@ -1103,10 +958,7 @@ function createBaseCreateSubmissionInput(): CreateSubmissionInput {
 }
 
 export const CreateSubmissionInput = {
-  encode(
-    message: CreateSubmissionInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CreateSubmissionInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.uploadId !== 0) {
       writer.uint32(8).int32(message.uploadId);
     }
@@ -1131,10 +983,7 @@ export const CreateSubmissionInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): CreateSubmissionInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CreateSubmissionInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateSubmissionInput();
@@ -1173,51 +1022,32 @@ export const CreateSubmissionInput = {
   fromJSON(object: any): CreateSubmissionInput {
     return {
       uploadId: isSet(object.uploadId) ? Number(object.uploadId) : 0,
-      initialScore: isSet(object.initialScore)
-        ? Number(object.initialScore)
-        : undefined,
-      finalScore: isSet(object.finalScore)
-        ? Number(object.finalScore)
-        : undefined,
+      initialScore: isSet(object.initialScore) ? Number(object.initialScore) : undefined,
+      finalScore: isSet(object.finalScore) ? Number(object.finalScore) : undefined,
       placement: isSet(object.placement) ? Number(object.placement) : undefined,
       prizeId: isSet(object.prizeId) ? Number(object.prizeId) : undefined,
-      submissionStatusId: isSet(object.submissionStatusId)
-        ? Number(object.submissionStatusId)
-        : 0,
-      submissionTypeId: isSet(object.submissionTypeId)
-        ? Number(object.submissionTypeId)
-        : 0,
+      submissionStatusId: isSet(object.submissionStatusId) ? Number(object.submissionStatusId) : 0,
+      submissionTypeId: isSet(object.submissionTypeId) ? Number(object.submissionTypeId) : 0,
     };
   },
 
   toJSON(message: CreateSubmissionInput): unknown {
     const obj: any = {};
-    message.uploadId !== undefined &&
-      (obj.uploadId = Math.round(message.uploadId));
-    message.initialScore !== undefined &&
-      (obj.initialScore = Math.round(message.initialScore));
-    message.finalScore !== undefined &&
-      (obj.finalScore = Math.round(message.finalScore));
-    message.placement !== undefined &&
-      (obj.placement = Math.round(message.placement));
-    message.prizeId !== undefined &&
-      (obj.prizeId = Math.round(message.prizeId));
-    message.submissionStatusId !== undefined &&
-      (obj.submissionStatusId = Math.round(message.submissionStatusId));
-    message.submissionTypeId !== undefined &&
-      (obj.submissionTypeId = Math.round(message.submissionTypeId));
+    message.uploadId !== undefined && (obj.uploadId = Math.round(message.uploadId));
+    message.initialScore !== undefined && (obj.initialScore = Math.round(message.initialScore));
+    message.finalScore !== undefined && (obj.finalScore = Math.round(message.finalScore));
+    message.placement !== undefined && (obj.placement = Math.round(message.placement));
+    message.prizeId !== undefined && (obj.prizeId = Math.round(message.prizeId));
+    message.submissionStatusId !== undefined && (obj.submissionStatusId = Math.round(message.submissionStatusId));
+    message.submissionTypeId !== undefined && (obj.submissionTypeId = Math.round(message.submissionTypeId));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateSubmissionInput>, I>>(
-    base?: I
-  ): CreateSubmissionInput {
+  create<I extends Exact<DeepPartial<CreateSubmissionInput>, I>>(base?: I): CreateSubmissionInput {
     return CreateSubmissionInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateSubmissionInput>, I>>(
-    object: I
-  ): CreateSubmissionInput {
+  fromPartial<I extends Exact<DeepPartial<CreateSubmissionInput>, I>>(object: I): CreateSubmissionInput {
     const message = createBaseCreateSubmissionInput();
     message.uploadId = object.uploadId ?? 0;
     message.initialScore = object.initialScore ?? undefined;
@@ -1231,20 +1061,11 @@ export const CreateSubmissionInput = {
 };
 
 function createBaseUpdateSubmissionInput(): UpdateSubmissionInput {
-  return {
-    submissionId: 0,
-    initialScore: undefined,
-    finalScore: undefined,
-    placement: undefined,
-    prizeId: undefined,
-  };
+  return { submissionId: 0, initialScore: undefined, finalScore: undefined, placement: undefined, prizeId: undefined };
 }
 
 export const UpdateSubmissionInput = {
-  encode(
-    message: UpdateSubmissionInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: UpdateSubmissionInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.submissionId !== 0) {
       writer.uint32(8).int32(message.submissionId);
     }
@@ -1263,10 +1084,7 @@ export const UpdateSubmissionInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateSubmissionInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateSubmissionInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateSubmissionInput();
@@ -1298,15 +1116,9 @@ export const UpdateSubmissionInput = {
 
   fromJSON(object: any): UpdateSubmissionInput {
     return {
-      submissionId: isSet(object.submissionId)
-        ? Number(object.submissionId)
-        : 0,
-      initialScore: isSet(object.initialScore)
-        ? Number(object.initialScore)
-        : undefined,
-      finalScore: isSet(object.finalScore)
-        ? Number(object.finalScore)
-        : undefined,
+      submissionId: isSet(object.submissionId) ? Number(object.submissionId) : 0,
+      initialScore: isSet(object.initialScore) ? Number(object.initialScore) : undefined,
+      finalScore: isSet(object.finalScore) ? Number(object.finalScore) : undefined,
       placement: isSet(object.placement) ? Number(object.placement) : undefined,
       prizeId: isSet(object.prizeId) ? Number(object.prizeId) : undefined,
     };
@@ -1314,28 +1126,19 @@ export const UpdateSubmissionInput = {
 
   toJSON(message: UpdateSubmissionInput): unknown {
     const obj: any = {};
-    message.submissionId !== undefined &&
-      (obj.submissionId = Math.round(message.submissionId));
-    message.initialScore !== undefined &&
-      (obj.initialScore = Math.round(message.initialScore));
-    message.finalScore !== undefined &&
-      (obj.finalScore = Math.round(message.finalScore));
-    message.placement !== undefined &&
-      (obj.placement = Math.round(message.placement));
-    message.prizeId !== undefined &&
-      (obj.prizeId = Math.round(message.prizeId));
+    message.submissionId !== undefined && (obj.submissionId = Math.round(message.submissionId));
+    message.initialScore !== undefined && (obj.initialScore = Math.round(message.initialScore));
+    message.finalScore !== undefined && (obj.finalScore = Math.round(message.finalScore));
+    message.placement !== undefined && (obj.placement = Math.round(message.placement));
+    message.prizeId !== undefined && (obj.prizeId = Math.round(message.prizeId));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdateSubmissionInput>, I>>(
-    base?: I
-  ): UpdateSubmissionInput {
+  create<I extends Exact<DeepPartial<UpdateSubmissionInput>, I>>(base?: I): UpdateSubmissionInput {
     return UpdateSubmissionInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdateSubmissionInput>, I>>(
-    object: I
-  ): UpdateSubmissionInput {
+  fromPartial<I extends Exact<DeepPartial<UpdateSubmissionInput>, I>>(object: I): UpdateSubmissionInput {
     const message = createBaseUpdateSubmissionInput();
     message.submissionId = object.submissionId ?? 0;
     message.initialScore = object.initialScore ?? undefined;
@@ -1347,20 +1150,11 @@ export const UpdateSubmissionInput = {
 };
 
 function createBaseUpload(): Upload {
-  return {
-    uploadId: 0,
-    projectId: 0,
-    uploadStatusId: 0,
-    resourceRoleId: 0,
-    resourceId: 0,
-  };
+  return { uploadId: 0, projectId: 0, uploadStatusId: 0, resourceRoleId: 0, resourceId: 0 };
 }
 
 export const Upload = {
-  encode(
-    message: Upload,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Upload, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.uploadId !== 0) {
       writer.uint32(8).int32(message.uploadId);
     }
@@ -1413,28 +1207,19 @@ export const Upload = {
     return {
       uploadId: isSet(object.uploadId) ? Number(object.uploadId) : 0,
       projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      uploadStatusId: isSet(object.uploadStatusId)
-        ? Number(object.uploadStatusId)
-        : 0,
-      resourceRoleId: isSet(object.resourceRoleId)
-        ? Number(object.resourceRoleId)
-        : 0,
+      uploadStatusId: isSet(object.uploadStatusId) ? Number(object.uploadStatusId) : 0,
+      resourceRoleId: isSet(object.resourceRoleId) ? Number(object.resourceRoleId) : 0,
       resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
     };
   },
 
   toJSON(message: Upload): unknown {
     const obj: any = {};
-    message.uploadId !== undefined &&
-      (obj.uploadId = Math.round(message.uploadId));
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.uploadStatusId !== undefined &&
-      (obj.uploadStatusId = Math.round(message.uploadStatusId));
-    message.resourceRoleId !== undefined &&
-      (obj.resourceRoleId = Math.round(message.resourceRoleId));
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
+    message.uploadId !== undefined && (obj.uploadId = Math.round(message.uploadId));
+    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
+    message.uploadStatusId !== undefined && (obj.uploadStatusId = Math.round(message.uploadStatusId));
+    message.resourceRoleId !== undefined && (obj.resourceRoleId = Math.round(message.resourceRoleId));
+    message.resourceId !== undefined && (obj.resourceId = Math.round(message.resourceId));
     return obj;
   },
 
@@ -1454,21 +1239,11 @@ export const Upload = {
 };
 
 function createBaseCreateUploadInput(): CreateUploadInput {
-  return {
-    projectId: 0,
-    uploadStatusId: 0,
-    resourceId: 0,
-    projectPhaseId: 0,
-    uploadTypeId: 0,
-    parameter: "",
-  };
+  return { projectId: 0, uploadStatusId: 0, resourceId: 0, projectPhaseId: 0, uploadTypeId: 0, parameter: "" };
 }
 
 export const CreateUploadInput = {
-  encode(
-    message: CreateUploadInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CreateUploadInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.projectId !== 0) {
       writer.uint32(16).int32(message.projectId);
     }
@@ -1526,45 +1301,30 @@ export const CreateUploadInput = {
   fromJSON(object: any): CreateUploadInput {
     return {
       projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      uploadStatusId: isSet(object.uploadStatusId)
-        ? Number(object.uploadStatusId)
-        : 0,
+      uploadStatusId: isSet(object.uploadStatusId) ? Number(object.uploadStatusId) : 0,
       resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
-      projectPhaseId: isSet(object.projectPhaseId)
-        ? Number(object.projectPhaseId)
-        : 0,
-      uploadTypeId: isSet(object.uploadTypeId)
-        ? Number(object.uploadTypeId)
-        : 0,
+      projectPhaseId: isSet(object.projectPhaseId) ? Number(object.projectPhaseId) : 0,
+      uploadTypeId: isSet(object.uploadTypeId) ? Number(object.uploadTypeId) : 0,
       parameter: isSet(object.parameter) ? String(object.parameter) : "",
     };
   },
 
   toJSON(message: CreateUploadInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.uploadStatusId !== undefined &&
-      (obj.uploadStatusId = Math.round(message.uploadStatusId));
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.projectPhaseId !== undefined &&
-      (obj.projectPhaseId = Math.round(message.projectPhaseId));
-    message.uploadTypeId !== undefined &&
-      (obj.uploadTypeId = Math.round(message.uploadTypeId));
+    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
+    message.uploadStatusId !== undefined && (obj.uploadStatusId = Math.round(message.uploadStatusId));
+    message.resourceId !== undefined && (obj.resourceId = Math.round(message.resourceId));
+    message.projectPhaseId !== undefined && (obj.projectPhaseId = Math.round(message.projectPhaseId));
+    message.uploadTypeId !== undefined && (obj.uploadTypeId = Math.round(message.uploadTypeId));
     message.parameter !== undefined && (obj.parameter = message.parameter);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateUploadInput>, I>>(
-    base?: I
-  ): CreateUploadInput {
+  create<I extends Exact<DeepPartial<CreateUploadInput>, I>>(base?: I): CreateUploadInput {
     return CreateUploadInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateUploadInput>, I>>(
-    object: I
-  ): CreateUploadInput {
+  fromPartial<I extends Exact<DeepPartial<CreateUploadInput>, I>>(object: I): CreateUploadInput {
     const message = createBaseCreateUploadInput();
     message.projectId = object.projectId ?? 0;
     message.uploadStatusId = object.uploadStatusId ?? 0;
@@ -1577,20 +1337,11 @@ export const CreateUploadInput = {
 };
 
 function createBaseReviewComment(): ReviewComment {
-  return {
-    reviewCommentId: 0,
-    resourceId: 0,
-    reviewId: 0,
-    commentTypeId: 0,
-    content: "",
-  };
+  return { reviewCommentId: 0, resourceId: 0, reviewId: 0, commentTypeId: 0, content: "" };
 }
 
 export const ReviewComment = {
-  encode(
-    message: ReviewComment,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ReviewComment, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.reviewCommentId !== 0) {
       writer.uint32(8).int32(message.reviewCommentId);
     }
@@ -1641,41 +1392,29 @@ export const ReviewComment = {
 
   fromJSON(object: any): ReviewComment {
     return {
-      reviewCommentId: isSet(object.reviewCommentId)
-        ? Number(object.reviewCommentId)
-        : 0,
+      reviewCommentId: isSet(object.reviewCommentId) ? Number(object.reviewCommentId) : 0,
       resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
       reviewId: isSet(object.reviewId) ? Number(object.reviewId) : 0,
-      commentTypeId: isSet(object.commentTypeId)
-        ? Number(object.commentTypeId)
-        : 0,
+      commentTypeId: isSet(object.commentTypeId) ? Number(object.commentTypeId) : 0,
       content: isSet(object.content) ? String(object.content) : "",
     };
   },
 
   toJSON(message: ReviewComment): unknown {
     const obj: any = {};
-    message.reviewCommentId !== undefined &&
-      (obj.reviewCommentId = Math.round(message.reviewCommentId));
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.reviewId !== undefined &&
-      (obj.reviewId = Math.round(message.reviewId));
-    message.commentTypeId !== undefined &&
-      (obj.commentTypeId = Math.round(message.commentTypeId));
+    message.reviewCommentId !== undefined && (obj.reviewCommentId = Math.round(message.reviewCommentId));
+    message.resourceId !== undefined && (obj.resourceId = Math.round(message.resourceId));
+    message.reviewId !== undefined && (obj.reviewId = Math.round(message.reviewId));
+    message.commentTypeId !== undefined && (obj.commentTypeId = Math.round(message.commentTypeId));
     message.content !== undefined && (obj.content = message.content);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ReviewComment>, I>>(
-    base?: I
-  ): ReviewComment {
+  create<I extends Exact<DeepPartial<ReviewComment>, I>>(base?: I): ReviewComment {
     return ReviewComment.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ReviewComment>, I>>(
-    object: I
-  ): ReviewComment {
+  fromPartial<I extends Exact<DeepPartial<ReviewComment>, I>>(object: I): ReviewComment {
     const message = createBaseReviewComment();
     message.reviewCommentId = object.reviewCommentId ?? 0;
     message.resourceId = object.resourceId ?? 0;
@@ -1691,10 +1430,7 @@ function createBaseCreateReviewComment(): CreateReviewComment {
 }
 
 export const CreateReviewComment = {
-  encode(
-    message: CreateReviewComment,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CreateReviewComment, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.resourceId !== 0) {
       writer.uint32(16).int32(message.resourceId);
     }
@@ -1741,34 +1477,25 @@ export const CreateReviewComment = {
     return {
       resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
       reviewId: isSet(object.reviewId) ? Number(object.reviewId) : 0,
-      commentTypeId: isSet(object.commentTypeId)
-        ? Number(object.commentTypeId)
-        : 0,
+      commentTypeId: isSet(object.commentTypeId) ? Number(object.commentTypeId) : 0,
       content: isSet(object.content) ? String(object.content) : "",
     };
   },
 
   toJSON(message: CreateReviewComment): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.reviewId !== undefined &&
-      (obj.reviewId = Math.round(message.reviewId));
-    message.commentTypeId !== undefined &&
-      (obj.commentTypeId = Math.round(message.commentTypeId));
+    message.resourceId !== undefined && (obj.resourceId = Math.round(message.resourceId));
+    message.reviewId !== undefined && (obj.reviewId = Math.round(message.reviewId));
+    message.commentTypeId !== undefined && (obj.commentTypeId = Math.round(message.commentTypeId));
     message.content !== undefined && (obj.content = message.content);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateReviewComment>, I>>(
-    base?: I
-  ): CreateReviewComment {
+  create<I extends Exact<DeepPartial<CreateReviewComment>, I>>(base?: I): CreateReviewComment {
     return CreateReviewComment.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateReviewComment>, I>>(
-    object: I
-  ): CreateReviewComment {
+  fromPartial<I extends Exact<DeepPartial<CreateReviewComment>, I>>(object: I): CreateReviewComment {
     const message = createBaseCreateReviewComment();
     message.resourceId = object.resourceId ?? 0;
     message.reviewId = object.reviewId ?? 0;
@@ -1779,21 +1506,11 @@ export const CreateReviewComment = {
 };
 
 function createBaseReviewItemComment(): ReviewItemComment {
-  return {
-    reviewItemCommentId: 0,
-    resourceId: 0,
-    reviewItemId: 0,
-    commentTypeId: 0,
-    content: "",
-    sort: 0,
-  };
+  return { reviewItemCommentId: 0, resourceId: 0, reviewItemId: 0, commentTypeId: 0, content: "", sort: 0 };
 }
 
 export const ReviewItemComment = {
-  encode(
-    message: ReviewItemComment,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ReviewItemComment, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.reviewItemCommentId !== 0) {
       writer.uint32(8).int32(message.reviewItemCommentId);
     }
@@ -1850,16 +1567,10 @@ export const ReviewItemComment = {
 
   fromJSON(object: any): ReviewItemComment {
     return {
-      reviewItemCommentId: isSet(object.reviewItemCommentId)
-        ? Number(object.reviewItemCommentId)
-        : 0,
+      reviewItemCommentId: isSet(object.reviewItemCommentId) ? Number(object.reviewItemCommentId) : 0,
       resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
-      reviewItemId: isSet(object.reviewItemId)
-        ? Number(object.reviewItemId)
-        : 0,
-      commentTypeId: isSet(object.commentTypeId)
-        ? Number(object.commentTypeId)
-        : 0,
+      reviewItemId: isSet(object.reviewItemId) ? Number(object.reviewItemId) : 0,
+      commentTypeId: isSet(object.commentTypeId) ? Number(object.commentTypeId) : 0,
       content: isSet(object.content) ? String(object.content) : "",
       sort: isSet(object.sort) ? Number(object.sort) : 0,
     };
@@ -1867,28 +1578,20 @@ export const ReviewItemComment = {
 
   toJSON(message: ReviewItemComment): unknown {
     const obj: any = {};
-    message.reviewItemCommentId !== undefined &&
-      (obj.reviewItemCommentId = Math.round(message.reviewItemCommentId));
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.reviewItemId !== undefined &&
-      (obj.reviewItemId = Math.round(message.reviewItemId));
-    message.commentTypeId !== undefined &&
-      (obj.commentTypeId = Math.round(message.commentTypeId));
+    message.reviewItemCommentId !== undefined && (obj.reviewItemCommentId = Math.round(message.reviewItemCommentId));
+    message.resourceId !== undefined && (obj.resourceId = Math.round(message.resourceId));
+    message.reviewItemId !== undefined && (obj.reviewItemId = Math.round(message.reviewItemId));
+    message.commentTypeId !== undefined && (obj.commentTypeId = Math.round(message.commentTypeId));
     message.content !== undefined && (obj.content = message.content);
     message.sort !== undefined && (obj.sort = Math.round(message.sort));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ReviewItemComment>, I>>(
-    base?: I
-  ): ReviewItemComment {
+  create<I extends Exact<DeepPartial<ReviewItemComment>, I>>(base?: I): ReviewItemComment {
     return ReviewItemComment.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ReviewItemComment>, I>>(
-    object: I
-  ): ReviewItemComment {
+  fromPartial<I extends Exact<DeepPartial<ReviewItemComment>, I>>(object: I): ReviewItemComment {
     const message = createBaseReviewItemComment();
     message.reviewItemCommentId = object.reviewItemCommentId ?? 0;
     message.resourceId = object.resourceId ?? 0;
@@ -1901,20 +1604,11 @@ export const ReviewItemComment = {
 };
 
 function createBaseCreateReviewItemCommentInput(): CreateReviewItemCommentInput {
-  return {
-    resourceId: 0,
-    reviewItemId: 0,
-    commentTypeId: 0,
-    content: "",
-    sort: 0,
-  };
+  return { resourceId: 0, reviewItemId: 0, commentTypeId: 0, content: "", sort: 0 };
 }
 
 export const CreateReviewItemCommentInput = {
-  encode(
-    message: CreateReviewItemCommentInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CreateReviewItemCommentInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.resourceId !== 0) {
       writer.uint32(16).int32(message.resourceId);
     }
@@ -1933,10 +1627,7 @@ export const CreateReviewItemCommentInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): CreateReviewItemCommentInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CreateReviewItemCommentInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateReviewItemCommentInput();
@@ -1969,12 +1660,8 @@ export const CreateReviewItemCommentInput = {
   fromJSON(object: any): CreateReviewItemCommentInput {
     return {
       resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
-      reviewItemId: isSet(object.reviewItemId)
-        ? Number(object.reviewItemId)
-        : 0,
-      commentTypeId: isSet(object.commentTypeId)
-        ? Number(object.commentTypeId)
-        : 0,
+      reviewItemId: isSet(object.reviewItemId) ? Number(object.reviewItemId) : 0,
+      commentTypeId: isSet(object.commentTypeId) ? Number(object.commentTypeId) : 0,
       content: isSet(object.content) ? String(object.content) : "",
       sort: isSet(object.sort) ? Number(object.sort) : 0,
     };
@@ -1982,26 +1669,19 @@ export const CreateReviewItemCommentInput = {
 
   toJSON(message: CreateReviewItemCommentInput): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.reviewItemId !== undefined &&
-      (obj.reviewItemId = Math.round(message.reviewItemId));
-    message.commentTypeId !== undefined &&
-      (obj.commentTypeId = Math.round(message.commentTypeId));
+    message.resourceId !== undefined && (obj.resourceId = Math.round(message.resourceId));
+    message.reviewItemId !== undefined && (obj.reviewItemId = Math.round(message.reviewItemId));
+    message.commentTypeId !== undefined && (obj.commentTypeId = Math.round(message.commentTypeId));
     message.content !== undefined && (obj.content = message.content);
     message.sort !== undefined && (obj.sort = Math.round(message.sort));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateReviewItemCommentInput>, I>>(
-    base?: I
-  ): CreateReviewItemCommentInput {
+  create<I extends Exact<DeepPartial<CreateReviewItemCommentInput>, I>>(base?: I): CreateReviewItemCommentInput {
     return CreateReviewItemCommentInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateReviewItemCommentInput>, I>>(
-    object: I
-  ): CreateReviewItemCommentInput {
+  fromPartial<I extends Exact<DeepPartial<CreateReviewItemCommentInput>, I>>(object: I): CreateReviewItemCommentInput {
     const message = createBaseCreateReviewItemCommentInput();
     message.resourceId = object.resourceId ?? 0;
     message.reviewItemId = object.reviewItemId ?? 0;
@@ -2028,10 +1708,7 @@ function createBaseScorecardGroup(): ScorecardGroup {
 }
 
 export const ScorecardGroup = {
-  encode(
-    message: ScorecardGroup,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ScorecardGroup, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.scorecardGroupId !== 0) {
       writer.uint32(8).int32(message.scorecardGroupId);
     }
@@ -2112,60 +1789,39 @@ export const ScorecardGroup = {
 
   fromJSON(object: any): ScorecardGroup {
     return {
-      scorecardGroupId: isSet(object.scorecardGroupId)
-        ? Number(object.scorecardGroupId)
-        : 0,
+      scorecardGroupId: isSet(object.scorecardGroupId) ? Number(object.scorecardGroupId) : 0,
       scorecardId: isSet(object.scorecardId) ? Number(object.scorecardId) : 0,
       name: isSet(object.name) ? String(object.name) : "",
       weight: isSet(object.weight) ? Number(object.weight) : 0,
       sort: isSet(object.sort) ? Number(object.sort) : 0,
       version: isSet(object.version) ? Number(object.version) : 0,
-      createUser: isSet(object.createUser)
-        ? Number(object.createUser)
-        : undefined,
-      createDate: isSet(object.createDate)
-        ? Number(object.createDate)
-        : undefined,
-      modifyUser: isSet(object.modifyUser)
-        ? Number(object.modifyUser)
-        : undefined,
-      modifyDate: isSet(object.modifyDate)
-        ? Number(object.modifyDate)
-        : undefined,
+      createUser: isSet(object.createUser) ? Number(object.createUser) : undefined,
+      createDate: isSet(object.createDate) ? Number(object.createDate) : undefined,
+      modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : undefined,
+      modifyDate: isSet(object.modifyDate) ? Number(object.modifyDate) : undefined,
     };
   },
 
   toJSON(message: ScorecardGroup): unknown {
     const obj: any = {};
-    message.scorecardGroupId !== undefined &&
-      (obj.scorecardGroupId = Math.round(message.scorecardGroupId));
-    message.scorecardId !== undefined &&
-      (obj.scorecardId = Math.round(message.scorecardId));
+    message.scorecardGroupId !== undefined && (obj.scorecardGroupId = Math.round(message.scorecardGroupId));
+    message.scorecardId !== undefined && (obj.scorecardId = Math.round(message.scorecardId));
     message.name !== undefined && (obj.name = message.name);
     message.weight !== undefined && (obj.weight = message.weight);
     message.sort !== undefined && (obj.sort = Math.round(message.sort));
-    message.version !== undefined &&
-      (obj.version = Math.round(message.version));
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    message.version !== undefined && (obj.version = Math.round(message.version));
+    message.createUser !== undefined && (obj.createUser = Math.round(message.createUser));
+    message.createDate !== undefined && (obj.createDate = Math.round(message.createDate));
+    message.modifyUser !== undefined && (obj.modifyUser = Math.round(message.modifyUser));
+    message.modifyDate !== undefined && (obj.modifyDate = Math.round(message.modifyDate));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ScorecardGroup>, I>>(
-    base?: I
-  ): ScorecardGroup {
+  create<I extends Exact<DeepPartial<ScorecardGroup>, I>>(base?: I): ScorecardGroup {
     return ScorecardGroup.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ScorecardGroup>, I>>(
-    object: I
-  ): ScorecardGroup {
+  fromPartial<I extends Exact<DeepPartial<ScorecardGroup>, I>>(object: I): ScorecardGroup {
     const message = createBaseScorecardGroup();
     message.scorecardGroupId = object.scorecardGroupId ?? 0;
     message.scorecardId = object.scorecardId ?? 0;
@@ -2186,10 +1842,7 @@ function createBaseScorecardGroupList(): ScorecardGroupList {
 }
 
 export const ScorecardGroupList = {
-  encode(
-    message: ScorecardGroupList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ScorecardGroupList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.items) {
       ScorecardGroup.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -2215,37 +1868,26 @@ export const ScorecardGroupList = {
   },
 
   fromJSON(object: any): ScorecardGroupList {
-    return {
-      items: Array.isArray(object?.items)
-        ? object.items.map((e: any) => ScorecardGroup.fromJSON(e))
-        : [],
-    };
+    return { items: Array.isArray(object?.items) ? object.items.map((e: any) => ScorecardGroup.fromJSON(e)) : [] };
   },
 
   toJSON(message: ScorecardGroupList): unknown {
     const obj: any = {};
     if (message.items) {
-      obj.items = message.items.map((e) =>
-        e ? ScorecardGroup.toJSON(e) : undefined
-      );
+      obj.items = message.items.map((e) => e ? ScorecardGroup.toJSON(e) : undefined);
     } else {
       obj.items = [];
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ScorecardGroupList>, I>>(
-    base?: I
-  ): ScorecardGroupList {
+  create<I extends Exact<DeepPartial<ScorecardGroupList>, I>>(base?: I): ScorecardGroupList {
     return ScorecardGroupList.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ScorecardGroupList>, I>>(
-    object: I
-  ): ScorecardGroupList {
+  fromPartial<I extends Exact<DeepPartial<ScorecardGroupList>, I>>(object: I): ScorecardGroupList {
     const message = createBaseScorecardGroupList();
-    message.items =
-      object.items?.map((e) => ScorecardGroup.fromPartial(e)) || [];
+    message.items = object.items?.map((e) => ScorecardGroup.fromPartial(e)) || [];
     return message;
   },
 };
@@ -2255,20 +1897,14 @@ function createBaseGetScorecardGroupsInput(): GetScorecardGroupsInput {
 }
 
 export const GetScorecardGroupsInput = {
-  encode(
-    message: GetScorecardGroupsInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: GetScorecardGroupsInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.scorecardId !== 0) {
       writer.uint32(8).int32(message.scorecardId);
     }
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): GetScorecardGroupsInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): GetScorecardGroupsInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetScorecardGroupsInput();
@@ -2287,27 +1923,20 @@ export const GetScorecardGroupsInput = {
   },
 
   fromJSON(object: any): GetScorecardGroupsInput {
-    return {
-      scorecardId: isSet(object.scorecardId) ? Number(object.scorecardId) : 0,
-    };
+    return { scorecardId: isSet(object.scorecardId) ? Number(object.scorecardId) : 0 };
   },
 
   toJSON(message: GetScorecardGroupsInput): unknown {
     const obj: any = {};
-    message.scorecardId !== undefined &&
-      (obj.scorecardId = Math.round(message.scorecardId));
+    message.scorecardId !== undefined && (obj.scorecardId = Math.round(message.scorecardId));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<GetScorecardGroupsInput>, I>>(
-    base?: I
-  ): GetScorecardGroupsInput {
+  create<I extends Exact<DeepPartial<GetScorecardGroupsInput>, I>>(base?: I): GetScorecardGroupsInput {
     return GetScorecardGroupsInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<GetScorecardGroupsInput>, I>>(
-    object: I
-  ): GetScorecardGroupsInput {
+  fromPartial<I extends Exact<DeepPartial<GetScorecardGroupsInput>, I>>(object: I): GetScorecardGroupsInput {
     const message = createBaseGetScorecardGroupsInput();
     message.scorecardId = object.scorecardId ?? 0;
     return message;
@@ -2330,10 +1959,7 @@ function createBaseScorecardSection(): ScorecardSection {
 }
 
 export const ScorecardSection = {
-  encode(
-    message: ScorecardSection,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ScorecardSection, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.scorecardSectionId !== 0) {
       writer.uint32(8).int32(message.scorecardSectionId);
     }
@@ -2414,62 +2040,39 @@ export const ScorecardSection = {
 
   fromJSON(object: any): ScorecardSection {
     return {
-      scorecardSectionId: isSet(object.scorecardSectionId)
-        ? Number(object.scorecardSectionId)
-        : 0,
-      scorecardGroupId: isSet(object.scorecardGroupId)
-        ? Number(object.scorecardGroupId)
-        : 0,
+      scorecardSectionId: isSet(object.scorecardSectionId) ? Number(object.scorecardSectionId) : 0,
+      scorecardGroupId: isSet(object.scorecardGroupId) ? Number(object.scorecardGroupId) : 0,
       name: isSet(object.name) ? String(object.name) : "",
       weight: isSet(object.weight) ? Number(object.weight) : 0,
       sort: isSet(object.sort) ? Number(object.sort) : 0,
       version: isSet(object.version) ? Number(object.version) : 0,
-      createUser: isSet(object.createUser)
-        ? Number(object.createUser)
-        : undefined,
-      createDate: isSet(object.createDate)
-        ? Number(object.createDate)
-        : undefined,
-      modifyUser: isSet(object.modifyUser)
-        ? Number(object.modifyUser)
-        : undefined,
-      modifyDate: isSet(object.modifyDate)
-        ? Number(object.modifyDate)
-        : undefined,
+      createUser: isSet(object.createUser) ? Number(object.createUser) : undefined,
+      createDate: isSet(object.createDate) ? Number(object.createDate) : undefined,
+      modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : undefined,
+      modifyDate: isSet(object.modifyDate) ? Number(object.modifyDate) : undefined,
     };
   },
 
   toJSON(message: ScorecardSection): unknown {
     const obj: any = {};
-    message.scorecardSectionId !== undefined &&
-      (obj.scorecardSectionId = Math.round(message.scorecardSectionId));
-    message.scorecardGroupId !== undefined &&
-      (obj.scorecardGroupId = Math.round(message.scorecardGroupId));
+    message.scorecardSectionId !== undefined && (obj.scorecardSectionId = Math.round(message.scorecardSectionId));
+    message.scorecardGroupId !== undefined && (obj.scorecardGroupId = Math.round(message.scorecardGroupId));
     message.name !== undefined && (obj.name = message.name);
     message.weight !== undefined && (obj.weight = message.weight);
     message.sort !== undefined && (obj.sort = Math.round(message.sort));
-    message.version !== undefined &&
-      (obj.version = Math.round(message.version));
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    message.version !== undefined && (obj.version = Math.round(message.version));
+    message.createUser !== undefined && (obj.createUser = Math.round(message.createUser));
+    message.createDate !== undefined && (obj.createDate = Math.round(message.createDate));
+    message.modifyUser !== undefined && (obj.modifyUser = Math.round(message.modifyUser));
+    message.modifyDate !== undefined && (obj.modifyDate = Math.round(message.modifyDate));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ScorecardSection>, I>>(
-    base?: I
-  ): ScorecardSection {
+  create<I extends Exact<DeepPartial<ScorecardSection>, I>>(base?: I): ScorecardSection {
     return ScorecardSection.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ScorecardSection>, I>>(
-    object: I
-  ): ScorecardSection {
+  fromPartial<I extends Exact<DeepPartial<ScorecardSection>, I>>(object: I): ScorecardSection {
     const message = createBaseScorecardSection();
     message.scorecardSectionId = object.scorecardSectionId ?? 0;
     message.scorecardGroupId = object.scorecardGroupId ?? 0;
@@ -2490,20 +2093,14 @@ function createBaseScorecardSectionList(): ScorecardSectionList {
 }
 
 export const ScorecardSectionList = {
-  encode(
-    message: ScorecardSectionList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ScorecardSectionList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.items) {
       ScorecardSection.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): ScorecardSectionList {
+  decode(input: _m0.Reader | Uint8Array, length?: number): ScorecardSectionList {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseScorecardSectionList();
@@ -2522,37 +2119,26 @@ export const ScorecardSectionList = {
   },
 
   fromJSON(object: any): ScorecardSectionList {
-    return {
-      items: Array.isArray(object?.items)
-        ? object.items.map((e: any) => ScorecardSection.fromJSON(e))
-        : [],
-    };
+    return { items: Array.isArray(object?.items) ? object.items.map((e: any) => ScorecardSection.fromJSON(e)) : [] };
   },
 
   toJSON(message: ScorecardSectionList): unknown {
     const obj: any = {};
     if (message.items) {
-      obj.items = message.items.map((e) =>
-        e ? ScorecardSection.toJSON(e) : undefined
-      );
+      obj.items = message.items.map((e) => e ? ScorecardSection.toJSON(e) : undefined);
     } else {
       obj.items = [];
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ScorecardSectionList>, I>>(
-    base?: I
-  ): ScorecardSectionList {
+  create<I extends Exact<DeepPartial<ScorecardSectionList>, I>>(base?: I): ScorecardSectionList {
     return ScorecardSectionList.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ScorecardSectionList>, I>>(
-    object: I
-  ): ScorecardSectionList {
+  fromPartial<I extends Exact<DeepPartial<ScorecardSectionList>, I>>(object: I): ScorecardSectionList {
     const message = createBaseScorecardSectionList();
-    message.items =
-      object.items?.map((e) => ScorecardSection.fromPartial(e)) || [];
+    message.items = object.items?.map((e) => ScorecardSection.fromPartial(e)) || [];
     return message;
   },
 };
@@ -2562,20 +2148,14 @@ function createBaseGetScorecardSectionsInput(): GetScorecardSectionsInput {
 }
 
 export const GetScorecardSectionsInput = {
-  encode(
-    message: GetScorecardSectionsInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: GetScorecardSectionsInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.scorecardGroupId !== 0) {
       writer.uint32(8).int32(message.scorecardGroupId);
     }
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): GetScorecardSectionsInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): GetScorecardSectionsInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetScorecardSectionsInput();
@@ -2594,29 +2174,20 @@ export const GetScorecardSectionsInput = {
   },
 
   fromJSON(object: any): GetScorecardSectionsInput {
-    return {
-      scorecardGroupId: isSet(object.scorecardGroupId)
-        ? Number(object.scorecardGroupId)
-        : 0,
-    };
+    return { scorecardGroupId: isSet(object.scorecardGroupId) ? Number(object.scorecardGroupId) : 0 };
   },
 
   toJSON(message: GetScorecardSectionsInput): unknown {
     const obj: any = {};
-    message.scorecardGroupId !== undefined &&
-      (obj.scorecardGroupId = Math.round(message.scorecardGroupId));
+    message.scorecardGroupId !== undefined && (obj.scorecardGroupId = Math.round(message.scorecardGroupId));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<GetScorecardSectionsInput>, I>>(
-    base?: I
-  ): GetScorecardSectionsInput {
+  create<I extends Exact<DeepPartial<GetScorecardSectionsInput>, I>>(base?: I): GetScorecardSectionsInput {
     return GetScorecardSectionsInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<GetScorecardSectionsInput>, I>>(
-    object: I
-  ): GetScorecardSectionsInput {
+  fromPartial<I extends Exact<DeepPartial<GetScorecardSectionsInput>, I>>(object: I): GetScorecardSectionsInput {
     const message = createBaseGetScorecardSectionsInput();
     message.scorecardGroupId = object.scorecardGroupId ?? 0;
     return message;
@@ -2642,41 +2213,21 @@ var tsProtoGlobalThis: any = (() => {
   throw "Unable to locate global object";
 })();
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
-    }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
-      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
-    };
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

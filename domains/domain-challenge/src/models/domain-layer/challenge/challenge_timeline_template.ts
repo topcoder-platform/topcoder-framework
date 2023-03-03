@@ -34,20 +34,11 @@ export interface UpdateChallengeTimelineTemplateInput_UpdateInput {
 }
 
 function createBaseChallengeTimelineTemplate(): ChallengeTimelineTemplate {
-  return {
-    id: "",
-    trackId: "",
-    typeId: "",
-    timelineTemplateId: "",
-    isDefault: false,
-  };
+  return { id: "", trackId: "", typeId: "", timelineTemplateId: "", isDefault: false };
 }
 
 export const ChallengeTimelineTemplate = {
-  encode(
-    message: ChallengeTimelineTemplate,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ChallengeTimelineTemplate, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -66,10 +57,7 @@ export const ChallengeTimelineTemplate = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): ChallengeTimelineTemplate {
+  decode(input: _m0.Reader | Uint8Array, length?: number): ChallengeTimelineTemplate {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseChallengeTimelineTemplate();
@@ -104,9 +92,7 @@ export const ChallengeTimelineTemplate = {
       id: isSet(object.id) ? String(object.id) : "",
       trackId: isSet(object.trackId) ? String(object.trackId) : "",
       typeId: isSet(object.typeId) ? String(object.typeId) : "",
-      timelineTemplateId: isSet(object.timelineTemplateId)
-        ? String(object.timelineTemplateId)
-        : "",
+      timelineTemplateId: isSet(object.timelineTemplateId) ? String(object.timelineTemplateId) : "",
       isDefault: isSet(object.isDefault) ? Boolean(object.isDefault) : false,
     };
   },
@@ -116,21 +102,16 @@ export const ChallengeTimelineTemplate = {
     message.id !== undefined && (obj.id = message.id);
     message.trackId !== undefined && (obj.trackId = message.trackId);
     message.typeId !== undefined && (obj.typeId = message.typeId);
-    message.timelineTemplateId !== undefined &&
-      (obj.timelineTemplateId = message.timelineTemplateId);
+    message.timelineTemplateId !== undefined && (obj.timelineTemplateId = message.timelineTemplateId);
     message.isDefault !== undefined && (obj.isDefault = message.isDefault);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ChallengeTimelineTemplate>, I>>(
-    base?: I
-  ): ChallengeTimelineTemplate {
+  create<I extends Exact<DeepPartial<ChallengeTimelineTemplate>, I>>(base?: I): ChallengeTimelineTemplate {
     return ChallengeTimelineTemplate.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ChallengeTimelineTemplate>, I>>(
-    object: I
-  ): ChallengeTimelineTemplate {
+  fromPartial<I extends Exact<DeepPartial<ChallengeTimelineTemplate>, I>>(object: I): ChallengeTimelineTemplate {
     const message = createBaseChallengeTimelineTemplate();
     message.id = object.id ?? "";
     message.trackId = object.trackId ?? "";
@@ -146,20 +127,14 @@ function createBaseChallengeTimelineTemplateList(): ChallengeTimelineTemplateLis
 }
 
 export const ChallengeTimelineTemplateList = {
-  encode(
-    message: ChallengeTimelineTemplateList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ChallengeTimelineTemplateList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.items) {
       ChallengeTimelineTemplate.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): ChallengeTimelineTemplateList {
+  decode(input: _m0.Reader | Uint8Array, length?: number): ChallengeTimelineTemplateList {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseChallengeTimelineTemplateList();
@@ -167,9 +142,7 @@ export const ChallengeTimelineTemplateList = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.items.push(
-            ChallengeTimelineTemplate.decode(reader, reader.uint32())
-          );
+          message.items.push(ChallengeTimelineTemplate.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -181,36 +154,29 @@ export const ChallengeTimelineTemplateList = {
 
   fromJSON(object: any): ChallengeTimelineTemplateList {
     return {
-      items: Array.isArray(object?.items)
-        ? object.items.map((e: any) => ChallengeTimelineTemplate.fromJSON(e))
-        : [],
+      items: Array.isArray(object?.items) ? object.items.map((e: any) => ChallengeTimelineTemplate.fromJSON(e)) : [],
     };
   },
 
   toJSON(message: ChallengeTimelineTemplateList): unknown {
     const obj: any = {};
     if (message.items) {
-      obj.items = message.items.map((e) =>
-        e ? ChallengeTimelineTemplate.toJSON(e) : undefined
-      );
+      obj.items = message.items.map((e) => e ? ChallengeTimelineTemplate.toJSON(e) : undefined);
     } else {
       obj.items = [];
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ChallengeTimelineTemplateList>, I>>(
-    base?: I
-  ): ChallengeTimelineTemplateList {
+  create<I extends Exact<DeepPartial<ChallengeTimelineTemplateList>, I>>(base?: I): ChallengeTimelineTemplateList {
     return ChallengeTimelineTemplateList.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<ChallengeTimelineTemplateList>, I>>(
-    object: I
+    object: I,
   ): ChallengeTimelineTemplateList {
     const message = createBaseChallengeTimelineTemplateList();
-    message.items =
-      object.items?.map((e) => ChallengeTimelineTemplate.fromPartial(e)) || [];
+    message.items = object.items?.map((e) => ChallengeTimelineTemplate.fromPartial(e)) || [];
     return message;
   },
 };
@@ -220,10 +186,7 @@ function createBaseCreateChallengeTimelineTemplateInput(): CreateChallengeTimeli
 }
 
 export const CreateChallengeTimelineTemplateInput = {
-  encode(
-    message: CreateChallengeTimelineTemplateInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CreateChallengeTimelineTemplateInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.trackId !== "") {
       writer.uint32(10).string(message.trackId);
     }
@@ -239,10 +202,7 @@ export const CreateChallengeTimelineTemplateInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): CreateChallengeTimelineTemplateInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CreateChallengeTimelineTemplateInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateChallengeTimelineTemplateInput();
@@ -273,9 +233,7 @@ export const CreateChallengeTimelineTemplateInput = {
     return {
       trackId: isSet(object.trackId) ? String(object.trackId) : "",
       typeId: isSet(object.typeId) ? String(object.typeId) : "",
-      timelineTemplateId: isSet(object.timelineTemplateId)
-        ? String(object.timelineTemplateId)
-        : "",
+      timelineTemplateId: isSet(object.timelineTemplateId) ? String(object.timelineTemplateId) : "",
       isDefault: isSet(object.isDefault) ? Boolean(object.isDefault) : false,
     };
   },
@@ -284,21 +242,20 @@ export const CreateChallengeTimelineTemplateInput = {
     const obj: any = {};
     message.trackId !== undefined && (obj.trackId = message.trackId);
     message.typeId !== undefined && (obj.typeId = message.typeId);
-    message.timelineTemplateId !== undefined &&
-      (obj.timelineTemplateId = message.timelineTemplateId);
+    message.timelineTemplateId !== undefined && (obj.timelineTemplateId = message.timelineTemplateId);
     message.isDefault !== undefined && (obj.isDefault = message.isDefault);
     return obj;
   },
 
   create<I extends Exact<DeepPartial<CreateChallengeTimelineTemplateInput>, I>>(
-    base?: I
+    base?: I,
   ): CreateChallengeTimelineTemplateInput {
     return CreateChallengeTimelineTemplateInput.fromPartial(base ?? {});
   },
 
-  fromPartial<
-    I extends Exact<DeepPartial<CreateChallengeTimelineTemplateInput>, I>
-  >(object: I): CreateChallengeTimelineTemplateInput {
+  fromPartial<I extends Exact<DeepPartial<CreateChallengeTimelineTemplateInput>, I>>(
+    object: I,
+  ): CreateChallengeTimelineTemplateInput {
     const message = createBaseCreateChallengeTimelineTemplateInput();
     message.trackId = object.trackId ?? "";
     message.typeId = object.typeId ?? "";
@@ -313,26 +270,17 @@ function createBaseUpdateChallengeTimelineTemplateInput(): UpdateChallengeTimeli
 }
 
 export const UpdateChallengeTimelineTemplateInput = {
-  encode(
-    message: UpdateChallengeTimelineTemplateInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: UpdateChallengeTimelineTemplateInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.filterCriteria) {
       ScanCriteria.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     if (message.updateInput !== undefined) {
-      UpdateChallengeTimelineTemplateInput_UpdateInput.encode(
-        message.updateInput,
-        writer.uint32(18).fork()
-      ).ldelim();
+      UpdateChallengeTimelineTemplateInput_UpdateInput.encode(message.updateInput, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateChallengeTimelineTemplateInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateChallengeTimelineTemplateInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateChallengeTimelineTemplateInput();
@@ -340,16 +288,10 @@ export const UpdateChallengeTimelineTemplateInput = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.filterCriteria.push(
-            ScanCriteria.decode(reader, reader.uint32())
-          );
+          message.filterCriteria.push(ScanCriteria.decode(reader, reader.uint32()));
           break;
         case 2:
-          message.updateInput =
-            UpdateChallengeTimelineTemplateInput_UpdateInput.decode(
-              reader,
-              reader.uint32()
-            );
+          message.updateInput = UpdateChallengeTimelineTemplateInput_UpdateInput.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -365,9 +307,7 @@ export const UpdateChallengeTimelineTemplateInput = {
         ? object.filterCriteria.map((e: any) => ScanCriteria.fromJSON(e))
         : [],
       updateInput: isSet(object.updateInput)
-        ? UpdateChallengeTimelineTemplateInput_UpdateInput.fromJSON(
-            object.updateInput
-          )
+        ? UpdateChallengeTimelineTemplateInput_UpdateInput.fromJSON(object.updateInput)
         : undefined,
     };
   },
@@ -375,56 +315,42 @@ export const UpdateChallengeTimelineTemplateInput = {
   toJSON(message: UpdateChallengeTimelineTemplateInput): unknown {
     const obj: any = {};
     if (message.filterCriteria) {
-      obj.filterCriteria = message.filterCriteria.map((e) =>
-        e ? ScanCriteria.toJSON(e) : undefined
-      );
+      obj.filterCriteria = message.filterCriteria.map((e) => e ? ScanCriteria.toJSON(e) : undefined);
     } else {
       obj.filterCriteria = [];
     }
-    message.updateInput !== undefined &&
-      (obj.updateInput = message.updateInput
-        ? UpdateChallengeTimelineTemplateInput_UpdateInput.toJSON(
-            message.updateInput
-          )
-        : undefined);
+    message.updateInput !== undefined && (obj.updateInput = message.updateInput
+      ? UpdateChallengeTimelineTemplateInput_UpdateInput.toJSON(message.updateInput)
+      : undefined);
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdateChallengeTimelineTemplateInput>, I>>(
-    base?: I
+    base?: I,
   ): UpdateChallengeTimelineTemplateInput {
     return UpdateChallengeTimelineTemplateInput.fromPartial(base ?? {});
   },
 
-  fromPartial<
-    I extends Exact<DeepPartial<UpdateChallengeTimelineTemplateInput>, I>
-  >(object: I): UpdateChallengeTimelineTemplateInput {
+  fromPartial<I extends Exact<DeepPartial<UpdateChallengeTimelineTemplateInput>, I>>(
+    object: I,
+  ): UpdateChallengeTimelineTemplateInput {
     const message = createBaseUpdateChallengeTimelineTemplateInput();
-    message.filterCriteria =
-      object.filterCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
-    message.updateInput =
-      object.updateInput !== undefined && object.updateInput !== null
-        ? UpdateChallengeTimelineTemplateInput_UpdateInput.fromPartial(
-            object.updateInput
-          )
-        : undefined;
+    message.filterCriteria = object.filterCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
+    message.updateInput = (object.updateInput !== undefined && object.updateInput !== null)
+      ? UpdateChallengeTimelineTemplateInput_UpdateInput.fromPartial(object.updateInput)
+      : undefined;
     return message;
   },
 };
 
 function createBaseUpdateChallengeTimelineTemplateInput_UpdateInput(): UpdateChallengeTimelineTemplateInput_UpdateInput {
-  return {
-    trackId: undefined,
-    typeId: undefined,
-    timelineTemplateId: undefined,
-    isDefault: undefined,
-  };
+  return { trackId: undefined, typeId: undefined, timelineTemplateId: undefined, isDefault: undefined };
 }
 
 export const UpdateChallengeTimelineTemplateInput_UpdateInput = {
   encode(
     message: UpdateChallengeTimelineTemplateInput_UpdateInput,
-    writer: _m0.Writer = _m0.Writer.create()
+    writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
     if (message.trackId !== undefined) {
       writer.uint32(18).string(message.trackId);
@@ -441,14 +367,10 @@ export const UpdateChallengeTimelineTemplateInput_UpdateInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateChallengeTimelineTemplateInput_UpdateInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateChallengeTimelineTemplateInput_UpdateInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message =
-      createBaseUpdateChallengeTimelineTemplateInput_UpdateInput();
+    const message = createBaseUpdateChallengeTimelineTemplateInput_UpdateInput();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -476,12 +398,8 @@ export const UpdateChallengeTimelineTemplateInput_UpdateInput = {
     return {
       trackId: isSet(object.trackId) ? String(object.trackId) : undefined,
       typeId: isSet(object.typeId) ? String(object.typeId) : undefined,
-      timelineTemplateId: isSet(object.timelineTemplateId)
-        ? String(object.timelineTemplateId)
-        : undefined,
-      isDefault: isSet(object.isDefault)
-        ? Boolean(object.isDefault)
-        : undefined,
+      timelineTemplateId: isSet(object.timelineTemplateId) ? String(object.timelineTemplateId) : undefined,
+      isDefault: isSet(object.isDefault) ? Boolean(object.isDefault) : undefined,
     };
   },
 
@@ -489,31 +407,21 @@ export const UpdateChallengeTimelineTemplateInput_UpdateInput = {
     const obj: any = {};
     message.trackId !== undefined && (obj.trackId = message.trackId);
     message.typeId !== undefined && (obj.typeId = message.typeId);
-    message.timelineTemplateId !== undefined &&
-      (obj.timelineTemplateId = message.timelineTemplateId);
+    message.timelineTemplateId !== undefined && (obj.timelineTemplateId = message.timelineTemplateId);
     message.isDefault !== undefined && (obj.isDefault = message.isDefault);
     return obj;
   },
 
-  create<
-    I extends Exact<
-      DeepPartial<UpdateChallengeTimelineTemplateInput_UpdateInput>,
-      I
-    >
-  >(base?: I): UpdateChallengeTimelineTemplateInput_UpdateInput {
-    return UpdateChallengeTimelineTemplateInput_UpdateInput.fromPartial(
-      base ?? {}
-    );
+  create<I extends Exact<DeepPartial<UpdateChallengeTimelineTemplateInput_UpdateInput>, I>>(
+    base?: I,
+  ): UpdateChallengeTimelineTemplateInput_UpdateInput {
+    return UpdateChallengeTimelineTemplateInput_UpdateInput.fromPartial(base ?? {});
   },
 
-  fromPartial<
-    I extends Exact<
-      DeepPartial<UpdateChallengeTimelineTemplateInput_UpdateInput>,
-      I
-    >
-  >(object: I): UpdateChallengeTimelineTemplateInput_UpdateInput {
-    const message =
-      createBaseUpdateChallengeTimelineTemplateInput_UpdateInput();
+  fromPartial<I extends Exact<DeepPartial<UpdateChallengeTimelineTemplateInput_UpdateInput>, I>>(
+    object: I,
+  ): UpdateChallengeTimelineTemplateInput_UpdateInput {
+    const message = createBaseUpdateChallengeTimelineTemplateInput_UpdateInput();
     message.trackId = object.trackId ?? undefined;
     message.typeId = object.typeId ?? undefined;
     message.timelineTemplateId = object.timelineTemplateId ?? undefined;
@@ -522,35 +430,17 @@ export const UpdateChallengeTimelineTemplateInput_UpdateInput = {
   },
 };
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
-    }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
-      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
-    };
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

@@ -47,10 +47,7 @@ function createBaseLongComponentState(): LongComponentState {
 }
 
 export const LongComponentState = {
-  encode(
-    message: LongComponentState,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: LongComponentState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.longComponentStateId !== 0) {
       writer.uint32(8).int32(message.longComponentStateId);
     }
@@ -119,54 +116,36 @@ export const LongComponentState = {
 
   fromJSON(object: any): LongComponentState {
     return {
-      longComponentStateId: isSet(object.longComponentStateId)
-        ? Number(object.longComponentStateId)
-        : 0,
+      longComponentStateId: isSet(object.longComponentStateId) ? Number(object.longComponentStateId) : 0,
       roundId: isSet(object.roundId) ? Number(object.roundId) : 0,
       coderId: isSet(object.coderId) ? Number(object.coderId) : 0,
       componentId: isSet(object.componentId) ? Number(object.componentId) : 0,
       points: isSet(object.points) ? Number(object.points) : 0,
       statusId: isSet(object.statusId) ? Number(object.statusId) : 0,
-      submissionNumber: isSet(object.submissionNumber)
-        ? Number(object.submissionNumber)
-        : 0,
-      exampleSubmissionNumber: isSet(object.exampleSubmissionNumber)
-        ? Number(object.exampleSubmissionNumber)
-        : 0,
+      submissionNumber: isSet(object.submissionNumber) ? Number(object.submissionNumber) : 0,
+      exampleSubmissionNumber: isSet(object.exampleSubmissionNumber) ? Number(object.exampleSubmissionNumber) : 0,
     };
   },
 
   toJSON(message: LongComponentState): unknown {
     const obj: any = {};
-    message.longComponentStateId !== undefined &&
-      (obj.longComponentStateId = Math.round(message.longComponentStateId));
-    message.roundId !== undefined &&
-      (obj.roundId = Math.round(message.roundId));
-    message.coderId !== undefined &&
-      (obj.coderId = Math.round(message.coderId));
-    message.componentId !== undefined &&
-      (obj.componentId = Math.round(message.componentId));
+    message.longComponentStateId !== undefined && (obj.longComponentStateId = Math.round(message.longComponentStateId));
+    message.roundId !== undefined && (obj.roundId = Math.round(message.roundId));
+    message.coderId !== undefined && (obj.coderId = Math.round(message.coderId));
+    message.componentId !== undefined && (obj.componentId = Math.round(message.componentId));
     message.points !== undefined && (obj.points = Math.round(message.points));
-    message.statusId !== undefined &&
-      (obj.statusId = Math.round(message.statusId));
-    message.submissionNumber !== undefined &&
-      (obj.submissionNumber = Math.round(message.submissionNumber));
+    message.statusId !== undefined && (obj.statusId = Math.round(message.statusId));
+    message.submissionNumber !== undefined && (obj.submissionNumber = Math.round(message.submissionNumber));
     message.exampleSubmissionNumber !== undefined &&
-      (obj.exampleSubmissionNumber = Math.round(
-        message.exampleSubmissionNumber
-      ));
+      (obj.exampleSubmissionNumber = Math.round(message.exampleSubmissionNumber));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<LongComponentState>, I>>(
-    base?: I
-  ): LongComponentState {
+  create<I extends Exact<DeepPartial<LongComponentState>, I>>(base?: I): LongComponentState {
     return LongComponentState.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<LongComponentState>, I>>(
-    object: I
-  ): LongComponentState {
+  fromPartial<I extends Exact<DeepPartial<LongComponentState>, I>>(object: I): LongComponentState {
     const message = createBaseLongComponentState();
     message.longComponentStateId = object.longComponentStateId ?? 0;
     message.roundId = object.roundId ?? 0;
@@ -193,10 +172,7 @@ function createBaseCreateLongComponentStateInput(): CreateLongComponentStateInpu
 }
 
 export const CreateLongComponentStateInput = {
-  encode(
-    message: CreateLongComponentStateInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CreateLongComponentStateInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.roundId !== 0) {
       writer.uint32(8).int32(message.roundId);
     }
@@ -221,10 +197,7 @@ export const CreateLongComponentStateInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): CreateLongComponentStateInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CreateLongComponentStateInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateLongComponentStateInput();
@@ -267,43 +240,30 @@ export const CreateLongComponentStateInput = {
       componentId: isSet(object.componentId) ? Number(object.componentId) : 0,
       points: isSet(object.points) ? Number(object.points) : 0,
       statusId: isSet(object.statusId) ? Number(object.statusId) : 0,
-      submissionNumber: isSet(object.submissionNumber)
-        ? Number(object.submissionNumber)
-        : 0,
-      exampleSubmissionNumber: isSet(object.exampleSubmissionNumber)
-        ? Number(object.exampleSubmissionNumber)
-        : 0,
+      submissionNumber: isSet(object.submissionNumber) ? Number(object.submissionNumber) : 0,
+      exampleSubmissionNumber: isSet(object.exampleSubmissionNumber) ? Number(object.exampleSubmissionNumber) : 0,
     };
   },
 
   toJSON(message: CreateLongComponentStateInput): unknown {
     const obj: any = {};
-    message.roundId !== undefined &&
-      (obj.roundId = Math.round(message.roundId));
-    message.coderId !== undefined &&
-      (obj.coderId = Math.round(message.coderId));
-    message.componentId !== undefined &&
-      (obj.componentId = Math.round(message.componentId));
+    message.roundId !== undefined && (obj.roundId = Math.round(message.roundId));
+    message.coderId !== undefined && (obj.coderId = Math.round(message.coderId));
+    message.componentId !== undefined && (obj.componentId = Math.round(message.componentId));
     message.points !== undefined && (obj.points = Math.round(message.points));
-    message.statusId !== undefined &&
-      (obj.statusId = Math.round(message.statusId));
-    message.submissionNumber !== undefined &&
-      (obj.submissionNumber = Math.round(message.submissionNumber));
+    message.statusId !== undefined && (obj.statusId = Math.round(message.statusId));
+    message.submissionNumber !== undefined && (obj.submissionNumber = Math.round(message.submissionNumber));
     message.exampleSubmissionNumber !== undefined &&
-      (obj.exampleSubmissionNumber = Math.round(
-        message.exampleSubmissionNumber
-      ));
+      (obj.exampleSubmissionNumber = Math.round(message.exampleSubmissionNumber));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateLongComponentStateInput>, I>>(
-    base?: I
-  ): CreateLongComponentStateInput {
+  create<I extends Exact<DeepPartial<CreateLongComponentStateInput>, I>>(base?: I): CreateLongComponentStateInput {
     return CreateLongComponentStateInput.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<CreateLongComponentStateInput>, I>>(
-    object: I
+    object: I,
   ): CreateLongComponentStateInput {
     const message = createBaseCreateLongComponentStateInput();
     message.roundId = object.roundId ?? 0;
@@ -322,26 +282,17 @@ function createBaseUpdateLongComponentStateInput(): UpdateLongComponentStateInpu
 }
 
 export const UpdateLongComponentStateInput = {
-  encode(
-    message: UpdateLongComponentStateInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: UpdateLongComponentStateInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.filterCriteria) {
       ScanCriteria.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     if (message.updateInput !== undefined) {
-      UpdateLongComponentStateInput_UpdateInput.encode(
-        message.updateInput,
-        writer.uint32(26).fork()
-      ).ldelim();
+      UpdateLongComponentStateInput_UpdateInput.encode(message.updateInput, writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateLongComponentStateInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateLongComponentStateInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateLongComponentStateInput();
@@ -349,16 +300,10 @@ export const UpdateLongComponentStateInput = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.filterCriteria.push(
-            ScanCriteria.decode(reader, reader.uint32())
-          );
+          message.filterCriteria.push(ScanCriteria.decode(reader, reader.uint32()));
           break;
         case 3:
-          message.updateInput =
-            UpdateLongComponentStateInput_UpdateInput.decode(
-              reader,
-              reader.uint32()
-            );
+          message.updateInput = UpdateLongComponentStateInput_UpdateInput.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -382,37 +327,28 @@ export const UpdateLongComponentStateInput = {
   toJSON(message: UpdateLongComponentStateInput): unknown {
     const obj: any = {};
     if (message.filterCriteria) {
-      obj.filterCriteria = message.filterCriteria.map((e) =>
-        e ? ScanCriteria.toJSON(e) : undefined
-      );
+      obj.filterCriteria = message.filterCriteria.map((e) => e ? ScanCriteria.toJSON(e) : undefined);
     } else {
       obj.filterCriteria = [];
     }
-    message.updateInput !== undefined &&
-      (obj.updateInput = message.updateInput
-        ? UpdateLongComponentStateInput_UpdateInput.toJSON(message.updateInput)
-        : undefined);
+    message.updateInput !== undefined && (obj.updateInput = message.updateInput
+      ? UpdateLongComponentStateInput_UpdateInput.toJSON(message.updateInput)
+      : undefined);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdateLongComponentStateInput>, I>>(
-    base?: I
-  ): UpdateLongComponentStateInput {
+  create<I extends Exact<DeepPartial<UpdateLongComponentStateInput>, I>>(base?: I): UpdateLongComponentStateInput {
     return UpdateLongComponentStateInput.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<UpdateLongComponentStateInput>, I>>(
-    object: I
+    object: I,
   ): UpdateLongComponentStateInput {
     const message = createBaseUpdateLongComponentStateInput();
-    message.filterCriteria =
-      object.filterCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
-    message.updateInput =
-      object.updateInput !== undefined && object.updateInput !== null
-        ? UpdateLongComponentStateInput_UpdateInput.fromPartial(
-            object.updateInput
-          )
-        : undefined;
+    message.filterCriteria = object.filterCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
+    message.updateInput = (object.updateInput !== undefined && object.updateInput !== null)
+      ? UpdateLongComponentStateInput_UpdateInput.fromPartial(object.updateInput)
+      : undefined;
     return message;
   },
 };
@@ -422,10 +358,7 @@ function createBaseUpdateLongComponentStateInput_UpdateInput(): UpdateLongCompon
 }
 
 export const UpdateLongComponentStateInput_UpdateInput = {
-  encode(
-    message: UpdateLongComponentStateInput_UpdateInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: UpdateLongComponentStateInput_UpdateInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.submissionNumber !== undefined) {
       writer.uint32(8).int32(message.submissionNumber);
     }
@@ -435,10 +368,7 @@ export const UpdateLongComponentStateInput_UpdateInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateLongComponentStateInput_UpdateInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateLongComponentStateInput_UpdateInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateLongComponentStateInput_UpdateInput();
@@ -461,30 +391,27 @@ export const UpdateLongComponentStateInput_UpdateInput = {
 
   fromJSON(object: any): UpdateLongComponentStateInput_UpdateInput {
     return {
-      submissionNumber: isSet(object.submissionNumber)
-        ? Number(object.submissionNumber)
-        : undefined,
+      submissionNumber: isSet(object.submissionNumber) ? Number(object.submissionNumber) : undefined,
       points: isSet(object.points) ? Number(object.points) : undefined,
     };
   },
 
   toJSON(message: UpdateLongComponentStateInput_UpdateInput): unknown {
     const obj: any = {};
-    message.submissionNumber !== undefined &&
-      (obj.submissionNumber = Math.round(message.submissionNumber));
+    message.submissionNumber !== undefined && (obj.submissionNumber = Math.round(message.submissionNumber));
     message.points !== undefined && (obj.points = Math.round(message.points));
     return obj;
   },
 
-  create<
-    I extends Exact<DeepPartial<UpdateLongComponentStateInput_UpdateInput>, I>
-  >(base?: I): UpdateLongComponentStateInput_UpdateInput {
+  create<I extends Exact<DeepPartial<UpdateLongComponentStateInput_UpdateInput>, I>>(
+    base?: I,
+  ): UpdateLongComponentStateInput_UpdateInput {
     return UpdateLongComponentStateInput_UpdateInput.fromPartial(base ?? {});
   },
 
-  fromPartial<
-    I extends Exact<DeepPartial<UpdateLongComponentStateInput_UpdateInput>, I>
-  >(object: I): UpdateLongComponentStateInput_UpdateInput {
+  fromPartial<I extends Exact<DeepPartial<UpdateLongComponentStateInput_UpdateInput>, I>>(
+    object: I,
+  ): UpdateLongComponentStateInput_UpdateInput {
     const message = createBaseUpdateLongComponentStateInput_UpdateInput();
     message.submissionNumber = object.submissionNumber ?? undefined;
     message.points = object.points ?? undefined;
@@ -492,35 +419,17 @@ export const UpdateLongComponentStateInput_UpdateInput = {
   },
 };
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
-    }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
-      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
-    };
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

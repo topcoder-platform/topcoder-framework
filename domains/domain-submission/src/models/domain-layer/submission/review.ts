@@ -71,10 +71,7 @@ function createBaseReview(): Review {
 }
 
 export const Review = {
-  encode(
-    message: Review,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Review, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -100,10 +97,7 @@ export const Review = {
       writer.uint32(66).string(message.reviewedDate);
     }
     if (message.metadata !== undefined) {
-      Struct.encode(
-        Struct.wrap(message.metadata),
-        writer.uint32(74).fork()
-      ).ldelim();
+      Struct.encode(Struct.wrap(message.metadata), writer.uint32(74).fork()).ldelim();
     }
     if (message.v5ScoreCardId !== undefined) {
       writer.uint32(82).string(message.v5ScoreCardId);
@@ -155,9 +149,7 @@ export const Review = {
           message.reviewedDate = reader.string();
           break;
         case 9:
-          message.metadata = Struct.unwrap(
-            Struct.decode(reader, reader.uint32())
-          );
+          message.metadata = Struct.unwrap(Struct.decode(reader, reader.uint32()));
           break;
         case 10:
           message.v5ScoreCardId = reader.string();
@@ -189,17 +181,11 @@ export const Review = {
       typeId: isSet(object.typeId) ? String(object.typeId) : "",
       reviewerId: isSet(object.reviewerId) ? String(object.reviewerId) : "",
       scoreCardId: isSet(object.scoreCardId) ? String(object.scoreCardId) : "",
-      submissionId: isSet(object.submissionId)
-        ? String(object.submissionId)
-        : "",
+      submissionId: isSet(object.submissionId) ? String(object.submissionId) : "",
       status: isSet(object.status) ? String(object.status) : "",
-      reviewedDate: isSet(object.reviewedDate)
-        ? String(object.reviewedDate)
-        : undefined,
+      reviewedDate: isSet(object.reviewedDate) ? String(object.reviewedDate) : undefined,
       metadata: isObject(object.metadata) ? object.metadata : undefined,
-      v5ScoreCardId: isSet(object.v5ScoreCardId)
-        ? String(object.v5ScoreCardId)
-        : undefined,
+      v5ScoreCardId: isSet(object.v5ScoreCardId) ? String(object.v5ScoreCardId) : undefined,
       created: isSet(object.created) ? Number(object.created) : 0,
       updated: isSet(object.updated) ? Number(object.updated) : 0,
       createdBy: isSet(object.createdBy) ? String(object.createdBy) : "",
@@ -213,20 +199,14 @@ export const Review = {
     message.score !== undefined && (obj.score = message.score);
     message.typeId !== undefined && (obj.typeId = message.typeId);
     message.reviewerId !== undefined && (obj.reviewerId = message.reviewerId);
-    message.scoreCardId !== undefined &&
-      (obj.scoreCardId = message.scoreCardId);
-    message.submissionId !== undefined &&
-      (obj.submissionId = message.submissionId);
+    message.scoreCardId !== undefined && (obj.scoreCardId = message.scoreCardId);
+    message.submissionId !== undefined && (obj.submissionId = message.submissionId);
     message.status !== undefined && (obj.status = message.status);
-    message.reviewedDate !== undefined &&
-      (obj.reviewedDate = message.reviewedDate);
+    message.reviewedDate !== undefined && (obj.reviewedDate = message.reviewedDate);
     message.metadata !== undefined && (obj.metadata = message.metadata);
-    message.v5ScoreCardId !== undefined &&
-      (obj.v5ScoreCardId = message.v5ScoreCardId);
-    message.created !== undefined &&
-      (obj.created = Math.round(message.created));
-    message.updated !== undefined &&
-      (obj.updated = Math.round(message.updated));
+    message.v5ScoreCardId !== undefined && (obj.v5ScoreCardId = message.v5ScoreCardId);
+    message.created !== undefined && (obj.created = Math.round(message.created));
+    message.updated !== undefined && (obj.updated = Math.round(message.updated));
     message.createdBy !== undefined && (obj.createdBy = message.createdBy);
     message.updatedBy !== undefined && (obj.updatedBy = message.updatedBy);
     return obj;
@@ -270,10 +250,7 @@ function createBaseCreateReviewInput(): CreateReviewInput {
 }
 
 export const CreateReviewInput = {
-  encode(
-    message: CreateReviewInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CreateReviewInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.score !== 0) {
       writer.uint32(13).float(message.score);
     }
@@ -296,10 +273,7 @@ export const CreateReviewInput = {
       writer.uint32(58).string(message.reviewedDate);
     }
     if (message.metadata !== undefined) {
-      Struct.encode(
-        Struct.wrap(message.metadata),
-        writer.uint32(66).fork()
-      ).ldelim();
+      Struct.encode(Struct.wrap(message.metadata), writer.uint32(66).fork()).ldelim();
     }
     return writer;
   },
@@ -333,9 +307,7 @@ export const CreateReviewInput = {
           message.reviewedDate = reader.string();
           break;
         case 8:
-          message.metadata = Struct.unwrap(
-            Struct.decode(reader, reader.uint32())
-          );
+          message.metadata = Struct.unwrap(Struct.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -351,13 +323,9 @@ export const CreateReviewInput = {
       typeId: isSet(object.typeId) ? String(object.typeId) : "",
       reviewerId: isSet(object.reviewerId) ? String(object.reviewerId) : "",
       scoreCardId: isSet(object.scoreCardId) ? String(object.scoreCardId) : "",
-      submissionId: isSet(object.submissionId)
-        ? String(object.submissionId)
-        : "",
+      submissionId: isSet(object.submissionId) ? String(object.submissionId) : "",
       status: isSet(object.status) ? String(object.status) : "",
-      reviewedDate: isSet(object.reviewedDate)
-        ? String(object.reviewedDate)
-        : undefined,
+      reviewedDate: isSet(object.reviewedDate) ? String(object.reviewedDate) : undefined,
       metadata: isObject(object.metadata) ? object.metadata : undefined,
     };
   },
@@ -367,26 +335,19 @@ export const CreateReviewInput = {
     message.score !== undefined && (obj.score = message.score);
     message.typeId !== undefined && (obj.typeId = message.typeId);
     message.reviewerId !== undefined && (obj.reviewerId = message.reviewerId);
-    message.scoreCardId !== undefined &&
-      (obj.scoreCardId = message.scoreCardId);
-    message.submissionId !== undefined &&
-      (obj.submissionId = message.submissionId);
+    message.scoreCardId !== undefined && (obj.scoreCardId = message.scoreCardId);
+    message.submissionId !== undefined && (obj.submissionId = message.submissionId);
     message.status !== undefined && (obj.status = message.status);
-    message.reviewedDate !== undefined &&
-      (obj.reviewedDate = message.reviewedDate);
+    message.reviewedDate !== undefined && (obj.reviewedDate = message.reviewedDate);
     message.metadata !== undefined && (obj.metadata = message.metadata);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateReviewInput>, I>>(
-    base?: I
-  ): CreateReviewInput {
+  create<I extends Exact<DeepPartial<CreateReviewInput>, I>>(base?: I): CreateReviewInput {
     return CreateReviewInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateReviewInput>, I>>(
-    object: I
-  ): CreateReviewInput {
+  fromPartial<I extends Exact<DeepPartial<CreateReviewInput>, I>>(object: I): CreateReviewInput {
     const message = createBaseCreateReviewInput();
     message.score = object.score ?? 0;
     message.typeId = object.typeId ?? "";
@@ -405,18 +366,12 @@ function createBaseUpdateReviewInput(): UpdateReviewInput {
 }
 
 export const UpdateReviewInput = {
-  encode(
-    message: UpdateReviewInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: UpdateReviewInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.filterCriteria) {
       ScanCriteria.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     if (message.updateInput !== undefined) {
-      UpdateReviewInput_UpdateInput.encode(
-        message.updateInput,
-        writer.uint32(26).fork()
-      ).ldelim();
+      UpdateReviewInput_UpdateInput.encode(message.updateInput, writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
@@ -429,15 +384,10 @@ export const UpdateReviewInput = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.filterCriteria.push(
-            ScanCriteria.decode(reader, reader.uint32())
-          );
+          message.filterCriteria.push(ScanCriteria.decode(reader, reader.uint32()));
           break;
         case 3:
-          message.updateInput = UpdateReviewInput_UpdateInput.decode(
-            reader,
-            reader.uint32()
-          );
+          message.updateInput = UpdateReviewInput_UpdateInput.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -452,44 +402,32 @@ export const UpdateReviewInput = {
       filterCriteria: Array.isArray(object?.filterCriteria)
         ? object.filterCriteria.map((e: any) => ScanCriteria.fromJSON(e))
         : [],
-      updateInput: isSet(object.updateInput)
-        ? UpdateReviewInput_UpdateInput.fromJSON(object.updateInput)
-        : undefined,
+      updateInput: isSet(object.updateInput) ? UpdateReviewInput_UpdateInput.fromJSON(object.updateInput) : undefined,
     };
   },
 
   toJSON(message: UpdateReviewInput): unknown {
     const obj: any = {};
     if (message.filterCriteria) {
-      obj.filterCriteria = message.filterCriteria.map((e) =>
-        e ? ScanCriteria.toJSON(e) : undefined
-      );
+      obj.filterCriteria = message.filterCriteria.map((e) => e ? ScanCriteria.toJSON(e) : undefined);
     } else {
       obj.filterCriteria = [];
     }
     message.updateInput !== undefined &&
-      (obj.updateInput = message.updateInput
-        ? UpdateReviewInput_UpdateInput.toJSON(message.updateInput)
-        : undefined);
+      (obj.updateInput = message.updateInput ? UpdateReviewInput_UpdateInput.toJSON(message.updateInput) : undefined);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdateReviewInput>, I>>(
-    base?: I
-  ): UpdateReviewInput {
+  create<I extends Exact<DeepPartial<UpdateReviewInput>, I>>(base?: I): UpdateReviewInput {
     return UpdateReviewInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdateReviewInput>, I>>(
-    object: I
-  ): UpdateReviewInput {
+  fromPartial<I extends Exact<DeepPartial<UpdateReviewInput>, I>>(object: I): UpdateReviewInput {
     const message = createBaseUpdateReviewInput();
-    message.filterCriteria =
-      object.filterCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
-    message.updateInput =
-      object.updateInput !== undefined && object.updateInput !== null
-        ? UpdateReviewInput_UpdateInput.fromPartial(object.updateInput)
-        : undefined;
+    message.filterCriteria = object.filterCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
+    message.updateInput = (object.updateInput !== undefined && object.updateInput !== null)
+      ? UpdateReviewInput_UpdateInput.fromPartial(object.updateInput)
+      : undefined;
     return message;
   },
 };
@@ -508,10 +446,7 @@ function createBaseUpdateReviewInput_UpdateInput(): UpdateReviewInput_UpdateInpu
 }
 
 export const UpdateReviewInput_UpdateInput = {
-  encode(
-    message: UpdateReviewInput_UpdateInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: UpdateReviewInput_UpdateInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.score !== undefined) {
       writer.uint32(13).float(message.score);
     }
@@ -534,18 +469,12 @@ export const UpdateReviewInput_UpdateInput = {
       writer.uint32(58).string(message.reviewedDate);
     }
     if (message.metadata !== undefined) {
-      Struct.encode(
-        Struct.wrap(message.metadata),
-        writer.uint32(66).fork()
-      ).ldelim();
+      Struct.encode(Struct.wrap(message.metadata), writer.uint32(66).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateReviewInput_UpdateInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateReviewInput_UpdateInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateReviewInput_UpdateInput();
@@ -574,9 +503,7 @@ export const UpdateReviewInput_UpdateInput = {
           message.reviewedDate = reader.string();
           break;
         case 8:
-          message.metadata = Struct.unwrap(
-            Struct.decode(reader, reader.uint32())
-          );
+          message.metadata = Struct.unwrap(Struct.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -590,19 +517,11 @@ export const UpdateReviewInput_UpdateInput = {
     return {
       score: isSet(object.score) ? Number(object.score) : undefined,
       typeId: isSet(object.typeId) ? String(object.typeId) : undefined,
-      reviewerId: isSet(object.reviewerId)
-        ? String(object.reviewerId)
-        : undefined,
-      scoreCardId: isSet(object.scoreCardId)
-        ? String(object.scoreCardId)
-        : undefined,
-      submissionId: isSet(object.submissionId)
-        ? String(object.submissionId)
-        : undefined,
+      reviewerId: isSet(object.reviewerId) ? String(object.reviewerId) : undefined,
+      scoreCardId: isSet(object.scoreCardId) ? String(object.scoreCardId) : undefined,
+      submissionId: isSet(object.submissionId) ? String(object.submissionId) : undefined,
       status: isSet(object.status) ? String(object.status) : undefined,
-      reviewedDate: isSet(object.reviewedDate)
-        ? String(object.reviewedDate)
-        : undefined,
+      reviewedDate: isSet(object.reviewedDate) ? String(object.reviewedDate) : undefined,
       metadata: isObject(object.metadata) ? object.metadata : undefined,
     };
   },
@@ -612,25 +531,20 @@ export const UpdateReviewInput_UpdateInput = {
     message.score !== undefined && (obj.score = message.score);
     message.typeId !== undefined && (obj.typeId = message.typeId);
     message.reviewerId !== undefined && (obj.reviewerId = message.reviewerId);
-    message.scoreCardId !== undefined &&
-      (obj.scoreCardId = message.scoreCardId);
-    message.submissionId !== undefined &&
-      (obj.submissionId = message.submissionId);
+    message.scoreCardId !== undefined && (obj.scoreCardId = message.scoreCardId);
+    message.submissionId !== undefined && (obj.submissionId = message.submissionId);
     message.status !== undefined && (obj.status = message.status);
-    message.reviewedDate !== undefined &&
-      (obj.reviewedDate = message.reviewedDate);
+    message.reviewedDate !== undefined && (obj.reviewedDate = message.reviewedDate);
     message.metadata !== undefined && (obj.metadata = message.metadata);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdateReviewInput_UpdateInput>, I>>(
-    base?: I
-  ): UpdateReviewInput_UpdateInput {
+  create<I extends Exact<DeepPartial<UpdateReviewInput_UpdateInput>, I>>(base?: I): UpdateReviewInput_UpdateInput {
     return UpdateReviewInput_UpdateInput.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<UpdateReviewInput_UpdateInput>, I>>(
-    object: I
+    object: I,
   ): UpdateReviewInput_UpdateInput {
     const message = createBaseUpdateReviewInput_UpdateInput();
     message.score = object.score ?? undefined;
@@ -650,10 +564,7 @@ function createBaseReviewList(): ReviewList {
 }
 
 export const ReviewList = {
-  encode(
-    message: ReviewList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ReviewList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.id) {
       writer.uint32(10).string(v!);
     }
@@ -679,9 +590,7 @@ export const ReviewList = {
   },
 
   fromJSON(object: any): ReviewList {
-    return {
-      id: Array.isArray(object?.id) ? object.id.map((e: any) => String(e)) : [],
-    };
+    return { id: Array.isArray(object?.id) ? object.id.map((e: any) => String(e)) : [] };
   },
 
   toJSON(message: ReviewList): unknown {
@@ -698,9 +607,7 @@ export const ReviewList = {
     return ReviewList.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ReviewList>, I>>(
-    object: I
-  ): ReviewList {
+  fromPartial<I extends Exact<DeepPartial<ReviewList>, I>>(object: I): ReviewList {
     const message = createBaseReviewList();
     message.id = object.id?.map((e) => e) || [];
     return message;
@@ -726,41 +633,21 @@ var tsProtoGlobalThis: any = (() => {
   throw "Unable to locate global object";
 })();
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
-    }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
-      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
-    };
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

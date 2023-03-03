@@ -71,10 +71,7 @@ function createBaseLegacyChallengePhase(): LegacyChallengePhase {
 }
 
 export const LegacyChallengePhase = {
-  encode(
-    message: LegacyChallengePhase,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: LegacyChallengePhase, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.projectPhaseId !== 0) {
       writer.uint32(8).int64(message.projectPhaseId);
     }
@@ -120,10 +117,7 @@ export const LegacyChallengePhase = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): LegacyChallengePhase {
+  decode(input: _m0.Reader | Uint8Array, length?: number): LegacyChallengePhase {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseLegacyChallengePhase();
@@ -182,85 +176,47 @@ export const LegacyChallengePhase = {
 
   fromJSON(object: any): LegacyChallengePhase {
     return {
-      projectPhaseId: isSet(object.projectPhaseId)
-        ? Number(object.projectPhaseId)
-        : 0,
+      projectPhaseId: isSet(object.projectPhaseId) ? Number(object.projectPhaseId) : 0,
       projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
       phaseTypeId: isSet(object.phaseTypeId) ? Number(object.phaseTypeId) : 0,
-      phaseStatusId: isSet(object.phaseStatusId)
-        ? Number(object.phaseStatusId)
-        : 0,
-      fixedStartTime: isSet(object.fixedStartTime)
-        ? String(object.fixedStartTime)
-        : undefined,
-      scheduledStartTime: isSet(object.scheduledStartTime)
-        ? String(object.scheduledStartTime)
-        : undefined,
-      scheduledEndTime: isSet(object.scheduledEndTime)
-        ? String(object.scheduledEndTime)
-        : undefined,
-      actualStartTime: isSet(object.actualStartTime)
-        ? String(object.actualStartTime)
-        : undefined,
-      actualEndTime: isSet(object.actualEndTime)
-        ? String(object.actualEndTime)
-        : undefined,
+      phaseStatusId: isSet(object.phaseStatusId) ? Number(object.phaseStatusId) : 0,
+      fixedStartTime: isSet(object.fixedStartTime) ? String(object.fixedStartTime) : undefined,
+      scheduledStartTime: isSet(object.scheduledStartTime) ? String(object.scheduledStartTime) : undefined,
+      scheduledEndTime: isSet(object.scheduledEndTime) ? String(object.scheduledEndTime) : undefined,
+      actualStartTime: isSet(object.actualStartTime) ? String(object.actualStartTime) : undefined,
+      actualEndTime: isSet(object.actualEndTime) ? String(object.actualEndTime) : undefined,
       duration: isSet(object.duration) ? Number(object.duration) : 0,
-      createUser: isSet(object.createUser)
-        ? Number(object.createUser)
-        : undefined,
-      createDate: isSet(object.createDate)
-        ? String(object.createDate)
-        : undefined,
-      modifyUser: isSet(object.modifyUser)
-        ? Number(object.modifyUser)
-        : undefined,
-      modifyDate: isSet(object.modifyDate)
-        ? String(object.modifyDate)
-        : undefined,
+      createUser: isSet(object.createUser) ? Number(object.createUser) : undefined,
+      createDate: isSet(object.createDate) ? String(object.createDate) : undefined,
+      modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : undefined,
+      modifyDate: isSet(object.modifyDate) ? String(object.modifyDate) : undefined,
     };
   },
 
   toJSON(message: LegacyChallengePhase): unknown {
     const obj: any = {};
-    message.projectPhaseId !== undefined &&
-      (obj.projectPhaseId = Math.round(message.projectPhaseId));
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.phaseTypeId !== undefined &&
-      (obj.phaseTypeId = Math.round(message.phaseTypeId));
-    message.phaseStatusId !== undefined &&
-      (obj.phaseStatusId = Math.round(message.phaseStatusId));
-    message.fixedStartTime !== undefined &&
-      (obj.fixedStartTime = message.fixedStartTime);
-    message.scheduledStartTime !== undefined &&
-      (obj.scheduledStartTime = message.scheduledStartTime);
-    message.scheduledEndTime !== undefined &&
-      (obj.scheduledEndTime = message.scheduledEndTime);
-    message.actualStartTime !== undefined &&
-      (obj.actualStartTime = message.actualStartTime);
-    message.actualEndTime !== undefined &&
-      (obj.actualEndTime = message.actualEndTime);
-    message.duration !== undefined &&
-      (obj.duration = Math.round(message.duration));
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
+    message.projectPhaseId !== undefined && (obj.projectPhaseId = Math.round(message.projectPhaseId));
+    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
+    message.phaseTypeId !== undefined && (obj.phaseTypeId = Math.round(message.phaseTypeId));
+    message.phaseStatusId !== undefined && (obj.phaseStatusId = Math.round(message.phaseStatusId));
+    message.fixedStartTime !== undefined && (obj.fixedStartTime = message.fixedStartTime);
+    message.scheduledStartTime !== undefined && (obj.scheduledStartTime = message.scheduledStartTime);
+    message.scheduledEndTime !== undefined && (obj.scheduledEndTime = message.scheduledEndTime);
+    message.actualStartTime !== undefined && (obj.actualStartTime = message.actualStartTime);
+    message.actualEndTime !== undefined && (obj.actualEndTime = message.actualEndTime);
+    message.duration !== undefined && (obj.duration = Math.round(message.duration));
+    message.createUser !== undefined && (obj.createUser = Math.round(message.createUser));
     message.createDate !== undefined && (obj.createDate = message.createDate);
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
+    message.modifyUser !== undefined && (obj.modifyUser = Math.round(message.modifyUser));
     message.modifyDate !== undefined && (obj.modifyDate = message.modifyDate);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<LegacyChallengePhase>, I>>(
-    base?: I
-  ): LegacyChallengePhase {
+  create<I extends Exact<DeepPartial<LegacyChallengePhase>, I>>(base?: I): LegacyChallengePhase {
     return LegacyChallengePhase.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<LegacyChallengePhase>, I>>(
-    object: I
-  ): LegacyChallengePhase {
+  fromPartial<I extends Exact<DeepPartial<LegacyChallengePhase>, I>>(object: I): LegacyChallengePhase {
     const message = createBaseLegacyChallengePhase();
     message.projectPhaseId = object.projectPhaseId ?? 0;
     message.projectId = object.projectId ?? 0;
@@ -293,10 +249,7 @@ function createBasePhaseType(): PhaseType {
 }
 
 export const PhaseType = {
-  encode(
-    message: PhaseType,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: PhaseType, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.phaseTypeId !== 0) {
       writer.uint32(8).int64(message.phaseTypeId);
     }
@@ -361,36 +314,22 @@ export const PhaseType = {
     return {
       phaseTypeId: isSet(object.phaseTypeId) ? Number(object.phaseTypeId) : 0,
       name: isSet(object.name) ? String(object.name) : "",
-      description: isSet(object.description)
-        ? String(object.description)
-        : undefined,
-      createUser: isSet(object.createUser)
-        ? Number(object.createUser)
-        : undefined,
-      createDate: isSet(object.createDate)
-        ? String(object.createDate)
-        : undefined,
-      modifyUser: isSet(object.modifyUser)
-        ? Number(object.modifyUser)
-        : undefined,
-      modifyDate: isSet(object.modifyDate)
-        ? String(object.modifyDate)
-        : undefined,
+      description: isSet(object.description) ? String(object.description) : undefined,
+      createUser: isSet(object.createUser) ? Number(object.createUser) : undefined,
+      createDate: isSet(object.createDate) ? String(object.createDate) : undefined,
+      modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : undefined,
+      modifyDate: isSet(object.modifyDate) ? String(object.modifyDate) : undefined,
     };
   },
 
   toJSON(message: PhaseType): unknown {
     const obj: any = {};
-    message.phaseTypeId !== undefined &&
-      (obj.phaseTypeId = Math.round(message.phaseTypeId));
+    message.phaseTypeId !== undefined && (obj.phaseTypeId = Math.round(message.phaseTypeId));
     message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined &&
-      (obj.description = message.description);
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
+    message.description !== undefined && (obj.description = message.description);
+    message.createUser !== undefined && (obj.createUser = Math.round(message.createUser));
     message.createDate !== undefined && (obj.createDate = message.createDate);
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
+    message.modifyUser !== undefined && (obj.modifyUser = Math.round(message.modifyUser));
     message.modifyDate !== undefined && (obj.modifyDate = message.modifyDate);
     return obj;
   },
@@ -399,9 +338,7 @@ export const PhaseType = {
     return PhaseType.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<PhaseType>, I>>(
-    object: I
-  ): PhaseType {
+  fromPartial<I extends Exact<DeepPartial<PhaseType>, I>>(object: I): PhaseType {
     const message = createBasePhaseType();
     message.phaseTypeId = object.phaseTypeId ?? 0;
     message.name = object.name ?? "";
@@ -419,20 +356,14 @@ function createBaseLegacyChallengePhaseList(): LegacyChallengePhaseList {
 }
 
 export const LegacyChallengePhaseList = {
-  encode(
-    message: LegacyChallengePhaseList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: LegacyChallengePhaseList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.phases) {
       LegacyChallengePhase.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): LegacyChallengePhaseList {
+  decode(input: _m0.Reader | Uint8Array, length?: number): LegacyChallengePhaseList {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseLegacyChallengePhaseList();
@@ -440,9 +371,7 @@ export const LegacyChallengePhaseList = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.phases.push(
-            LegacyChallengePhase.decode(reader, reader.uint32())
-          );
+          message.phases.push(LegacyChallengePhase.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -454,36 +383,27 @@ export const LegacyChallengePhaseList = {
 
   fromJSON(object: any): LegacyChallengePhaseList {
     return {
-      phases: Array.isArray(object?.phases)
-        ? object.phases.map((e: any) => LegacyChallengePhase.fromJSON(e))
-        : [],
+      phases: Array.isArray(object?.phases) ? object.phases.map((e: any) => LegacyChallengePhase.fromJSON(e)) : [],
     };
   },
 
   toJSON(message: LegacyChallengePhaseList): unknown {
     const obj: any = {};
     if (message.phases) {
-      obj.phases = message.phases.map((e) =>
-        e ? LegacyChallengePhase.toJSON(e) : undefined
-      );
+      obj.phases = message.phases.map((e) => e ? LegacyChallengePhase.toJSON(e) : undefined);
     } else {
       obj.phases = [];
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<LegacyChallengePhaseList>, I>>(
-    base?: I
-  ): LegacyChallengePhaseList {
+  create<I extends Exact<DeepPartial<LegacyChallengePhaseList>, I>>(base?: I): LegacyChallengePhaseList {
     return LegacyChallengePhaseList.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<LegacyChallengePhaseList>, I>>(
-    object: I
-  ): LegacyChallengePhaseList {
+  fromPartial<I extends Exact<DeepPartial<LegacyChallengePhaseList>, I>>(object: I): LegacyChallengePhaseList {
     const message = createBaseLegacyChallengePhaseList();
-    message.phases =
-      object.phases?.map((e) => LegacyChallengePhase.fromPartial(e)) || [];
+    message.phases = object.phases?.map((e) => LegacyChallengePhase.fromPartial(e)) || [];
     return message;
   },
 };
@@ -493,10 +413,7 @@ function createBasePhaseTypeList(): PhaseTypeList {
 }
 
 export const PhaseTypeList = {
-  encode(
-    message: PhaseTypeList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: PhaseTypeList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.items) {
       PhaseType.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -522,34 +439,24 @@ export const PhaseTypeList = {
   },
 
   fromJSON(object: any): PhaseTypeList {
-    return {
-      items: Array.isArray(object?.items)
-        ? object.items.map((e: any) => PhaseType.fromJSON(e))
-        : [],
-    };
+    return { items: Array.isArray(object?.items) ? object.items.map((e: any) => PhaseType.fromJSON(e)) : [] };
   },
 
   toJSON(message: PhaseTypeList): unknown {
     const obj: any = {};
     if (message.items) {
-      obj.items = message.items.map((e) =>
-        e ? PhaseType.toJSON(e) : undefined
-      );
+      obj.items = message.items.map((e) => e ? PhaseType.toJSON(e) : undefined);
     } else {
       obj.items = [];
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<PhaseTypeList>, I>>(
-    base?: I
-  ): PhaseTypeList {
+  create<I extends Exact<DeepPartial<PhaseTypeList>, I>>(base?: I): PhaseTypeList {
     return PhaseTypeList.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<PhaseTypeList>, I>>(
-    object: I
-  ): PhaseTypeList {
+  fromPartial<I extends Exact<DeepPartial<PhaseTypeList>, I>>(object: I): PhaseTypeList {
     const message = createBasePhaseTypeList();
     message.items = object.items?.map((e) => PhaseType.fromPartial(e)) || [];
     return message;
@@ -573,10 +480,7 @@ function createBaseCreatePhaseInput(): CreatePhaseInput {
 }
 
 export const CreatePhaseInput = {
-  encode(
-    message: CreatePhaseInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CreatePhaseInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.projectId !== 0) {
       writer.uint32(8).int64(message.projectId);
     }
@@ -665,68 +569,39 @@ export const CreatePhaseInput = {
     return {
       projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
       phaseTypeId: isSet(object.phaseTypeId) ? Number(object.phaseTypeId) : 0,
-      phaseStatusId: isSet(object.phaseStatusId)
-        ? Number(object.phaseStatusId)
-        : 0,
-      fixedStartTime: isSet(object.fixedStartTime)
-        ? String(object.fixedStartTime)
-        : undefined,
-      scheduledStartTime: isSet(object.scheduledStartTime)
-        ? String(object.scheduledStartTime)
-        : undefined,
-      scheduledEndTime: isSet(object.scheduledEndTime)
-        ? String(object.scheduledEndTime)
-        : undefined,
-      actualStartTime: isSet(object.actualStartTime)
-        ? String(object.actualStartTime)
-        : undefined,
-      actualEndTime: isSet(object.actualEndTime)
-        ? String(object.actualEndTime)
-        : undefined,
+      phaseStatusId: isSet(object.phaseStatusId) ? Number(object.phaseStatusId) : 0,
+      fixedStartTime: isSet(object.fixedStartTime) ? String(object.fixedStartTime) : undefined,
+      scheduledStartTime: isSet(object.scheduledStartTime) ? String(object.scheduledStartTime) : undefined,
+      scheduledEndTime: isSet(object.scheduledEndTime) ? String(object.scheduledEndTime) : undefined,
+      actualStartTime: isSet(object.actualStartTime) ? String(object.actualStartTime) : undefined,
+      actualEndTime: isSet(object.actualEndTime) ? String(object.actualEndTime) : undefined,
       duration: isSet(object.duration) ? Number(object.duration) : 0,
       createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
-      modifyUser: isSet(object.modifyUser)
-        ? Number(object.modifyUser)
-        : undefined,
+      modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : undefined,
     };
   },
 
   toJSON(message: CreatePhaseInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.phaseTypeId !== undefined &&
-      (obj.phaseTypeId = Math.round(message.phaseTypeId));
-    message.phaseStatusId !== undefined &&
-      (obj.phaseStatusId = Math.round(message.phaseStatusId));
-    message.fixedStartTime !== undefined &&
-      (obj.fixedStartTime = message.fixedStartTime);
-    message.scheduledStartTime !== undefined &&
-      (obj.scheduledStartTime = message.scheduledStartTime);
-    message.scheduledEndTime !== undefined &&
-      (obj.scheduledEndTime = message.scheduledEndTime);
-    message.actualStartTime !== undefined &&
-      (obj.actualStartTime = message.actualStartTime);
-    message.actualEndTime !== undefined &&
-      (obj.actualEndTime = message.actualEndTime);
-    message.duration !== undefined &&
-      (obj.duration = Math.round(message.duration));
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
+    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
+    message.phaseTypeId !== undefined && (obj.phaseTypeId = Math.round(message.phaseTypeId));
+    message.phaseStatusId !== undefined && (obj.phaseStatusId = Math.round(message.phaseStatusId));
+    message.fixedStartTime !== undefined && (obj.fixedStartTime = message.fixedStartTime);
+    message.scheduledStartTime !== undefined && (obj.scheduledStartTime = message.scheduledStartTime);
+    message.scheduledEndTime !== undefined && (obj.scheduledEndTime = message.scheduledEndTime);
+    message.actualStartTime !== undefined && (obj.actualStartTime = message.actualStartTime);
+    message.actualEndTime !== undefined && (obj.actualEndTime = message.actualEndTime);
+    message.duration !== undefined && (obj.duration = Math.round(message.duration));
+    message.createUser !== undefined && (obj.createUser = Math.round(message.createUser));
+    message.modifyUser !== undefined && (obj.modifyUser = Math.round(message.modifyUser));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreatePhaseInput>, I>>(
-    base?: I
-  ): CreatePhaseInput {
+  create<I extends Exact<DeepPartial<CreatePhaseInput>, I>>(base?: I): CreatePhaseInput {
     return CreatePhaseInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreatePhaseInput>, I>>(
-    object: I
-  ): CreatePhaseInput {
+  fromPartial<I extends Exact<DeepPartial<CreatePhaseInput>, I>>(object: I): CreatePhaseInput {
     const message = createBaseCreatePhaseInput();
     message.projectId = object.projectId ?? 0;
     message.phaseTypeId = object.phaseTypeId ?? 0;
@@ -762,41 +637,21 @@ var tsProtoGlobalThis: any = (() => {
   throw "Unable to locate global object";
 })();
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
-    }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
-      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
-    };
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }
