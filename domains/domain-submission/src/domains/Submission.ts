@@ -7,11 +7,14 @@ import {
   Submission,
   SubmissionList,
   CreateSubmissionInput,
+  UpdateSubmissionInput,
 } from "../models/domain-layer/submission/submission";
 import {
+  CreateResult,
   LookupCriteria,
   ScanRequest,
   ScanResult,
+  UpdateResult,
 } from "@topcoder-framework/lib-common";
 
 export class SubmissionDomain {
@@ -48,20 +51,19 @@ export class SubmissionDomain {
     param: CreateSubmissionInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<CreateSubmissionInput, Metadata, Submission>(
+    return promisify<CreateSubmissionInput, Metadata, CreateResult>(
       this.client.create.bind(this.client)
     )(param, metadata);
   }
 
-  //TODO
-  // public async update(
-  //   param: UpdateSubmissionInput,
-  //   metadata: Metadata = new Metadata()
-  // ) {
-  //   return promisify<UpdateSubmissionInput, Metadata, Submission>(
-  //     this.client.update.bind(this.client)
-  //   )(param, metadata);
-  // }
+  public async update(
+    param: UpdateSubmissionInput,
+    metadata: Metadata = new Metadata()
+  ) {
+    return promisify<UpdateSubmissionInput, Metadata, UpdateResult>(
+      this.client.update.bind(this.client)
+    )(param, metadata);
+  }
 
   public async delete(
     param: LookupCriteria,

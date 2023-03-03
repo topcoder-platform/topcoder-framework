@@ -19,16 +19,16 @@ import {
   UpdateResult,
 } from "@topcoder-framework/lib-common";
 import {
-  CreateSubmissionInput,
-  Submission,
-  SubmissionList,
-  UpdateSubmissionInput,
-} from "../submission";
+  CreateLongComponentStateInput,
+  LongComponentState,
+  UpdateLongComponentStateInput,
+} from "../long_component_state";
 
-export type SubmissionService = typeof SubmissionService;
-export const SubmissionService = {
+export type LegacyLongComponentStateService =
+  typeof LegacyLongComponentStateService;
+export const LegacyLongComponentStateService = {
   scan: {
-    path: "/topcoder.domain.service.submission.Submission/Scan",
+    path: "/topcoder.domain.service.legacy_long_component_state.LegacyLongComponentState/Scan",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: ScanRequest) =>
@@ -39,60 +39,51 @@ export const SubmissionService = {
     responseDeserialize: (value: Buffer) => ScanResult.decode(value),
   },
   lookup: {
-    path: "/topcoder.domain.service.submission.Submission/Lookup",
+    path: "/topcoder.domain.service.legacy_long_component_state.LegacyLongComponentState/Lookup",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: LookupCriteria) =>
       Buffer.from(LookupCriteria.encode(value).finish()),
     requestDeserialize: (value: Buffer) => LookupCriteria.decode(value),
-    responseSerialize: (value: Submission) =>
-      Buffer.from(Submission.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => Submission.decode(value),
+    responseSerialize: (value: LongComponentState) =>
+      Buffer.from(LongComponentState.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => LongComponentState.decode(value),
   },
   create: {
-    path: "/topcoder.domain.service.submission.Submission/Create",
+    path: "/topcoder.domain.service.legacy_long_component_state.LegacyLongComponentState/Create",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: CreateSubmissionInput) =>
-      Buffer.from(CreateSubmissionInput.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => CreateSubmissionInput.decode(value),
+    requestSerialize: (value: CreateLongComponentStateInput) =>
+      Buffer.from(CreateLongComponentStateInput.encode(value).finish()),
+    requestDeserialize: (value: Buffer) =>
+      CreateLongComponentStateInput.decode(value),
     responseSerialize: (value: CreateResult) =>
       Buffer.from(CreateResult.encode(value).finish()),
     responseDeserialize: (value: Buffer) => CreateResult.decode(value),
   },
   update: {
-    path: "/topcoder.domain.service.submission.Submission/Update",
+    path: "/topcoder.domain.service.legacy_long_component_state.LegacyLongComponentState/Update",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: UpdateSubmissionInput) =>
-      Buffer.from(UpdateSubmissionInput.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => UpdateSubmissionInput.decode(value),
+    requestSerialize: (value: UpdateLongComponentStateInput) =>
+      Buffer.from(UpdateLongComponentStateInput.encode(value).finish()),
+    requestDeserialize: (value: Buffer) =>
+      UpdateLongComponentStateInput.decode(value),
     responseSerialize: (value: UpdateResult) =>
       Buffer.from(UpdateResult.encode(value).finish()),
     responseDeserialize: (value: Buffer) => UpdateResult.decode(value),
   },
-  delete: {
-    path: "/topcoder.domain.service.submission.Submission/Delete",
-    requestStream: false,
-    responseStream: false,
-    requestSerialize: (value: LookupCriteria) =>
-      Buffer.from(LookupCriteria.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => LookupCriteria.decode(value),
-    responseSerialize: (value: SubmissionList) =>
-      Buffer.from(SubmissionList.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => SubmissionList.decode(value),
-  },
 } as const;
 
-export interface SubmissionServer extends UntypedServiceImplementation {
+export interface LegacyLongComponentStateServer
+  extends UntypedServiceImplementation {
   scan: handleUnaryCall<ScanRequest, ScanResult>;
-  lookup: handleUnaryCall<LookupCriteria, Submission>;
-  create: handleUnaryCall<CreateSubmissionInput, CreateResult>;
-  update: handleUnaryCall<UpdateSubmissionInput, UpdateResult>;
-  delete: handleUnaryCall<LookupCriteria, SubmissionList>;
+  lookup: handleUnaryCall<LookupCriteria, LongComponentState>;
+  create: handleUnaryCall<CreateLongComponentStateInput, CreateResult>;
+  update: handleUnaryCall<UpdateLongComponentStateInput, UpdateResult>;
 }
 
-export interface SubmissionClient extends Client {
+export interface LegacyLongComponentStateClient extends Client {
   scan(
     request: ScanRequest,
     callback: (error: ServiceError | null, response: ScanResult) => void
@@ -110,74 +101,59 @@ export interface SubmissionClient extends Client {
   ): ClientUnaryCall;
   lookup(
     request: LookupCriteria,
-    callback: (error: ServiceError | null, response: Submission) => void
+    callback: (error: ServiceError | null, response: LongComponentState) => void
   ): ClientUnaryCall;
   lookup(
     request: LookupCriteria,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: Submission) => void
+    callback: (error: ServiceError | null, response: LongComponentState) => void
   ): ClientUnaryCall;
   lookup(
     request: LookupCriteria,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: Submission) => void
+    callback: (error: ServiceError | null, response: LongComponentState) => void
   ): ClientUnaryCall;
   create(
-    request: CreateSubmissionInput,
+    request: CreateLongComponentStateInput,
     callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   create(
-    request: CreateSubmissionInput,
+    request: CreateLongComponentStateInput,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   create(
-    request: CreateSubmissionInput,
+    request: CreateLongComponentStateInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: CreateResult) => void
   ): ClientUnaryCall;
   update(
-    request: UpdateSubmissionInput,
+    request: UpdateLongComponentStateInput,
     callback: (error: ServiceError | null, response: UpdateResult) => void
   ): ClientUnaryCall;
   update(
-    request: UpdateSubmissionInput,
+    request: UpdateLongComponentStateInput,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: UpdateResult) => void
   ): ClientUnaryCall;
   update(
-    request: UpdateSubmissionInput,
+    request: UpdateLongComponentStateInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: UpdateResult) => void
-  ): ClientUnaryCall;
-  delete(
-    request: LookupCriteria,
-    callback: (error: ServiceError | null, response: SubmissionList) => void
-  ): ClientUnaryCall;
-  delete(
-    request: LookupCriteria,
-    metadata: Metadata,
-    callback: (error: ServiceError | null, response: SubmissionList) => void
-  ): ClientUnaryCall;
-  delete(
-    request: LookupCriteria,
-    metadata: Metadata,
-    options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: SubmissionList) => void
   ): ClientUnaryCall;
 }
 
-export const SubmissionClient = makeGenericClientConstructor(
-  SubmissionService,
-  "topcoder.domain.service.submission.Submission"
+export const LegacyLongComponentStateClient = makeGenericClientConstructor(
+  LegacyLongComponentStateService,
+  "topcoder.domain.service.legacy_long_component_state.LegacyLongComponentState"
 ) as unknown as {
   new (
     address: string,
     credentials: ChannelCredentials,
     options?: Partial<ClientOptions>
-  ): SubmissionClient;
-  service: typeof SubmissionService;
+  ): LegacyLongComponentStateClient;
+  service: typeof LegacyLongComponentStateService;
 };

@@ -1,23 +1,25 @@
-require("dotenv").config();
-
+/* eslint-disable */
 const path = require("path");
-const { execSync } = require("child_process");
 const rimraf = require("rimraf");
 
-// const PROTO_DIR = process.env.SUBMISSION_DOMAIN_PROTO_PATH;
-const PROTO_DIR = "/Users/hamidtavakoli/topcoder/topcoder-framework/domains/domain-submission/node_modules/topcoder-interface";
+const { execSync } = require("child_process");
+
+const PROTO_DIR = path.join(
+  __dirname,
+  "../../../node_modules/topcoder-interface"
+);
+
 const MODEL_DIR = path.join(__dirname, "../src/models/");
 
-console.log("PROTO_DIR", PROTO_DIR)
-
 const PROTOC_PATH = "protoc";
+
 const PLUGIN_PATH = path.join(
   __dirname,
-  "../node_modules/.bin/protoc-gen-ts_proto"
+  "../../../node_modules/.bin/protoc-gen-ts_proto"
 );
 
 rimraf.sync(`${MODEL_DIR}/*`, {
-  glob: { ignore: `${MODEL_DIR}/tsconfig.json` },
+  glob: { ignore: `${MODEL_DIR}/*.json` },
 });
 
 const protoConfig = [
@@ -28,6 +30,8 @@ const protoConfig = [
   `--ts_proto_opt=addGrpcMetadata=true`,
   `--ts_proto_opt=outputServerImpl=false`,
   `--ts_proto_out=${MODEL_DIR}`,
+  `--ts_proto_opt=stringEnums=true`,
+  `--ts_proto_opt=useDate=string`,
   `--ts_proto_opt=Mcommon/common.proto=@topcoder-framework/lib-common`,
   `--ts_proto_opt=Mgoogle/protobuf/struct.proto=@topcoder-framework/lib-common`,
   `--ts_proto_opt=Mgoogle/protobuf/timestamp.proto=@topcoder-framework/lib-common`,

@@ -20,15 +20,14 @@ import {
 } from "@topcoder-framework/lib-common";
 import {
   CreateSubmissionInput,
-  Submission,
-  SubmissionList,
+  LegacySubmission,
   UpdateSubmissionInput,
 } from "../submission";
 
-export type SubmissionService = typeof SubmissionService;
-export const SubmissionService = {
+export type LegacySubmissionService = typeof LegacySubmissionService;
+export const LegacySubmissionService = {
   scan: {
-    path: "/topcoder.domain.service.submission.Submission/Scan",
+    path: "/topcoder.domain.service.legacy_submission.LegacySubmission/Scan",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: ScanRequest) =>
@@ -39,18 +38,18 @@ export const SubmissionService = {
     responseDeserialize: (value: Buffer) => ScanResult.decode(value),
   },
   lookup: {
-    path: "/topcoder.domain.service.submission.Submission/Lookup",
+    path: "/topcoder.domain.service.legacy_submission.LegacySubmission/Lookup",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: LookupCriteria) =>
       Buffer.from(LookupCriteria.encode(value).finish()),
     requestDeserialize: (value: Buffer) => LookupCriteria.decode(value),
-    responseSerialize: (value: Submission) =>
-      Buffer.from(Submission.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => Submission.decode(value),
+    responseSerialize: (value: LegacySubmission) =>
+      Buffer.from(LegacySubmission.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => LegacySubmission.decode(value),
   },
   create: {
-    path: "/topcoder.domain.service.submission.Submission/Create",
+    path: "/topcoder.domain.service.legacy_submission.LegacySubmission/Create",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: CreateSubmissionInput) =>
@@ -61,7 +60,7 @@ export const SubmissionService = {
     responseDeserialize: (value: Buffer) => CreateResult.decode(value),
   },
   update: {
-    path: "/topcoder.domain.service.submission.Submission/Update",
+    path: "/topcoder.domain.service.legacy_submission.LegacySubmission/Update",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: UpdateSubmissionInput) =>
@@ -71,28 +70,16 @@ export const SubmissionService = {
       Buffer.from(UpdateResult.encode(value).finish()),
     responseDeserialize: (value: Buffer) => UpdateResult.decode(value),
   },
-  delete: {
-    path: "/topcoder.domain.service.submission.Submission/Delete",
-    requestStream: false,
-    responseStream: false,
-    requestSerialize: (value: LookupCriteria) =>
-      Buffer.from(LookupCriteria.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => LookupCriteria.decode(value),
-    responseSerialize: (value: SubmissionList) =>
-      Buffer.from(SubmissionList.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => SubmissionList.decode(value),
-  },
 } as const;
 
-export interface SubmissionServer extends UntypedServiceImplementation {
+export interface LegacySubmissionServer extends UntypedServiceImplementation {
   scan: handleUnaryCall<ScanRequest, ScanResult>;
-  lookup: handleUnaryCall<LookupCriteria, Submission>;
+  lookup: handleUnaryCall<LookupCriteria, LegacySubmission>;
   create: handleUnaryCall<CreateSubmissionInput, CreateResult>;
   update: handleUnaryCall<UpdateSubmissionInput, UpdateResult>;
-  delete: handleUnaryCall<LookupCriteria, SubmissionList>;
 }
 
-export interface SubmissionClient extends Client {
+export interface LegacySubmissionClient extends Client {
   scan(
     request: ScanRequest,
     callback: (error: ServiceError | null, response: ScanResult) => void
@@ -110,18 +97,18 @@ export interface SubmissionClient extends Client {
   ): ClientUnaryCall;
   lookup(
     request: LookupCriteria,
-    callback: (error: ServiceError | null, response: Submission) => void
+    callback: (error: ServiceError | null, response: LegacySubmission) => void
   ): ClientUnaryCall;
   lookup(
     request: LookupCriteria,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: Submission) => void
+    callback: (error: ServiceError | null, response: LegacySubmission) => void
   ): ClientUnaryCall;
   lookup(
     request: LookupCriteria,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: Submission) => void
+    callback: (error: ServiceError | null, response: LegacySubmission) => void
   ): ClientUnaryCall;
   create(
     request: CreateSubmissionInput,
@@ -152,32 +139,17 @@ export interface SubmissionClient extends Client {
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: UpdateResult) => void
-  ): ClientUnaryCall;
-  delete(
-    request: LookupCriteria,
-    callback: (error: ServiceError | null, response: SubmissionList) => void
-  ): ClientUnaryCall;
-  delete(
-    request: LookupCriteria,
-    metadata: Metadata,
-    callback: (error: ServiceError | null, response: SubmissionList) => void
-  ): ClientUnaryCall;
-  delete(
-    request: LookupCriteria,
-    metadata: Metadata,
-    options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: SubmissionList) => void
   ): ClientUnaryCall;
 }
 
-export const SubmissionClient = makeGenericClientConstructor(
-  SubmissionService,
-  "topcoder.domain.service.submission.Submission"
+export const LegacySubmissionClient = makeGenericClientConstructor(
+  LegacySubmissionService,
+  "topcoder.domain.service.legacy_submission.LegacySubmission"
 ) as unknown as {
   new (
     address: string,
     credentials: ChannelCredentials,
     options?: Partial<ClientOptions>
-  ): SubmissionClient;
-  service: typeof SubmissionService;
+  ): LegacySubmissionClient;
+  service: typeof LegacySubmissionService;
 };

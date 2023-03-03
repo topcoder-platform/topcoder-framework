@@ -1,70 +1,55 @@
 /* eslint-disable */
+import { ScanCriteria } from "@topcoder-framework/lib-common";
 import Long from "long";
 import _m0 from "protobufjs/minimal";
 
 export interface Submission {
   id: string;
   challengeId: string;
-  created: string;
+  created: number;
   createdBy: string;
   fileType: string;
   legacyChallengeId?: number | undefined;
   legacySubmissionId?: number | undefined;
   memberId: number;
   submissionPhaseId?: string | undefined;
-  submittedDate?: string | undefined;
+  submittedDate?: number | undefined;
   type: string;
-  updated?: string | undefined;
+  updated?: number | undefined;
   updatedBy?: string | undefined;
   url?: string | undefined;
-}
-
-export interface CreateSubmissionInput {}
-
-export interface CreateSubmissionInput_authUser {
-  handle: string;
-  sub: string;
-  roles: string[];
-  scopes: string[];
-}
-
-export interface CreateSubmissionInput_files {
-  submission: string;
-}
-
-export interface CreateSubmissionInput_entity {
-  url: string;
-  fileType: string;
-  challengeId: string;
-  type: string;
-  memberId: string;
   legacyUploadId?: number | undefined;
+  v5ChallengeId?: string | undefined;
+}
+
+export interface CreateSubmissionInput {
+  challengeId: string;
+  fileType: string;
+  memberId: number;
+  type: string;
+  url?: string | undefined;
+  legacyChallengeId?: number | undefined;
   legacySubmissionId?: number | undefined;
   submissionPhaseId?: string | undefined;
-  submittedDate?: string | undefined;
+  submittedDate?: number | undefined;
+  legacyUploadId?: number | undefined;
 }
 
 export interface UpdateSubmissionInput {
-  submissionId: string;
+  filterCriteria: ScanCriteria[];
+  updateInput?: UpdateSubmissionInput_UpdateInput;
 }
 
-export interface UpdateSubmissionInput_authUser {
-  handle: string;
-  sub: string;
-  roles: string[];
-  scopes: string[];
-}
-
-export interface UpdateSubmissionInput_entity {
-  url?: string | undefined;
-  fileType?: string | undefined;
-  challengeId?: string | undefined;
+export interface UpdateSubmissionInput_UpdateInput {
   type?: string | undefined;
-  memberId?: string | undefined;
-  legacyUploadId?: number | undefined;
-  legacySubmissionId?: number | undefined;
+  url?: string | undefined;
+  memberId?: number | undefined;
+  challengeId?: string | undefined;
+  submittedDate?: number | undefined;
+  legacyChallengeId?: string | undefined;
+  legacySubmissionId?: string | undefined;
+  submissionUploadId?: string | undefined;
   submissionPhaseId?: string | undefined;
-  submittedDate?: string | undefined;
 }
 
 export interface SubmissionList {
@@ -75,7 +60,7 @@ function createBaseSubmission(): Submission {
   return {
     id: "",
     challengeId: "",
-    created: "",
+    created: 0,
     createdBy: "",
     fileType: "",
     legacyChallengeId: undefined,
@@ -87,6 +72,8 @@ function createBaseSubmission(): Submission {
     updated: undefined,
     updatedBy: undefined,
     url: undefined,
+    legacyUploadId: undefined,
+    v5ChallengeId: undefined,
   };
 }
 
@@ -101,8 +88,8 @@ export const Submission = {
     if (message.challengeId !== "") {
       writer.uint32(18).string(message.challengeId);
     }
-    if (message.created !== "") {
-      writer.uint32(26).string(message.created);
+    if (message.created !== 0) {
+      writer.uint32(24).int64(message.created);
     }
     if (message.createdBy !== "") {
       writer.uint32(34).string(message.createdBy);
@@ -123,19 +110,25 @@ export const Submission = {
       writer.uint32(74).string(message.submissionPhaseId);
     }
     if (message.submittedDate !== undefined) {
-      writer.uint32(82).string(message.submittedDate);
+      writer.uint32(80).int64(message.submittedDate);
     }
     if (message.type !== "") {
       writer.uint32(90).string(message.type);
     }
     if (message.updated !== undefined) {
-      writer.uint32(98).string(message.updated);
+      writer.uint32(96).int64(message.updated);
     }
     if (message.updatedBy !== undefined) {
       writer.uint32(106).string(message.updatedBy);
     }
     if (message.url !== undefined) {
       writer.uint32(114).string(message.url);
+    }
+    if (message.legacyUploadId !== undefined) {
+      writer.uint32(120).int64(message.legacyUploadId);
+    }
+    if (message.v5ChallengeId !== undefined) {
+      writer.uint32(130).string(message.v5ChallengeId);
     }
     return writer;
   },
@@ -154,7 +147,7 @@ export const Submission = {
           message.challengeId = reader.string();
           break;
         case 3:
-          message.created = reader.string();
+          message.created = longToNumber(reader.int64() as Long);
           break;
         case 4:
           message.createdBy = reader.string();
@@ -175,19 +168,25 @@ export const Submission = {
           message.submissionPhaseId = reader.string();
           break;
         case 10:
-          message.submittedDate = reader.string();
+          message.submittedDate = longToNumber(reader.int64() as Long);
           break;
         case 11:
           message.type = reader.string();
           break;
         case 12:
-          message.updated = reader.string();
+          message.updated = longToNumber(reader.int64() as Long);
           break;
         case 13:
           message.updatedBy = reader.string();
           break;
         case 14:
           message.url = reader.string();
+          break;
+        case 15:
+          message.legacyUploadId = longToNumber(reader.int64() as Long);
+          break;
+        case 16:
+          message.v5ChallengeId = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -201,7 +200,7 @@ export const Submission = {
     return {
       id: isSet(object.id) ? String(object.id) : "",
       challengeId: isSet(object.challengeId) ? String(object.challengeId) : "",
-      created: isSet(object.created) ? String(object.created) : "",
+      created: isSet(object.created) ? Number(object.created) : 0,
       createdBy: isSet(object.createdBy) ? String(object.createdBy) : "",
       fileType: isSet(object.fileType) ? String(object.fileType) : "",
       legacyChallengeId: isSet(object.legacyChallengeId)
@@ -215,12 +214,18 @@ export const Submission = {
         ? String(object.submissionPhaseId)
         : undefined,
       submittedDate: isSet(object.submittedDate)
-        ? String(object.submittedDate)
+        ? Number(object.submittedDate)
         : undefined,
       type: isSet(object.type) ? String(object.type) : "",
-      updated: isSet(object.updated) ? String(object.updated) : undefined,
+      updated: isSet(object.updated) ? Number(object.updated) : undefined,
       updatedBy: isSet(object.updatedBy) ? String(object.updatedBy) : undefined,
       url: isSet(object.url) ? String(object.url) : undefined,
+      legacyUploadId: isSet(object.legacyUploadId)
+        ? Number(object.legacyUploadId)
+        : undefined,
+      v5ChallengeId: isSet(object.v5ChallengeId)
+        ? String(object.v5ChallengeId)
+        : undefined,
     };
   },
 
@@ -229,7 +234,8 @@ export const Submission = {
     message.id !== undefined && (obj.id = message.id);
     message.challengeId !== undefined &&
       (obj.challengeId = message.challengeId);
-    message.created !== undefined && (obj.created = message.created);
+    message.created !== undefined &&
+      (obj.created = Math.round(message.created));
     message.createdBy !== undefined && (obj.createdBy = message.createdBy);
     message.fileType !== undefined && (obj.fileType = message.fileType);
     message.legacyChallengeId !== undefined &&
@@ -241,11 +247,16 @@ export const Submission = {
     message.submissionPhaseId !== undefined &&
       (obj.submissionPhaseId = message.submissionPhaseId);
     message.submittedDate !== undefined &&
-      (obj.submittedDate = message.submittedDate);
+      (obj.submittedDate = Math.round(message.submittedDate));
     message.type !== undefined && (obj.type = message.type);
-    message.updated !== undefined && (obj.updated = message.updated);
+    message.updated !== undefined &&
+      (obj.updated = Math.round(message.updated));
     message.updatedBy !== undefined && (obj.updatedBy = message.updatedBy);
     message.url !== undefined && (obj.url = message.url);
+    message.legacyUploadId !== undefined &&
+      (obj.legacyUploadId = Math.round(message.legacyUploadId));
+    message.v5ChallengeId !== undefined &&
+      (obj.v5ChallengeId = message.v5ChallengeId);
     return obj;
   },
 
@@ -259,7 +270,7 @@ export const Submission = {
     const message = createBaseSubmission();
     message.id = object.id ?? "";
     message.challengeId = object.challengeId ?? "";
-    message.created = object.created ?? "";
+    message.created = object.created ?? 0;
     message.createdBy = object.createdBy ?? "";
     message.fileType = object.fileType ?? "";
     message.legacyChallengeId = object.legacyChallengeId ?? undefined;
@@ -271,19 +282,62 @@ export const Submission = {
     message.updated = object.updated ?? undefined;
     message.updatedBy = object.updatedBy ?? undefined;
     message.url = object.url ?? undefined;
+    message.legacyUploadId = object.legacyUploadId ?? undefined;
+    message.v5ChallengeId = object.v5ChallengeId ?? undefined;
     return message;
   },
 };
 
 function createBaseCreateSubmissionInput(): CreateSubmissionInput {
-  return {};
+  return {
+    challengeId: "",
+    fileType: "",
+    memberId: 0,
+    type: "",
+    url: undefined,
+    legacyChallengeId: undefined,
+    legacySubmissionId: undefined,
+    submissionPhaseId: undefined,
+    submittedDate: undefined,
+    legacyUploadId: undefined,
+  };
 }
 
 export const CreateSubmissionInput = {
   encode(
-    _: CreateSubmissionInput,
+    message: CreateSubmissionInput,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
+    if (message.challengeId !== "") {
+      writer.uint32(10).string(message.challengeId);
+    }
+    if (message.fileType !== "") {
+      writer.uint32(18).string(message.fileType);
+    }
+    if (message.memberId !== 0) {
+      writer.uint32(24).int64(message.memberId);
+    }
+    if (message.type !== "") {
+      writer.uint32(34).string(message.type);
+    }
+    if (message.url !== undefined) {
+      writer.uint32(42).string(message.url);
+    }
+    if (message.legacyChallengeId !== undefined) {
+      writer.uint32(48).int64(message.legacyChallengeId);
+    }
+    if (message.legacySubmissionId !== undefined) {
+      writer.uint32(56).int64(message.legacySubmissionId);
+    }
+    if (message.submissionPhaseId !== undefined) {
+      writer.uint32(66).string(message.submissionPhaseId);
+    }
+    if (message.submittedDate !== undefined) {
+      writer.uint32(72).int64(message.submittedDate);
+    }
+    if (message.legacyUploadId !== undefined) {
+      writer.uint32(80).int64(message.legacyUploadId);
+    }
     return writer;
   },
 
@@ -297,6 +351,36 @@ export const CreateSubmissionInput = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.challengeId = reader.string();
+          break;
+        case 2:
+          message.fileType = reader.string();
+          break;
+        case 3:
+          message.memberId = longToNumber(reader.int64() as Long);
+          break;
+        case 4:
+          message.type = reader.string();
+          break;
+        case 5:
+          message.url = reader.string();
+          break;
+        case 6:
+          message.legacyChallengeId = longToNumber(reader.int64() as Long);
+          break;
+        case 7:
+          message.legacySubmissionId = longToNumber(reader.int64() as Long);
+          break;
+        case 8:
+          message.submissionPhaseId = reader.string();
+          break;
+        case 9:
+          message.submittedDate = longToNumber(reader.int64() as Long);
+          break;
+        case 10:
+          message.legacyUploadId = longToNumber(reader.int64() as Long);
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -305,12 +389,50 @@ export const CreateSubmissionInput = {
     return message;
   },
 
-  fromJSON(_: any): CreateSubmissionInput {
-    return {};
+  fromJSON(object: any): CreateSubmissionInput {
+    return {
+      challengeId: isSet(object.challengeId) ? String(object.challengeId) : "",
+      fileType: isSet(object.fileType) ? String(object.fileType) : "",
+      memberId: isSet(object.memberId) ? Number(object.memberId) : 0,
+      type: isSet(object.type) ? String(object.type) : "",
+      url: isSet(object.url) ? String(object.url) : undefined,
+      legacyChallengeId: isSet(object.legacyChallengeId)
+        ? Number(object.legacyChallengeId)
+        : undefined,
+      legacySubmissionId: isSet(object.legacySubmissionId)
+        ? Number(object.legacySubmissionId)
+        : undefined,
+      submissionPhaseId: isSet(object.submissionPhaseId)
+        ? String(object.submissionPhaseId)
+        : undefined,
+      submittedDate: isSet(object.submittedDate)
+        ? Number(object.submittedDate)
+        : undefined,
+      legacyUploadId: isSet(object.legacyUploadId)
+        ? Number(object.legacyUploadId)
+        : undefined,
+    };
   },
 
-  toJSON(_: CreateSubmissionInput): unknown {
+  toJSON(message: CreateSubmissionInput): unknown {
     const obj: any = {};
+    message.challengeId !== undefined &&
+      (obj.challengeId = message.challengeId);
+    message.fileType !== undefined && (obj.fileType = message.fileType);
+    message.memberId !== undefined &&
+      (obj.memberId = Math.round(message.memberId));
+    message.type !== undefined && (obj.type = message.type);
+    message.url !== undefined && (obj.url = message.url);
+    message.legacyChallengeId !== undefined &&
+      (obj.legacyChallengeId = Math.round(message.legacyChallengeId));
+    message.legacySubmissionId !== undefined &&
+      (obj.legacySubmissionId = Math.round(message.legacySubmissionId));
+    message.submissionPhaseId !== undefined &&
+      (obj.submissionPhaseId = message.submissionPhaseId);
+    message.submittedDate !== undefined &&
+      (obj.submittedDate = Math.round(message.submittedDate));
+    message.legacyUploadId !== undefined &&
+      (obj.legacyUploadId = Math.round(message.legacyUploadId));
     return obj;
   },
 
@@ -321,338 +443,25 @@ export const CreateSubmissionInput = {
   },
 
   fromPartial<I extends Exact<DeepPartial<CreateSubmissionInput>, I>>(
-    _: I
+    object: I
   ): CreateSubmissionInput {
     const message = createBaseCreateSubmissionInput();
-    return message;
-  },
-};
-
-function createBaseCreateSubmissionInput_authUser(): CreateSubmissionInput_authUser {
-  return { handle: "", sub: "", roles: [], scopes: [] };
-}
-
-export const CreateSubmissionInput_authUser = {
-  encode(
-    message: CreateSubmissionInput_authUser,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.handle !== "") {
-      writer.uint32(10).string(message.handle);
-    }
-    if (message.sub !== "") {
-      writer.uint32(18).string(message.sub);
-    }
-    for (const v of message.roles) {
-      writer.uint32(26).string(v!);
-    }
-    for (const v of message.scopes) {
-      writer.uint32(34).string(v!);
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): CreateSubmissionInput_authUser {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCreateSubmissionInput_authUser();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.handle = reader.string();
-          break;
-        case 2:
-          message.sub = reader.string();
-          break;
-        case 3:
-          message.roles.push(reader.string());
-          break;
-        case 4:
-          message.scopes.push(reader.string());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CreateSubmissionInput_authUser {
-    return {
-      handle: isSet(object.handle) ? String(object.handle) : "",
-      sub: isSet(object.sub) ? String(object.sub) : "",
-      roles: Array.isArray(object?.roles)
-        ? object.roles.map((e: any) => String(e))
-        : [],
-      scopes: Array.isArray(object?.scopes)
-        ? object.scopes.map((e: any) => String(e))
-        : [],
-    };
-  },
-
-  toJSON(message: CreateSubmissionInput_authUser): unknown {
-    const obj: any = {};
-    message.handle !== undefined && (obj.handle = message.handle);
-    message.sub !== undefined && (obj.sub = message.sub);
-    if (message.roles) {
-      obj.roles = message.roles.map((e) => e);
-    } else {
-      obj.roles = [];
-    }
-    if (message.scopes) {
-      obj.scopes = message.scopes.map((e) => e);
-    } else {
-      obj.scopes = [];
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<CreateSubmissionInput_authUser>, I>>(
-    base?: I
-  ): CreateSubmissionInput_authUser {
-    return CreateSubmissionInput_authUser.fromPartial(base ?? {});
-  },
-
-  fromPartial<I extends Exact<DeepPartial<CreateSubmissionInput_authUser>, I>>(
-    object: I
-  ): CreateSubmissionInput_authUser {
-    const message = createBaseCreateSubmissionInput_authUser();
-    message.handle = object.handle ?? "";
-    message.sub = object.sub ?? "";
-    message.roles = object.roles?.map((e) => e) || [];
-    message.scopes = object.scopes?.map((e) => e) || [];
-    return message;
-  },
-};
-
-function createBaseCreateSubmissionInput_files(): CreateSubmissionInput_files {
-  return { submission: "" };
-}
-
-export const CreateSubmissionInput_files = {
-  encode(
-    message: CreateSubmissionInput_files,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.submission !== "") {
-      writer.uint32(10).string(message.submission);
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): CreateSubmissionInput_files {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCreateSubmissionInput_files();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.submission = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CreateSubmissionInput_files {
-    return {
-      submission: isSet(object.submission) ? String(object.submission) : "",
-    };
-  },
-
-  toJSON(message: CreateSubmissionInput_files): unknown {
-    const obj: any = {};
-    message.submission !== undefined && (obj.submission = message.submission);
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<CreateSubmissionInput_files>, I>>(
-    base?: I
-  ): CreateSubmissionInput_files {
-    return CreateSubmissionInput_files.fromPartial(base ?? {});
-  },
-
-  fromPartial<I extends Exact<DeepPartial<CreateSubmissionInput_files>, I>>(
-    object: I
-  ): CreateSubmissionInput_files {
-    const message = createBaseCreateSubmissionInput_files();
-    message.submission = object.submission ?? "";
-    return message;
-  },
-};
-
-function createBaseCreateSubmissionInput_entity(): CreateSubmissionInput_entity {
-  return {
-    url: "",
-    fileType: "",
-    challengeId: "",
-    type: "",
-    memberId: "",
-    legacyUploadId: undefined,
-    legacySubmissionId: undefined,
-    submissionPhaseId: undefined,
-    submittedDate: undefined,
-  };
-}
-
-export const CreateSubmissionInput_entity = {
-  encode(
-    message: CreateSubmissionInput_entity,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.url !== "") {
-      writer.uint32(10).string(message.url);
-    }
-    if (message.fileType !== "") {
-      writer.uint32(18).string(message.fileType);
-    }
-    if (message.challengeId !== "") {
-      writer.uint32(26).string(message.challengeId);
-    }
-    if (message.type !== "") {
-      writer.uint32(34).string(message.type);
-    }
-    if (message.memberId !== "") {
-      writer.uint32(42).string(message.memberId);
-    }
-    if (message.legacyUploadId !== undefined) {
-      writer.uint32(48).int64(message.legacyUploadId);
-    }
-    if (message.legacySubmissionId !== undefined) {
-      writer.uint32(56).int64(message.legacySubmissionId);
-    }
-    if (message.submissionPhaseId !== undefined) {
-      writer.uint32(66).string(message.submissionPhaseId);
-    }
-    if (message.submittedDate !== undefined) {
-      writer.uint32(74).string(message.submittedDate);
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): CreateSubmissionInput_entity {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCreateSubmissionInput_entity();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.url = reader.string();
-          break;
-        case 2:
-          message.fileType = reader.string();
-          break;
-        case 3:
-          message.challengeId = reader.string();
-          break;
-        case 4:
-          message.type = reader.string();
-          break;
-        case 5:
-          message.memberId = reader.string();
-          break;
-        case 6:
-          message.legacyUploadId = longToNumber(reader.int64() as Long);
-          break;
-        case 7:
-          message.legacySubmissionId = longToNumber(reader.int64() as Long);
-          break;
-        case 8:
-          message.submissionPhaseId = reader.string();
-          break;
-        case 9:
-          message.submittedDate = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CreateSubmissionInput_entity {
-    return {
-      url: isSet(object.url) ? String(object.url) : "",
-      fileType: isSet(object.fileType) ? String(object.fileType) : "",
-      challengeId: isSet(object.challengeId) ? String(object.challengeId) : "",
-      type: isSet(object.type) ? String(object.type) : "",
-      memberId: isSet(object.memberId) ? String(object.memberId) : "",
-      legacyUploadId: isSet(object.legacyUploadId)
-        ? Number(object.legacyUploadId)
-        : undefined,
-      legacySubmissionId: isSet(object.legacySubmissionId)
-        ? Number(object.legacySubmissionId)
-        : undefined,
-      submissionPhaseId: isSet(object.submissionPhaseId)
-        ? String(object.submissionPhaseId)
-        : undefined,
-      submittedDate: isSet(object.submittedDate)
-        ? String(object.submittedDate)
-        : undefined,
-    };
-  },
-
-  toJSON(message: CreateSubmissionInput_entity): unknown {
-    const obj: any = {};
-    message.url !== undefined && (obj.url = message.url);
-    message.fileType !== undefined && (obj.fileType = message.fileType);
-    message.challengeId !== undefined &&
-      (obj.challengeId = message.challengeId);
-    message.type !== undefined && (obj.type = message.type);
-    message.memberId !== undefined && (obj.memberId = message.memberId);
-    message.legacyUploadId !== undefined &&
-      (obj.legacyUploadId = Math.round(message.legacyUploadId));
-    message.legacySubmissionId !== undefined &&
-      (obj.legacySubmissionId = Math.round(message.legacySubmissionId));
-    message.submissionPhaseId !== undefined &&
-      (obj.submissionPhaseId = message.submissionPhaseId);
-    message.submittedDate !== undefined &&
-      (obj.submittedDate = message.submittedDate);
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<CreateSubmissionInput_entity>, I>>(
-    base?: I
-  ): CreateSubmissionInput_entity {
-    return CreateSubmissionInput_entity.fromPartial(base ?? {});
-  },
-
-  fromPartial<I extends Exact<DeepPartial<CreateSubmissionInput_entity>, I>>(
-    object: I
-  ): CreateSubmissionInput_entity {
-    const message = createBaseCreateSubmissionInput_entity();
-    message.url = object.url ?? "";
-    message.fileType = object.fileType ?? "";
     message.challengeId = object.challengeId ?? "";
+    message.fileType = object.fileType ?? "";
+    message.memberId = object.memberId ?? 0;
     message.type = object.type ?? "";
-    message.memberId = object.memberId ?? "";
-    message.legacyUploadId = object.legacyUploadId ?? undefined;
+    message.url = object.url ?? undefined;
+    message.legacyChallengeId = object.legacyChallengeId ?? undefined;
     message.legacySubmissionId = object.legacySubmissionId ?? undefined;
     message.submissionPhaseId = object.submissionPhaseId ?? undefined;
     message.submittedDate = object.submittedDate ?? undefined;
+    message.legacyUploadId = object.legacyUploadId ?? undefined;
     return message;
   },
 };
 
 function createBaseUpdateSubmissionInput(): UpdateSubmissionInput {
-  return { submissionId: "" };
+  return { filterCriteria: [], updateInput: undefined };
 }
 
 export const UpdateSubmissionInput = {
@@ -660,8 +469,14 @@ export const UpdateSubmissionInput = {
     message: UpdateSubmissionInput,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.submissionId !== "") {
-      writer.uint32(10).string(message.submissionId);
+    for (const v of message.filterCriteria) {
+      ScanCriteria.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.updateInput !== undefined) {
+      UpdateSubmissionInput_UpdateInput.encode(
+        message.updateInput,
+        writer.uint32(26).fork()
+      ).ldelim();
     }
     return writer;
   },
@@ -677,7 +492,15 @@ export const UpdateSubmissionInput = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.submissionId = reader.string();
+          message.filterCriteria.push(
+            ScanCriteria.decode(reader, reader.uint32())
+          );
+          break;
+        case 3:
+          message.updateInput = UpdateSubmissionInput_UpdateInput.decode(
+            reader,
+            reader.uint32()
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -689,16 +512,28 @@ export const UpdateSubmissionInput = {
 
   fromJSON(object: any): UpdateSubmissionInput {
     return {
-      submissionId: isSet(object.submissionId)
-        ? String(object.submissionId)
-        : "",
+      filterCriteria: Array.isArray(object?.filterCriteria)
+        ? object.filterCriteria.map((e: any) => ScanCriteria.fromJSON(e))
+        : [],
+      updateInput: isSet(object.updateInput)
+        ? UpdateSubmissionInput_UpdateInput.fromJSON(object.updateInput)
+        : undefined,
     };
   },
 
   toJSON(message: UpdateSubmissionInput): unknown {
     const obj: any = {};
-    message.submissionId !== undefined &&
-      (obj.submissionId = message.submissionId);
+    if (message.filterCriteria) {
+      obj.filterCriteria = message.filterCriteria.map((e) =>
+        e ? ScanCriteria.toJSON(e) : undefined
+      );
+    } else {
+      obj.filterCriteria = [];
+    }
+    message.updateInput !== undefined &&
+      (obj.updateInput = message.updateInput
+        ? UpdateSubmissionInput_UpdateInput.toJSON(message.updateInput)
+        : undefined);
     return obj;
   },
 
@@ -712,158 +547,61 @@ export const UpdateSubmissionInput = {
     object: I
   ): UpdateSubmissionInput {
     const message = createBaseUpdateSubmissionInput();
-    message.submissionId = object.submissionId ?? "";
+    message.filterCriteria =
+      object.filterCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
+    message.updateInput =
+      object.updateInput !== undefined && object.updateInput !== null
+        ? UpdateSubmissionInput_UpdateInput.fromPartial(object.updateInput)
+        : undefined;
     return message;
   },
 };
 
-function createBaseUpdateSubmissionInput_authUser(): UpdateSubmissionInput_authUser {
-  return { handle: "", sub: "", roles: [], scopes: [] };
-}
-
-export const UpdateSubmissionInput_authUser = {
-  encode(
-    message: UpdateSubmissionInput_authUser,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.handle !== "") {
-      writer.uint32(10).string(message.handle);
-    }
-    if (message.sub !== "") {
-      writer.uint32(18).string(message.sub);
-    }
-    for (const v of message.roles) {
-      writer.uint32(26).string(v!);
-    }
-    for (const v of message.scopes) {
-      writer.uint32(34).string(v!);
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateSubmissionInput_authUser {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUpdateSubmissionInput_authUser();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.handle = reader.string();
-          break;
-        case 2:
-          message.sub = reader.string();
-          break;
-        case 3:
-          message.roles.push(reader.string());
-          break;
-        case 4:
-          message.scopes.push(reader.string());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): UpdateSubmissionInput_authUser {
-    return {
-      handle: isSet(object.handle) ? String(object.handle) : "",
-      sub: isSet(object.sub) ? String(object.sub) : "",
-      roles: Array.isArray(object?.roles)
-        ? object.roles.map((e: any) => String(e))
-        : [],
-      scopes: Array.isArray(object?.scopes)
-        ? object.scopes.map((e: any) => String(e))
-        : [],
-    };
-  },
-
-  toJSON(message: UpdateSubmissionInput_authUser): unknown {
-    const obj: any = {};
-    message.handle !== undefined && (obj.handle = message.handle);
-    message.sub !== undefined && (obj.sub = message.sub);
-    if (message.roles) {
-      obj.roles = message.roles.map((e) => e);
-    } else {
-      obj.roles = [];
-    }
-    if (message.scopes) {
-      obj.scopes = message.scopes.map((e) => e);
-    } else {
-      obj.scopes = [];
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<UpdateSubmissionInput_authUser>, I>>(
-    base?: I
-  ): UpdateSubmissionInput_authUser {
-    return UpdateSubmissionInput_authUser.fromPartial(base ?? {});
-  },
-
-  fromPartial<I extends Exact<DeepPartial<UpdateSubmissionInput_authUser>, I>>(
-    object: I
-  ): UpdateSubmissionInput_authUser {
-    const message = createBaseUpdateSubmissionInput_authUser();
-    message.handle = object.handle ?? "";
-    message.sub = object.sub ?? "";
-    message.roles = object.roles?.map((e) => e) || [];
-    message.scopes = object.scopes?.map((e) => e) || [];
-    return message;
-  },
-};
-
-function createBaseUpdateSubmissionInput_entity(): UpdateSubmissionInput_entity {
+function createBaseUpdateSubmissionInput_UpdateInput(): UpdateSubmissionInput_UpdateInput {
   return {
-    url: undefined,
-    fileType: undefined,
-    challengeId: undefined,
     type: undefined,
+    url: undefined,
     memberId: undefined,
-    legacyUploadId: undefined,
-    legacySubmissionId: undefined,
-    submissionPhaseId: undefined,
+    challengeId: undefined,
     submittedDate: undefined,
+    legacyChallengeId: undefined,
+    legacySubmissionId: undefined,
+    submissionUploadId: undefined,
+    submissionPhaseId: undefined,
   };
 }
 
-export const UpdateSubmissionInput_entity = {
+export const UpdateSubmissionInput_UpdateInput = {
   encode(
-    message: UpdateSubmissionInput_entity,
+    message: UpdateSubmissionInput_UpdateInput,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.url !== undefined) {
-      writer.uint32(10).string(message.url);
-    }
-    if (message.fileType !== undefined) {
-      writer.uint32(18).string(message.fileType);
-    }
-    if (message.challengeId !== undefined) {
-      writer.uint32(26).string(message.challengeId);
-    }
     if (message.type !== undefined) {
-      writer.uint32(34).string(message.type);
+      writer.uint32(10).string(message.type);
+    }
+    if (message.url !== undefined) {
+      writer.uint32(18).string(message.url);
     }
     if (message.memberId !== undefined) {
-      writer.uint32(42).string(message.memberId);
+      writer.uint32(24).int64(message.memberId);
     }
-    if (message.legacyUploadId !== undefined) {
-      writer.uint32(48).int64(message.legacyUploadId);
-    }
-    if (message.legacySubmissionId !== undefined) {
-      writer.uint32(56).int64(message.legacySubmissionId);
-    }
-    if (message.submissionPhaseId !== undefined) {
-      writer.uint32(66).string(message.submissionPhaseId);
+    if (message.challengeId !== undefined) {
+      writer.uint32(34).string(message.challengeId);
     }
     if (message.submittedDate !== undefined) {
-      writer.uint32(74).string(message.submittedDate);
+      writer.uint32(40).int64(message.submittedDate);
+    }
+    if (message.legacyChallengeId !== undefined) {
+      writer.uint32(50).string(message.legacyChallengeId);
+    }
+    if (message.legacySubmissionId !== undefined) {
+      writer.uint32(58).string(message.legacySubmissionId);
+    }
+    if (message.submissionUploadId !== undefined) {
+      writer.uint32(66).string(message.submissionUploadId);
+    }
+    if (message.submissionPhaseId !== undefined) {
+      writer.uint32(74).string(message.submissionPhaseId);
     }
     return writer;
   },
@@ -871,39 +609,39 @@ export const UpdateSubmissionInput_entity = {
   decode(
     input: _m0.Reader | Uint8Array,
     length?: number
-  ): UpdateSubmissionInput_entity {
+  ): UpdateSubmissionInput_UpdateInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUpdateSubmissionInput_entity();
+    const message = createBaseUpdateSubmissionInput_UpdateInput();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.url = reader.string();
-          break;
-        case 2:
-          message.fileType = reader.string();
-          break;
-        case 3:
-          message.challengeId = reader.string();
-          break;
-        case 4:
           message.type = reader.string();
           break;
+        case 2:
+          message.url = reader.string();
+          break;
+        case 3:
+          message.memberId = longToNumber(reader.int64() as Long);
+          break;
+        case 4:
+          message.challengeId = reader.string();
+          break;
         case 5:
-          message.memberId = reader.string();
+          message.submittedDate = longToNumber(reader.int64() as Long);
           break;
         case 6:
-          message.legacyUploadId = longToNumber(reader.int64() as Long);
+          message.legacyChallengeId = reader.string();
           break;
         case 7:
-          message.legacySubmissionId = longToNumber(reader.int64() as Long);
+          message.legacySubmissionId = reader.string();
           break;
         case 8:
-          message.submissionPhaseId = reader.string();
+          message.submissionUploadId = reader.string();
           break;
         case 9:
-          message.submittedDate = reader.string();
+          message.submissionPhaseId = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -913,68 +651,72 @@ export const UpdateSubmissionInput_entity = {
     return message;
   },
 
-  fromJSON(object: any): UpdateSubmissionInput_entity {
+  fromJSON(object: any): UpdateSubmissionInput_UpdateInput {
     return {
+      type: isSet(object.type) ? String(object.type) : undefined,
       url: isSet(object.url) ? String(object.url) : undefined,
-      fileType: isSet(object.fileType) ? String(object.fileType) : undefined,
+      memberId: isSet(object.memberId) ? Number(object.memberId) : undefined,
       challengeId: isSet(object.challengeId)
         ? String(object.challengeId)
         : undefined,
-      type: isSet(object.type) ? String(object.type) : undefined,
-      memberId: isSet(object.memberId) ? String(object.memberId) : undefined,
-      legacyUploadId: isSet(object.legacyUploadId)
-        ? Number(object.legacyUploadId)
+      submittedDate: isSet(object.submittedDate)
+        ? Number(object.submittedDate)
+        : undefined,
+      legacyChallengeId: isSet(object.legacyChallengeId)
+        ? String(object.legacyChallengeId)
         : undefined,
       legacySubmissionId: isSet(object.legacySubmissionId)
-        ? Number(object.legacySubmissionId)
+        ? String(object.legacySubmissionId)
+        : undefined,
+      submissionUploadId: isSet(object.submissionUploadId)
+        ? String(object.submissionUploadId)
         : undefined,
       submissionPhaseId: isSet(object.submissionPhaseId)
         ? String(object.submissionPhaseId)
         : undefined,
-      submittedDate: isSet(object.submittedDate)
-        ? String(object.submittedDate)
-        : undefined,
     };
   },
 
-  toJSON(message: UpdateSubmissionInput_entity): unknown {
+  toJSON(message: UpdateSubmissionInput_UpdateInput): unknown {
     const obj: any = {};
+    message.type !== undefined && (obj.type = message.type);
     message.url !== undefined && (obj.url = message.url);
-    message.fileType !== undefined && (obj.fileType = message.fileType);
+    message.memberId !== undefined &&
+      (obj.memberId = Math.round(message.memberId));
     message.challengeId !== undefined &&
       (obj.challengeId = message.challengeId);
-    message.type !== undefined && (obj.type = message.type);
-    message.memberId !== undefined && (obj.memberId = message.memberId);
-    message.legacyUploadId !== undefined &&
-      (obj.legacyUploadId = Math.round(message.legacyUploadId));
+    message.submittedDate !== undefined &&
+      (obj.submittedDate = Math.round(message.submittedDate));
+    message.legacyChallengeId !== undefined &&
+      (obj.legacyChallengeId = message.legacyChallengeId);
     message.legacySubmissionId !== undefined &&
-      (obj.legacySubmissionId = Math.round(message.legacySubmissionId));
+      (obj.legacySubmissionId = message.legacySubmissionId);
+    message.submissionUploadId !== undefined &&
+      (obj.submissionUploadId = message.submissionUploadId);
     message.submissionPhaseId !== undefined &&
       (obj.submissionPhaseId = message.submissionPhaseId);
-    message.submittedDate !== undefined &&
-      (obj.submittedDate = message.submittedDate);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdateSubmissionInput_entity>, I>>(
+  create<I extends Exact<DeepPartial<UpdateSubmissionInput_UpdateInput>, I>>(
     base?: I
-  ): UpdateSubmissionInput_entity {
-    return UpdateSubmissionInput_entity.fromPartial(base ?? {});
+  ): UpdateSubmissionInput_UpdateInput {
+    return UpdateSubmissionInput_UpdateInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdateSubmissionInput_entity>, I>>(
-    object: I
-  ): UpdateSubmissionInput_entity {
-    const message = createBaseUpdateSubmissionInput_entity();
-    message.url = object.url ?? undefined;
-    message.fileType = object.fileType ?? undefined;
-    message.challengeId = object.challengeId ?? undefined;
+  fromPartial<
+    I extends Exact<DeepPartial<UpdateSubmissionInput_UpdateInput>, I>
+  >(object: I): UpdateSubmissionInput_UpdateInput {
+    const message = createBaseUpdateSubmissionInput_UpdateInput();
     message.type = object.type ?? undefined;
+    message.url = object.url ?? undefined;
     message.memberId = object.memberId ?? undefined;
-    message.legacyUploadId = object.legacyUploadId ?? undefined;
-    message.legacySubmissionId = object.legacySubmissionId ?? undefined;
-    message.submissionPhaseId = object.submissionPhaseId ?? undefined;
+    message.challengeId = object.challengeId ?? undefined;
     message.submittedDate = object.submittedDate ?? undefined;
+    message.legacyChallengeId = object.legacyChallengeId ?? undefined;
+    message.legacySubmissionId = object.legacySubmissionId ?? undefined;
+    message.submissionUploadId = object.submissionUploadId ?? undefined;
+    message.submissionPhaseId = object.submissionPhaseId ?? undefined;
     return message;
   },
 };
