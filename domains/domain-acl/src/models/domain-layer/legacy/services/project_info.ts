@@ -11,8 +11,7 @@ import {
   ServiceError,
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
-import { UpdateResult } from "@topcoder-framework/lib-common";
-import { Empty } from "../../../google/protobuf/empty";
+import { Empty, UpdateResult } from "@topcoder-framework/lib-common";
 import {
   CreateProjectInfoInput,
   DeleteProjectInfoInput,

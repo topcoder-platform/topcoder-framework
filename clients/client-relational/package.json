@@ -1,0 +1,48 @@
+{
+  "name": "@topcoder-framework/client-relational",
+  "version": "0.5.1-ci.0",
+  "description": "Topcoder gRPC client stub for relational gRPC service",
+  "main": "./dist-cjs/index.js",
+  "types": "./dist-es/index.d.ts",
+  "module": "./dist-es/index.js",
+  "scripts": {
+    "build:proto": "scripty",
+    "build": "scripty",
+    "build:es": "scripty",
+    "build:app": "scripty",
+    "build:types": "scripty",
+    "build:include:deps": "scripty",
+    "clean": "scripty",
+    "lint": "scripty",
+    "format": "scripty",
+    "prepublishOnly": "yarn clean && yarn build"
+  },
+  "scripty": {
+    "path": "../../scripts/packages"
+  },
+  "author": "Rakib Ansary <rakibansary@topcoder.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.8.0",
+    "@topcoder-framework/lib-common": "^0.5.2",
+    "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.20",
+    "tslib": "^2.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.17",
+    "eslint": "^8.30.0",
+    "rimraf": "^3.0.2",
+    "ts-proto": "^1.131.0",
+    "typescript": "^4.9.4"
+  },
+  "volta": {
+    "node": "18.14.1",
+    "typescript": "4.9.4",
+    "npm": "9.2.0",
+    "yarn": "1.22.19"
+  },
+  "files": [
+    "dist-*"
+  ],
+  "gitHead": "a91a2a734d1a783da66936d858e006be51cad021"
+}

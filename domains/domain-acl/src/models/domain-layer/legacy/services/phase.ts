@@ -11,8 +11,7 @@ import {
   ServiceError,
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
-import { CreateResult } from "@topcoder-framework/lib-common";
-import { Empty } from "../../../google/protobuf/empty";
+import { CreateResult, Empty } from "@topcoder-framework/lib-common";
 import {
   CreatePhaseCriteriaInput,
   CreatePhaseDependencyInput,

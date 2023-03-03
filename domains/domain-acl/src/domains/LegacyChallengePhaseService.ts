@@ -1,11 +1,12 @@
 import { promisify } from "util";
 import { Metadata } from "@grpc/grpc-js";
 
-import { LegacyChallengePhaseClient } from "../models/domain-layer/legacy/services/legacy_challenge_phase";
+import { LegacyChallengePhaseClient } from "../models/domain-layer/legacy/services/challenge_phase";
 import {
-  CreateLegacyChallengePhaseInput,
-  LegacyChallengePhase,
-} from "../models/domain-layer/legacy/legacy_challenge_phase";
+  CreatePhaseInput,
+  PhaseTypeList,
+} from "../models/domain-layer/legacy/challenge_phase";
+import { CreateResult, Empty } from "@topcoder-framework/lib-common";
 
 import { GrpcClient } from "../common/GrpcClient";
 
@@ -23,13 +24,20 @@ export class LegacyChallengePhaseDomain {
     );
 
   public async create(
-    param: CreateLegacyChallengePhaseInput,
+    param: CreatePhaseInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<
-      CreateLegacyChallengePhaseInput,
-      Metadata,
-      LegacyChallengePhase
-    >(this.client.create.bind(this.client))(param, metadata);
+    return promisify<CreatePhaseInput, Metadata, CreateResult>(
+      this.client.create.bind(this.client)
+    )(param, metadata);
+  }
+
+  public async getPhaseTypes(
+    param: Empty,
+    metadata: Metadata = new Metadata()
+  ) {
+    return promisify<Empty, Metadata, PhaseTypeList>(
+      this.client.getPhaseTypes.bind(this.client)
+    )(param, metadata);
   }
 }

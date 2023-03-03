@@ -11,8 +11,11 @@ import {
   ServiceError,
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
-import { CreateResult, UpdateResult } from "@topcoder-framework/lib-common";
-import { Empty } from "../../../google/protobuf/empty";
+import {
+  CreateResult,
+  Empty,
+  UpdateResult,
+} from "@topcoder-framework/lib-common";
 import {
   CreateLegacyChallengePaymentInput,
   DeleteLegacyChallengePaymentInput,

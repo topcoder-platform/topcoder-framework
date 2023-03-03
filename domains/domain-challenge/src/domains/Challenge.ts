@@ -4,10 +4,18 @@ import { Metadata } from "@grpc/grpc-js";
 import { ChallengeClient } from "../models/domain-layer/challenge/services/challenge";
 import {
   Challenge,
+  ChallengeList,
   CreateChallengeInput,
+  UpdateChallengeInput,
 } from "../models/domain-layer/challenge/challenge";
 
 import { GrpcClient } from "../common/GrpcClient";
+import {
+  LookupCriteria,
+  ScanRequest,
+  ScanResult,
+  UpdateResult,
+} from "@topcoder-framework/lib-common";
 
 export class ChallengeDomain {
   constructor(
@@ -27,6 +35,42 @@ export class ChallengeDomain {
   ) {
     return promisify<CreateChallengeInput, Metadata, Challenge>(
       this.client.create.bind(this.client)
+    )(param, metadata);
+  }
+
+  public async scan(
+    param: ScanRequest,
+    metadata: Metadata = new Metadata()
+  ): Promise<ScanResult> {
+    return promisify<ScanRequest, Metadata, ScanResult>(
+      this.client.scan.bind(this.client)
+    )(param, metadata);
+  }
+
+  public async lookup(
+    param: LookupCriteria,
+    metadata: Metadata = new Metadata()
+  ) {
+    return promisify<LookupCriteria, Metadata, Challenge>(
+      this.client.lookup.bind(this.client)
+    )(param, metadata);
+  }
+
+  public async update(
+    param: UpdateChallengeInput,
+    metadata: Metadata = new Metadata()
+  ) {
+    return promisify<UpdateChallengeInput, Metadata, UpdateResult>(
+      this.client.update.bind(this.client)
+    )(param, metadata);
+  }
+
+  public async delete(
+    param: LookupCriteria,
+    metadata: Metadata = new Metadata()
+  ) {
+    return promisify<LookupCriteria, Metadata, ChallengeList>(
+      this.client.delete.bind(this.client)
     )(param, metadata);
   }
 }

@@ -9,8 +9,8 @@ import _m0 from "protobufjs/minimal";
  */
 export enum NullValue {
   /** NULL_VALUE - Null value. */
-  NULL_VALUE = "NULL_VALUE",
-  UNRECOGNIZED = "UNRECOGNIZED",
+  NULL_VALUE = 0,
+  UNRECOGNIZED = -1,
 }
 
 export function nullValueFromJSON(object: any): NullValue {
@@ -32,16 +32,6 @@ export function nullValueToJSON(object: NullValue): string {
     case NullValue.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
-  }
-}
-
-export function nullValueToNumber(object: NullValue): number {
-  switch (object) {
-    case NullValue.NULL_VALUE:
-      return 0;
-    case NullValue.UNRECOGNIZED:
-    default:
-      return -1;
   }
 }
 
@@ -277,7 +267,7 @@ export const Value = {
   encode(message: Value, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     switch (message.kind?.$case) {
       case "nullValue":
-        writer.uint32(8).int32(nullValueToNumber(message.kind.nullValue));
+        writer.uint32(8).int32(message.kind.nullValue);
         break;
       case "numberValue":
         writer.uint32(17).double(message.kind.numberValue);
@@ -314,7 +304,7 @@ export const Value = {
         case 1:
           message.kind = {
             $case: "nullValue",
-            nullValue: nullValueFromJSON(reader.int32()),
+            nullValue: reader.int32() as any,
           };
           break;
         case 2:

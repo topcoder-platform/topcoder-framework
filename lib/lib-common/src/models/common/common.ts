@@ -6,20 +6,20 @@ import { Struct, Value } from "../google/protobuf/struct";
 import { Timestamp } from "../google/protobuf/timestamp";
 
 export enum Operator {
-  OPERATOR_UNSPECIFIED = "OPERATOR_UNSPECIFIED",
-  OPERATOR_EQUAL = "OPERATOR_EQUAL",
-  OPERATOR_NOT_EQUAL = "OPERATOR_NOT_EQUAL",
-  OPERATOR_GREATER_THAN = "OPERATOR_GREATER_THAN",
-  OPERATOR_GREATER_THAN_OR_EQUAL = "OPERATOR_GREATER_THAN_OR_EQUAL",
-  OPERATOR_LESS_THAN = "OPERATOR_LESS_THAN",
-  OPERATOR_LESS_THAN_OR_EQUAL = "OPERATOR_LESS_THAN_OR_EQUAL",
-  OPERATOR_AND = "OPERATOR_AND",
-  OPERATOR_BETWEEN = "OPERATOR_BETWEEN",
-  OPERATOR_IN = "OPERATOR_IN",
-  OPERATOR_IS = "OPERATOR_IS",
-  OPERATOR_NOT = "OPERATOR_NOT",
-  OPERATOR_OR = "OPERATOR_OR",
-  UNRECOGNIZED = "UNRECOGNIZED",
+  OPERATOR_UNSPECIFIED = 0,
+  OPERATOR_EQUAL = 1,
+  OPERATOR_NOT_EQUAL = 2,
+  OPERATOR_GREATER_THAN = 3,
+  OPERATOR_GREATER_THAN_OR_EQUAL = 4,
+  OPERATOR_LESS_THAN = 5,
+  OPERATOR_LESS_THAN_OR_EQUAL = 6,
+  OPERATOR_AND = 7,
+  OPERATOR_BETWEEN = 8,
+  OPERATOR_IN = 9,
+  OPERATOR_IS = 10,
+  OPERATOR_NOT = 11,
+  OPERATOR_OR = 12,
+  UNRECOGNIZED = -1,
 }
 
 export function operatorFromJSON(object: any): Operator {
@@ -104,53 +104,19 @@ export function operatorToJSON(object: Operator): string {
   }
 }
 
-export function operatorToNumber(object: Operator): number {
-  switch (object) {
-    case Operator.OPERATOR_UNSPECIFIED:
-      return 0;
-    case Operator.OPERATOR_EQUAL:
-      return 1;
-    case Operator.OPERATOR_NOT_EQUAL:
-      return 2;
-    case Operator.OPERATOR_GREATER_THAN:
-      return 3;
-    case Operator.OPERATOR_GREATER_THAN_OR_EQUAL:
-      return 4;
-    case Operator.OPERATOR_LESS_THAN:
-      return 5;
-    case Operator.OPERATOR_LESS_THAN_OR_EQUAL:
-      return 6;
-    case Operator.OPERATOR_AND:
-      return 7;
-    case Operator.OPERATOR_BETWEEN:
-      return 8;
-    case Operator.OPERATOR_IN:
-      return 9;
-    case Operator.OPERATOR_IS:
-      return 10;
-    case Operator.OPERATOR_NOT:
-      return 11;
-    case Operator.OPERATOR_OR:
-      return 12;
-    case Operator.UNRECOGNIZED:
-    default:
-      return -1;
-  }
-}
-
 export enum Domain {
-  DOMAIN_UNSPECIFIED = "DOMAIN_UNSPECIFIED",
-  DOMAIN_RESOURCE = "DOMAIN_RESOURCE",
-  DOMAIN_RESOURCE_ROLE = "DOMAIN_RESOURCE_ROLE",
-  DOMAIN_RESOURCE_ROLE_PHASE_DEPENDENCY = "DOMAIN_RESOURCE_ROLE_PHASE_DEPENDENCY",
-  DOMAIN_CHALLENGE = "DOMAIN_CHALLENGE",
-  DOMAIN_CHALLENGE_TYPE = "DOMAIN_CHALLENGE_TYPE",
-  DOMAIN_CHALLENG_TIMELINE_TEMPLATE = "DOMAIN_CHALLENG_TIMELINE_TEMPLATE",
-  DOMAIN_CHALLENGE_TRACK = "DOMAIN_CHALLENGE_TRACK",
-  DOMAIN_CHALLENGE_PHASE = "DOMAIN_CHALLENGE_PHASE",
-  DOMAIN_CHALLENGE_TIMELINE_TEMPLATE = "DOMAIN_CHALLENGE_TIMELINE_TEMPLATE",
-  DOMAIN_SUBMISSION = "DOMAIN_SUBMISSION",
-  UNRECOGNIZED = "UNRECOGNIZED",
+  DOMAIN_UNSPECIFIED = 0,
+  DOMAIN_RESOURCE = 1,
+  DOMAIN_RESOURCE_ROLE = 2,
+  DOMAIN_RESOURCE_ROLE_PHASE_DEPENDENCY = 3,
+  DOMAIN_CHALLENGE = 4,
+  DOMAIN_CHALLENGE_TYPE = 5,
+  DOMAIN_CHALLENG_TIMELINE_TEMPLATE = 6,
+  DOMAIN_CHALLENGE_TRACK = 7,
+  DOMAIN_CHALLENGE_PHASE = 8,
+  DOMAIN_CHALLENGE_TIMELINE_TEMPLATE = 9,
+  DOMAIN_SUBMISSION = 10,
+  UNRECOGNIZED = -1,
 }
 
 export function domainFromJSON(object: any): Domain {
@@ -225,36 +191,6 @@ export function domainToJSON(object: Domain): string {
   }
 }
 
-export function domainToNumber(object: Domain): number {
-  switch (object) {
-    case Domain.DOMAIN_UNSPECIFIED:
-      return 0;
-    case Domain.DOMAIN_RESOURCE:
-      return 1;
-    case Domain.DOMAIN_RESOURCE_ROLE:
-      return 2;
-    case Domain.DOMAIN_RESOURCE_ROLE_PHASE_DEPENDENCY:
-      return 3;
-    case Domain.DOMAIN_CHALLENGE:
-      return 4;
-    case Domain.DOMAIN_CHALLENGE_TYPE:
-      return 5;
-    case Domain.DOMAIN_CHALLENG_TIMELINE_TEMPLATE:
-      return 6;
-    case Domain.DOMAIN_CHALLENGE_TRACK:
-      return 7;
-    case Domain.DOMAIN_CHALLENGE_PHASE:
-      return 8;
-    case Domain.DOMAIN_CHALLENGE_TIMELINE_TEMPLATE:
-      return 9;
-    case Domain.DOMAIN_SUBMISSION:
-      return 10;
-    case Domain.UNRECOGNIZED:
-    default:
-      return -1;
-  }
-}
-
 export interface ScanCriteria {
   key: string;
   operator?: Operator | undefined;
@@ -310,7 +246,7 @@ export const ScanCriteria = {
       writer.uint32(10).string(message.key);
     }
     if (message.operator !== undefined) {
-      writer.uint32(16).int32(operatorToNumber(message.operator));
+      writer.uint32(16).int32(message.operator);
     }
     if (message.value !== undefined) {
       Value.encode(
@@ -332,7 +268,7 @@ export const ScanCriteria = {
           message.key = reader.string();
           break;
         case 2:
-          message.operator = operatorFromJSON(reader.int32());
+          message.operator = reader.int32() as any;
           break;
         case 3:
           message.value = Value.unwrap(Value.decode(reader, reader.uint32()));

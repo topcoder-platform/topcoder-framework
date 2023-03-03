@@ -14,10 +14,10 @@ import {
 import {
   CheckExistsResult,
   CreateResult,
+  Empty,
   LookupCriteria,
   UpdateResult,
 } from "@topcoder-framework/lib-common";
-import { Empty } from "../../../google/protobuf/empty";
 import {
   CloseChallengeInput,
   CreateChallengeInput,
