@@ -201,7 +201,17 @@ export interface UpdateChallengeInputForACL {
 export interface UpdateChallengeInputForACL_UpdateInputForACL {
   status?: string | undefined;
   phases?: UpdateChallengeInputForACL_PhasesACL | undefined;
-  legacy?: Challenge_Legacy | undefined;
+  currentPhase?: Challenge_Phase | undefined;
+  currentPhaseNames?:
+    | UpdateChallengeInputForACL_CurrentPhaseNamesACL
+    | undefined;
+  registrationStartDate?: string | undefined;
+  registrationEndDate?: string | undefined;
+  submissionStartDate?: string | undefined;
+  submissionEndDate?: string | undefined;
+  startDate?: string | undefined;
+  endDate?: string | undefined;
+  legacy?: UpdateChallengeInputForACL_LegacyACL | undefined;
   prizeSets?: UpdateChallengeInputForACL_PrizeSetsACL | undefined;
   overview?: Challenge_Overview | undefined;
   winners?: UpdateChallengeInputForACL_WinnersACL | undefined;
@@ -211,12 +221,26 @@ export interface UpdateChallengeInputForACL_PhasesACL {
   phases: Challenge_Phase[];
 }
 
+export interface UpdateChallengeInputForACL_CurrentPhaseNamesACL {
+  currentPhaseNames: string[];
+}
+
+export interface UpdateChallengeInputForACL_LegacyACL {
+  reviewScorecardId?: number | undefined;
+  screeningScorecardId?: number | undefined;
+}
+
 export interface UpdateChallengeInputForACL_PrizeSetsACL {
   prizeSets: Challenge_PrizeSet[];
 }
 
 export interface UpdateChallengeInputForACL_WinnersACL {
-  winners: Challenge_Winner[];
+  winners: UpdateChallengeInputForACL_WinnerACL[];
+}
+
+export interface UpdateChallengeInputForACL_WinnerACL {
+  handle: string;
+  placement: number;
 }
 
 function createBaseChallenge(): Challenge {
@@ -3048,6 +3072,14 @@ function createBaseUpdateChallengeInputForACL_UpdateInputForACL(): UpdateChallen
   return {
     status: undefined,
     phases: undefined,
+    currentPhase: undefined,
+    currentPhaseNames: undefined,
+    registrationStartDate: undefined,
+    registrationEndDate: undefined,
+    submissionStartDate: undefined,
+    submissionEndDate: undefined,
+    startDate: undefined,
+    endDate: undefined,
     legacy: undefined,
     prizeSets: undefined,
     overview: undefined,
@@ -3069,28 +3101,76 @@ export const UpdateChallengeInputForACL_UpdateInputForACL = {
         writer.uint32(18).fork()
       ).ldelim();
     }
-    if (message.legacy !== undefined) {
-      Challenge_Legacy.encode(
-        message.legacy,
+    if (message.currentPhase !== undefined) {
+      Challenge_Phase.encode(
+        message.currentPhase,
         writer.uint32(26).fork()
+      ).ldelim();
+    }
+    if (message.currentPhaseNames !== undefined) {
+      UpdateChallengeInputForACL_CurrentPhaseNamesACL.encode(
+        message.currentPhaseNames,
+        writer.uint32(34).fork()
+      ).ldelim();
+    }
+    if (message.registrationStartDate !== undefined) {
+      Timestamp.encode(
+        toTimestamp(message.registrationStartDate),
+        writer.uint32(42).fork()
+      ).ldelim();
+    }
+    if (message.registrationEndDate !== undefined) {
+      Timestamp.encode(
+        toTimestamp(message.registrationEndDate),
+        writer.uint32(50).fork()
+      ).ldelim();
+    }
+    if (message.submissionStartDate !== undefined) {
+      Timestamp.encode(
+        toTimestamp(message.submissionStartDate),
+        writer.uint32(58).fork()
+      ).ldelim();
+    }
+    if (message.submissionEndDate !== undefined) {
+      Timestamp.encode(
+        toTimestamp(message.submissionEndDate),
+        writer.uint32(66).fork()
+      ).ldelim();
+    }
+    if (message.startDate !== undefined) {
+      Timestamp.encode(
+        toTimestamp(message.startDate),
+        writer.uint32(74).fork()
+      ).ldelim();
+    }
+    if (message.endDate !== undefined) {
+      Timestamp.encode(
+        toTimestamp(message.endDate),
+        writer.uint32(82).fork()
+      ).ldelim();
+    }
+    if (message.legacy !== undefined) {
+      UpdateChallengeInputForACL_LegacyACL.encode(
+        message.legacy,
+        writer.uint32(90).fork()
       ).ldelim();
     }
     if (message.prizeSets !== undefined) {
       UpdateChallengeInputForACL_PrizeSetsACL.encode(
         message.prizeSets,
-        writer.uint32(34).fork()
+        writer.uint32(98).fork()
       ).ldelim();
     }
     if (message.overview !== undefined) {
       Challenge_Overview.encode(
         message.overview,
-        writer.uint32(42).fork()
+        writer.uint32(106).fork()
       ).ldelim();
     }
     if (message.winners !== undefined) {
       UpdateChallengeInputForACL_WinnersACL.encode(
         message.winners,
-        writer.uint32(50).fork()
+        writer.uint32(114).fork()
       ).ldelim();
     }
     return writer;
@@ -3116,18 +3196,64 @@ export const UpdateChallengeInputForACL_UpdateInputForACL = {
           );
           break;
         case 3:
-          message.legacy = Challenge_Legacy.decode(reader, reader.uint32());
+          message.currentPhase = Challenge_Phase.decode(
+            reader,
+            reader.uint32()
+          );
           break;
         case 4:
+          message.currentPhaseNames =
+            UpdateChallengeInputForACL_CurrentPhaseNamesACL.decode(
+              reader,
+              reader.uint32()
+            );
+          break;
+        case 5:
+          message.registrationStartDate = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32())
+          );
+          break;
+        case 6:
+          message.registrationEndDate = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32())
+          );
+          break;
+        case 7:
+          message.submissionStartDate = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32())
+          );
+          break;
+        case 8:
+          message.submissionEndDate = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32())
+          );
+          break;
+        case 9:
+          message.startDate = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32())
+          );
+          break;
+        case 10:
+          message.endDate = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32())
+          );
+          break;
+        case 11:
+          message.legacy = UpdateChallengeInputForACL_LegacyACL.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 12:
           message.prizeSets = UpdateChallengeInputForACL_PrizeSetsACL.decode(
             reader,
             reader.uint32()
           );
           break;
-        case 5:
+        case 13:
           message.overview = Challenge_Overview.decode(reader, reader.uint32());
           break;
-        case 6:
+        case 14:
           message.winners = UpdateChallengeInputForACL_WinnersACL.decode(
             reader,
             reader.uint32()
@@ -3147,8 +3273,30 @@ export const UpdateChallengeInputForACL_UpdateInputForACL = {
       phases: isSet(object.phases)
         ? UpdateChallengeInputForACL_PhasesACL.fromJSON(object.phases)
         : undefined,
+      currentPhase: isSet(object.currentPhase)
+        ? Challenge_Phase.fromJSON(object.currentPhase)
+        : undefined,
+      currentPhaseNames: isSet(object.currentPhaseNames)
+        ? UpdateChallengeInputForACL_CurrentPhaseNamesACL.fromJSON(
+            object.currentPhaseNames
+          )
+        : undefined,
+      registrationStartDate: isSet(object.registrationStartDate)
+        ? String(object.registrationStartDate)
+        : undefined,
+      registrationEndDate: isSet(object.registrationEndDate)
+        ? String(object.registrationEndDate)
+        : undefined,
+      submissionStartDate: isSet(object.submissionStartDate)
+        ? String(object.submissionStartDate)
+        : undefined,
+      submissionEndDate: isSet(object.submissionEndDate)
+        ? String(object.submissionEndDate)
+        : undefined,
+      startDate: isSet(object.startDate) ? String(object.startDate) : undefined,
+      endDate: isSet(object.endDate) ? String(object.endDate) : undefined,
       legacy: isSet(object.legacy)
-        ? Challenge_Legacy.fromJSON(object.legacy)
+        ? UpdateChallengeInputForACL_LegacyACL.fromJSON(object.legacy)
         : undefined,
       prizeSets: isSet(object.prizeSets)
         ? UpdateChallengeInputForACL_PrizeSetsACL.fromJSON(object.prizeSets)
@@ -3169,9 +3317,29 @@ export const UpdateChallengeInputForACL_UpdateInputForACL = {
       (obj.phases = message.phases
         ? UpdateChallengeInputForACL_PhasesACL.toJSON(message.phases)
         : undefined);
+    message.currentPhase !== undefined &&
+      (obj.currentPhase = message.currentPhase
+        ? Challenge_Phase.toJSON(message.currentPhase)
+        : undefined);
+    message.currentPhaseNames !== undefined &&
+      (obj.currentPhaseNames = message.currentPhaseNames
+        ? UpdateChallengeInputForACL_CurrentPhaseNamesACL.toJSON(
+            message.currentPhaseNames
+          )
+        : undefined);
+    message.registrationStartDate !== undefined &&
+      (obj.registrationStartDate = message.registrationStartDate);
+    message.registrationEndDate !== undefined &&
+      (obj.registrationEndDate = message.registrationEndDate);
+    message.submissionStartDate !== undefined &&
+      (obj.submissionStartDate = message.submissionStartDate);
+    message.submissionEndDate !== undefined &&
+      (obj.submissionEndDate = message.submissionEndDate);
+    message.startDate !== undefined && (obj.startDate = message.startDate);
+    message.endDate !== undefined && (obj.endDate = message.endDate);
     message.legacy !== undefined &&
       (obj.legacy = message.legacy
-        ? Challenge_Legacy.toJSON(message.legacy)
+        ? UpdateChallengeInputForACL_LegacyACL.toJSON(message.legacy)
         : undefined);
     message.prizeSets !== undefined &&
       (obj.prizeSets = message.prizeSets
@@ -3209,9 +3377,26 @@ export const UpdateChallengeInputForACL_UpdateInputForACL = {
       object.phases !== undefined && object.phases !== null
         ? UpdateChallengeInputForACL_PhasesACL.fromPartial(object.phases)
         : undefined;
+    message.currentPhase =
+      object.currentPhase !== undefined && object.currentPhase !== null
+        ? Challenge_Phase.fromPartial(object.currentPhase)
+        : undefined;
+    message.currentPhaseNames =
+      object.currentPhaseNames !== undefined &&
+      object.currentPhaseNames !== null
+        ? UpdateChallengeInputForACL_CurrentPhaseNamesACL.fromPartial(
+            object.currentPhaseNames
+          )
+        : undefined;
+    message.registrationStartDate = object.registrationStartDate ?? undefined;
+    message.registrationEndDate = object.registrationEndDate ?? undefined;
+    message.submissionStartDate = object.submissionStartDate ?? undefined;
+    message.submissionEndDate = object.submissionEndDate ?? undefined;
+    message.startDate = object.startDate ?? undefined;
+    message.endDate = object.endDate ?? undefined;
     message.legacy =
       object.legacy !== undefined && object.legacy !== null
-        ? Challenge_Legacy.fromPartial(object.legacy)
+        ? UpdateChallengeInputForACL_LegacyACL.fromPartial(object.legacy)
         : undefined;
     message.prizeSets =
       object.prizeSets !== undefined && object.prizeSets !== null
@@ -3301,6 +3486,161 @@ export const UpdateChallengeInputForACL_PhasesACL = {
   },
 };
 
+function createBaseUpdateChallengeInputForACL_CurrentPhaseNamesACL(): UpdateChallengeInputForACL_CurrentPhaseNamesACL {
+  return { currentPhaseNames: [] };
+}
+
+export const UpdateChallengeInputForACL_CurrentPhaseNamesACL = {
+  encode(
+    message: UpdateChallengeInputForACL_CurrentPhaseNamesACL,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    for (const v of message.currentPhaseNames) {
+      writer.uint32(10).string(v!);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): UpdateChallengeInputForACL_CurrentPhaseNamesACL {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUpdateChallengeInputForACL_CurrentPhaseNamesACL();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.currentPhaseNames.push(reader.string());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UpdateChallengeInputForACL_CurrentPhaseNamesACL {
+    return {
+      currentPhaseNames: Array.isArray(object?.currentPhaseNames)
+        ? object.currentPhaseNames.map((e: any) => String(e))
+        : [],
+    };
+  },
+
+  toJSON(message: UpdateChallengeInputForACL_CurrentPhaseNamesACL): unknown {
+    const obj: any = {};
+    if (message.currentPhaseNames) {
+      obj.currentPhaseNames = message.currentPhaseNames.map((e) => e);
+    } else {
+      obj.currentPhaseNames = [];
+    }
+    return obj;
+  },
+
+  create<
+    I extends Exact<
+      DeepPartial<UpdateChallengeInputForACL_CurrentPhaseNamesACL>,
+      I
+    >
+  >(base?: I): UpdateChallengeInputForACL_CurrentPhaseNamesACL {
+    return UpdateChallengeInputForACL_CurrentPhaseNamesACL.fromPartial(
+      base ?? {}
+    );
+  },
+
+  fromPartial<
+    I extends Exact<
+      DeepPartial<UpdateChallengeInputForACL_CurrentPhaseNamesACL>,
+      I
+    >
+  >(object: I): UpdateChallengeInputForACL_CurrentPhaseNamesACL {
+    const message = createBaseUpdateChallengeInputForACL_CurrentPhaseNamesACL();
+    message.currentPhaseNames = object.currentPhaseNames?.map((e) => e) || [];
+    return message;
+  },
+};
+
+function createBaseUpdateChallengeInputForACL_LegacyACL(): UpdateChallengeInputForACL_LegacyACL {
+  return { reviewScorecardId: undefined, screeningScorecardId: undefined };
+}
+
+export const UpdateChallengeInputForACL_LegacyACL = {
+  encode(
+    message: UpdateChallengeInputForACL_LegacyACL,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.reviewScorecardId !== undefined) {
+      writer.uint32(8).int32(message.reviewScorecardId);
+    }
+    if (message.screeningScorecardId !== undefined) {
+      writer.uint32(16).int32(message.screeningScorecardId);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): UpdateChallengeInputForACL_LegacyACL {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUpdateChallengeInputForACL_LegacyACL();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.reviewScorecardId = reader.int32();
+          break;
+        case 2:
+          message.screeningScorecardId = reader.int32();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UpdateChallengeInputForACL_LegacyACL {
+    return {
+      reviewScorecardId: isSet(object.reviewScorecardId)
+        ? Number(object.reviewScorecardId)
+        : undefined,
+      screeningScorecardId: isSet(object.screeningScorecardId)
+        ? Number(object.screeningScorecardId)
+        : undefined,
+    };
+  },
+
+  toJSON(message: UpdateChallengeInputForACL_LegacyACL): unknown {
+    const obj: any = {};
+    message.reviewScorecardId !== undefined &&
+      (obj.reviewScorecardId = Math.round(message.reviewScorecardId));
+    message.screeningScorecardId !== undefined &&
+      (obj.screeningScorecardId = Math.round(message.screeningScorecardId));
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<UpdateChallengeInputForACL_LegacyACL>, I>>(
+    base?: I
+  ): UpdateChallengeInputForACL_LegacyACL {
+    return UpdateChallengeInputForACL_LegacyACL.fromPartial(base ?? {});
+  },
+
+  fromPartial<
+    I extends Exact<DeepPartial<UpdateChallengeInputForACL_LegacyACL>, I>
+  >(object: I): UpdateChallengeInputForACL_LegacyACL {
+    const message = createBaseUpdateChallengeInputForACL_LegacyACL();
+    message.reviewScorecardId = object.reviewScorecardId ?? undefined;
+    message.screeningScorecardId = object.screeningScorecardId ?? undefined;
+    return message;
+  },
+};
+
 function createBaseUpdateChallengeInputForACL_PrizeSetsACL(): UpdateChallengeInputForACL_PrizeSetsACL {
   return { prizeSets: [] };
 }
@@ -3385,7 +3725,10 @@ export const UpdateChallengeInputForACL_WinnersACL = {
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     for (const v of message.winners) {
-      Challenge_Winner.encode(v!, writer.uint32(10).fork()).ldelim();
+      UpdateChallengeInputForACL_WinnerACL.encode(
+        v!,
+        writer.uint32(10).fork()
+      ).ldelim();
     }
     return writer;
   },
@@ -3402,7 +3745,7 @@ export const UpdateChallengeInputForACL_WinnersACL = {
       switch (tag >>> 3) {
         case 1:
           message.winners.push(
-            Challenge_Winner.decode(reader, reader.uint32())
+            UpdateChallengeInputForACL_WinnerACL.decode(reader, reader.uint32())
           );
           break;
         default:
@@ -3416,7 +3759,9 @@ export const UpdateChallengeInputForACL_WinnersACL = {
   fromJSON(object: any): UpdateChallengeInputForACL_WinnersACL {
     return {
       winners: Array.isArray(object?.winners)
-        ? object.winners.map((e: any) => Challenge_Winner.fromJSON(e))
+        ? object.winners.map((e: any) =>
+            UpdateChallengeInputForACL_WinnerACL.fromJSON(e)
+          )
         : [],
     };
   },
@@ -3425,7 +3770,7 @@ export const UpdateChallengeInputForACL_WinnersACL = {
     const obj: any = {};
     if (message.winners) {
       obj.winners = message.winners.map((e) =>
-        e ? Challenge_Winner.toJSON(e) : undefined
+        e ? UpdateChallengeInputForACL_WinnerACL.toJSON(e) : undefined
       );
     } else {
       obj.winners = [];
@@ -3444,7 +3789,82 @@ export const UpdateChallengeInputForACL_WinnersACL = {
   >(object: I): UpdateChallengeInputForACL_WinnersACL {
     const message = createBaseUpdateChallengeInputForACL_WinnersACL();
     message.winners =
-      object.winners?.map((e) => Challenge_Winner.fromPartial(e)) || [];
+      object.winners?.map((e) =>
+        UpdateChallengeInputForACL_WinnerACL.fromPartial(e)
+      ) || [];
+    return message;
+  },
+};
+
+function createBaseUpdateChallengeInputForACL_WinnerACL(): UpdateChallengeInputForACL_WinnerACL {
+  return { handle: "", placement: 0 };
+}
+
+export const UpdateChallengeInputForACL_WinnerACL = {
+  encode(
+    message: UpdateChallengeInputForACL_WinnerACL,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.handle !== "") {
+      writer.uint32(10).string(message.handle);
+    }
+    if (message.placement !== 0) {
+      writer.uint32(16).int32(message.placement);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): UpdateChallengeInputForACL_WinnerACL {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUpdateChallengeInputForACL_WinnerACL();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.handle = reader.string();
+          break;
+        case 2:
+          message.placement = reader.int32();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UpdateChallengeInputForACL_WinnerACL {
+    return {
+      handle: isSet(object.handle) ? String(object.handle) : "",
+      placement: isSet(object.placement) ? Number(object.placement) : 0,
+    };
+  },
+
+  toJSON(message: UpdateChallengeInputForACL_WinnerACL): unknown {
+    const obj: any = {};
+    message.handle !== undefined && (obj.handle = message.handle);
+    message.placement !== undefined &&
+      (obj.placement = Math.round(message.placement));
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<UpdateChallengeInputForACL_WinnerACL>, I>>(
+    base?: I
+  ): UpdateChallengeInputForACL_WinnerACL {
+    return UpdateChallengeInputForACL_WinnerACL.fromPartial(base ?? {});
+  },
+
+  fromPartial<
+    I extends Exact<DeepPartial<UpdateChallengeInputForACL_WinnerACL>, I>
+  >(object: I): UpdateChallengeInputForACL_WinnerACL {
+    const message = createBaseUpdateChallengeInputForACL_WinnerACL();
+    message.handle = object.handle ?? "";
+    message.placement = object.placement ?? 0;
     return message;
   },
 };
