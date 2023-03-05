@@ -17,11 +17,13 @@ import {
   ScanResult,
   UpdateResult,
 } from "@topcoder-framework/lib-common";
+import { Empty } from "../../../google/protobuf/empty";
 import {
   Challenge,
   ChallengeList,
   CreateChallengeInput,
   UpdateChallengeInput,
+  UpdateChallengeInputForACL,
 } from "../challenge";
 
 export type ChallengeService = typeof ChallengeService;
@@ -81,6 +83,18 @@ export const ChallengeService = {
       Buffer.from(ChallengeList.encode(value).finish()),
     responseDeserialize: (value: Buffer) => ChallengeList.decode(value),
   },
+  updateForAcl: {
+    path: "/topcoder.domain.service.challenge.Challenge/UpdateForACL",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: UpdateChallengeInputForACL) =>
+      Buffer.from(UpdateChallengeInputForACL.encode(value).finish()),
+    requestDeserialize: (value: Buffer) =>
+      UpdateChallengeInputForACL.decode(value),
+    responseSerialize: (value: Empty) =>
+      Buffer.from(Empty.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => Empty.decode(value),
+  },
 } as const;
 
 export interface ChallengeServer extends UntypedServiceImplementation {
@@ -89,6 +103,7 @@ export interface ChallengeServer extends UntypedServiceImplementation {
   lookup: handleUnaryCall<LookupCriteria, Challenge>;
   update: handleUnaryCall<UpdateChallengeInput, UpdateResult>;
   delete: handleUnaryCall<LookupCriteria, ChallengeList>;
+  updateForAcl: handleUnaryCall<UpdateChallengeInputForACL, Empty>;
 }
 
 export interface ChallengeClient extends Client {
@@ -166,6 +181,21 @@ export interface ChallengeClient extends Client {
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: ChallengeList) => void
+  ): ClientUnaryCall;
+  updateForAcl(
+    request: UpdateChallengeInputForACL,
+    callback: (error: ServiceError | null, response: Empty) => void
+  ): ClientUnaryCall;
+  updateForAcl(
+    request: UpdateChallengeInputForACL,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: Empty) => void
+  ): ClientUnaryCall;
+  updateForAcl(
+    request: UpdateChallengeInputForACL,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: Empty) => void
   ): ClientUnaryCall;
 }
 
