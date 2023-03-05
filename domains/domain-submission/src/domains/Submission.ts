@@ -51,7 +51,7 @@ export class SubmissionDomain {
     param: CreateSubmissionInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<CreateSubmissionInput, Metadata, CreateResult>(
+    return promisify<CreateSubmissionInput, Metadata, Submission>(
       this.client.create.bind(this.client)
     )(param, metadata);
   }
@@ -60,7 +60,7 @@ export class SubmissionDomain {
     param: UpdateSubmissionInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<UpdateSubmissionInput, Metadata, UpdateResult>(
+    return promisify<UpdateSubmissionInput, Metadata, SubmissionList>(
       this.client.update.bind(this.client)
     )(param, metadata);
   }

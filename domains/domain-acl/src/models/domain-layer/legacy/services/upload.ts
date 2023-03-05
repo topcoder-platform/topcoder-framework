@@ -13,6 +13,7 @@ import {
 } from "@grpc/grpc-js";
 import {
   CreateResult,
+  Empty,
   LookupCriteria,
   ScanRequest,
   ScanResult,
@@ -66,6 +67,17 @@ export const LegacyUploadService = {
       Buffer.from(UpdateResult.encode(value).finish()),
     responseDeserialize: (value: Buffer) => UpdateResult.decode(value),
   },
+  delete: {
+    path: "/topcoder.domain.service.legacy_upload.LegacyUpload/Delete",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: LookupCriteria) =>
+      Buffer.from(LookupCriteria.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => LookupCriteria.decode(value),
+    responseSerialize: (value: Empty) =>
+      Buffer.from(Empty.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => Empty.decode(value),
+  },
 } as const;
 
 export interface LegacyUploadServer extends UntypedServiceImplementation {
@@ -73,6 +85,7 @@ export interface LegacyUploadServer extends UntypedServiceImplementation {
   lookup: handleUnaryCall<LookupCriteria, Upload>;
   create: handleUnaryCall<CreateUploadInput, CreateResult>;
   update: handleUnaryCall<UpdateUploadInput, UpdateResult>;
+  delete: handleUnaryCall<LookupCriteria, Empty>;
 }
 
 export interface LegacyUploadClient extends Client {
@@ -135,6 +148,21 @@ export interface LegacyUploadClient extends Client {
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: UpdateResult) => void
+  ): ClientUnaryCall;
+  delete(
+    request: LookupCriteria,
+    callback: (error: ServiceError | null, response: Empty) => void
+  ): ClientUnaryCall;
+  delete(
+    request: LookupCriteria,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: Empty) => void
+  ): ClientUnaryCall;
+  delete(
+    request: LookupCriteria,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: Empty) => void
   ): ClientUnaryCall;
 }
 

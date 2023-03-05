@@ -44,6 +44,10 @@ export interface UpdateUploadInput_UpdateInput {
   url: string;
 }
 
+export interface DeleteUploadInput {
+  filterCriteria: ScanCriteria[];
+}
+
 function createBaseUpload(): Upload {
   return {
     uploadId: 0,
@@ -633,6 +637,77 @@ export const UpdateUploadInput_UpdateInput = {
   ): UpdateUploadInput_UpdateInput {
     const message = createBaseUpdateUploadInput_UpdateInput();
     message.url = object.url ?? "";
+    return message;
+  },
+};
+
+function createBaseDeleteUploadInput(): DeleteUploadInput {
+  return { filterCriteria: [] };
+}
+
+export const DeleteUploadInput = {
+  encode(
+    message: DeleteUploadInput,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    for (const v of message.filterCriteria) {
+      ScanCriteria.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): DeleteUploadInput {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDeleteUploadInput();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.filterCriteria.push(
+            ScanCriteria.decode(reader, reader.uint32())
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): DeleteUploadInput {
+    return {
+      filterCriteria: Array.isArray(object?.filterCriteria)
+        ? object.filterCriteria.map((e: any) => ScanCriteria.fromJSON(e))
+        : [],
+    };
+  },
+
+  toJSON(message: DeleteUploadInput): unknown {
+    const obj: any = {};
+    if (message.filterCriteria) {
+      obj.filterCriteria = message.filterCriteria.map((e) =>
+        e ? ScanCriteria.toJSON(e) : undefined
+      );
+    } else {
+      obj.filterCriteria = [];
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<DeleteUploadInput>, I>>(
+    base?: I
+  ): DeleteUploadInput {
+    return DeleteUploadInput.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<DeleteUploadInput>, I>>(
+    object: I
+  ): DeleteUploadInput {
+    const message = createBaseDeleteUploadInput();
+    message.filterCriteria =
+      object.filterCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
     return message;
   },
 };

@@ -53,7 +53,7 @@ export interface UpdateSubmissionInput_UpdateInput {
 }
 
 export interface SubmissionList {
-  id: string[];
+  items: Submission[];
 }
 
 function createBaseSubmission(): Submission {
@@ -722,7 +722,7 @@ export const UpdateSubmissionInput_UpdateInput = {
 };
 
 function createBaseSubmissionList(): SubmissionList {
-  return { id: [] };
+  return { items: [] };
 }
 
 export const SubmissionList = {
@@ -730,8 +730,8 @@ export const SubmissionList = {
     message: SubmissionList,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    for (const v of message.id) {
-      writer.uint32(10).string(v!);
+    for (const v of message.items) {
+      Submission.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
@@ -744,7 +744,7 @@ export const SubmissionList = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.id.push(reader.string());
+          message.items.push(Submission.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -756,16 +756,20 @@ export const SubmissionList = {
 
   fromJSON(object: any): SubmissionList {
     return {
-      id: Array.isArray(object?.id) ? object.id.map((e: any) => String(e)) : [],
+      items: Array.isArray(object?.items)
+        ? object.items.map((e: any) => Submission.fromJSON(e))
+        : [],
     };
   },
 
   toJSON(message: SubmissionList): unknown {
     const obj: any = {};
-    if (message.id) {
-      obj.id = message.id.map((e) => e);
+    if (message.items) {
+      obj.items = message.items.map((e) =>
+        e ? Submission.toJSON(e) : undefined
+      );
     } else {
-      obj.id = [];
+      obj.items = [];
     }
     return obj;
   },
@@ -780,7 +784,7 @@ export const SubmissionList = {
     object: I
   ): SubmissionList {
     const message = createBaseSubmissionList();
-    message.id = object.id?.map((e) => e) || [];
+    message.items = object.items?.map((e) => Submission.fromPartial(e)) || [];
     return message;
   },
 };

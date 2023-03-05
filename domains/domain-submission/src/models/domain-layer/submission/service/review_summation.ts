@@ -12,11 +12,9 @@ import {
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
 import {
-  CreateResult,
   LookupCriteria,
   ScanRequest,
   ScanResult,
-  UpdateResult,
 } from "@topcoder-framework/lib-common";
 import {
   CreateReviewSummationInput,
@@ -57,9 +55,9 @@ export const ReviewSummationService = {
       Buffer.from(CreateReviewSummationInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) =>
       CreateReviewSummationInput.decode(value),
-    responseSerialize: (value: CreateResult) =>
-      Buffer.from(CreateResult.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => CreateResult.decode(value),
+    responseSerialize: (value: ReviewSummation) =>
+      Buffer.from(ReviewSummation.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => ReviewSummation.decode(value),
   },
   update: {
     path: "/topcoder.domain.service.review_summation.ReviewSummation/Update",
@@ -69,9 +67,9 @@ export const ReviewSummationService = {
       Buffer.from(UpdateReviewSummationInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) =>
       UpdateReviewSummationInput.decode(value),
-    responseSerialize: (value: UpdateResult) =>
-      Buffer.from(UpdateResult.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => UpdateResult.decode(value),
+    responseSerialize: (value: ReviewSummationList) =>
+      Buffer.from(ReviewSummationList.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => ReviewSummationList.decode(value),
   },
   delete: {
     path: "/topcoder.domain.service.review_summation.ReviewSummation/Delete",
@@ -89,8 +87,8 @@ export const ReviewSummationService = {
 export interface ReviewSummationServer extends UntypedServiceImplementation {
   scan: handleUnaryCall<ScanRequest, ScanResult>;
   lookup: handleUnaryCall<LookupCriteria, ReviewSummation>;
-  create: handleUnaryCall<CreateReviewSummationInput, CreateResult>;
-  update: handleUnaryCall<UpdateReviewSummationInput, UpdateResult>;
+  create: handleUnaryCall<CreateReviewSummationInput, ReviewSummation>;
+  update: handleUnaryCall<UpdateReviewSummationInput, ReviewSummationList>;
   delete: handleUnaryCall<LookupCriteria, ReviewSummationList>;
 }
 
@@ -127,33 +125,42 @@ export interface ReviewSummationClient extends Client {
   ): ClientUnaryCall;
   create(
     request: CreateReviewSummationInput,
-    callback: (error: ServiceError | null, response: CreateResult) => void
+    callback: (error: ServiceError | null, response: ReviewSummation) => void
   ): ClientUnaryCall;
   create(
     request: CreateReviewSummationInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: CreateResult) => void
+    callback: (error: ServiceError | null, response: ReviewSummation) => void
   ): ClientUnaryCall;
   create(
     request: CreateReviewSummationInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: CreateResult) => void
+    callback: (error: ServiceError | null, response: ReviewSummation) => void
   ): ClientUnaryCall;
   update(
     request: UpdateReviewSummationInput,
-    callback: (error: ServiceError | null, response: UpdateResult) => void
+    callback: (
+      error: ServiceError | null,
+      response: ReviewSummationList
+    ) => void
   ): ClientUnaryCall;
   update(
     request: UpdateReviewSummationInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: UpdateResult) => void
+    callback: (
+      error: ServiceError | null,
+      response: ReviewSummationList
+    ) => void
   ): ClientUnaryCall;
   update(
     request: UpdateReviewSummationInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: UpdateResult) => void
+    callback: (
+      error: ServiceError | null,
+      response: ReviewSummationList
+    ) => void
   ): ClientUnaryCall;
   delete(
     request: LookupCriteria,

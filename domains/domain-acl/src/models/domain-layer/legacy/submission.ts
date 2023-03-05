@@ -8,6 +8,9 @@ export interface LegacySubmission {
   submissionStatusId: number;
   submissionTypeId: number;
   uploadId: number;
+  screeningScore: number;
+  initialScore: number;
+  finalScore: number;
   createUser: number;
   createDate: number;
   modifyUser: number;
@@ -26,10 +29,13 @@ export interface UpdateSubmissionInput {
 }
 
 export interface UpdateSubmissionInput_UpdateInput {
-  submissionId: number;
-  submissionStatusId: number;
-  submissionTypeId: number;
-  uploadId: number;
+  submissionId?: number | undefined;
+  submissionStatusId?: number | undefined;
+  submissionTypeId?: number | undefined;
+  uploadId?: number | undefined;
+  screeningScore?: number | undefined;
+  initialScore?: number | undefined;
+  finalScore?: number | undefined;
 }
 
 function createBaseLegacySubmission(): LegacySubmission {
@@ -38,6 +44,9 @@ function createBaseLegacySubmission(): LegacySubmission {
     submissionStatusId: 0,
     submissionTypeId: 0,
     uploadId: 0,
+    screeningScore: 0,
+    initialScore: 0,
+    finalScore: 0,
     createUser: 0,
     createDate: 0,
     modifyUser: 0,
@@ -62,17 +71,26 @@ export const LegacySubmission = {
     if (message.uploadId !== 0) {
       writer.uint32(32).int32(message.uploadId);
     }
+    if (message.screeningScore !== 0) {
+      writer.uint32(40).int32(message.screeningScore);
+    }
+    if (message.initialScore !== 0) {
+      writer.uint32(48).int32(message.initialScore);
+    }
+    if (message.finalScore !== 0) {
+      writer.uint32(56).int32(message.finalScore);
+    }
     if (message.createUser !== 0) {
-      writer.uint32(40).int32(message.createUser);
+      writer.uint32(64).int32(message.createUser);
     }
     if (message.createDate !== 0) {
-      writer.uint32(48).int64(message.createDate);
+      writer.uint32(72).int64(message.createDate);
     }
     if (message.modifyUser !== 0) {
-      writer.uint32(56).int32(message.modifyUser);
+      writer.uint32(80).int32(message.modifyUser);
     }
     if (message.modifyDate !== 0) {
-      writer.uint32(64).int64(message.modifyDate);
+      writer.uint32(88).int64(message.modifyDate);
     }
     return writer;
   },
@@ -97,15 +115,24 @@ export const LegacySubmission = {
           message.uploadId = reader.int32();
           break;
         case 5:
-          message.createUser = reader.int32();
+          message.screeningScore = reader.int32();
           break;
         case 6:
-          message.createDate = longToNumber(reader.int64() as Long);
+          message.initialScore = reader.int32();
           break;
         case 7:
-          message.modifyUser = reader.int32();
+          message.finalScore = reader.int32();
           break;
         case 8:
+          message.createUser = reader.int32();
+          break;
+        case 9:
+          message.createDate = longToNumber(reader.int64() as Long);
+          break;
+        case 10:
+          message.modifyUser = reader.int32();
+          break;
+        case 11:
           message.modifyDate = longToNumber(reader.int64() as Long);
           break;
         default:
@@ -128,6 +155,13 @@ export const LegacySubmission = {
         ? Number(object.submissionTypeId)
         : 0,
       uploadId: isSet(object.uploadId) ? Number(object.uploadId) : 0,
+      screeningScore: isSet(object.screeningScore)
+        ? Number(object.screeningScore)
+        : 0,
+      initialScore: isSet(object.initialScore)
+        ? Number(object.initialScore)
+        : 0,
+      finalScore: isSet(object.finalScore) ? Number(object.finalScore) : 0,
       createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
       createDate: isSet(object.createDate) ? Number(object.createDate) : 0,
       modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : 0,
@@ -145,6 +179,12 @@ export const LegacySubmission = {
       (obj.submissionTypeId = Math.round(message.submissionTypeId));
     message.uploadId !== undefined &&
       (obj.uploadId = Math.round(message.uploadId));
+    message.screeningScore !== undefined &&
+      (obj.screeningScore = Math.round(message.screeningScore));
+    message.initialScore !== undefined &&
+      (obj.initialScore = Math.round(message.initialScore));
+    message.finalScore !== undefined &&
+      (obj.finalScore = Math.round(message.finalScore));
     message.createUser !== undefined &&
       (obj.createUser = Math.round(message.createUser));
     message.createDate !== undefined &&
@@ -170,6 +210,9 @@ export const LegacySubmission = {
     message.submissionStatusId = object.submissionStatusId ?? 0;
     message.submissionTypeId = object.submissionTypeId ?? 0;
     message.uploadId = object.uploadId ?? 0;
+    message.screeningScore = object.screeningScore ?? 0;
+    message.initialScore = object.initialScore ?? 0;
+    message.finalScore = object.finalScore ?? 0;
     message.createUser = object.createUser ?? 0;
     message.createDate = object.createDate ?? 0;
     message.modifyUser = object.modifyUser ?? 0;
@@ -365,10 +408,13 @@ export const UpdateSubmissionInput = {
 
 function createBaseUpdateSubmissionInput_UpdateInput(): UpdateSubmissionInput_UpdateInput {
   return {
-    submissionId: 0,
-    submissionStatusId: 0,
-    submissionTypeId: 0,
-    uploadId: 0,
+    submissionId: undefined,
+    submissionStatusId: undefined,
+    submissionTypeId: undefined,
+    uploadId: undefined,
+    screeningScore: undefined,
+    initialScore: undefined,
+    finalScore: undefined,
   };
 }
 
@@ -377,17 +423,26 @@ export const UpdateSubmissionInput_UpdateInput = {
     message: UpdateSubmissionInput_UpdateInput,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.submissionId !== 0) {
+    if (message.submissionId !== undefined) {
       writer.uint32(8).int32(message.submissionId);
     }
-    if (message.submissionStatusId !== 0) {
+    if (message.submissionStatusId !== undefined) {
       writer.uint32(16).int32(message.submissionStatusId);
     }
-    if (message.submissionTypeId !== 0) {
+    if (message.submissionTypeId !== undefined) {
       writer.uint32(24).int32(message.submissionTypeId);
     }
-    if (message.uploadId !== 0) {
+    if (message.uploadId !== undefined) {
       writer.uint32(32).int32(message.uploadId);
+    }
+    if (message.screeningScore !== undefined) {
+      writer.uint32(40).int32(message.screeningScore);
+    }
+    if (message.initialScore !== undefined) {
+      writer.uint32(48).int32(message.initialScore);
+    }
+    if (message.finalScore !== undefined) {
+      writer.uint32(56).int32(message.finalScore);
     }
     return writer;
   },
@@ -414,6 +469,15 @@ export const UpdateSubmissionInput_UpdateInput = {
         case 4:
           message.uploadId = reader.int32();
           break;
+        case 5:
+          message.screeningScore = reader.int32();
+          break;
+        case 6:
+          message.initialScore = reader.int32();
+          break;
+        case 7:
+          message.finalScore = reader.int32();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -426,14 +490,23 @@ export const UpdateSubmissionInput_UpdateInput = {
     return {
       submissionId: isSet(object.submissionId)
         ? Number(object.submissionId)
-        : 0,
+        : undefined,
       submissionStatusId: isSet(object.submissionStatusId)
         ? Number(object.submissionStatusId)
-        : 0,
+        : undefined,
       submissionTypeId: isSet(object.submissionTypeId)
         ? Number(object.submissionTypeId)
-        : 0,
-      uploadId: isSet(object.uploadId) ? Number(object.uploadId) : 0,
+        : undefined,
+      uploadId: isSet(object.uploadId) ? Number(object.uploadId) : undefined,
+      screeningScore: isSet(object.screeningScore)
+        ? Number(object.screeningScore)
+        : undefined,
+      initialScore: isSet(object.initialScore)
+        ? Number(object.initialScore)
+        : undefined,
+      finalScore: isSet(object.finalScore)
+        ? Number(object.finalScore)
+        : undefined,
     };
   },
 
@@ -447,6 +520,12 @@ export const UpdateSubmissionInput_UpdateInput = {
       (obj.submissionTypeId = Math.round(message.submissionTypeId));
     message.uploadId !== undefined &&
       (obj.uploadId = Math.round(message.uploadId));
+    message.screeningScore !== undefined &&
+      (obj.screeningScore = Math.round(message.screeningScore));
+    message.initialScore !== undefined &&
+      (obj.initialScore = Math.round(message.initialScore));
+    message.finalScore !== undefined &&
+      (obj.finalScore = Math.round(message.finalScore));
     return obj;
   },
 
@@ -460,10 +539,13 @@ export const UpdateSubmissionInput_UpdateInput = {
     I extends Exact<DeepPartial<UpdateSubmissionInput_UpdateInput>, I>
   >(object: I): UpdateSubmissionInput_UpdateInput {
     const message = createBaseUpdateSubmissionInput_UpdateInput();
-    message.submissionId = object.submissionId ?? 0;
-    message.submissionStatusId = object.submissionStatusId ?? 0;
-    message.submissionTypeId = object.submissionTypeId ?? 0;
-    message.uploadId = object.uploadId ?? 0;
+    message.submissionId = object.submissionId ?? undefined;
+    message.submissionStatusId = object.submissionStatusId ?? undefined;
+    message.submissionTypeId = object.submissionTypeId ?? undefined;
+    message.uploadId = object.uploadId ?? undefined;
+    message.screeningScore = object.screeningScore ?? undefined;
+    message.initialScore = object.initialScore ?? undefined;
+    message.finalScore = object.finalScore ?? undefined;
     return message;
   },
 };

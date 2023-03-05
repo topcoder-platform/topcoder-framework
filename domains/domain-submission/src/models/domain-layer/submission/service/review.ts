@@ -12,11 +12,9 @@ import {
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
 import {
-  CreateResult,
   LookupCriteria,
   ScanRequest,
   ScanResult,
-  UpdateResult,
 } from "@topcoder-framework/lib-common";
 import {
   CreateReviewInput,
@@ -56,9 +54,9 @@ export const ReviewService = {
     requestSerialize: (value: CreateReviewInput) =>
       Buffer.from(CreateReviewInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) => CreateReviewInput.decode(value),
-    responseSerialize: (value: CreateResult) =>
-      Buffer.from(CreateResult.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => CreateResult.decode(value),
+    responseSerialize: (value: Review) =>
+      Buffer.from(Review.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => Review.decode(value),
   },
   update: {
     path: "/topcoder.domain.service.review.Review/Update",
@@ -67,9 +65,9 @@ export const ReviewService = {
     requestSerialize: (value: UpdateReviewInput) =>
       Buffer.from(UpdateReviewInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) => UpdateReviewInput.decode(value),
-    responseSerialize: (value: UpdateResult) =>
-      Buffer.from(UpdateResult.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => UpdateResult.decode(value),
+    responseSerialize: (value: ReviewList) =>
+      Buffer.from(ReviewList.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => ReviewList.decode(value),
   },
   delete: {
     path: "/topcoder.domain.service.review.Review/Delete",
@@ -87,8 +85,8 @@ export const ReviewService = {
 export interface ReviewServer extends UntypedServiceImplementation {
   scan: handleUnaryCall<ScanRequest, ScanResult>;
   lookup: handleUnaryCall<LookupCriteria, Review>;
-  create: handleUnaryCall<CreateReviewInput, CreateResult>;
-  update: handleUnaryCall<UpdateReviewInput, UpdateResult>;
+  create: handleUnaryCall<CreateReviewInput, Review>;
+  update: handleUnaryCall<UpdateReviewInput, ReviewList>;
   delete: handleUnaryCall<LookupCriteria, ReviewList>;
 }
 
@@ -125,33 +123,33 @@ export interface ReviewClient extends Client {
   ): ClientUnaryCall;
   create(
     request: CreateReviewInput,
-    callback: (error: ServiceError | null, response: CreateResult) => void
+    callback: (error: ServiceError | null, response: Review) => void
   ): ClientUnaryCall;
   create(
     request: CreateReviewInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: CreateResult) => void
+    callback: (error: ServiceError | null, response: Review) => void
   ): ClientUnaryCall;
   create(
     request: CreateReviewInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: CreateResult) => void
+    callback: (error: ServiceError | null, response: Review) => void
   ): ClientUnaryCall;
   update(
     request: UpdateReviewInput,
-    callback: (error: ServiceError | null, response: UpdateResult) => void
+    callback: (error: ServiceError | null, response: ReviewList) => void
   ): ClientUnaryCall;
   update(
     request: UpdateReviewInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: UpdateResult) => void
+    callback: (error: ServiceError | null, response: ReviewList) => void
   ): ClientUnaryCall;
   update(
     request: UpdateReviewInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: UpdateResult) => void
+    callback: (error: ServiceError | null, response: ReviewList) => void
   ): ClientUnaryCall;
   delete(
     request: LookupCriteria,

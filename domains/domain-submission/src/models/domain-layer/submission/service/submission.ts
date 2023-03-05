@@ -12,11 +12,9 @@ import {
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
 import {
-  CreateResult,
   LookupCriteria,
   ScanRequest,
   ScanResult,
-  UpdateResult,
 } from "@topcoder-framework/lib-common";
 import {
   CreateSubmissionInput,
@@ -56,9 +54,9 @@ export const SubmissionService = {
     requestSerialize: (value: CreateSubmissionInput) =>
       Buffer.from(CreateSubmissionInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) => CreateSubmissionInput.decode(value),
-    responseSerialize: (value: CreateResult) =>
-      Buffer.from(CreateResult.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => CreateResult.decode(value),
+    responseSerialize: (value: Submission) =>
+      Buffer.from(Submission.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => Submission.decode(value),
   },
   update: {
     path: "/topcoder.domain.service.submission.Submission/Update",
@@ -67,9 +65,9 @@ export const SubmissionService = {
     requestSerialize: (value: UpdateSubmissionInput) =>
       Buffer.from(UpdateSubmissionInput.encode(value).finish()),
     requestDeserialize: (value: Buffer) => UpdateSubmissionInput.decode(value),
-    responseSerialize: (value: UpdateResult) =>
-      Buffer.from(UpdateResult.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => UpdateResult.decode(value),
+    responseSerialize: (value: SubmissionList) =>
+      Buffer.from(SubmissionList.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => SubmissionList.decode(value),
   },
   delete: {
     path: "/topcoder.domain.service.submission.Submission/Delete",
@@ -87,8 +85,8 @@ export const SubmissionService = {
 export interface SubmissionServer extends UntypedServiceImplementation {
   scan: handleUnaryCall<ScanRequest, ScanResult>;
   lookup: handleUnaryCall<LookupCriteria, Submission>;
-  create: handleUnaryCall<CreateSubmissionInput, CreateResult>;
-  update: handleUnaryCall<UpdateSubmissionInput, UpdateResult>;
+  create: handleUnaryCall<CreateSubmissionInput, Submission>;
+  update: handleUnaryCall<UpdateSubmissionInput, SubmissionList>;
   delete: handleUnaryCall<LookupCriteria, SubmissionList>;
 }
 
@@ -125,33 +123,33 @@ export interface SubmissionClient extends Client {
   ): ClientUnaryCall;
   create(
     request: CreateSubmissionInput,
-    callback: (error: ServiceError | null, response: CreateResult) => void
+    callback: (error: ServiceError | null, response: Submission) => void
   ): ClientUnaryCall;
   create(
     request: CreateSubmissionInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: CreateResult) => void
+    callback: (error: ServiceError | null, response: Submission) => void
   ): ClientUnaryCall;
   create(
     request: CreateSubmissionInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: CreateResult) => void
+    callback: (error: ServiceError | null, response: Submission) => void
   ): ClientUnaryCall;
   update(
     request: UpdateSubmissionInput,
-    callback: (error: ServiceError | null, response: UpdateResult) => void
+    callback: (error: ServiceError | null, response: SubmissionList) => void
   ): ClientUnaryCall;
   update(
     request: UpdateSubmissionInput,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: UpdateResult) => void
+    callback: (error: ServiceError | null, response: SubmissionList) => void
   ): ClientUnaryCall;
   update(
     request: UpdateSubmissionInput,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: UpdateResult) => void
+    callback: (error: ServiceError | null, response: SubmissionList) => void
   ): ClientUnaryCall;
   delete(
     request: LookupCriteria,

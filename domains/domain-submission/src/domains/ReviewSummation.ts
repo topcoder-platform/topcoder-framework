@@ -51,7 +51,7 @@ export class ReviewSummationDomain {
     param: CreateReviewSummationInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<CreateReviewSummationInput, Metadata, CreateResult>(
+    return promisify<CreateReviewSummationInput, Metadata, ReviewSummation>(
       this.client.create.bind(this.client)
     )(param, metadata);
   }
@@ -60,7 +60,7 @@ export class ReviewSummationDomain {
     param: UpdateReviewSummationInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<UpdateReviewSummationInput, Metadata, UpdateResult>(
+    return promisify<UpdateReviewSummationInput, Metadata, ReviewSummationList>(
       this.client.update.bind(this.client)
     )(param, metadata);
   }
