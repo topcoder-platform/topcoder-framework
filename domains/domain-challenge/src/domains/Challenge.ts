@@ -12,12 +12,12 @@ import {
 
 import { GrpcClient } from "../common/GrpcClient";
 import {
+  Empty,
   LookupCriteria,
   ScanRequest,
   ScanResult,
   UpdateResult,
 } from "@topcoder-framework/lib-common";
-import { Empty } from "src/models/google/protobuf/empty";
 
 export class ChallengeDomain {
   constructor(
