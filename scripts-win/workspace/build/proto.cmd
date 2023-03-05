@@ -2,4 +2,4 @@
 
 echo "⚗️ Building all packages..."
 
-yarn lerna run build:proto
+yarn lerna run build:proto --concurrency 10
