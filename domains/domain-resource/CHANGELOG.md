@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.5.3...v0.6.0) (2023-03-05)
+
+### Features
+
+- add support for building on windows ([0a7f3af](https://github.com/topcoder-platform/topcoder-framework/commit/0a7f3af3428993b9c2a9fd72a402b508ad01add0))
+
 ## [0.5.2](https://github.com/topcoder-platform/topcoder-framework/compare/v0.5.1...v0.5.2) (2023-02-26)
 
 **Note:** Version bump only for package @topcoder-framework/domain-resource
