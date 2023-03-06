@@ -9,3 +9,4 @@ export * from "./domains/ResourceService";
 export * from "./domains/ReviewService";
 export * from "./domains/TermService";
 export * from "./domains/PrizeService";
+export * from "./models/domain-layer/legacy/challenge";
