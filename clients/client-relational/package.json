@@ -1,6 +1,6 @@
 {
   "name": "@topcoder-framework/client-relational",
-  "version": "0.5.1-ci.0",
+  "version": "0.5.4-ci.0",
   "description": "Topcoder gRPC client stub for relational gRPC service",
   "main": "./dist-cjs/index.js",
   "types": "./dist-es/index.d.ts",
@@ -25,7 +25,7 @@
   "license": "ISC",
   "dependencies": {
     "@grpc/grpc-js": "^1.8.0",
-    "@topcoder-framework/lib-common": "^0.5.2",
+    "@topcoder-framework/lib-common": "0.5.4-ci.0",
     "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.20",
     "tslib": "^2.4.1"
   },
@@ -45,5 +45,5 @@
   "files": [
     "dist-*"
   ],
-  "gitHead": "a91a2a734d1a783da66936d858e006be51cad021"
+  "gitHead": "d1f5aa12f078f2e100be4d1e92d5fb7b77a47707"
 }

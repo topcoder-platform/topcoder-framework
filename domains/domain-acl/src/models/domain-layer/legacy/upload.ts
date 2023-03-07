@@ -44,6 +44,10 @@ export interface UpdateUploadInput_UpdateInput {
   url: string;
 }
 
+export interface DeleteUploadInput {
+  filterCriteria: ScanCriteria[];
+}
+
 function createBaseUpload(): Upload {
   return {
     uploadId: 0,
@@ -62,7 +66,10 @@ function createBaseUpload(): Upload {
 }
 
 export const Upload = {
-  encode(message: Upload, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: Upload,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.uploadId !== 0) {
       writer.uint32(8).int32(message.uploadId);
     }
@@ -158,10 +165,16 @@ export const Upload = {
       uploadId: isSet(object.uploadId) ? Number(object.uploadId) : 0,
       projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
       resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
-      projectPhaseId: isSet(object.projectPhaseId) ? Number(object.projectPhaseId) : 0,
-      uploadTypeId: isSet(object.uploadTypeId) ? Number(object.uploadTypeId) : 0,
+      projectPhaseId: isSet(object.projectPhaseId)
+        ? Number(object.projectPhaseId)
+        : 0,
+      uploadTypeId: isSet(object.uploadTypeId)
+        ? Number(object.uploadTypeId)
+        : 0,
       url: isSet(object.url) ? String(object.url) : "",
-      uploadStatusId: isSet(object.uploadStatusId) ? Number(object.uploadStatusId) : 0,
+      uploadStatusId: isSet(object.uploadStatusId)
+        ? Number(object.uploadStatusId)
+        : 0,
       parameter: isSet(object.parameter) ? String(object.parameter) : "",
       createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
       modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : 0,
@@ -172,18 +185,28 @@ export const Upload = {
 
   toJSON(message: Upload): unknown {
     const obj: any = {};
-    message.uploadId !== undefined && (obj.uploadId = Math.round(message.uploadId));
-    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
-    message.resourceId !== undefined && (obj.resourceId = Math.round(message.resourceId));
-    message.projectPhaseId !== undefined && (obj.projectPhaseId = Math.round(message.projectPhaseId));
-    message.uploadTypeId !== undefined && (obj.uploadTypeId = Math.round(message.uploadTypeId));
+    message.uploadId !== undefined &&
+      (obj.uploadId = Math.round(message.uploadId));
+    message.projectId !== undefined &&
+      (obj.projectId = Math.round(message.projectId));
+    message.resourceId !== undefined &&
+      (obj.resourceId = Math.round(message.resourceId));
+    message.projectPhaseId !== undefined &&
+      (obj.projectPhaseId = Math.round(message.projectPhaseId));
+    message.uploadTypeId !== undefined &&
+      (obj.uploadTypeId = Math.round(message.uploadTypeId));
     message.url !== undefined && (obj.url = message.url);
-    message.uploadStatusId !== undefined && (obj.uploadStatusId = Math.round(message.uploadStatusId));
+    message.uploadStatusId !== undefined &&
+      (obj.uploadStatusId = Math.round(message.uploadStatusId));
     message.parameter !== undefined && (obj.parameter = message.parameter);
-    message.createUser !== undefined && (obj.createUser = Math.round(message.createUser));
-    message.modifyUser !== undefined && (obj.modifyUser = Math.round(message.modifyUser));
-    message.createDate !== undefined && (obj.createDate = Math.round(message.createDate));
-    message.modifyDate !== undefined && (obj.modifyDate = Math.round(message.modifyDate));
+    message.createUser !== undefined &&
+      (obj.createUser = Math.round(message.createUser));
+    message.modifyUser !== undefined &&
+      (obj.modifyUser = Math.round(message.modifyUser));
+    message.createDate !== undefined &&
+      (obj.createDate = Math.round(message.createDate));
+    message.modifyDate !== undefined &&
+      (obj.modifyDate = Math.round(message.modifyDate));
     return obj;
   },
 
@@ -214,7 +237,10 @@ function createBaseUploadId(): UploadId {
 }
 
 export const UploadId = {
-  encode(message: UploadId, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: UploadId,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.uploadId !== 0) {
       writer.uint32(8).int32(message.uploadId);
     }
@@ -245,7 +271,8 @@ export const UploadId = {
 
   toJSON(message: UploadId): unknown {
     const obj: any = {};
-    message.uploadId !== undefined && (obj.uploadId = Math.round(message.uploadId));
+    message.uploadId !== undefined &&
+      (obj.uploadId = Math.round(message.uploadId));
     return obj;
   },
 
@@ -265,7 +292,10 @@ function createBaseUploadList(): UploadList {
 }
 
 export const UploadList = {
-  encode(message: UploadList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: UploadList,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.uploads) {
       Upload.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -291,13 +321,19 @@ export const UploadList = {
   },
 
   fromJSON(object: any): UploadList {
-    return { uploads: Array.isArray(object?.uploads) ? object.uploads.map((e: any) => Upload.fromJSON(e)) : [] };
+    return {
+      uploads: Array.isArray(object?.uploads)
+        ? object.uploads.map((e: any) => Upload.fromJSON(e))
+        : [],
+    };
   },
 
   toJSON(message: UploadList): unknown {
     const obj: any = {};
     if (message.uploads) {
-      obj.uploads = message.uploads.map((e) => e ? Upload.toJSON(e) : undefined);
+      obj.uploads = message.uploads.map((e) =>
+        e ? Upload.toJSON(e) : undefined
+      );
     } else {
       obj.uploads = [];
     }
@@ -308,7 +344,9 @@ export const UploadList = {
     return UploadList.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<UploadList>, I>>(object: I): UploadList {
+  fromPartial<I extends Exact<DeepPartial<UploadList>, I>>(
+    object: I
+  ): UploadList {
     const message = createBaseUploadList();
     message.uploads = object.uploads?.map((e) => Upload.fromPartial(e)) || [];
     return message;
@@ -316,11 +354,22 @@ export const UploadList = {
 };
 
 function createBaseCreateUploadInput(): CreateUploadInput {
-  return { projectId: 0, resourceId: 0, projectPhaseId: 0, uploadTypeId: 0, url: "", uploadStatusId: 0, parameter: "" };
+  return {
+    projectId: 0,
+    resourceId: 0,
+    projectPhaseId: 0,
+    uploadTypeId: 0,
+    url: "",
+    uploadStatusId: 0,
+    parameter: "",
+  };
 }
 
 export const CreateUploadInput = {
-  encode(message: CreateUploadInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: CreateUploadInput,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.projectId !== 0) {
       writer.uint32(8).int32(message.projectId);
     }
@@ -385,31 +434,46 @@ export const CreateUploadInput = {
     return {
       projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
       resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
-      projectPhaseId: isSet(object.projectPhaseId) ? Number(object.projectPhaseId) : 0,
-      uploadTypeId: isSet(object.uploadTypeId) ? Number(object.uploadTypeId) : 0,
+      projectPhaseId: isSet(object.projectPhaseId)
+        ? Number(object.projectPhaseId)
+        : 0,
+      uploadTypeId: isSet(object.uploadTypeId)
+        ? Number(object.uploadTypeId)
+        : 0,
       url: isSet(object.url) ? String(object.url) : "",
-      uploadStatusId: isSet(object.uploadStatusId) ? Number(object.uploadStatusId) : 0,
+      uploadStatusId: isSet(object.uploadStatusId)
+        ? Number(object.uploadStatusId)
+        : 0,
       parameter: isSet(object.parameter) ? String(object.parameter) : "",
     };
   },
 
   toJSON(message: CreateUploadInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
-    message.resourceId !== undefined && (obj.resourceId = Math.round(message.resourceId));
-    message.projectPhaseId !== undefined && (obj.projectPhaseId = Math.round(message.projectPhaseId));
-    message.uploadTypeId !== undefined && (obj.uploadTypeId = Math.round(message.uploadTypeId));
+    message.projectId !== undefined &&
+      (obj.projectId = Math.round(message.projectId));
+    message.resourceId !== undefined &&
+      (obj.resourceId = Math.round(message.resourceId));
+    message.projectPhaseId !== undefined &&
+      (obj.projectPhaseId = Math.round(message.projectPhaseId));
+    message.uploadTypeId !== undefined &&
+      (obj.uploadTypeId = Math.round(message.uploadTypeId));
     message.url !== undefined && (obj.url = message.url);
-    message.uploadStatusId !== undefined && (obj.uploadStatusId = Math.round(message.uploadStatusId));
+    message.uploadStatusId !== undefined &&
+      (obj.uploadStatusId = Math.round(message.uploadStatusId));
     message.parameter !== undefined && (obj.parameter = message.parameter);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateUploadInput>, I>>(base?: I): CreateUploadInput {
+  create<I extends Exact<DeepPartial<CreateUploadInput>, I>>(
+    base?: I
+  ): CreateUploadInput {
     return CreateUploadInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateUploadInput>, I>>(object: I): CreateUploadInput {
+  fromPartial<I extends Exact<DeepPartial<CreateUploadInput>, I>>(
+    object: I
+  ): CreateUploadInput {
     const message = createBaseCreateUploadInput();
     message.projectId = object.projectId ?? 0;
     message.resourceId = object.resourceId ?? 0;
@@ -427,12 +491,18 @@ function createBaseUpdateUploadInput(): UpdateUploadInput {
 }
 
 export const UpdateUploadInput = {
-  encode(message: UpdateUploadInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: UpdateUploadInput,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.filterCriteria) {
       ScanCriteria.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     if (message.updateInput !== undefined) {
-      UpdateUploadInput_UpdateInput.encode(message.updateInput, writer.uint32(26).fork()).ldelim();
+      UpdateUploadInput_UpdateInput.encode(
+        message.updateInput,
+        writer.uint32(26).fork()
+      ).ldelim();
     }
     return writer;
   },
@@ -445,10 +515,15 @@ export const UpdateUploadInput = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.filterCriteria.push(ScanCriteria.decode(reader, reader.uint32()));
+          message.filterCriteria.push(
+            ScanCriteria.decode(reader, reader.uint32())
+          );
           break;
         case 3:
-          message.updateInput = UpdateUploadInput_UpdateInput.decode(reader, reader.uint32());
+          message.updateInput = UpdateUploadInput_UpdateInput.decode(
+            reader,
+            reader.uint32()
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -463,32 +538,44 @@ export const UpdateUploadInput = {
       filterCriteria: Array.isArray(object?.filterCriteria)
         ? object.filterCriteria.map((e: any) => ScanCriteria.fromJSON(e))
         : [],
-      updateInput: isSet(object.updateInput) ? UpdateUploadInput_UpdateInput.fromJSON(object.updateInput) : undefined,
+      updateInput: isSet(object.updateInput)
+        ? UpdateUploadInput_UpdateInput.fromJSON(object.updateInput)
+        : undefined,
     };
   },
 
   toJSON(message: UpdateUploadInput): unknown {
     const obj: any = {};
     if (message.filterCriteria) {
-      obj.filterCriteria = message.filterCriteria.map((e) => e ? ScanCriteria.toJSON(e) : undefined);
+      obj.filterCriteria = message.filterCriteria.map((e) =>
+        e ? ScanCriteria.toJSON(e) : undefined
+      );
     } else {
       obj.filterCriteria = [];
     }
     message.updateInput !== undefined &&
-      (obj.updateInput = message.updateInput ? UpdateUploadInput_UpdateInput.toJSON(message.updateInput) : undefined);
+      (obj.updateInput = message.updateInput
+        ? UpdateUploadInput_UpdateInput.toJSON(message.updateInput)
+        : undefined);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdateUploadInput>, I>>(base?: I): UpdateUploadInput {
+  create<I extends Exact<DeepPartial<UpdateUploadInput>, I>>(
+    base?: I
+  ): UpdateUploadInput {
     return UpdateUploadInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdateUploadInput>, I>>(object: I): UpdateUploadInput {
+  fromPartial<I extends Exact<DeepPartial<UpdateUploadInput>, I>>(
+    object: I
+  ): UpdateUploadInput {
     const message = createBaseUpdateUploadInput();
-    message.filterCriteria = object.filterCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
-    message.updateInput = (object.updateInput !== undefined && object.updateInput !== null)
-      ? UpdateUploadInput_UpdateInput.fromPartial(object.updateInput)
-      : undefined;
+    message.filterCriteria =
+      object.filterCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
+    message.updateInput =
+      object.updateInput !== undefined && object.updateInput !== null
+        ? UpdateUploadInput_UpdateInput.fromPartial(object.updateInput)
+        : undefined;
     return message;
   },
 };
@@ -498,14 +585,20 @@ function createBaseUpdateUploadInput_UpdateInput(): UpdateUploadInput_UpdateInpu
 }
 
 export const UpdateUploadInput_UpdateInput = {
-  encode(message: UpdateUploadInput_UpdateInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: UpdateUploadInput_UpdateInput,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.url !== "") {
       writer.uint32(10).string(message.url);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateUploadInput_UpdateInput {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): UpdateUploadInput_UpdateInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateUploadInput_UpdateInput();
@@ -533,12 +626,14 @@ export const UpdateUploadInput_UpdateInput = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdateUploadInput_UpdateInput>, I>>(base?: I): UpdateUploadInput_UpdateInput {
+  create<I extends Exact<DeepPartial<UpdateUploadInput_UpdateInput>, I>>(
+    base?: I
+  ): UpdateUploadInput_UpdateInput {
     return UpdateUploadInput_UpdateInput.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<UpdateUploadInput_UpdateInput>, I>>(
-    object: I,
+    object: I
   ): UpdateUploadInput_UpdateInput {
     const message = createBaseUpdateUploadInput_UpdateInput();
     message.url = object.url ?? "";
@@ -546,17 +641,106 @@ export const UpdateUploadInput_UpdateInput = {
   },
 };
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+function createBaseDeleteUploadInput(): DeleteUploadInput {
+  return { filterCriteria: [] };
+}
 
-type DeepPartial<T> = T extends Builtin ? T
-  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+export const DeleteUploadInput = {
+  encode(
+    message: DeleteUploadInput,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    for (const v of message.filterCriteria) {
+      ScanCriteria.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): DeleteUploadInput {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDeleteUploadInput();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.filterCriteria.push(
+            ScanCriteria.decode(reader, reader.uint32())
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): DeleteUploadInput {
+    return {
+      filterCriteria: Array.isArray(object?.filterCriteria)
+        ? object.filterCriteria.map((e: any) => ScanCriteria.fromJSON(e))
+        : [],
+    };
+  },
+
+  toJSON(message: DeleteUploadInput): unknown {
+    const obj: any = {};
+    if (message.filterCriteria) {
+      obj.filterCriteria = message.filterCriteria.map((e) =>
+        e ? ScanCriteria.toJSON(e) : undefined
+      );
+    } else {
+      obj.filterCriteria = [];
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<DeleteUploadInput>, I>>(
+    base?: I
+  ): DeleteUploadInput {
+    return DeleteUploadInput.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<DeleteUploadInput>, I>>(
+    object: I
+  ): DeleteUploadInput {
+    const message = createBaseDeleteUploadInput();
+    message.filterCriteria =
+      object.filterCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | undefined;
+
+type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string }
+  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
+      $case: T["$case"];
+    }
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
+      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
+    };
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;
