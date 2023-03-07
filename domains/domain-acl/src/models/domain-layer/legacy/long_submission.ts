@@ -37,10 +37,7 @@ function createBaseLongSubmission(): LongSubmission {
 }
 
 export const LongSubmission = {
-  encode(
-    message: LongSubmission,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: LongSubmission, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.longComponentStateId !== 0) {
       writer.uint32(8).int32(message.longComponentStateId);
     }
@@ -109,20 +106,12 @@ export const LongSubmission = {
 
   fromJSON(object: any): LongSubmission {
     return {
-      longComponentStateId: isSet(object.longComponentStateId)
-        ? Number(object.longComponentStateId)
-        : 0,
-      submissionNumber: isSet(object.submissionNumber)
-        ? Number(object.submissionNumber)
-        : 0,
-      submissionText: isSet(object.submissionText)
-        ? String(object.submissionText)
-        : "",
+      longComponentStateId: isSet(object.longComponentStateId) ? Number(object.longComponentStateId) : 0,
+      submissionNumber: isSet(object.submissionNumber) ? Number(object.submissionNumber) : 0,
+      submissionText: isSet(object.submissionText) ? String(object.submissionText) : "",
       openTime: isSet(object.openTime) ? Number(object.openTime) : 0,
       submitTime: isSet(object.submitTime) ? Number(object.submitTime) : 0,
-      submissionPoints: isSet(object.submissionPoints)
-        ? Number(object.submissionPoints)
-        : 0,
+      submissionPoints: isSet(object.submissionPoints) ? Number(object.submissionPoints) : 0,
       languageId: isSet(object.languageId) ? Number(object.languageId) : 0,
       example: isSet(object.example) ? Boolean(object.example) : false,
     };
@@ -130,33 +119,22 @@ export const LongSubmission = {
 
   toJSON(message: LongSubmission): unknown {
     const obj: any = {};
-    message.longComponentStateId !== undefined &&
-      (obj.longComponentStateId = Math.round(message.longComponentStateId));
-    message.submissionNumber !== undefined &&
-      (obj.submissionNumber = Math.round(message.submissionNumber));
-    message.submissionText !== undefined &&
-      (obj.submissionText = message.submissionText);
-    message.openTime !== undefined &&
-      (obj.openTime = Math.round(message.openTime));
-    message.submitTime !== undefined &&
-      (obj.submitTime = Math.round(message.submitTime));
-    message.submissionPoints !== undefined &&
-      (obj.submissionPoints = Math.round(message.submissionPoints));
-    message.languageId !== undefined &&
-      (obj.languageId = Math.round(message.languageId));
+    message.longComponentStateId !== undefined && (obj.longComponentStateId = Math.round(message.longComponentStateId));
+    message.submissionNumber !== undefined && (obj.submissionNumber = Math.round(message.submissionNumber));
+    message.submissionText !== undefined && (obj.submissionText = message.submissionText);
+    message.openTime !== undefined && (obj.openTime = Math.round(message.openTime));
+    message.submitTime !== undefined && (obj.submitTime = Math.round(message.submitTime));
+    message.submissionPoints !== undefined && (obj.submissionPoints = Math.round(message.submissionPoints));
+    message.languageId !== undefined && (obj.languageId = Math.round(message.languageId));
     message.example !== undefined && (obj.example = message.example);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<LongSubmission>, I>>(
-    base?: I
-  ): LongSubmission {
+  create<I extends Exact<DeepPartial<LongSubmission>, I>>(base?: I): LongSubmission {
     return LongSubmission.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<LongSubmission>, I>>(
-    object: I
-  ): LongSubmission {
+  fromPartial<I extends Exact<DeepPartial<LongSubmission>, I>>(object: I): LongSubmission {
     const message = createBaseLongSubmission();
     message.longComponentStateId = object.longComponentStateId ?? 0;
     message.submissionNumber = object.submissionNumber ?? 0;
@@ -183,10 +161,7 @@ function createBaseCreateLongSubmissionInput(): CreateLongSubmissionInput {
 }
 
 export const CreateLongSubmissionInput = {
-  encode(
-    message: CreateLongSubmissionInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CreateLongSubmissionInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.submissionNumber !== 0) {
       writer.uint32(8).int32(message.submissionNumber);
     }
@@ -211,10 +186,7 @@ export const CreateLongSubmissionInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): CreateLongSubmissionInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CreateLongSubmissionInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateLongSubmissionInput();
@@ -252,17 +224,11 @@ export const CreateLongSubmissionInput = {
 
   fromJSON(object: any): CreateLongSubmissionInput {
     return {
-      submissionNumber: isSet(object.submissionNumber)
-        ? Number(object.submissionNumber)
-        : 0,
-      submissionText: isSet(object.submissionText)
-        ? String(object.submissionText)
-        : "",
+      submissionNumber: isSet(object.submissionNumber) ? Number(object.submissionNumber) : 0,
+      submissionText: isSet(object.submissionText) ? String(object.submissionText) : "",
       openTime: isSet(object.openTime) ? Number(object.openTime) : 0,
       submitTime: isSet(object.submitTime) ? Number(object.submitTime) : 0,
-      submissionPoints: isSet(object.submissionPoints)
-        ? Number(object.submissionPoints)
-        : 0,
+      submissionPoints: isSet(object.submissionPoints) ? Number(object.submissionPoints) : 0,
       languageId: isSet(object.languageId) ? Number(object.languageId) : 0,
       example: isSet(object.example) ? Boolean(object.example) : false,
     };
@@ -270,31 +236,21 @@ export const CreateLongSubmissionInput = {
 
   toJSON(message: CreateLongSubmissionInput): unknown {
     const obj: any = {};
-    message.submissionNumber !== undefined &&
-      (obj.submissionNumber = Math.round(message.submissionNumber));
-    message.submissionText !== undefined &&
-      (obj.submissionText = message.submissionText);
-    message.openTime !== undefined &&
-      (obj.openTime = Math.round(message.openTime));
-    message.submitTime !== undefined &&
-      (obj.submitTime = Math.round(message.submitTime));
-    message.submissionPoints !== undefined &&
-      (obj.submissionPoints = Math.round(message.submissionPoints));
-    message.languageId !== undefined &&
-      (obj.languageId = Math.round(message.languageId));
+    message.submissionNumber !== undefined && (obj.submissionNumber = Math.round(message.submissionNumber));
+    message.submissionText !== undefined && (obj.submissionText = message.submissionText);
+    message.openTime !== undefined && (obj.openTime = Math.round(message.openTime));
+    message.submitTime !== undefined && (obj.submitTime = Math.round(message.submitTime));
+    message.submissionPoints !== undefined && (obj.submissionPoints = Math.round(message.submissionPoints));
+    message.languageId !== undefined && (obj.languageId = Math.round(message.languageId));
     message.example !== undefined && (obj.example = message.example);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateLongSubmissionInput>, I>>(
-    base?: I
-  ): CreateLongSubmissionInput {
+  create<I extends Exact<DeepPartial<CreateLongSubmissionInput>, I>>(base?: I): CreateLongSubmissionInput {
     return CreateLongSubmissionInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateLongSubmissionInput>, I>>(
-    object: I
-  ): CreateLongSubmissionInput {
+  fromPartial<I extends Exact<DeepPartial<CreateLongSubmissionInput>, I>>(object: I): CreateLongSubmissionInput {
     const message = createBaseCreateLongSubmissionInput();
     message.submissionNumber = object.submissionNumber ?? 0;
     message.submissionText = object.submissionText ?? "";
@@ -326,41 +282,21 @@ var tsProtoGlobalThis: any = (() => {
   throw "Unable to locate global object";
 })();
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
-    }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
-      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
-    };
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

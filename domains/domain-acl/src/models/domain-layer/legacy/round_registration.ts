@@ -20,10 +20,7 @@ function createBaseRoundRegistration(): RoundRegistration {
 }
 
 export const RoundRegistration = {
-  encode(
-    message: RoundRegistration,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: RoundRegistration, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.roundId !== 0) {
       writer.uint32(8).int32(message.roundId);
     }
@@ -63,22 +60,16 @@ export const RoundRegistration = {
 
   toJSON(message: RoundRegistration): unknown {
     const obj: any = {};
-    message.roundId !== undefined &&
-      (obj.roundId = Math.round(message.roundId));
-    message.coderId !== undefined &&
-      (obj.coderId = Math.round(message.coderId));
+    message.roundId !== undefined && (obj.roundId = Math.round(message.roundId));
+    message.coderId !== undefined && (obj.coderId = Math.round(message.coderId));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<RoundRegistration>, I>>(
-    base?: I
-  ): RoundRegistration {
+  create<I extends Exact<DeepPartial<RoundRegistration>, I>>(base?: I): RoundRegistration {
     return RoundRegistration.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<RoundRegistration>, I>>(
-    object: I
-  ): RoundRegistration {
+  fromPartial<I extends Exact<DeepPartial<RoundRegistration>, I>>(object: I): RoundRegistration {
     const message = createBaseRoundRegistration();
     message.roundId = object.roundId ?? 0;
     message.coderId = object.coderId ?? 0;
@@ -91,10 +82,7 @@ function createBaseCreateRoundRegistrationInput(): CreateRoundRegistrationInput 
 }
 
 export const CreateRoundRegistrationInput = {
-  encode(
-    message: CreateRoundRegistrationInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CreateRoundRegistrationInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.roundId !== 0) {
       writer.uint32(8).int32(message.roundId);
     }
@@ -113,10 +101,7 @@ export const CreateRoundRegistrationInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): CreateRoundRegistrationInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CreateRoundRegistrationInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateRoundRegistrationInput();
@@ -158,26 +143,19 @@ export const CreateRoundRegistrationInput = {
 
   toJSON(message: CreateRoundRegistrationInput): unknown {
     const obj: any = {};
-    message.roundId !== undefined &&
-      (obj.roundId = Math.round(message.roundId));
-    message.coderId !== undefined &&
-      (obj.coderId = Math.round(message.coderId));
-    message.timestamp !== undefined &&
-      (obj.timestamp = Math.round(message.timestamp));
+    message.roundId !== undefined && (obj.roundId = Math.round(message.roundId));
+    message.coderId !== undefined && (obj.coderId = Math.round(message.coderId));
+    message.timestamp !== undefined && (obj.timestamp = Math.round(message.timestamp));
     message.eligible !== undefined && (obj.eligible = message.eligible);
     message.teamId !== undefined && (obj.teamId = Math.round(message.teamId));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateRoundRegistrationInput>, I>>(
-    base?: I
-  ): CreateRoundRegistrationInput {
+  create<I extends Exact<DeepPartial<CreateRoundRegistrationInput>, I>>(base?: I): CreateRoundRegistrationInput {
     return CreateRoundRegistrationInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateRoundRegistrationInput>, I>>(
-    object: I
-  ): CreateRoundRegistrationInput {
+  fromPartial<I extends Exact<DeepPartial<CreateRoundRegistrationInput>, I>>(object: I): CreateRoundRegistrationInput {
     const message = createBaseCreateRoundRegistrationInput();
     message.roundId = object.roundId ?? 0;
     message.coderId = object.coderId ?? 0;
@@ -207,41 +185,21 @@ var tsProtoGlobalThis: any = (() => {
   throw "Unable to locate global object";
 })();
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
-    }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
-      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
-    };
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }
