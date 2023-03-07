@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@topcoder-framework/lib-common": "^0.5.2",
+    "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.24",
     "dotenv": "^16.0.3",
     "tslib": "^2.4.1"
   },
