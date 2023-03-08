@@ -60,7 +60,7 @@ export class SubmissionDomain {
     param: UpdateSubmissionInput,
     metadata: Metadata = new Metadata()
   ): Promise<SubmissionList> {
-    return promisify<UpdateSubmissionInput, Metadata, SubmissionList>( // TODO: Update Proto to return UpdateSubmission and not SubmissionList
+    return promisify<UpdateSubmissionInput, Metadata, SubmissionList>(
       this.client.update.bind(this.client)
     )(param, metadata);
   }
