@@ -30,7 +30,7 @@ export interface CreateSubmissionInput {
   url?: string | undefined;
   legacyChallengeId?: number | undefined;
   legacySubmissionId?: string | undefined;
-  submissionPhaseId?: number | undefined;
+  submissionPhaseId?: string | undefined;
   submittedDate?: number | undefined;
   legacyUploadId?: number | undefined;
 }
@@ -330,7 +330,7 @@ export const CreateSubmissionInput = {
       writer.uint32(58).string(message.legacySubmissionId);
     }
     if (message.submissionPhaseId !== undefined) {
-      writer.uint32(64).int64(message.submissionPhaseId);
+      writer.uint32(66).string(message.submissionPhaseId);
     }
     if (message.submittedDate !== undefined) {
       writer.uint32(72).int64(message.submittedDate);
@@ -373,7 +373,7 @@ export const CreateSubmissionInput = {
           message.legacySubmissionId = reader.string();
           break;
         case 8:
-          message.submissionPhaseId = longToNumber(reader.int64() as Long);
+          message.submissionPhaseId = reader.string();
           break;
         case 9:
           message.submittedDate = longToNumber(reader.int64() as Long);
@@ -403,7 +403,7 @@ export const CreateSubmissionInput = {
         ? String(object.legacySubmissionId)
         : undefined,
       submissionPhaseId: isSet(object.submissionPhaseId)
-        ? Number(object.submissionPhaseId)
+        ? String(object.submissionPhaseId)
         : undefined,
       submittedDate: isSet(object.submittedDate)
         ? Number(object.submittedDate)
@@ -428,7 +428,7 @@ export const CreateSubmissionInput = {
     message.legacySubmissionId !== undefined &&
       (obj.legacySubmissionId = message.legacySubmissionId);
     message.submissionPhaseId !== undefined &&
-      (obj.submissionPhaseId = Math.round(message.submissionPhaseId));
+      (obj.submissionPhaseId = message.submissionPhaseId);
     message.submittedDate !== undefined &&
       (obj.submittedDate = Math.round(message.submittedDate));
     message.legacyUploadId !== undefined &&
