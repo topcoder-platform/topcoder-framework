@@ -38,11 +38,21 @@ export interface UpdateAttachmentInput_UpdateInput {
 }
 
 function createBaseAttachment(): Attachment {
-  return { id: "", url: "", fileSize: 0, name: "", challengeId: "", description: undefined };
+  return {
+    id: "",
+    url: "",
+    fileSize: 0,
+    name: "",
+    challengeId: "",
+    description: undefined,
+  };
 }
 
 export const Attachment = {
-  encode(message: Attachment, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: Attachment,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -104,7 +114,9 @@ export const Attachment = {
       fileSize: isSet(object.fileSize) ? Number(object.fileSize) : 0,
       name: isSet(object.name) ? String(object.name) : "",
       challengeId: isSet(object.challengeId) ? String(object.challengeId) : "",
-      description: isSet(object.description) ? String(object.description) : undefined,
+      description: isSet(object.description)
+        ? String(object.description)
+        : undefined,
     };
   },
 
@@ -112,10 +124,13 @@ export const Attachment = {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     message.url !== undefined && (obj.url = message.url);
-    message.fileSize !== undefined && (obj.fileSize = Math.round(message.fileSize));
+    message.fileSize !== undefined &&
+      (obj.fileSize = Math.round(message.fileSize));
     message.name !== undefined && (obj.name = message.name);
-    message.challengeId !== undefined && (obj.challengeId = message.challengeId);
-    message.description !== undefined && (obj.description = message.description);
+    message.challengeId !== undefined &&
+      (obj.challengeId = message.challengeId);
+    message.description !== undefined &&
+      (obj.description = message.description);
     return obj;
   },
 
@@ -123,7 +138,9 @@ export const Attachment = {
     return Attachment.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<Attachment>, I>>(object: I): Attachment {
+  fromPartial<I extends Exact<DeepPartial<Attachment>, I>>(
+    object: I
+  ): Attachment {
     const message = createBaseAttachment();
     message.id = object.id ?? "";
     message.url = object.url ?? "";
@@ -140,7 +157,10 @@ function createBaseAttachmentList(): AttachmentList {
 }
 
 export const AttachmentList = {
-  encode(message: AttachmentList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: AttachmentList,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.items) {
       Attachment.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -166,24 +186,34 @@ export const AttachmentList = {
   },
 
   fromJSON(object: any): AttachmentList {
-    return { items: Array.isArray(object?.items) ? object.items.map((e: any) => Attachment.fromJSON(e)) : [] };
+    return {
+      items: Array.isArray(object?.items)
+        ? object.items.map((e: any) => Attachment.fromJSON(e))
+        : [],
+    };
   },
 
   toJSON(message: AttachmentList): unknown {
     const obj: any = {};
     if (message.items) {
-      obj.items = message.items.map((e) => e ? Attachment.toJSON(e) : undefined);
+      obj.items = message.items.map((e) =>
+        e ? Attachment.toJSON(e) : undefined
+      );
     } else {
       obj.items = [];
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<AttachmentList>, I>>(base?: I): AttachmentList {
+  create<I extends Exact<DeepPartial<AttachmentList>, I>>(
+    base?: I
+  ): AttachmentList {
     return AttachmentList.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<AttachmentList>, I>>(object: I): AttachmentList {
+  fromPartial<I extends Exact<DeepPartial<AttachmentList>, I>>(
+    object: I
+  ): AttachmentList {
     const message = createBaseAttachmentList();
     message.items = object.items?.map((e) => Attachment.fromPartial(e)) || [];
     return message;
@@ -191,11 +221,20 @@ export const AttachmentList = {
 };
 
 function createBaseCreateAttachmentInput(): CreateAttachmentInput {
-  return { url: "", fileSize: 0, name: "", challengeId: "", description: undefined };
+  return {
+    url: "",
+    fileSize: 0,
+    name: "",
+    challengeId: "",
+    description: undefined,
+  };
 }
 
 export const CreateAttachmentInput = {
-  encode(message: CreateAttachmentInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: CreateAttachmentInput,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.url !== "") {
       writer.uint32(10).string(message.url);
     }
@@ -214,7 +253,10 @@ export const CreateAttachmentInput = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): CreateAttachmentInput {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): CreateAttachmentInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateAttachmentInput();
@@ -250,25 +292,34 @@ export const CreateAttachmentInput = {
       fileSize: isSet(object.fileSize) ? Number(object.fileSize) : 0,
       name: isSet(object.name) ? String(object.name) : "",
       challengeId: isSet(object.challengeId) ? String(object.challengeId) : "",
-      description: isSet(object.description) ? String(object.description) : undefined,
+      description: isSet(object.description)
+        ? String(object.description)
+        : undefined,
     };
   },
 
   toJSON(message: CreateAttachmentInput): unknown {
     const obj: any = {};
     message.url !== undefined && (obj.url = message.url);
-    message.fileSize !== undefined && (obj.fileSize = Math.round(message.fileSize));
+    message.fileSize !== undefined &&
+      (obj.fileSize = Math.round(message.fileSize));
     message.name !== undefined && (obj.name = message.name);
-    message.challengeId !== undefined && (obj.challengeId = message.challengeId);
-    message.description !== undefined && (obj.description = message.description);
+    message.challengeId !== undefined &&
+      (obj.challengeId = message.challengeId);
+    message.description !== undefined &&
+      (obj.description = message.description);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateAttachmentInput>, I>>(base?: I): CreateAttachmentInput {
+  create<I extends Exact<DeepPartial<CreateAttachmentInput>, I>>(
+    base?: I
+  ): CreateAttachmentInput {
     return CreateAttachmentInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateAttachmentInput>, I>>(object: I): CreateAttachmentInput {
+  fromPartial<I extends Exact<DeepPartial<CreateAttachmentInput>, I>>(
+    object: I
+  ): CreateAttachmentInput {
     const message = createBaseCreateAttachmentInput();
     message.url = object.url ?? "";
     message.fileSize = object.fileSize ?? 0;
@@ -284,17 +335,26 @@ function createBaseUpdateAttachmentInput(): UpdateAttachmentInput {
 }
 
 export const UpdateAttachmentInput = {
-  encode(message: UpdateAttachmentInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: UpdateAttachmentInput,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.filterCriteria) {
       ScanCriteria.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     if (message.updateInput !== undefined) {
-      UpdateAttachmentInput_UpdateInput.encode(message.updateInput, writer.uint32(18).fork()).ldelim();
+      UpdateAttachmentInput_UpdateInput.encode(
+        message.updateInput,
+        writer.uint32(18).fork()
+      ).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateAttachmentInput {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): UpdateAttachmentInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateAttachmentInput();
@@ -302,10 +362,15 @@ export const UpdateAttachmentInput = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.filterCriteria.push(ScanCriteria.decode(reader, reader.uint32()));
+          message.filterCriteria.push(
+            ScanCriteria.decode(reader, reader.uint32())
+          );
           break;
         case 2:
-          message.updateInput = UpdateAttachmentInput_UpdateInput.decode(reader, reader.uint32());
+          message.updateInput = UpdateAttachmentInput_UpdateInput.decode(
+            reader,
+            reader.uint32()
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -329,7 +394,9 @@ export const UpdateAttachmentInput = {
   toJSON(message: UpdateAttachmentInput): unknown {
     const obj: any = {};
     if (message.filterCriteria) {
-      obj.filterCriteria = message.filterCriteria.map((e) => e ? ScanCriteria.toJSON(e) : undefined);
+      obj.filterCriteria = message.filterCriteria.map((e) =>
+        e ? ScanCriteria.toJSON(e) : undefined
+      );
     } else {
       obj.filterCriteria = [];
     }
@@ -340,26 +407,41 @@ export const UpdateAttachmentInput = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdateAttachmentInput>, I>>(base?: I): UpdateAttachmentInput {
+  create<I extends Exact<DeepPartial<UpdateAttachmentInput>, I>>(
+    base?: I
+  ): UpdateAttachmentInput {
     return UpdateAttachmentInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdateAttachmentInput>, I>>(object: I): UpdateAttachmentInput {
+  fromPartial<I extends Exact<DeepPartial<UpdateAttachmentInput>, I>>(
+    object: I
+  ): UpdateAttachmentInput {
     const message = createBaseUpdateAttachmentInput();
-    message.filterCriteria = object.filterCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
-    message.updateInput = (object.updateInput !== undefined && object.updateInput !== null)
-      ? UpdateAttachmentInput_UpdateInput.fromPartial(object.updateInput)
-      : undefined;
+    message.filterCriteria =
+      object.filterCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
+    message.updateInput =
+      object.updateInput !== undefined && object.updateInput !== null
+        ? UpdateAttachmentInput_UpdateInput.fromPartial(object.updateInput)
+        : undefined;
     return message;
   },
 };
 
 function createBaseUpdateAttachmentInput_UpdateInput(): UpdateAttachmentInput_UpdateInput {
-  return { url: "", fileSize: 0, name: "", challengeId: "", description: undefined };
+  return {
+    url: "",
+    fileSize: 0,
+    name: "",
+    challengeId: "",
+    description: undefined,
+  };
 }
 
 export const UpdateAttachmentInput_UpdateInput = {
-  encode(message: UpdateAttachmentInput_UpdateInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: UpdateAttachmentInput_UpdateInput,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.url !== "") {
       writer.uint32(18).string(message.url);
     }
@@ -378,7 +460,10 @@ export const UpdateAttachmentInput_UpdateInput = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateAttachmentInput_UpdateInput {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): UpdateAttachmentInput_UpdateInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateAttachmentInput_UpdateInput();
@@ -414,29 +499,34 @@ export const UpdateAttachmentInput_UpdateInput = {
       fileSize: isSet(object.fileSize) ? Number(object.fileSize) : 0,
       name: isSet(object.name) ? String(object.name) : "",
       challengeId: isSet(object.challengeId) ? String(object.challengeId) : "",
-      description: isSet(object.description) ? String(object.description) : undefined,
+      description: isSet(object.description)
+        ? String(object.description)
+        : undefined,
     };
   },
 
   toJSON(message: UpdateAttachmentInput_UpdateInput): unknown {
     const obj: any = {};
     message.url !== undefined && (obj.url = message.url);
-    message.fileSize !== undefined && (obj.fileSize = Math.round(message.fileSize));
+    message.fileSize !== undefined &&
+      (obj.fileSize = Math.round(message.fileSize));
     message.name !== undefined && (obj.name = message.name);
-    message.challengeId !== undefined && (obj.challengeId = message.challengeId);
-    message.description !== undefined && (obj.description = message.description);
+    message.challengeId !== undefined &&
+      (obj.challengeId = message.challengeId);
+    message.description !== undefined &&
+      (obj.description = message.description);
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdateAttachmentInput_UpdateInput>, I>>(
-    base?: I,
+    base?: I
   ): UpdateAttachmentInput_UpdateInput {
     return UpdateAttachmentInput_UpdateInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdateAttachmentInput_UpdateInput>, I>>(
-    object: I,
-  ): UpdateAttachmentInput_UpdateInput {
+  fromPartial<
+    I extends Exact<DeepPartial<UpdateAttachmentInput_UpdateInput>, I>
+  >(object: I): UpdateAttachmentInput_UpdateInput {
     const message = createBaseUpdateAttachmentInput_UpdateInput();
     message.url = object.url ?? "";
     message.fileSize = object.fileSize ?? 0;
@@ -466,21 +556,41 @@ var tsProtoGlobalThis: any = (() => {
   throw "Unable to locate global object";
 })();
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | undefined;
 
-type DeepPartial<T> = T extends Builtin ? T
-  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string }
+  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
+      $case: T["$case"];
+    }
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
+      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
+    };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+    throw new tsProtoGlobalThis.Error(
+      "Value is larger than Number.MAX_SAFE_INTEGER"
+    );
   }
   return long.toNumber();
 }

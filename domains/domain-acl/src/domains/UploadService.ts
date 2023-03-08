@@ -7,6 +7,7 @@ import { GrpcClient } from "../common/GrpcClient";
 
 import {
   CreateResult,
+  Empty,
   LookupCriteria,
   ScanRequest,
   ScanResult,
@@ -14,6 +15,7 @@ import {
 } from "@topcoder-framework/lib-common";
 import {
   CreateUploadInput,
+  DeleteUploadInput,
   Upload,
 } from "src/models/domain-layer/legacy/upload";
 import { UpdateUploadInput } from "src/models/domain-layer/legacy/upload";
@@ -63,6 +65,15 @@ export class LegacyUploadDomain {
   ) {
     return promisify<UpdateUploadInput, Metadata, UpdateResult>(
       this.client.update.bind(this.client)
+    )(param, metadata);
+  }
+
+  public async delete(
+    param: LookupCriteria,
+    metadata: Metadata = new Metadata()
+  ) {
+    return promisify<LookupCriteria, Metadata, Empty>(
+      this.client.delete.bind(this.client)
     )(param, metadata);
   }
 }
