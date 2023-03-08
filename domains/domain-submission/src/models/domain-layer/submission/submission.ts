@@ -10,9 +10,9 @@ export interface Submission {
   createdBy: string;
   fileType?: string | undefined;
   legacyChallengeId?: number | undefined;
-  legacySubmissionId?: number | undefined;
+  legacySubmissionId?: string | undefined;
   memberId: number;
-  submissionPhaseId?: number | undefined;
+  submissionPhaseId?: string | undefined;
   submittedDate?: number | undefined;
   type: string;
   updated?: number | undefined;
@@ -101,13 +101,13 @@ export const Submission = {
       writer.uint32(48).int64(message.legacyChallengeId);
     }
     if (message.legacySubmissionId !== undefined) {
-      writer.uint32(56).int64(message.legacySubmissionId);
+      writer.uint32(58).string(message.legacySubmissionId);
     }
     if (message.memberId !== 0) {
       writer.uint32(64).int64(message.memberId);
     }
     if (message.submissionPhaseId !== undefined) {
-      writer.uint32(72).int64(message.submissionPhaseId);
+      writer.uint32(74).string(message.submissionPhaseId);
     }
     if (message.submittedDate !== undefined) {
       writer.uint32(80).int64(message.submittedDate);
@@ -159,13 +159,13 @@ export const Submission = {
           message.legacyChallengeId = longToNumber(reader.int64() as Long);
           break;
         case 7:
-          message.legacySubmissionId = longToNumber(reader.int64() as Long);
+          message.legacySubmissionId = reader.string();
           break;
         case 8:
           message.memberId = longToNumber(reader.int64() as Long);
           break;
         case 9:
-          message.submissionPhaseId = longToNumber(reader.int64() as Long);
+          message.submissionPhaseId = reader.string();
           break;
         case 10:
           message.submittedDate = longToNumber(reader.int64() as Long);
@@ -207,11 +207,11 @@ export const Submission = {
         ? Number(object.legacyChallengeId)
         : undefined,
       legacySubmissionId: isSet(object.legacySubmissionId)
-        ? Number(object.legacySubmissionId)
+        ? String(object.legacySubmissionId)
         : undefined,
       memberId: isSet(object.memberId) ? Number(object.memberId) : 0,
       submissionPhaseId: isSet(object.submissionPhaseId)
-        ? Number(object.submissionPhaseId)
+        ? String(object.submissionPhaseId)
         : undefined,
       submittedDate: isSet(object.submittedDate)
         ? Number(object.submittedDate)
@@ -241,11 +241,11 @@ export const Submission = {
     message.legacyChallengeId !== undefined &&
       (obj.legacyChallengeId = Math.round(message.legacyChallengeId));
     message.legacySubmissionId !== undefined &&
-      (obj.legacySubmissionId = Math.round(message.legacySubmissionId));
+      (obj.legacySubmissionId = message.legacySubmissionId);
     message.memberId !== undefined &&
       (obj.memberId = Math.round(message.memberId));
     message.submissionPhaseId !== undefined &&
-      (obj.submissionPhaseId = Math.round(message.submissionPhaseId));
+      (obj.submissionPhaseId = message.submissionPhaseId);
     message.submittedDate !== undefined &&
       (obj.submittedDate = Math.round(message.submittedDate));
     message.type !== undefined && (obj.type = message.type);

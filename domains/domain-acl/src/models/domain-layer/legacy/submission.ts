@@ -1,5 +1,4 @@
 /* eslint-disable */
-import { ScanCriteria } from "@topcoder-framework/lib-common";
 import Long from "long";
 import _m0 from "protobufjs/minimal";
 
@@ -37,12 +36,7 @@ export interface CreateSubmissionInput {
 }
 
 export interface UpdateSubmissionInput {
-  filterCriteria: ScanCriteria[];
-  updateInput?: UpdateSubmissionInput_UpdateInput;
-}
-
-export interface UpdateSubmissionInput_UpdateInput {
-  submissionId?: number | undefined;
+  submissionId: number;
   submissionStatusId?: number | undefined;
   submissionTypeId?: number | undefined;
   uploadId?: number | undefined;
@@ -476,105 +470,8 @@ export const CreateSubmissionInput = {
 };
 
 function createBaseUpdateSubmissionInput(): UpdateSubmissionInput {
-  return { filterCriteria: [], updateInput: undefined };
-}
-
-export const UpdateSubmissionInput = {
-  encode(
-    message: UpdateSubmissionInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    for (const v of message.filterCriteria) {
-      ScanCriteria.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    if (message.updateInput !== undefined) {
-      UpdateSubmissionInput_UpdateInput.encode(
-        message.updateInput,
-        writer.uint32(26).fork()
-      ).ldelim();
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateSubmissionInput {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUpdateSubmissionInput();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.filterCriteria.push(
-            ScanCriteria.decode(reader, reader.uint32())
-          );
-          break;
-        case 3:
-          message.updateInput = UpdateSubmissionInput_UpdateInput.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): UpdateSubmissionInput {
-    return {
-      filterCriteria: Array.isArray(object?.filterCriteria)
-        ? object.filterCriteria.map((e: any) => ScanCriteria.fromJSON(e))
-        : [],
-      updateInput: isSet(object.updateInput)
-        ? UpdateSubmissionInput_UpdateInput.fromJSON(object.updateInput)
-        : undefined,
-    };
-  },
-
-  toJSON(message: UpdateSubmissionInput): unknown {
-    const obj: any = {};
-    if (message.filterCriteria) {
-      obj.filterCriteria = message.filterCriteria.map((e) =>
-        e ? ScanCriteria.toJSON(e) : undefined
-      );
-    } else {
-      obj.filterCriteria = [];
-    }
-    message.updateInput !== undefined &&
-      (obj.updateInput = message.updateInput
-        ? UpdateSubmissionInput_UpdateInput.toJSON(message.updateInput)
-        : undefined);
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<UpdateSubmissionInput>, I>>(
-    base?: I
-  ): UpdateSubmissionInput {
-    return UpdateSubmissionInput.fromPartial(base ?? {});
-  },
-
-  fromPartial<I extends Exact<DeepPartial<UpdateSubmissionInput>, I>>(
-    object: I
-  ): UpdateSubmissionInput {
-    const message = createBaseUpdateSubmissionInput();
-    message.filterCriteria =
-      object.filterCriteria?.map((e) => ScanCriteria.fromPartial(e)) || [];
-    message.updateInput =
-      object.updateInput !== undefined && object.updateInput !== null
-        ? UpdateSubmissionInput_UpdateInput.fromPartial(object.updateInput)
-        : undefined;
-    return message;
-  },
-};
-
-function createBaseUpdateSubmissionInput_UpdateInput(): UpdateSubmissionInput_UpdateInput {
   return {
-    submissionId: undefined,
+    submissionId: 0,
     submissionStatusId: undefined,
     submissionTypeId: undefined,
     uploadId: undefined,
@@ -584,12 +481,12 @@ function createBaseUpdateSubmissionInput_UpdateInput(): UpdateSubmissionInput_Up
   };
 }
 
-export const UpdateSubmissionInput_UpdateInput = {
+export const UpdateSubmissionInput = {
   encode(
-    message: UpdateSubmissionInput_UpdateInput,
+    message: UpdateSubmissionInput,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.submissionId !== undefined) {
+    if (message.submissionId !== 0) {
       writer.uint32(8).int32(message.submissionId);
     }
     if (message.submissionStatusId !== undefined) {
@@ -616,10 +513,10 @@ export const UpdateSubmissionInput_UpdateInput = {
   decode(
     input: _m0.Reader | Uint8Array,
     length?: number
-  ): UpdateSubmissionInput_UpdateInput {
+  ): UpdateSubmissionInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUpdateSubmissionInput_UpdateInput();
+    const message = createBaseUpdateSubmissionInput();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -652,11 +549,11 @@ export const UpdateSubmissionInput_UpdateInput = {
     return message;
   },
 
-  fromJSON(object: any): UpdateSubmissionInput_UpdateInput {
+  fromJSON(object: any): UpdateSubmissionInput {
     return {
       submissionId: isSet(object.submissionId)
         ? Number(object.submissionId)
-        : undefined,
+        : 0,
       submissionStatusId: isSet(object.submissionStatusId)
         ? Number(object.submissionStatusId)
         : undefined,
@@ -676,7 +573,7 @@ export const UpdateSubmissionInput_UpdateInput = {
     };
   },
 
-  toJSON(message: UpdateSubmissionInput_UpdateInput): unknown {
+  toJSON(message: UpdateSubmissionInput): unknown {
     const obj: any = {};
     message.submissionId !== undefined &&
       (obj.submissionId = Math.round(message.submissionId));
@@ -695,17 +592,17 @@ export const UpdateSubmissionInput_UpdateInput = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdateSubmissionInput_UpdateInput>, I>>(
+  create<I extends Exact<DeepPartial<UpdateSubmissionInput>, I>>(
     base?: I
-  ): UpdateSubmissionInput_UpdateInput {
-    return UpdateSubmissionInput_UpdateInput.fromPartial(base ?? {});
+  ): UpdateSubmissionInput {
+    return UpdateSubmissionInput.fromPartial(base ?? {});
   },
 
-  fromPartial<
-    I extends Exact<DeepPartial<UpdateSubmissionInput_UpdateInput>, I>
-  >(object: I): UpdateSubmissionInput_UpdateInput {
-    const message = createBaseUpdateSubmissionInput_UpdateInput();
-    message.submissionId = object.submissionId ?? undefined;
+  fromPartial<I extends Exact<DeepPartial<UpdateSubmissionInput>, I>>(
+    object: I
+  ): UpdateSubmissionInput {
+    const message = createBaseUpdateSubmissionInput();
+    message.submissionId = object.submissionId ?? 0;
     message.submissionStatusId = object.submissionStatusId ?? undefined;
     message.submissionTypeId = object.submissionTypeId ?? undefined;
     message.uploadId = object.uploadId ?? undefined;

@@ -15,3 +15,4 @@ export * from "./domains/RoundRegistrationService";
 export * from "./domains/LongComponentStateService";
 export * from "./domains/LongSubmissionService";
 export * from "./domains/ResourceSubmissionService";
+export * from "./models/domain-layer/legacy/challenge";
