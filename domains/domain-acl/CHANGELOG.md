@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.2](https://github.com/topcoder-platform/topcoder-framework/compare/v0.6.1...v0.6.2) (2023-03-06)
+
+### Bug Fixes
+
+- **domain-acl:** export challenge types ([ee6b4f9](https://github.com/topcoder-platform/topcoder-framework/commit/ee6b4f974c82e640eb3ee0de427c6539cec7bbb8))
+
+# [0.6.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.5.3...v0.6.0) (2023-03-05)
+
+### Features
+
+- add support for building on windows ([0a7f3af](https://github.com/topcoder-platform/topcoder-framework/commit/0a7f3af3428993b9c2a9fd72a402b508ad01add0))
+- **domain-challenge:** add interfaces for syncing from acl ([#21](https://github.com/topcoder-platform/topcoder-framework/issues/21)) ([8ec5ac3](https://github.com/topcoder-platform/topcoder-framework/commit/8ec5ac3354f3028624fae403c99fbed1083d3642))
+
 ## [0.5.2](https://github.com/topcoder-platform/topcoder-framework/compare/v0.5.1...v0.5.2) (2023-02-26)
 
 **Note:** Version bump only for package @topcoder-framework/domain-acl

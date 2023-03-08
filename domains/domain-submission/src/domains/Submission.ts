@@ -50,7 +50,7 @@ export class SubmissionDomain {
   public async create(
     param: CreateSubmissionInput,
     metadata: Metadata = new Metadata()
-  ) {
+  ): Promise<Submission> {
     return promisify<CreateSubmissionInput, Metadata, Submission>(
       this.client.create.bind(this.client)
     )(param, metadata);
@@ -59,7 +59,7 @@ export class SubmissionDomain {
   public async update(
     param: UpdateSubmissionInput,
     metadata: Metadata = new Metadata()
-  ) {
+  ): Promise<SubmissionList> {
     return promisify<UpdateSubmissionInput, Metadata, SubmissionList>(
       this.client.update.bind(this.client)
     )(param, metadata);

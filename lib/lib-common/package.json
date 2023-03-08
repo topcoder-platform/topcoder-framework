@@ -1,6 +1,6 @@
 {
   "name": "@topcoder-framework/lib-common",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "description": "",
   "main": "./dist-cjs/index.js",
   "types": "./dist-es/index.d.ts",
@@ -18,14 +18,15 @@
     "prepublishOnly": "yarn clean && yarn build"
   },
   "scripty": {
-    "path": "../../scripts/packages"
+    "path": "../../scripts/packages",
+    "windowsPath": "../../scripts-win/packages"
   },
   "author": "Rakib Ansary <rakibansary@topcoder.com>",
   "license": "ISC",
   "dependencies": {
     "@grpc/grpc-js": "^1.8.0",
     "rimraf": "^3.0.2",
-    "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.20",
+    "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.24",
     "tslib": "^2.4.1"
   },
   "devDependencies": {

@@ -12,12 +12,12 @@ import {
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
 import {
+  Empty,
   LookupCriteria,
   ScanRequest,
   ScanResult,
   UpdateResult,
 } from "@topcoder-framework/lib-common";
-import { Empty } from "../../../google/protobuf/empty";
 import {
   Challenge,
   ChallengeList,

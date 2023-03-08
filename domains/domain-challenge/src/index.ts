@@ -5,3 +5,4 @@ export * from "./domains/ChallengeTrack";
 export * from "./domains/ChallengeType";
 export * from "./domains/Phase";
 export * from "./domains/TimelineTemplate";
+export * from "./models/domain-layer/challenge/challenge";

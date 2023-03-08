@@ -8,9 +8,9 @@ export interface Submission {
   challengeId: string;
   created: number;
   createdBy: string;
-  fileType: string;
+  fileType?: string | undefined;
   legacyChallengeId?: number | undefined;
-  legacySubmissionId?: number | undefined;
+  legacySubmissionId?: string | undefined;
   memberId: number;
   submissionPhaseId?: string | undefined;
   submittedDate?: number | undefined;
@@ -24,12 +24,12 @@ export interface Submission {
 
 export interface CreateSubmissionInput {
   challengeId: string;
-  fileType: string;
+  fileType?: string | undefined;
   memberId: number;
   type: string;
   url?: string | undefined;
   legacyChallengeId?: number | undefined;
-  legacySubmissionId?: number | undefined;
+  legacySubmissionId?: string | undefined;
   submissionPhaseId?: string | undefined;
   submittedDate?: number | undefined;
   legacyUploadId?: number | undefined;
@@ -62,7 +62,7 @@ function createBaseSubmission(): Submission {
     challengeId: "",
     created: 0,
     createdBy: "",
-    fileType: "",
+    fileType: undefined,
     legacyChallengeId: undefined,
     legacySubmissionId: undefined,
     memberId: 0,
@@ -94,14 +94,14 @@ export const Submission = {
     if (message.createdBy !== "") {
       writer.uint32(34).string(message.createdBy);
     }
-    if (message.fileType !== "") {
+    if (message.fileType !== undefined) {
       writer.uint32(42).string(message.fileType);
     }
     if (message.legacyChallengeId !== undefined) {
       writer.uint32(48).int64(message.legacyChallengeId);
     }
     if (message.legacySubmissionId !== undefined) {
-      writer.uint32(56).int64(message.legacySubmissionId);
+      writer.uint32(58).string(message.legacySubmissionId);
     }
     if (message.memberId !== 0) {
       writer.uint32(64).int64(message.memberId);
@@ -159,7 +159,7 @@ export const Submission = {
           message.legacyChallengeId = longToNumber(reader.int64() as Long);
           break;
         case 7:
-          message.legacySubmissionId = longToNumber(reader.int64() as Long);
+          message.legacySubmissionId = reader.string();
           break;
         case 8:
           message.memberId = longToNumber(reader.int64() as Long);
@@ -202,12 +202,12 @@ export const Submission = {
       challengeId: isSet(object.challengeId) ? String(object.challengeId) : "",
       created: isSet(object.created) ? Number(object.created) : 0,
       createdBy: isSet(object.createdBy) ? String(object.createdBy) : "",
-      fileType: isSet(object.fileType) ? String(object.fileType) : "",
+      fileType: isSet(object.fileType) ? String(object.fileType) : undefined,
       legacyChallengeId: isSet(object.legacyChallengeId)
         ? Number(object.legacyChallengeId)
         : undefined,
       legacySubmissionId: isSet(object.legacySubmissionId)
-        ? Number(object.legacySubmissionId)
+        ? String(object.legacySubmissionId)
         : undefined,
       memberId: isSet(object.memberId) ? Number(object.memberId) : 0,
       submissionPhaseId: isSet(object.submissionPhaseId)
@@ -241,7 +241,7 @@ export const Submission = {
     message.legacyChallengeId !== undefined &&
       (obj.legacyChallengeId = Math.round(message.legacyChallengeId));
     message.legacySubmissionId !== undefined &&
-      (obj.legacySubmissionId = Math.round(message.legacySubmissionId));
+      (obj.legacySubmissionId = message.legacySubmissionId);
     message.memberId !== undefined &&
       (obj.memberId = Math.round(message.memberId));
     message.submissionPhaseId !== undefined &&
@@ -272,7 +272,7 @@ export const Submission = {
     message.challengeId = object.challengeId ?? "";
     message.created = object.created ?? 0;
     message.createdBy = object.createdBy ?? "";
-    message.fileType = object.fileType ?? "";
+    message.fileType = object.fileType ?? undefined;
     message.legacyChallengeId = object.legacyChallengeId ?? undefined;
     message.legacySubmissionId = object.legacySubmissionId ?? undefined;
     message.memberId = object.memberId ?? 0;
@@ -291,7 +291,7 @@ export const Submission = {
 function createBaseCreateSubmissionInput(): CreateSubmissionInput {
   return {
     challengeId: "",
-    fileType: "",
+    fileType: undefined,
     memberId: 0,
     type: "",
     url: undefined,
@@ -311,7 +311,7 @@ export const CreateSubmissionInput = {
     if (message.challengeId !== "") {
       writer.uint32(10).string(message.challengeId);
     }
-    if (message.fileType !== "") {
+    if (message.fileType !== undefined) {
       writer.uint32(18).string(message.fileType);
     }
     if (message.memberId !== 0) {
@@ -327,7 +327,7 @@ export const CreateSubmissionInput = {
       writer.uint32(48).int64(message.legacyChallengeId);
     }
     if (message.legacySubmissionId !== undefined) {
-      writer.uint32(56).int64(message.legacySubmissionId);
+      writer.uint32(58).string(message.legacySubmissionId);
     }
     if (message.submissionPhaseId !== undefined) {
       writer.uint32(66).string(message.submissionPhaseId);
@@ -370,7 +370,7 @@ export const CreateSubmissionInput = {
           message.legacyChallengeId = longToNumber(reader.int64() as Long);
           break;
         case 7:
-          message.legacySubmissionId = longToNumber(reader.int64() as Long);
+          message.legacySubmissionId = reader.string();
           break;
         case 8:
           message.submissionPhaseId = reader.string();
@@ -392,7 +392,7 @@ export const CreateSubmissionInput = {
   fromJSON(object: any): CreateSubmissionInput {
     return {
       challengeId: isSet(object.challengeId) ? String(object.challengeId) : "",
-      fileType: isSet(object.fileType) ? String(object.fileType) : "",
+      fileType: isSet(object.fileType) ? String(object.fileType) : undefined,
       memberId: isSet(object.memberId) ? Number(object.memberId) : 0,
       type: isSet(object.type) ? String(object.type) : "",
       url: isSet(object.url) ? String(object.url) : undefined,
@@ -400,7 +400,7 @@ export const CreateSubmissionInput = {
         ? Number(object.legacyChallengeId)
         : undefined,
       legacySubmissionId: isSet(object.legacySubmissionId)
-        ? Number(object.legacySubmissionId)
+        ? String(object.legacySubmissionId)
         : undefined,
       submissionPhaseId: isSet(object.submissionPhaseId)
         ? String(object.submissionPhaseId)
@@ -426,7 +426,7 @@ export const CreateSubmissionInput = {
     message.legacyChallengeId !== undefined &&
       (obj.legacyChallengeId = Math.round(message.legacyChallengeId));
     message.legacySubmissionId !== undefined &&
-      (obj.legacySubmissionId = Math.round(message.legacySubmissionId));
+      (obj.legacySubmissionId = message.legacySubmissionId);
     message.submissionPhaseId !== undefined &&
       (obj.submissionPhaseId = message.submissionPhaseId);
     message.submittedDate !== undefined &&
@@ -447,7 +447,7 @@ export const CreateSubmissionInput = {
   ): CreateSubmissionInput {
     const message = createBaseCreateSubmissionInput();
     message.challengeId = object.challengeId ?? "";
-    message.fileType = object.fileType ?? "";
+    message.fileType = object.fileType ?? undefined;
     message.memberId = object.memberId ?? 0;
     message.type = object.type ?? "";
     message.url = object.url ?? undefined;

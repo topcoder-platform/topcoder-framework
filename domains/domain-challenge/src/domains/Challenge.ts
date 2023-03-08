@@ -7,10 +7,12 @@ import {
   ChallengeList,
   CreateChallengeInput,
   UpdateChallengeInput,
+  UpdateChallengeInputForACL,
 } from "../models/domain-layer/challenge/challenge";
 
 import { GrpcClient } from "../common/GrpcClient";
 import {
+  Empty,
   LookupCriteria,
   ScanRequest,
   ScanResult,
@@ -62,6 +64,15 @@ export class ChallengeDomain {
   ) {
     return promisify<UpdateChallengeInput, Metadata, UpdateResult>(
       this.client.update.bind(this.client)
+    )(param, metadata);
+  }
+
+  public async updateForACL(
+    param: UpdateChallengeInputForACL,
+    metadata: Metadata = new Metadata()
+  ) {
+    return promisify<UpdateChallengeInputForACL, Metadata, Empty>(
+      this.client.updateForAcl.bind(this.client)
     )(param, metadata);
   }
 
