@@ -15,4 +15,6 @@ export * from "./domains/RoundRegistrationService";
 export * from "./domains/LongComponentStateService";
 export * from "./domains/LongSubmissionService";
 export * from "./domains/ResourceSubmissionService";
+export * from "./domains/SubmissionService";
 export * from "./models/domain-layer/legacy/challenge";
+export * from "./models/domain-layer/legacy/submission";
