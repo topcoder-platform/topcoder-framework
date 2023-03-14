@@ -62,7 +62,7 @@ export class ChallengeDomain {
     param: UpdateChallengeInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<UpdateChallengeInput, Metadata, UpdateResult>(
+    return promisify<UpdateChallengeInput, Metadata, ChallengeList>(
       this.client.update.bind(this.client)
     )(param, metadata);
   }
