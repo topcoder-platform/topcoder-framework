@@ -5182,10 +5182,9 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-"topcoder-interface@github:topcoder-platform/plat-interface-definition#v0.0.20":
+"topcoder-interface@github:topcoder-platform/plat-interface-definition#v0.0.26":
   version "1.0.0"
-  resolved "https://codeload.github.com/topcoder-platform/plat-interface-definition/tar.gz/9f2a79c1fdba9b3e96a8cbcd4ad26203eefb0320"
-  integrity sha512-usrthSr4zdhxWeWIe4wmQd2Q0e7lTthCgqTsM/NIxvKSR/6/GPvyl3gnXnXumY1y+14eVoc6Hn6+wc3X1L8Xyw==
+  resolved "https://codeload.github.com/topcoder-platform/plat-interface-definition/tar.gz/345395b5165eba9277eccdd920a68385378219f3"
 
 tr46@~0.0.3:
   version "0.0.3"
