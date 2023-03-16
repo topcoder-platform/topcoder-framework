@@ -160,9 +160,7 @@ export const Prize = {
       place: isSet(object.place) ? Number(object.place) : 0,
       prizeAmount: isSet(object.prizeAmount) ? Number(object.prizeAmount) : 0,
       prizeTypeId: isSet(object.prizeTypeId) ? Number(object.prizeTypeId) : 0,
-      numberOfSubmissions: isSet(object.numberOfSubmissions)
-        ? Number(object.numberOfSubmissions)
-        : 0,
+      numberOfSubmissions: isSet(object.numberOfSubmissions) ? Number(object.numberOfSubmissions) : 0,
       createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
       createDate: isSet(object.createDate) ? Number(object.createDate) : 0,
       modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : 0,
@@ -173,25 +171,16 @@ export const Prize = {
 
   toJSON(message: Prize): unknown {
     const obj: any = {};
-    message.prizeId !== undefined &&
-      (obj.prizeId = Math.round(message.prizeId));
+    message.prizeId !== undefined && (obj.prizeId = Math.round(message.prizeId));
     message.place !== undefined && (obj.place = Math.round(message.place));
-    message.prizeAmount !== undefined &&
-      (obj.prizeAmount = message.prizeAmount);
-    message.prizeTypeId !== undefined &&
-      (obj.prizeTypeId = Math.round(message.prizeTypeId));
-    message.numberOfSubmissions !== undefined &&
-      (obj.numberOfSubmissions = Math.round(message.numberOfSubmissions));
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
+    message.prizeAmount !== undefined && (obj.prizeAmount = message.prizeAmount);
+    message.prizeTypeId !== undefined && (obj.prizeTypeId = Math.round(message.prizeTypeId));
+    message.numberOfSubmissions !== undefined && (obj.numberOfSubmissions = Math.round(message.numberOfSubmissions));
+    message.createUser !== undefined && (obj.createUser = Math.round(message.createUser));
+    message.createDate !== undefined && (obj.createDate = Math.round(message.createDate));
+    message.modifyUser !== undefined && (obj.modifyUser = Math.round(message.modifyUser));
+    message.modifyDate !== undefined && (obj.modifyDate = Math.round(message.modifyDate));
+    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
     return obj;
   },
 
@@ -220,10 +209,7 @@ function createBasePrizeType(): PrizeType {
 }
 
 export const PrizeType = {
-  encode(
-    message: PrizeType,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: PrizeType, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.prizeTypeId !== 0) {
       writer.uint32(8).int32(message.prizeTypeId);
     }
@@ -257,18 +243,14 @@ export const PrizeType = {
   fromJSON(object: any): PrizeType {
     return {
       prizeTypeId: isSet(object.prizeTypeId) ? Number(object.prizeTypeId) : 0,
-      prizeTypeDesc: isSet(object.prizeTypeDesc)
-        ? String(object.prizeTypeDesc)
-        : "",
+      prizeTypeDesc: isSet(object.prizeTypeDesc) ? String(object.prizeTypeDesc) : "",
     };
   },
 
   toJSON(message: PrizeType): unknown {
     const obj: any = {};
-    message.prizeTypeId !== undefined &&
-      (obj.prizeTypeId = Math.round(message.prizeTypeId));
-    message.prizeTypeDesc !== undefined &&
-      (obj.prizeTypeDesc = message.prizeTypeDesc);
+    message.prizeTypeId !== undefined && (obj.prizeTypeId = Math.round(message.prizeTypeId));
+    message.prizeTypeDesc !== undefined && (obj.prizeTypeDesc = message.prizeTypeDesc);
     return obj;
   },
 
@@ -276,9 +258,7 @@ export const PrizeType = {
     return PrizeType.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<PrizeType>, I>>(
-    object: I
-  ): PrizeType {
+  fromPartial<I extends Exact<DeepPartial<PrizeType>, I>>(object: I): PrizeType {
     const message = createBasePrizeType();
     message.prizeTypeId = object.prizeTypeId ?? 0;
     message.prizeTypeDesc = object.prizeTypeDesc ?? "";
@@ -291,10 +271,7 @@ function createBasePrizeList(): PrizeList {
 }
 
 export const PrizeList = {
-  encode(
-    message: PrizeList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: PrizeList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.prizes) {
       Prize.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -320,17 +297,13 @@ export const PrizeList = {
   },
 
   fromJSON(object: any): PrizeList {
-    return {
-      prizes: Array.isArray(object?.prizes)
-        ? object.prizes.map((e: any) => Prize.fromJSON(e))
-        : [],
-    };
+    return { prizes: Array.isArray(object?.prizes) ? object.prizes.map((e: any) => Prize.fromJSON(e)) : [] };
   },
 
   toJSON(message: PrizeList): unknown {
     const obj: any = {};
     if (message.prizes) {
-      obj.prizes = message.prizes.map((e) => (e ? Prize.toJSON(e) : undefined));
+      obj.prizes = message.prizes.map((e) => e ? Prize.toJSON(e) : undefined);
     } else {
       obj.prizes = [];
     }
@@ -341,9 +314,7 @@ export const PrizeList = {
     return PrizeList.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<PrizeList>, I>>(
-    object: I
-  ): PrizeList {
+  fromPartial<I extends Exact<DeepPartial<PrizeList>, I>>(object: I): PrizeList {
     const message = createBasePrizeList();
     message.prizes = object.prizes?.map((e) => Prize.fromPartial(e)) || [];
     return message;
@@ -355,10 +326,7 @@ function createBasePrizeTypeList(): PrizeTypeList {
 }
 
 export const PrizeTypeList = {
-  encode(
-    message: PrizeTypeList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: PrizeTypeList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.prizeTypes) {
       PrizeType.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -385,55 +353,37 @@ export const PrizeTypeList = {
 
   fromJSON(object: any): PrizeTypeList {
     return {
-      prizeTypes: Array.isArray(object?.prizeTypes)
-        ? object.prizeTypes.map((e: any) => PrizeType.fromJSON(e))
-        : [],
+      prizeTypes: Array.isArray(object?.prizeTypes) ? object.prizeTypes.map((e: any) => PrizeType.fromJSON(e)) : [],
     };
   },
 
   toJSON(message: PrizeTypeList): unknown {
     const obj: any = {};
     if (message.prizeTypes) {
-      obj.prizeTypes = message.prizeTypes.map((e) =>
-        e ? PrizeType.toJSON(e) : undefined
-      );
+      obj.prizeTypes = message.prizeTypes.map((e) => e ? PrizeType.toJSON(e) : undefined);
     } else {
       obj.prizeTypes = [];
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<PrizeTypeList>, I>>(
-    base?: I
-  ): PrizeTypeList {
+  create<I extends Exact<DeepPartial<PrizeTypeList>, I>>(base?: I): PrizeTypeList {
     return PrizeTypeList.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<PrizeTypeList>, I>>(
-    object: I
-  ): PrizeTypeList {
+  fromPartial<I extends Exact<DeepPartial<PrizeTypeList>, I>>(object: I): PrizeTypeList {
     const message = createBasePrizeTypeList();
-    message.prizeTypes =
-      object.prizeTypes?.map((e) => PrizeType.fromPartial(e)) || [];
+    message.prizeTypes = object.prizeTypes?.map((e) => PrizeType.fromPartial(e)) || [];
     return message;
   },
 };
 
 function createBaseCreatePrizeInput(): CreatePrizeInput {
-  return {
-    place: 0,
-    prizeAmount: 0,
-    prizeTypeId: 0,
-    numberOfSubmissions: undefined,
-    projectId: 0,
-  };
+  return { place: 0, prizeAmount: 0, prizeTypeId: 0, numberOfSubmissions: undefined, projectId: 0 };
 }
 
 export const CreatePrizeInput = {
-  encode(
-    message: CreatePrizeInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CreatePrizeInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.place !== 0) {
       writer.uint32(8).int32(message.place);
     }
@@ -487,9 +437,7 @@ export const CreatePrizeInput = {
       place: isSet(object.place) ? Number(object.place) : 0,
       prizeAmount: isSet(object.prizeAmount) ? Number(object.prizeAmount) : 0,
       prizeTypeId: isSet(object.prizeTypeId) ? Number(object.prizeTypeId) : 0,
-      numberOfSubmissions: isSet(object.numberOfSubmissions)
-        ? Number(object.numberOfSubmissions)
-        : undefined,
+      numberOfSubmissions: isSet(object.numberOfSubmissions) ? Number(object.numberOfSubmissions) : undefined,
       projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
     };
   },
@@ -497,26 +445,18 @@ export const CreatePrizeInput = {
   toJSON(message: CreatePrizeInput): unknown {
     const obj: any = {};
     message.place !== undefined && (obj.place = Math.round(message.place));
-    message.prizeAmount !== undefined &&
-      (obj.prizeAmount = message.prizeAmount);
-    message.prizeTypeId !== undefined &&
-      (obj.prizeTypeId = Math.round(message.prizeTypeId));
-    message.numberOfSubmissions !== undefined &&
-      (obj.numberOfSubmissions = Math.round(message.numberOfSubmissions));
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
+    message.prizeAmount !== undefined && (obj.prizeAmount = message.prizeAmount);
+    message.prizeTypeId !== undefined && (obj.prizeTypeId = Math.round(message.prizeTypeId));
+    message.numberOfSubmissions !== undefined && (obj.numberOfSubmissions = Math.round(message.numberOfSubmissions));
+    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreatePrizeInput>, I>>(
-    base?: I
-  ): CreatePrizeInput {
+  create<I extends Exact<DeepPartial<CreatePrizeInput>, I>>(base?: I): CreatePrizeInput {
     return CreatePrizeInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreatePrizeInput>, I>>(
-    object: I
-  ): CreatePrizeInput {
+  fromPartial<I extends Exact<DeepPartial<CreatePrizeInput>, I>>(object: I): CreatePrizeInput {
     const message = createBaseCreatePrizeInput();
     message.place = object.place ?? 0;
     message.prizeAmount = object.prizeAmount ?? 0;
@@ -532,21 +472,12 @@ function createBaseUpdatePrizeInput(): UpdatePrizeInput {
 }
 
 export const UpdatePrizeInput = {
-  encode(
-    message: UpdatePrizeInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: UpdatePrizeInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.updateCriteria !== undefined) {
-      UpdatePrizeInput_UpdateCriteria.encode(
-        message.updateCriteria,
-        writer.uint32(10).fork()
-      ).ldelim();
+      UpdatePrizeInput_UpdateCriteria.encode(message.updateCriteria, writer.uint32(10).fork()).ldelim();
     }
     if (message.updateInput !== undefined) {
-      UpdatePrizeInput_UpdateInput.encode(
-        message.updateInput,
-        writer.uint32(18).fork()
-      ).ldelim();
+      UpdatePrizeInput_UpdateInput.encode(message.updateInput, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -559,16 +490,10 @@ export const UpdatePrizeInput = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.updateCriteria = UpdatePrizeInput_UpdateCriteria.decode(
-            reader,
-            reader.uint32()
-          );
+          message.updateCriteria = UpdatePrizeInput_UpdateCriteria.decode(reader, reader.uint32());
           break;
         case 2:
-          message.updateInput = UpdatePrizeInput_UpdateInput.decode(
-            reader,
-            reader.uint32()
-          );
+          message.updateInput = UpdatePrizeInput_UpdateInput.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -583,61 +508,42 @@ export const UpdatePrizeInput = {
       updateCriteria: isSet(object.updateCriteria)
         ? UpdatePrizeInput_UpdateCriteria.fromJSON(object.updateCriteria)
         : undefined,
-      updateInput: isSet(object.updateInput)
-        ? UpdatePrizeInput_UpdateInput.fromJSON(object.updateInput)
-        : undefined,
+      updateInput: isSet(object.updateInput) ? UpdatePrizeInput_UpdateInput.fromJSON(object.updateInput) : undefined,
     };
   },
 
   toJSON(message: UpdatePrizeInput): unknown {
     const obj: any = {};
-    message.updateCriteria !== undefined &&
-      (obj.updateCriteria = message.updateCriteria
-        ? UpdatePrizeInput_UpdateCriteria.toJSON(message.updateCriteria)
-        : undefined);
+    message.updateCriteria !== undefined && (obj.updateCriteria = message.updateCriteria
+      ? UpdatePrizeInput_UpdateCriteria.toJSON(message.updateCriteria)
+      : undefined);
     message.updateInput !== undefined &&
-      (obj.updateInput = message.updateInput
-        ? UpdatePrizeInput_UpdateInput.toJSON(message.updateInput)
-        : undefined);
+      (obj.updateInput = message.updateInput ? UpdatePrizeInput_UpdateInput.toJSON(message.updateInput) : undefined);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdatePrizeInput>, I>>(
-    base?: I
-  ): UpdatePrizeInput {
+  create<I extends Exact<DeepPartial<UpdatePrizeInput>, I>>(base?: I): UpdatePrizeInput {
     return UpdatePrizeInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdatePrizeInput>, I>>(
-    object: I
-  ): UpdatePrizeInput {
+  fromPartial<I extends Exact<DeepPartial<UpdatePrizeInput>, I>>(object: I): UpdatePrizeInput {
     const message = createBaseUpdatePrizeInput();
-    message.updateCriteria =
-      object.updateCriteria !== undefined && object.updateCriteria !== null
-        ? UpdatePrizeInput_UpdateCriteria.fromPartial(object.updateCriteria)
-        : undefined;
-    message.updateInput =
-      object.updateInput !== undefined && object.updateInput !== null
-        ? UpdatePrizeInput_UpdateInput.fromPartial(object.updateInput)
-        : undefined;
+    message.updateCriteria = (object.updateCriteria !== undefined && object.updateCriteria !== null)
+      ? UpdatePrizeInput_UpdateCriteria.fromPartial(object.updateCriteria)
+      : undefined;
+    message.updateInput = (object.updateInput !== undefined && object.updateInput !== null)
+      ? UpdatePrizeInput_UpdateInput.fromPartial(object.updateInput)
+      : undefined;
     return message;
   },
 };
 
 function createBaseUpdatePrizeInput_UpdateInput(): UpdatePrizeInput_UpdateInput {
-  return {
-    place: undefined,
-    prizeAmount: undefined,
-    prizeTypeId: undefined,
-    numberOfSubmissions: undefined,
-  };
+  return { place: undefined, prizeAmount: undefined, prizeTypeId: undefined, numberOfSubmissions: undefined };
 }
 
 export const UpdatePrizeInput_UpdateInput = {
-  encode(
-    message: UpdatePrizeInput_UpdateInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: UpdatePrizeInput_UpdateInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.place !== undefined) {
       writer.uint32(8).int32(message.place);
     }
@@ -653,10 +559,7 @@ export const UpdatePrizeInput_UpdateInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdatePrizeInput_UpdateInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdatePrizeInput_UpdateInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdatePrizeInput_UpdateInput();
@@ -686,39 +589,26 @@ export const UpdatePrizeInput_UpdateInput = {
   fromJSON(object: any): UpdatePrizeInput_UpdateInput {
     return {
       place: isSet(object.place) ? Number(object.place) : undefined,
-      prizeAmount: isSet(object.prizeAmount)
-        ? Number(object.prizeAmount)
-        : undefined,
-      prizeTypeId: isSet(object.prizeTypeId)
-        ? Number(object.prizeTypeId)
-        : undefined,
-      numberOfSubmissions: isSet(object.numberOfSubmissions)
-        ? Number(object.numberOfSubmissions)
-        : undefined,
+      prizeAmount: isSet(object.prizeAmount) ? Number(object.prizeAmount) : undefined,
+      prizeTypeId: isSet(object.prizeTypeId) ? Number(object.prizeTypeId) : undefined,
+      numberOfSubmissions: isSet(object.numberOfSubmissions) ? Number(object.numberOfSubmissions) : undefined,
     };
   },
 
   toJSON(message: UpdatePrizeInput_UpdateInput): unknown {
     const obj: any = {};
     message.place !== undefined && (obj.place = Math.round(message.place));
-    message.prizeAmount !== undefined &&
-      (obj.prizeAmount = message.prizeAmount);
-    message.prizeTypeId !== undefined &&
-      (obj.prizeTypeId = Math.round(message.prizeTypeId));
-    message.numberOfSubmissions !== undefined &&
-      (obj.numberOfSubmissions = Math.round(message.numberOfSubmissions));
+    message.prizeAmount !== undefined && (obj.prizeAmount = message.prizeAmount);
+    message.prizeTypeId !== undefined && (obj.prizeTypeId = Math.round(message.prizeTypeId));
+    message.numberOfSubmissions !== undefined && (obj.numberOfSubmissions = Math.round(message.numberOfSubmissions));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdatePrizeInput_UpdateInput>, I>>(
-    base?: I
-  ): UpdatePrizeInput_UpdateInput {
+  create<I extends Exact<DeepPartial<UpdatePrizeInput_UpdateInput>, I>>(base?: I): UpdatePrizeInput_UpdateInput {
     return UpdatePrizeInput_UpdateInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdatePrizeInput_UpdateInput>, I>>(
-    object: I
-  ): UpdatePrizeInput_UpdateInput {
+  fromPartial<I extends Exact<DeepPartial<UpdatePrizeInput_UpdateInput>, I>>(object: I): UpdatePrizeInput_UpdateInput {
     const message = createBaseUpdatePrizeInput_UpdateInput();
     message.place = object.place ?? undefined;
     message.prizeAmount = object.prizeAmount ?? undefined;
@@ -733,10 +623,7 @@ function createBaseUpdatePrizeInput_UpdateCriteria(): UpdatePrizeInput_UpdateCri
 }
 
 export const UpdatePrizeInput_UpdateCriteria = {
-  encode(
-    message: UpdatePrizeInput_UpdateCriteria,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: UpdatePrizeInput_UpdateCriteria, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.projectId !== undefined) {
       writer.uint32(8).uint32(message.projectId);
     }
@@ -749,10 +636,7 @@ export const UpdatePrizeInput_UpdateCriteria = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdatePrizeInput_UpdateCriteria {
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdatePrizeInput_UpdateCriteria {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdatePrizeInput_UpdateCriteria();
@@ -786,22 +670,18 @@ export const UpdatePrizeInput_UpdateCriteria = {
 
   toJSON(message: UpdatePrizeInput_UpdateCriteria): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
+    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
     message.place !== undefined && (obj.place = Math.round(message.place));
-    message.prizeId !== undefined &&
-      (obj.prizeId = Math.round(message.prizeId));
+    message.prizeId !== undefined && (obj.prizeId = Math.round(message.prizeId));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdatePrizeInput_UpdateCriteria>, I>>(
-    base?: I
-  ): UpdatePrizeInput_UpdateCriteria {
+  create<I extends Exact<DeepPartial<UpdatePrizeInput_UpdateCriteria>, I>>(base?: I): UpdatePrizeInput_UpdateCriteria {
     return UpdatePrizeInput_UpdateCriteria.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<UpdatePrizeInput_UpdateCriteria>, I>>(
-    object: I
+    object: I,
   ): UpdatePrizeInput_UpdateCriteria {
     const message = createBaseUpdatePrizeInput_UpdateCriteria();
     message.projectId = object.projectId ?? undefined;
@@ -816,10 +696,7 @@ function createBaseDeletePrizeInput(): DeletePrizeInput {
 }
 
 export const DeletePrizeInput = {
-  encode(
-    message: DeletePrizeInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: DeletePrizeInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.prizeId !== 0) {
       writer.uint32(8).int32(message.prizeId);
     }
@@ -859,22 +736,16 @@ export const DeletePrizeInput = {
 
   toJSON(message: DeletePrizeInput): unknown {
     const obj: any = {};
-    message.prizeId !== undefined &&
-      (obj.prizeId = Math.round(message.prizeId));
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
+    message.prizeId !== undefined && (obj.prizeId = Math.round(message.prizeId));
+    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<DeletePrizeInput>, I>>(
-    base?: I
-  ): DeletePrizeInput {
+  create<I extends Exact<DeepPartial<DeletePrizeInput>, I>>(base?: I): DeletePrizeInput {
     return DeletePrizeInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<DeletePrizeInput>, I>>(
-    object: I
-  ): DeletePrizeInput {
+  fromPartial<I extends Exact<DeepPartial<DeletePrizeInput>, I>>(object: I): DeletePrizeInput {
     const message = createBaseDeletePrizeInput();
     message.prizeId = object.prizeId ?? 0;
     message.projectId = object.projectId ?? 0;
@@ -901,41 +772,21 @@ var tsProtoGlobalThis: any = (() => {
   throw "Unable to locate global object";
 })();
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
-    }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
-      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
-    };
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

@@ -85,10 +85,7 @@ function createBaseResource(): Resource {
 }
 
 export const Resource = {
-  encode(
-    message: Resource,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Resource, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.resourceId !== 0) {
       writer.uint32(8).int32(message.resourceId);
     }
@@ -164,13 +161,9 @@ export const Resource = {
   fromJSON(object: any): Resource {
     return {
       resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
-      resourceRoleId: isSet(object.resourceRoleId)
-        ? Number(object.resourceRoleId)
-        : 0,
+      resourceRoleId: isSet(object.resourceRoleId) ? Number(object.resourceRoleId) : 0,
       projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      projectPhaseId: isSet(object.projectPhaseId)
-        ? Number(object.projectPhaseId)
-        : 0,
+      projectPhaseId: isSet(object.projectPhaseId) ? Number(object.projectPhaseId) : 0,
       userId: isSet(object.userId) ? Number(object.userId) : 0,
       createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
       createDate: isSet(object.createDate) ? Number(object.createDate) : 0,
@@ -181,23 +174,15 @@ export const Resource = {
 
   toJSON(message: Resource): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.resourceRoleId !== undefined &&
-      (obj.resourceRoleId = Math.round(message.resourceRoleId));
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.projectPhaseId !== undefined &&
-      (obj.projectPhaseId = Math.round(message.projectPhaseId));
+    message.resourceId !== undefined && (obj.resourceId = Math.round(message.resourceId));
+    message.resourceRoleId !== undefined && (obj.resourceRoleId = Math.round(message.resourceRoleId));
+    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
+    message.projectPhaseId !== undefined && (obj.projectPhaseId = Math.round(message.projectPhaseId));
     message.userId !== undefined && (obj.userId = Math.round(message.userId));
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    message.createUser !== undefined && (obj.createUser = Math.round(message.createUser));
+    message.createDate !== undefined && (obj.createDate = Math.round(message.createDate));
+    message.modifyUser !== undefined && (obj.modifyUser = Math.round(message.modifyUser));
+    message.modifyDate !== undefined && (obj.modifyDate = Math.round(message.modifyDate));
     return obj;
   },
 
@@ -221,19 +206,11 @@ export const Resource = {
 };
 
 function createBaseCreateResourceInput(): CreateResourceInput {
-  return {
-    resourceRoleId: 0,
-    projectId: 0,
-    projectPhaseId: undefined,
-    userId: 0,
-  };
+  return { resourceRoleId: 0, projectId: 0, projectPhaseId: undefined, userId: 0 };
 }
 
 export const CreateResourceInput = {
-  encode(
-    message: CreateResourceInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CreateResourceInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.resourceRoleId !== 0) {
       writer.uint32(16).int32(message.resourceRoleId);
     }
@@ -278,38 +255,27 @@ export const CreateResourceInput = {
 
   fromJSON(object: any): CreateResourceInput {
     return {
-      resourceRoleId: isSet(object.resourceRoleId)
-        ? Number(object.resourceRoleId)
-        : 0,
+      resourceRoleId: isSet(object.resourceRoleId) ? Number(object.resourceRoleId) : 0,
       projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      projectPhaseId: isSet(object.projectPhaseId)
-        ? Number(object.projectPhaseId)
-        : undefined,
+      projectPhaseId: isSet(object.projectPhaseId) ? Number(object.projectPhaseId) : undefined,
       userId: isSet(object.userId) ? Number(object.userId) : 0,
     };
   },
 
   toJSON(message: CreateResourceInput): unknown {
     const obj: any = {};
-    message.resourceRoleId !== undefined &&
-      (obj.resourceRoleId = Math.round(message.resourceRoleId));
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.projectPhaseId !== undefined &&
-      (obj.projectPhaseId = Math.round(message.projectPhaseId));
+    message.resourceRoleId !== undefined && (obj.resourceRoleId = Math.round(message.resourceRoleId));
+    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
+    message.projectPhaseId !== undefined && (obj.projectPhaseId = Math.round(message.projectPhaseId));
     message.userId !== undefined && (obj.userId = Math.round(message.userId));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateResourceInput>, I>>(
-    base?: I
-  ): CreateResourceInput {
+  create<I extends Exact<DeepPartial<CreateResourceInput>, I>>(base?: I): CreateResourceInput {
     return CreateResourceInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateResourceInput>, I>>(
-    object: I
-  ): CreateResourceInput {
+  fromPartial<I extends Exact<DeepPartial<CreateResourceInput>, I>>(object: I): CreateResourceInput {
     const message = createBaseCreateResourceInput();
     message.resourceRoleId = object.resourceRoleId ?? 0;
     message.projectId = object.projectId ?? 0;
@@ -324,10 +290,7 @@ function createBaseGetResourcesInput(): GetResourcesInput {
 }
 
 export const GetResourcesInput = {
-  encode(
-    message: GetResourcesInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: GetResourcesInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.projectId !== 0) {
       writer.uint32(8).int32(message.projectId);
     }
@@ -361,30 +324,22 @@ export const GetResourcesInput = {
   fromJSON(object: any): GetResourcesInput {
     return {
       projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      resourceRoleId: isSet(object.resourceRoleId)
-        ? Number(object.resourceRoleId)
-        : undefined,
+      resourceRoleId: isSet(object.resourceRoleId) ? Number(object.resourceRoleId) : undefined,
     };
   },
 
   toJSON(message: GetResourcesInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.resourceRoleId !== undefined &&
-      (obj.resourceRoleId = Math.round(message.resourceRoleId));
+    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
+    message.resourceRoleId !== undefined && (obj.resourceRoleId = Math.round(message.resourceRoleId));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<GetResourcesInput>, I>>(
-    base?: I
-  ): GetResourcesInput {
+  create<I extends Exact<DeepPartial<GetResourcesInput>, I>>(base?: I): GetResourcesInput {
     return GetResourcesInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<GetResourcesInput>, I>>(
-    object: I
-  ): GetResourcesInput {
+  fromPartial<I extends Exact<DeepPartial<GetResourcesInput>, I>>(object: I): GetResourcesInput {
     const message = createBaseGetResourcesInput();
     message.projectId = object.projectId ?? 0;
     message.resourceRoleId = object.resourceRoleId ?? undefined;
@@ -397,10 +352,7 @@ function createBaseDeleteResourcesInput(): DeleteResourcesInput {
 }
 
 export const DeleteResourcesInput = {
-  encode(
-    message: DeleteResourcesInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: DeleteResourcesInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.projectId !== 0) {
       writer.uint32(8).int32(message.projectId);
     }
@@ -410,10 +362,7 @@ export const DeleteResourcesInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): DeleteResourcesInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): DeleteResourcesInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDeleteResourcesInput();
@@ -437,30 +386,22 @@ export const DeleteResourcesInput = {
   fromJSON(object: any): DeleteResourcesInput {
     return {
       projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      resourceRoleId: isSet(object.resourceRoleId)
-        ? Number(object.resourceRoleId)
-        : undefined,
+      resourceRoleId: isSet(object.resourceRoleId) ? Number(object.resourceRoleId) : undefined,
     };
   },
 
   toJSON(message: DeleteResourcesInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.resourceRoleId !== undefined &&
-      (obj.resourceRoleId = Math.round(message.resourceRoleId));
+    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
+    message.resourceRoleId !== undefined && (obj.resourceRoleId = Math.round(message.resourceRoleId));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<DeleteResourcesInput>, I>>(
-    base?: I
-  ): DeleteResourcesInput {
+  create<I extends Exact<DeepPartial<DeleteResourcesInput>, I>>(base?: I): DeleteResourcesInput {
     return DeleteResourcesInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<DeleteResourcesInput>, I>>(
-    object: I
-  ): DeleteResourcesInput {
+  fromPartial<I extends Exact<DeepPartial<DeleteResourcesInput>, I>>(object: I): DeleteResourcesInput {
     const message = createBaseDeleteResourcesInput();
     message.projectId = object.projectId ?? 0;
     message.resourceRoleId = object.resourceRoleId ?? undefined;
@@ -473,10 +414,7 @@ function createBaseResourceList(): ResourceList {
 }
 
 export const ResourceList = {
-  encode(
-    message: ResourceList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ResourceList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.resources) {
       Resource.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -503,36 +441,27 @@ export const ResourceList = {
 
   fromJSON(object: any): ResourceList {
     return {
-      resources: Array.isArray(object?.resources)
-        ? object.resources.map((e: any) => Resource.fromJSON(e))
-        : [],
+      resources: Array.isArray(object?.resources) ? object.resources.map((e: any) => Resource.fromJSON(e)) : [],
     };
   },
 
   toJSON(message: ResourceList): unknown {
     const obj: any = {};
     if (message.resources) {
-      obj.resources = message.resources.map((e) =>
-        e ? Resource.toJSON(e) : undefined
-      );
+      obj.resources = message.resources.map((e) => e ? Resource.toJSON(e) : undefined);
     } else {
       obj.resources = [];
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ResourceList>, I>>(
-    base?: I
-  ): ResourceList {
+  create<I extends Exact<DeepPartial<ResourceList>, I>>(base?: I): ResourceList {
     return ResourceList.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ResourceList>, I>>(
-    object: I
-  ): ResourceList {
+  fromPartial<I extends Exact<DeepPartial<ResourceList>, I>>(object: I): ResourceList {
     const message = createBaseResourceList();
-    message.resources =
-      object.resources?.map((e) => Resource.fromPartial(e)) || [];
+    message.resources = object.resources?.map((e) => Resource.fromPartial(e)) || [];
     return message;
   },
 };
@@ -550,10 +479,7 @@ function createBaseResourceInfo(): ResourceInfo {
 }
 
 export const ResourceInfo = {
-  encode(
-    message: ResourceInfo,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ResourceInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.resourceId !== 0) {
       writer.uint32(8).int32(message.resourceId);
     }
@@ -617,9 +543,7 @@ export const ResourceInfo = {
   fromJSON(object: any): ResourceInfo {
     return {
       resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
-      resourceInfoTypeId: isSet(object.resourceInfoTypeId)
-        ? Number(object.resourceInfoTypeId)
-        : 0,
+      resourceInfoTypeId: isSet(object.resourceInfoTypeId) ? Number(object.resourceInfoTypeId) : 0,
       value: isSet(object.value) ? String(object.value) : "",
       createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
       createDate: isSet(object.createDate) ? Number(object.createDate) : 0,
@@ -630,31 +554,21 @@ export const ResourceInfo = {
 
   toJSON(message: ResourceInfo): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.resourceInfoTypeId !== undefined &&
-      (obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId));
+    message.resourceId !== undefined && (obj.resourceId = Math.round(message.resourceId));
+    message.resourceInfoTypeId !== undefined && (obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId));
     message.value !== undefined && (obj.value = message.value);
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    message.createUser !== undefined && (obj.createUser = Math.round(message.createUser));
+    message.createDate !== undefined && (obj.createDate = Math.round(message.createDate));
+    message.modifyUser !== undefined && (obj.modifyUser = Math.round(message.modifyUser));
+    message.modifyDate !== undefined && (obj.modifyDate = Math.round(message.modifyDate));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ResourceInfo>, I>>(
-    base?: I
-  ): ResourceInfo {
+  create<I extends Exact<DeepPartial<ResourceInfo>, I>>(base?: I): ResourceInfo {
     return ResourceInfo.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ResourceInfo>, I>>(
-    object: I
-  ): ResourceInfo {
+  fromPartial<I extends Exact<DeepPartial<ResourceInfo>, I>>(object: I): ResourceInfo {
     const message = createBaseResourceInfo();
     message.resourceId = object.resourceId ?? 0;
     message.resourceInfoTypeId = object.resourceInfoTypeId ?? 0;
@@ -672,10 +586,7 @@ function createBaseCreateResourceInfoInput(): CreateResourceInfoInput {
 }
 
 export const CreateResourceInfoInput = {
-  encode(
-    message: CreateResourceInfoInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CreateResourceInfoInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.resourceId !== 0) {
       writer.uint32(8).int32(message.resourceId);
     }
@@ -688,10 +599,7 @@ export const CreateResourceInfoInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): CreateResourceInfoInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CreateResourceInfoInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateResourceInfoInput();
@@ -718,32 +626,24 @@ export const CreateResourceInfoInput = {
   fromJSON(object: any): CreateResourceInfoInput {
     return {
       resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
-      resourceInfoTypeId: isSet(object.resourceInfoTypeId)
-        ? Number(object.resourceInfoTypeId)
-        : 0,
+      resourceInfoTypeId: isSet(object.resourceInfoTypeId) ? Number(object.resourceInfoTypeId) : 0,
       value: isSet(object.value) ? String(object.value) : "",
     };
   },
 
   toJSON(message: CreateResourceInfoInput): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.resourceInfoTypeId !== undefined &&
-      (obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId));
+    message.resourceId !== undefined && (obj.resourceId = Math.round(message.resourceId));
+    message.resourceInfoTypeId !== undefined && (obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId));
     message.value !== undefined && (obj.value = message.value);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateResourceInfoInput>, I>>(
-    base?: I
-  ): CreateResourceInfoInput {
+  create<I extends Exact<DeepPartial<CreateResourceInfoInput>, I>>(base?: I): CreateResourceInfoInput {
     return CreateResourceInfoInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateResourceInfoInput>, I>>(
-    object: I
-  ): CreateResourceInfoInput {
+  fromPartial<I extends Exact<DeepPartial<CreateResourceInfoInput>, I>>(object: I): CreateResourceInfoInput {
     const message = createBaseCreateResourceInfoInput();
     message.resourceId = object.resourceId ?? 0;
     message.resourceInfoTypeId = object.resourceInfoTypeId ?? 0;
@@ -757,10 +657,7 @@ function createBaseUpdateResourceInfoInput(): UpdateResourceInfoInput {
 }
 
 export const UpdateResourceInfoInput = {
-  encode(
-    message: UpdateResourceInfoInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: UpdateResourceInfoInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.resourceId !== 0) {
       writer.uint32(8).int32(message.resourceId);
     }
@@ -773,10 +670,7 @@ export const UpdateResourceInfoInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateResourceInfoInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateResourceInfoInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateResourceInfoInput();
@@ -803,32 +697,24 @@ export const UpdateResourceInfoInput = {
   fromJSON(object: any): UpdateResourceInfoInput {
     return {
       resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
-      resourceInfoTypeId: isSet(object.resourceInfoTypeId)
-        ? Number(object.resourceInfoTypeId)
-        : 0,
+      resourceInfoTypeId: isSet(object.resourceInfoTypeId) ? Number(object.resourceInfoTypeId) : 0,
       value: isSet(object.value) ? String(object.value) : "",
     };
   },
 
   toJSON(message: UpdateResourceInfoInput): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.resourceInfoTypeId !== undefined &&
-      (obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId));
+    message.resourceId !== undefined && (obj.resourceId = Math.round(message.resourceId));
+    message.resourceInfoTypeId !== undefined && (obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId));
     message.value !== undefined && (obj.value = message.value);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdateResourceInfoInput>, I>>(
-    base?: I
-  ): UpdateResourceInfoInput {
+  create<I extends Exact<DeepPartial<UpdateResourceInfoInput>, I>>(base?: I): UpdateResourceInfoInput {
     return UpdateResourceInfoInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdateResourceInfoInput>, I>>(
-    object: I
-  ): UpdateResourceInfoInput {
+  fromPartial<I extends Exact<DeepPartial<UpdateResourceInfoInput>, I>>(object: I): UpdateResourceInfoInput {
     const message = createBaseUpdateResourceInfoInput();
     message.resourceId = object.resourceId ?? 0;
     message.resourceInfoTypeId = object.resourceInfoTypeId ?? 0;
@@ -842,20 +728,14 @@ function createBaseDeleteResourceInfoInput(): DeleteResourceInfoInput {
 }
 
 export const DeleteResourceInfoInput = {
-  encode(
-    message: DeleteResourceInfoInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: DeleteResourceInfoInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.resourceId !== 0) {
       writer.uint32(8).int32(message.resourceId);
     }
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): DeleteResourceInfoInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): DeleteResourceInfoInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDeleteResourceInfoInput();
@@ -874,27 +754,20 @@ export const DeleteResourceInfoInput = {
   },
 
   fromJSON(object: any): DeleteResourceInfoInput {
-    return {
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
-    };
+    return { resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0 };
   },
 
   toJSON(message: DeleteResourceInfoInput): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
+    message.resourceId !== undefined && (obj.resourceId = Math.round(message.resourceId));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<DeleteResourceInfoInput>, I>>(
-    base?: I
-  ): DeleteResourceInfoInput {
+  create<I extends Exact<DeepPartial<DeleteResourceInfoInput>, I>>(base?: I): DeleteResourceInfoInput {
     return DeleteResourceInfoInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<DeleteResourceInfoInput>, I>>(
-    object: I
-  ): DeleteResourceInfoInput {
+  fromPartial<I extends Exact<DeepPartial<DeleteResourceInfoInput>, I>>(object: I): DeleteResourceInfoInput {
     const message = createBaseDeleteResourceInfoInput();
     message.resourceId = object.resourceId ?? 0;
     return message;
@@ -906,10 +779,7 @@ function createBaseGetResourceInfosInput(): GetResourceInfosInput {
 }
 
 export const GetResourceInfosInput = {
-  encode(
-    message: GetResourceInfosInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: GetResourceInfosInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.resourceId !== 0) {
       writer.uint32(8).int32(message.resourceId);
     }
@@ -919,10 +789,7 @@ export const GetResourceInfosInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): GetResourceInfosInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): GetResourceInfosInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetResourceInfosInput();
@@ -946,30 +813,22 @@ export const GetResourceInfosInput = {
   fromJSON(object: any): GetResourceInfosInput {
     return {
       resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
-      resourceInfoTypeId: isSet(object.resourceInfoTypeId)
-        ? Number(object.resourceInfoTypeId)
-        : undefined,
+      resourceInfoTypeId: isSet(object.resourceInfoTypeId) ? Number(object.resourceInfoTypeId) : undefined,
     };
   },
 
   toJSON(message: GetResourceInfosInput): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.resourceInfoTypeId !== undefined &&
-      (obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId));
+    message.resourceId !== undefined && (obj.resourceId = Math.round(message.resourceId));
+    message.resourceInfoTypeId !== undefined && (obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<GetResourceInfosInput>, I>>(
-    base?: I
-  ): GetResourceInfosInput {
+  create<I extends Exact<DeepPartial<GetResourceInfosInput>, I>>(base?: I): GetResourceInfosInput {
     return GetResourceInfosInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<GetResourceInfosInput>, I>>(
-    object: I
-  ): GetResourceInfosInput {
+  fromPartial<I extends Exact<DeepPartial<GetResourceInfosInput>, I>>(object: I): GetResourceInfosInput {
     const message = createBaseGetResourceInfosInput();
     message.resourceId = object.resourceId ?? 0;
     message.resourceInfoTypeId = object.resourceInfoTypeId ?? undefined;
@@ -982,10 +841,7 @@ function createBaseResourceInfoList(): ResourceInfoList {
 }
 
 export const ResourceInfoList = {
-  encode(
-    message: ResourceInfoList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ResourceInfoList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.resourceInfos) {
       ResourceInfo.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -1000,9 +856,7 @@ export const ResourceInfoList = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.resourceInfos.push(
-            ResourceInfo.decode(reader, reader.uint32())
-          );
+          message.resourceInfos.push(ResourceInfo.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -1023,27 +877,20 @@ export const ResourceInfoList = {
   toJSON(message: ResourceInfoList): unknown {
     const obj: any = {};
     if (message.resourceInfos) {
-      obj.resourceInfos = message.resourceInfos.map((e) =>
-        e ? ResourceInfo.toJSON(e) : undefined
-      );
+      obj.resourceInfos = message.resourceInfos.map((e) => e ? ResourceInfo.toJSON(e) : undefined);
     } else {
       obj.resourceInfos = [];
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ResourceInfoList>, I>>(
-    base?: I
-  ): ResourceInfoList {
+  create<I extends Exact<DeepPartial<ResourceInfoList>, I>>(base?: I): ResourceInfoList {
     return ResourceInfoList.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ResourceInfoList>, I>>(
-    object: I
-  ): ResourceInfoList {
+  fromPartial<I extends Exact<DeepPartial<ResourceInfoList>, I>>(object: I): ResourceInfoList {
     const message = createBaseResourceInfoList();
-    message.resourceInfos =
-      object.resourceInfos?.map((e) => ResourceInfo.fromPartial(e)) || [];
+    message.resourceInfos = object.resourceInfos?.map((e) => ResourceInfo.fromPartial(e)) || [];
     return message;
   },
 };
@@ -1067,41 +914,21 @@ var tsProtoGlobalThis: any = (() => {
   throw "Unable to locate global object";
 })();
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
-    }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
-      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
-    };
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

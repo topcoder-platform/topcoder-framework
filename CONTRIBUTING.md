@@ -53,7 +53,7 @@ Any line of the commit message cannot be longer than 100 characters.
   │        |        │
   │        |        └─⫸ Summary in present tense. Not capitalized. No period at the end.
   |        |
-  |        └─⫸ Commit Scope: domain-acl|domain-challenge|domain-resource|lib-logger|lib-common|lib-secrets
+  |        └─⫸ Commit Scope: domain-challenge| domain-submission|domain-resource|lib-logger|lib-common|lib-secrets
   |
   └─⫸ Commit Type: feat|fix|docs|chore|refactor|ci|test|perf|revert
 ```

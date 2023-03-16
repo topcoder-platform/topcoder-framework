@@ -13,22 +13,11 @@ export interface LegacyChallengeStatus {
 }
 
 function createBaseLegacyChallengeStatus(): LegacyChallengeStatus {
-  return {
-    name: 0,
-    description: "",
-    projectStatusId: 0,
-    createUser: 0,
-    createDate: 0,
-    modifyUser: 0,
-    modifyDate: 0,
-  };
+  return { name: 0, description: "", projectStatusId: 0, createUser: 0, createDate: 0, modifyUser: 0, modifyDate: 0 };
 }
 
 export const LegacyChallengeStatus = {
-  encode(
-    message: LegacyChallengeStatus,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: LegacyChallengeStatus, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.name !== 0) {
       writer.uint32(8).int32(message.name);
     }
@@ -53,10 +42,7 @@ export const LegacyChallengeStatus = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): LegacyChallengeStatus {
+  decode(input: _m0.Reader | Uint8Array, length?: number): LegacyChallengeStatus {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseLegacyChallengeStatus();
@@ -96,9 +82,7 @@ export const LegacyChallengeStatus = {
     return {
       name: isSet(object.name) ? Number(object.name) : 0,
       description: isSet(object.description) ? String(object.description) : "",
-      projectStatusId: isSet(object.projectStatusId)
-        ? Number(object.projectStatusId)
-        : 0,
+      projectStatusId: isSet(object.projectStatusId) ? Number(object.projectStatusId) : 0,
       createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
       createDate: isSet(object.createDate) ? Number(object.createDate) : 0,
       modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : 0,
@@ -109,30 +93,20 @@ export const LegacyChallengeStatus = {
   toJSON(message: LegacyChallengeStatus): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = Math.round(message.name));
-    message.description !== undefined &&
-      (obj.description = message.description);
-    message.projectStatusId !== undefined &&
-      (obj.projectStatusId = message.projectStatusId);
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    message.description !== undefined && (obj.description = message.description);
+    message.projectStatusId !== undefined && (obj.projectStatusId = message.projectStatusId);
+    message.createUser !== undefined && (obj.createUser = Math.round(message.createUser));
+    message.createDate !== undefined && (obj.createDate = Math.round(message.createDate));
+    message.modifyUser !== undefined && (obj.modifyUser = Math.round(message.modifyUser));
+    message.modifyDate !== undefined && (obj.modifyDate = Math.round(message.modifyDate));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<LegacyChallengeStatus>, I>>(
-    base?: I
-  ): LegacyChallengeStatus {
+  create<I extends Exact<DeepPartial<LegacyChallengeStatus>, I>>(base?: I): LegacyChallengeStatus {
     return LegacyChallengeStatus.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<LegacyChallengeStatus>, I>>(
-    object: I
-  ): LegacyChallengeStatus {
+  fromPartial<I extends Exact<DeepPartial<LegacyChallengeStatus>, I>>(object: I): LegacyChallengeStatus {
     const message = createBaseLegacyChallengeStatus();
     message.name = object.name ?? 0;
     message.description = object.description ?? "";
@@ -164,41 +138,21 @@ var tsProtoGlobalThis: any = (() => {
   throw "Unable to locate global object";
 })();
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
-    }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
-      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
-    };
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

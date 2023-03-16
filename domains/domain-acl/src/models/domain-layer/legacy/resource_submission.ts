@@ -12,7 +12,7 @@ export interface ResourceSubmission {
 }
 
 export interface CreateResourceSubmissionInput {
-  resourceId: number;
+  resourceId?: number | undefined;
   submissionId: number;
 }
 
@@ -137,7 +137,7 @@ export const ResourceSubmission = {
 };
 
 function createBaseCreateResourceSubmissionInput(): CreateResourceSubmissionInput {
-  return { resourceId: 0, submissionId: 0 };
+  return { resourceId: undefined, submissionId: 0 };
 }
 
 export const CreateResourceSubmissionInput = {
@@ -145,7 +145,7 @@ export const CreateResourceSubmissionInput = {
     message: CreateResourceSubmissionInput,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.resourceId !== 0) {
+    if (message.resourceId !== undefined) {
       writer.uint32(8).int32(message.resourceId);
     }
     if (message.submissionId !== 0) {
@@ -180,7 +180,9 @@ export const CreateResourceSubmissionInput = {
 
   fromJSON(object: any): CreateResourceSubmissionInput {
     return {
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
+      resourceId: isSet(object.resourceId)
+        ? Number(object.resourceId)
+        : undefined,
       submissionId: isSet(object.submissionId)
         ? Number(object.submissionId)
         : 0,
@@ -206,7 +208,7 @@ export const CreateResourceSubmissionInput = {
     object: I
   ): CreateResourceSubmissionInput {
     const message = createBaseCreateResourceSubmissionInput();
-    message.resourceId = object.resourceId ?? 0;
+    message.resourceId = object.resourceId ?? undefined;
     message.submissionId = object.submissionId ?? 0;
     return message;
   },

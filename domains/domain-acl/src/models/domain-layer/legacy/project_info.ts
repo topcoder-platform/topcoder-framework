@@ -64,10 +64,7 @@ function createBaseProjectInfo(): ProjectInfo {
 }
 
 export const ProjectInfo = {
-  encode(
-    message: ProjectInfo,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ProjectInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.projectId !== 0) {
       writer.uint32(8).int32(message.projectId);
     }
@@ -131,37 +128,23 @@ export const ProjectInfo = {
   fromJSON(object: any): ProjectInfo {
     return {
       projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      projectInfoTypeId: isSet(object.projectInfoTypeId)
-        ? Number(object.projectInfoTypeId)
-        : 0,
+      projectInfoTypeId: isSet(object.projectInfoTypeId) ? Number(object.projectInfoTypeId) : 0,
       value: isSet(object.value) ? String(object.value) : "",
-      createUser: isSet(object.createUser)
-        ? Number(object.createUser)
-        : undefined,
-      createDate: isSet(object.createDate)
-        ? String(object.createDate)
-        : undefined,
-      modifyUser: isSet(object.modifyUser)
-        ? Number(object.modifyUser)
-        : undefined,
-      modifyDate: isSet(object.modifyDate)
-        ? String(object.modifyDate)
-        : undefined,
+      createUser: isSet(object.createUser) ? Number(object.createUser) : undefined,
+      createDate: isSet(object.createDate) ? String(object.createDate) : undefined,
+      modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : undefined,
+      modifyDate: isSet(object.modifyDate) ? String(object.modifyDate) : undefined,
     };
   },
 
   toJSON(message: ProjectInfo): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.projectInfoTypeId !== undefined &&
-      (obj.projectInfoTypeId = Math.round(message.projectInfoTypeId));
+    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
+    message.projectInfoTypeId !== undefined && (obj.projectInfoTypeId = Math.round(message.projectInfoTypeId));
     message.value !== undefined && (obj.value = message.value);
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
+    message.createUser !== undefined && (obj.createUser = Math.round(message.createUser));
     message.createDate !== undefined && (obj.createDate = message.createDate);
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
+    message.modifyUser !== undefined && (obj.modifyUser = Math.round(message.modifyUser));
     message.modifyDate !== undefined && (obj.modifyDate = message.modifyDate);
     return obj;
   },
@@ -170,9 +153,7 @@ export const ProjectInfo = {
     return ProjectInfo.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ProjectInfo>, I>>(
-    object: I
-  ): ProjectInfo {
+  fromPartial<I extends Exact<DeepPartial<ProjectInfo>, I>>(object: I): ProjectInfo {
     const message = createBaseProjectInfo();
     message.projectId = object.projectId ?? 0;
     message.projectInfoTypeId = object.projectInfoTypeId ?? 0;
@@ -190,10 +171,7 @@ function createBaseProjectInfoList(): ProjectInfoList {
 }
 
 export const ProjectInfoList = {
-  encode(
-    message: ProjectInfoList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ProjectInfoList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.projectInfos) {
       ProjectInfo.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -208,9 +186,7 @@ export const ProjectInfoList = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.projectInfos.push(
-            ProjectInfo.decode(reader, reader.uint32())
-          );
+          message.projectInfos.push(ProjectInfo.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -231,27 +207,20 @@ export const ProjectInfoList = {
   toJSON(message: ProjectInfoList): unknown {
     const obj: any = {};
     if (message.projectInfos) {
-      obj.projectInfos = message.projectInfos.map((e) =>
-        e ? ProjectInfo.toJSON(e) : undefined
-      );
+      obj.projectInfos = message.projectInfos.map((e) => e ? ProjectInfo.toJSON(e) : undefined);
     } else {
       obj.projectInfos = [];
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ProjectInfoList>, I>>(
-    base?: I
-  ): ProjectInfoList {
+  create<I extends Exact<DeepPartial<ProjectInfoList>, I>>(base?: I): ProjectInfoList {
     return ProjectInfoList.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ProjectInfoList>, I>>(
-    object: I
-  ): ProjectInfoList {
+  fromPartial<I extends Exact<DeepPartial<ProjectInfoList>, I>>(object: I): ProjectInfoList {
     const message = createBaseProjectInfoList();
-    message.projectInfos =
-      object.projectInfos?.map((e) => ProjectInfo.fromPartial(e)) || [];
+    message.projectInfos = object.projectInfos?.map((e) => ProjectInfo.fromPartial(e)) || [];
     return message;
   },
 };
@@ -261,10 +230,7 @@ function createBaseGetProjectInfoInput(): GetProjectInfoInput {
 }
 
 export const GetProjectInfoInput = {
-  encode(
-    message: GetProjectInfoInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: GetProjectInfoInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.projectId !== 0) {
       writer.uint32(8).int32(message.projectId);
     }
@@ -298,30 +264,22 @@ export const GetProjectInfoInput = {
   fromJSON(object: any): GetProjectInfoInput {
     return {
       projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      projectInfoTypeId: isSet(object.projectInfoTypeId)
-        ? Number(object.projectInfoTypeId)
-        : undefined,
+      projectInfoTypeId: isSet(object.projectInfoTypeId) ? Number(object.projectInfoTypeId) : undefined,
     };
   },
 
   toJSON(message: GetProjectInfoInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.projectInfoTypeId !== undefined &&
-      (obj.projectInfoTypeId = Math.round(message.projectInfoTypeId));
+    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
+    message.projectInfoTypeId !== undefined && (obj.projectInfoTypeId = Math.round(message.projectInfoTypeId));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<GetProjectInfoInput>, I>>(
-    base?: I
-  ): GetProjectInfoInput {
+  create<I extends Exact<DeepPartial<GetProjectInfoInput>, I>>(base?: I): GetProjectInfoInput {
     return GetProjectInfoInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<GetProjectInfoInput>, I>>(
-    object: I
-  ): GetProjectInfoInput {
+  fromPartial<I extends Exact<DeepPartial<GetProjectInfoInput>, I>>(object: I): GetProjectInfoInput {
     const message = createBaseGetProjectInfoInput();
     message.projectId = object.projectId ?? 0;
     message.projectInfoTypeId = object.projectInfoTypeId ?? undefined;
@@ -334,10 +292,7 @@ function createBaseCreateProjectInfoInput(): CreateProjectInfoInput {
 }
 
 export const CreateProjectInfoInput = {
-  encode(
-    message: CreateProjectInfoInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CreateProjectInfoInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.projectId !== 0) {
       writer.uint32(8).int32(message.projectId);
     }
@@ -350,10 +305,7 @@ export const CreateProjectInfoInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): CreateProjectInfoInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CreateProjectInfoInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateProjectInfoInput();
@@ -380,32 +332,24 @@ export const CreateProjectInfoInput = {
   fromJSON(object: any): CreateProjectInfoInput {
     return {
       projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      projectInfoTypeId: isSet(object.projectInfoTypeId)
-        ? Number(object.projectInfoTypeId)
-        : 0,
+      projectInfoTypeId: isSet(object.projectInfoTypeId) ? Number(object.projectInfoTypeId) : 0,
       value: isSet(object.value) ? String(object.value) : "",
     };
   },
 
   toJSON(message: CreateProjectInfoInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.projectInfoTypeId !== undefined &&
-      (obj.projectInfoTypeId = Math.round(message.projectInfoTypeId));
+    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
+    message.projectInfoTypeId !== undefined && (obj.projectInfoTypeId = Math.round(message.projectInfoTypeId));
     message.value !== undefined && (obj.value = message.value);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateProjectInfoInput>, I>>(
-    base?: I
-  ): CreateProjectInfoInput {
+  create<I extends Exact<DeepPartial<CreateProjectInfoInput>, I>>(base?: I): CreateProjectInfoInput {
     return CreateProjectInfoInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<CreateProjectInfoInput>, I>>(
-    object: I
-  ): CreateProjectInfoInput {
+  fromPartial<I extends Exact<DeepPartial<CreateProjectInfoInput>, I>>(object: I): CreateProjectInfoInput {
     const message = createBaseCreateProjectInfoInput();
     message.projectId = object.projectId ?? 0;
     message.projectInfoTypeId = object.projectInfoTypeId ?? 0;
@@ -419,10 +363,7 @@ function createBaseDeleteProjectInfoInput(): DeleteProjectInfoInput {
 }
 
 export const DeleteProjectInfoInput = {
-  encode(
-    message: DeleteProjectInfoInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: DeleteProjectInfoInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.projectId !== 0) {
       writer.uint32(8).int32(message.projectId);
     }
@@ -432,10 +373,7 @@ export const DeleteProjectInfoInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): DeleteProjectInfoInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): DeleteProjectInfoInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDeleteProjectInfoInput();
@@ -459,30 +397,22 @@ export const DeleteProjectInfoInput = {
   fromJSON(object: any): DeleteProjectInfoInput {
     return {
       projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      projectInfoTypeId: isSet(object.projectInfoTypeId)
-        ? Number(object.projectInfoTypeId)
-        : 0,
+      projectInfoTypeId: isSet(object.projectInfoTypeId) ? Number(object.projectInfoTypeId) : 0,
     };
   },
 
   toJSON(message: DeleteProjectInfoInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.projectInfoTypeId !== undefined &&
-      (obj.projectInfoTypeId = Math.round(message.projectInfoTypeId));
+    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
+    message.projectInfoTypeId !== undefined && (obj.projectInfoTypeId = Math.round(message.projectInfoTypeId));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<DeleteProjectInfoInput>, I>>(
-    base?: I
-  ): DeleteProjectInfoInput {
+  create<I extends Exact<DeepPartial<DeleteProjectInfoInput>, I>>(base?: I): DeleteProjectInfoInput {
     return DeleteProjectInfoInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<DeleteProjectInfoInput>, I>>(
-    object: I
-  ): DeleteProjectInfoInput {
+  fromPartial<I extends Exact<DeepPartial<DeleteProjectInfoInput>, I>>(object: I): DeleteProjectInfoInput {
     const message = createBaseDeleteProjectInfoInput();
     message.projectId = object.projectId ?? 0;
     message.projectInfoTypeId = object.projectInfoTypeId ?? 0;
@@ -495,10 +425,7 @@ function createBaseUpdateProjectInfoInput(): UpdateProjectInfoInput {
 }
 
 export const UpdateProjectInfoInput = {
-  encode(
-    message: UpdateProjectInfoInput,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: UpdateProjectInfoInput, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.projectId !== 0) {
       writer.uint32(8).int32(message.projectId);
     }
@@ -511,10 +438,7 @@ export const UpdateProjectInfoInput = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateProjectInfoInput {
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateProjectInfoInput {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateProjectInfoInput();
@@ -541,32 +465,24 @@ export const UpdateProjectInfoInput = {
   fromJSON(object: any): UpdateProjectInfoInput {
     return {
       projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      projectInfoTypeId: isSet(object.projectInfoTypeId)
-        ? Number(object.projectInfoTypeId)
-        : 0,
+      projectInfoTypeId: isSet(object.projectInfoTypeId) ? Number(object.projectInfoTypeId) : 0,
       value: isSet(object.value) ? String(object.value) : "",
     };
   },
 
   toJSON(message: UpdateProjectInfoInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.projectInfoTypeId !== undefined &&
-      (obj.projectInfoTypeId = Math.round(message.projectInfoTypeId));
+    message.projectId !== undefined && (obj.projectId = Math.round(message.projectId));
+    message.projectInfoTypeId !== undefined && (obj.projectInfoTypeId = Math.round(message.projectInfoTypeId));
     message.value !== undefined && (obj.value = message.value);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdateProjectInfoInput>, I>>(
-    base?: I
-  ): UpdateProjectInfoInput {
+  create<I extends Exact<DeepPartial<UpdateProjectInfoInput>, I>>(base?: I): UpdateProjectInfoInput {
     return UpdateProjectInfoInput.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdateProjectInfoInput>, I>>(
-    object: I
-  ): UpdateProjectInfoInput {
+  fromPartial<I extends Exact<DeepPartial<UpdateProjectInfoInput>, I>>(object: I): UpdateProjectInfoInput {
     const message = createBaseUpdateProjectInfoInput();
     message.projectId = object.projectId ?? 0;
     message.projectInfoTypeId = object.projectInfoTypeId ?? 0;
@@ -588,10 +504,7 @@ function createBaseProjectInfoType(): ProjectInfoType {
 }
 
 export const ProjectInfoType = {
-  encode(
-    message: ProjectInfoType,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ProjectInfoType, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.projectInfoTypeId !== 0) {
       writer.uint32(8).int32(message.projectInfoTypeId);
     }
@@ -654,51 +567,33 @@ export const ProjectInfoType = {
 
   fromJSON(object: any): ProjectInfoType {
     return {
-      projectInfoTypeId: isSet(object.projectInfoTypeId)
-        ? Number(object.projectInfoTypeId)
-        : 0,
+      projectInfoTypeId: isSet(object.projectInfoTypeId) ? Number(object.projectInfoTypeId) : 0,
       name: isSet(object.name) ? String(object.name) : "",
       description: isSet(object.description) ? String(object.description) : "",
-      createUser: isSet(object.createUser)
-        ? Number(object.createUser)
-        : undefined,
-      createDate: isSet(object.createDate)
-        ? String(object.createDate)
-        : undefined,
-      modifyUser: isSet(object.modifyUser)
-        ? Number(object.modifyUser)
-        : undefined,
-      modifyDate: isSet(object.modifyDate)
-        ? String(object.modifyDate)
-        : undefined,
+      createUser: isSet(object.createUser) ? Number(object.createUser) : undefined,
+      createDate: isSet(object.createDate) ? String(object.createDate) : undefined,
+      modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : undefined,
+      modifyDate: isSet(object.modifyDate) ? String(object.modifyDate) : undefined,
     };
   },
 
   toJSON(message: ProjectInfoType): unknown {
     const obj: any = {};
-    message.projectInfoTypeId !== undefined &&
-      (obj.projectInfoTypeId = Math.round(message.projectInfoTypeId));
+    message.projectInfoTypeId !== undefined && (obj.projectInfoTypeId = Math.round(message.projectInfoTypeId));
     message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined &&
-      (obj.description = message.description);
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
+    message.description !== undefined && (obj.description = message.description);
+    message.createUser !== undefined && (obj.createUser = Math.round(message.createUser));
     message.createDate !== undefined && (obj.createDate = message.createDate);
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
+    message.modifyUser !== undefined && (obj.modifyUser = Math.round(message.modifyUser));
     message.modifyDate !== undefined && (obj.modifyDate = message.modifyDate);
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ProjectInfoType>, I>>(
-    base?: I
-  ): ProjectInfoType {
+  create<I extends Exact<DeepPartial<ProjectInfoType>, I>>(base?: I): ProjectInfoType {
     return ProjectInfoType.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ProjectInfoType>, I>>(
-    object: I
-  ): ProjectInfoType {
+  fromPartial<I extends Exact<DeepPartial<ProjectInfoType>, I>>(object: I): ProjectInfoType {
     const message = createBaseProjectInfoType();
     message.projectInfoTypeId = object.projectInfoTypeId ?? 0;
     message.name = object.name ?? "";
@@ -716,10 +611,7 @@ function createBaseProjectInfoTypeList(): ProjectInfoTypeList {
 }
 
 export const ProjectInfoTypeList = {
-  encode(
-    message: ProjectInfoTypeList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ProjectInfoTypeList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.projectInfoTypes) {
       ProjectInfoType.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -734,9 +626,7 @@ export const ProjectInfoTypeList = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.projectInfoTypes.push(
-            ProjectInfoType.decode(reader, reader.uint32())
-          );
+          message.projectInfoTypes.push(ProjectInfoType.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -757,60 +647,35 @@ export const ProjectInfoTypeList = {
   toJSON(message: ProjectInfoTypeList): unknown {
     const obj: any = {};
     if (message.projectInfoTypes) {
-      obj.projectInfoTypes = message.projectInfoTypes.map((e) =>
-        e ? ProjectInfoType.toJSON(e) : undefined
-      );
+      obj.projectInfoTypes = message.projectInfoTypes.map((e) => e ? ProjectInfoType.toJSON(e) : undefined);
     } else {
       obj.projectInfoTypes = [];
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ProjectInfoTypeList>, I>>(
-    base?: I
-  ): ProjectInfoTypeList {
+  create<I extends Exact<DeepPartial<ProjectInfoTypeList>, I>>(base?: I): ProjectInfoTypeList {
     return ProjectInfoTypeList.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<ProjectInfoTypeList>, I>>(
-    object: I
-  ): ProjectInfoTypeList {
+  fromPartial<I extends Exact<DeepPartial<ProjectInfoTypeList>, I>>(object: I): ProjectInfoTypeList {
     const message = createBaseProjectInfoTypeList();
-    message.projectInfoTypes =
-      object.projectInfoTypes?.map((e) => ProjectInfoType.fromPartial(e)) || [];
+    message.projectInfoTypes = object.projectInfoTypes?.map((e) => ProjectInfoType.fromPartial(e)) || [];
     return message;
   },
 };
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
-    }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
-      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
-    };
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;
