@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.3](https://github.com/topcoder-platform/topcoder-framework/compare/v0.6.2...v0.6.3) (2023-03-16)
+
+### Bug Fixes
+
+- update protos ([85b013f](https://github.com/topcoder-platform/topcoder-framework/commit/85b013f59e79bdc6a548bf3dacd807f882778e72))
+
 # [0.6.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.5.3...v0.6.0) (2023-03-05)
 
 ### Features
