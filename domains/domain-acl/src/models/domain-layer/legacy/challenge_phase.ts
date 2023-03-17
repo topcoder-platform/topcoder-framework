@@ -47,8 +47,6 @@ export interface CreatePhaseInput {
   actualStartTime?: string | undefined;
   actualEndTime?: string | undefined;
   duration: number;
-  createUser: number;
-  modifyUser?: number | undefined;
 }
 
 function createBaseLegacyChallengePhase(): LegacyChallengePhase {
@@ -567,8 +565,6 @@ function createBaseCreatePhaseInput(): CreatePhaseInput {
     actualStartTime: undefined,
     actualEndTime: undefined,
     duration: 0,
-    createUser: 0,
-    modifyUser: undefined,
   };
 }
 
@@ -603,12 +599,6 @@ export const CreatePhaseInput = {
     }
     if (message.duration !== 0) {
       writer.uint32(72).int32(message.duration);
-    }
-    if (message.createUser !== 0) {
-      writer.uint32(80).int32(message.createUser);
-    }
-    if (message.modifyUser !== undefined) {
-      writer.uint32(88).int32(message.modifyUser);
     }
     return writer;
   },
@@ -647,12 +637,6 @@ export const CreatePhaseInput = {
         case 9:
           message.duration = reader.int32();
           break;
-        case 10:
-          message.createUser = reader.int32();
-          break;
-        case 11:
-          message.modifyUser = reader.int32();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -684,10 +668,6 @@ export const CreatePhaseInput = {
         ? String(object.actualEndTime)
         : undefined,
       duration: isSet(object.duration) ? Number(object.duration) : 0,
-      createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
-      modifyUser: isSet(object.modifyUser)
-        ? Number(object.modifyUser)
-        : undefined,
     };
   },
 
@@ -711,10 +691,6 @@ export const CreatePhaseInput = {
       (obj.actualEndTime = message.actualEndTime);
     message.duration !== undefined &&
       (obj.duration = Math.round(message.duration));
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
     return obj;
   },
 
@@ -737,8 +713,6 @@ export const CreatePhaseInput = {
     message.actualStartTime = object.actualStartTime ?? undefined;
     message.actualEndTime = object.actualEndTime ?? undefined;
     message.duration = object.duration ?? 0;
-    message.createUser = object.createUser ?? 0;
-    message.modifyUser = object.modifyUser ?? undefined;
     return message;
   },
 };

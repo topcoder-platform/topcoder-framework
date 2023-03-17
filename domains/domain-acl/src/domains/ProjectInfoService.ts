@@ -5,14 +5,17 @@ import {
   CreateProjectInfoInput,
   DeleteProjectInfoInput,
   GetProjectInfoInput,
-  ProjectInfo,
   ProjectInfoList,
   ProjectInfoTypeList,
   UpdateProjectInfoInput,
 } from "../models/domain-layer/legacy/project_info";
 import { LegacyProjectInfoClient } from "../models/domain-layer/legacy/services/project_info";
 
-import { Empty, UpdateResult } from "@topcoder-framework/lib-common";
+import {
+  CreateResult,
+  Empty,
+  UpdateResult,
+} from "@topcoder-framework/lib-common";
 import { GrpcClient } from "../common/GrpcClient";
 
 export class ProjectInfoDomain {
@@ -32,7 +35,7 @@ export class ProjectInfoDomain {
     param: CreateProjectInfoInput,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<CreateProjectInfoInput, Metadata, ProjectInfo>(
+    return promisify<CreateProjectInfoInput, Metadata, CreateResult>(
       this.client.create.bind(this.client)
     )(param, metadata);
   }

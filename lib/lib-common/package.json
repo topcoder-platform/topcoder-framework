@@ -1,6 +1,6 @@
 {
   "name": "@topcoder-framework/lib-common",
-  "version": "0.6.0",
+  "version": "0.6.4",
   "description": "",
   "main": "./dist-cjs/index.js",
   "types": "./dist-es/index.d.ts",
@@ -26,7 +26,7 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.8.0",
     "rimraf": "^3.0.2",
-    "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.20",
+    "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.27",
     "tslib": "^2.4.1"
   },
   "devDependencies": {
