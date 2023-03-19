@@ -9,7 +9,7 @@ import {
 import _ from "lodash";
 
 export interface Transaction {
-  add(query: Query): Promise<QueryResult | Error>;
+  add(query: Query): Promise<QueryResult>;
   commit(): void;
   rollback(): void;
 }
@@ -45,12 +45,13 @@ export class QueryRunner {
     const transactionStream = this.#client.startTransactionStream(metadata);
 
     return {
-      add: async (query: Query): Promise<QueryResult | Error> =>
+      add: async (query: Query): Promise<QueryResult> =>
         new Promise((resolve, reject) => {
           transactionStream.write({ query });
 
           const errorListener = (err: Error) => {
             transactionStream.removeListener("data", successListener);
+            transactionStream.end();
             reject(err);
           };
 

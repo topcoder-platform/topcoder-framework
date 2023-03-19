@@ -359,8 +359,6 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
 
   private toRelationalValue(key: string, value: unknown): RelationalValue {
     const dataType: ColumnType = this.schema.columns[key].type;
-    console.log("key", key);
-    console.log("value", value);
 
     if (this.isWKTValue(value)) {
       value = Value.unwrap(value);
