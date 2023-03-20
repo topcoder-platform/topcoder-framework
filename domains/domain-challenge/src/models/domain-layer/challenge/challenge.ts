@@ -94,6 +94,12 @@ export interface Challenge_Phase {
   phaseId: string;
   id: string;
   isOpen: boolean;
+  constraints: Challenge_Phase_Constraint[];
+}
+
+export interface Challenge_Phase_Constraint {
+  name: string;
+  value: number;
 }
 
 export interface Challenge_Winner {
@@ -1330,6 +1336,7 @@ function createBaseChallenge_Phase(): Challenge_Phase {
     phaseId: "",
     id: "",
     isOpen: false,
+    constraints: [],
   };
 }
 
@@ -1377,6 +1384,9 @@ export const Challenge_Phase = {
     if (message.isOpen === true) {
       writer.uint32(72).bool(message.isOpen);
     }
+    for (const v of message.constraints) {
+      Challenge_Phase_Constraint.encode(v!, writer.uint32(82).fork()).ldelim();
+    }
     return writer;
   },
 
@@ -1422,6 +1432,11 @@ export const Challenge_Phase = {
         case 9:
           message.isOpen = reader.bool();
           break;
+        case 10:
+          message.constraints.push(
+            Challenge_Phase_Constraint.decode(reader, reader.uint32())
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1449,6 +1464,11 @@ export const Challenge_Phase = {
       phaseId: isSet(object.phaseId) ? String(object.phaseId) : "",
       id: isSet(object.id) ? String(object.id) : "",
       isOpen: isSet(object.isOpen) ? Boolean(object.isOpen) : false,
+      constraints: Array.isArray(object?.constraints)
+        ? object.constraints.map((e: any) =>
+            Challenge_Phase_Constraint.fromJSON(e)
+          )
+        : [],
     };
   },
 
@@ -1468,6 +1488,13 @@ export const Challenge_Phase = {
     message.phaseId !== undefined && (obj.phaseId = message.phaseId);
     message.id !== undefined && (obj.id = message.id);
     message.isOpen !== undefined && (obj.isOpen = message.isOpen);
+    if (message.constraints) {
+      obj.constraints = message.constraints.map((e) =>
+        e ? Challenge_Phase_Constraint.toJSON(e) : undefined
+      );
+    } else {
+      obj.constraints = [];
+    }
     return obj;
   },
 
@@ -1490,6 +1517,82 @@ export const Challenge_Phase = {
     message.phaseId = object.phaseId ?? "";
     message.id = object.id ?? "";
     message.isOpen = object.isOpen ?? false;
+    message.constraints =
+      object.constraints?.map((e) =>
+        Challenge_Phase_Constraint.fromPartial(e)
+      ) || [];
+    return message;
+  },
+};
+
+function createBaseChallenge_Phase_Constraint(): Challenge_Phase_Constraint {
+  return { name: "", value: 0 };
+}
+
+export const Challenge_Phase_Constraint = {
+  encode(
+    message: Challenge_Phase_Constraint,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.name !== "") {
+      writer.uint32(10).string(message.name);
+    }
+    if (message.value !== 0) {
+      writer.uint32(16).int32(message.value);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): Challenge_Phase_Constraint {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseChallenge_Phase_Constraint();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.name = reader.string();
+          break;
+        case 2:
+          message.value = reader.int32();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Challenge_Phase_Constraint {
+    return {
+      name: isSet(object.name) ? String(object.name) : "",
+      value: isSet(object.value) ? Number(object.value) : 0,
+    };
+  },
+
+  toJSON(message: Challenge_Phase_Constraint): unknown {
+    const obj: any = {};
+    message.name !== undefined && (obj.name = message.name);
+    message.value !== undefined && (obj.value = Math.round(message.value));
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Challenge_Phase_Constraint>, I>>(
+    base?: I
+  ): Challenge_Phase_Constraint {
+    return Challenge_Phase_Constraint.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<Challenge_Phase_Constraint>, I>>(
+    object: I
+  ): Challenge_Phase_Constraint {
+    const message = createBaseChallenge_Phase_Constraint();
+    message.name = object.name ?? "";
+    message.value = object.value ?? 0;
     return message;
   },
 };
