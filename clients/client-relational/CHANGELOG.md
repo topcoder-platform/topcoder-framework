@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.6.5...v0.7.0) (2023-03-20)
+
+### Features
+
+- add phase constraints ([c57ff2c](https://github.com/topcoder-platform/topcoder-framework/commit/c57ff2c90b0704792af451516684d440cf8b4995))
+
 ## [0.6.5](https://github.com/topcoder-platform/topcoder-framework/compare/v0.6.2...v0.6.5) (2023-03-19)
 
 ### Bug Fixes
