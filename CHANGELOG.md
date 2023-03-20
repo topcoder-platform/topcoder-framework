@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.1](https://github.com/topcoder-platform/topcoder-framework/compare/v0.7.0...v0.7.1) (2023-03-20)
+
+### Bug Fixes
+
+- value wrapper ([#26](https://github.com/topcoder-platform/topcoder-framework/issues/26)) ([7519c8b](https://github.com/topcoder-platform/topcoder-framework/commit/7519c8b69ef2294fba860b271c58e68dadf60ef8))
+
 # [0.7.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.6.5...v0.7.0) (2023-03-20)
 
 ### Features
