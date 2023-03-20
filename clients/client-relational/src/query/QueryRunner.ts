@@ -91,6 +91,8 @@ export class QueryRunner {
         return value.value.floatValue;
       case "booleanValue":
         return value.value.booleanValue;
+      case "doubleValue":
+        return value.value.doubleValue;
       case "dateValue":
         return new Date(value.value.dateValue).getTime();
       case "datetimeValue":
