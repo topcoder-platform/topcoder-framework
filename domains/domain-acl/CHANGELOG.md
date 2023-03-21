@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.2](https://github.com/topcoder-platform/topcoder-framework/compare/v0.7.1...v0.7.2) (2023-03-21)
+
+### Bug Fixes
+
+- create secure connection when required ([bc16357](https://github.com/topcoder-platform/topcoder-framework/commit/bc16357b2449c4e8145504fd2c9a0ccc366fabfe))
+
 ## [0.7.1](https://github.com/topcoder-platform/topcoder-framework/compare/v0.7.0...v0.7.1) (2023-03-20)
 
 **Note:** Version bump only for package @topcoder-framework/domain-acl
