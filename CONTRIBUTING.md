@@ -10,7 +10,7 @@ As a contributor, here are the guidelines we would like you to follow:
 
 TODO
 
-## Working with branches
+## Working with branch
 
 Remote branches must follow the following format:
 

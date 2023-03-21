@@ -20,7 +20,9 @@ export class ReviewDomain {
 
   protected readonly client: LegacyReviewClient = new LegacyReviewClient(
     `${this.grpcServerHost}:${this.grpcServerPort}`,
-    GrpcClient.credentials,
+    this.grpcServerHost.indexOf("topcoder") == -1
+      ? GrpcClient.credentials
+      : GrpcClient.secureCredentials,
     GrpcClient.clientOptions
   );
 

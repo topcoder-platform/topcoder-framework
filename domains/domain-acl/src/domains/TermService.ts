@@ -21,7 +21,9 @@ export class TermDomain {
 
   protected readonly client: LegacyTermClient = new LegacyTermClient(
     `${this.grpcServerHost}:${this.grpcServerPort}`,
-    GrpcClient.credentials,
+    this.grpcServerHost.indexOf("topcoder") == -1
+      ? GrpcClient.credentials
+      : GrpcClient.secureCredentials,
     GrpcClient.clientOptions
   );
 

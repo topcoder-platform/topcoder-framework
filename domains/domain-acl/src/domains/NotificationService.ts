@@ -20,7 +20,9 @@ export class NotificationDomain {
   protected readonly client: LegacyNotificationClient =
     new LegacyNotificationClient(
       `${this.grpcServerHost}:${this.grpcServerPort}`,
-      GrpcClient.credentials,
+      this.grpcServerHost.indexOf("topcoder") == -1
+        ? GrpcClient.credentials
+        : GrpcClient.secureCredentials,
       GrpcClient.clientOptions
     );
 

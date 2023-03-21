@@ -27,7 +27,9 @@ export class ChallengeDomain {
 
   protected readonly client: ChallengeClient = new ChallengeClient(
     `${this.grpcServerHost}:${this.grpcServerPort}`,
-    GrpcClient.credentials,
+    this.grpcServerHost.indexOf("topcoder") == -1
+      ? GrpcClient.credentials
+      : GrpcClient.secureCredentials,
     GrpcClient.clientOptions
   );
 

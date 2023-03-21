@@ -25,7 +25,9 @@ export class TimelineTemplateDomain {
   protected readonly client: TimelineTemplateClient =
     new TimelineTemplateClient(
       `${this.grpcServerHost}:${this.grpcServerPort}`,
-      GrpcClient.credentials,
+      this.grpcServerHost.indexOf("topcoder") == -1
+        ? GrpcClient.credentials
+        : GrpcClient.secureCredentials,
       GrpcClient.clientOptions
     );
 

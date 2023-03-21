@@ -10,4 +10,5 @@ export class GrpcClient {
   };
 
   public static credentials = credentials.createInsecure();
+  public static secureCredentials = credentials.createSsl();
 }

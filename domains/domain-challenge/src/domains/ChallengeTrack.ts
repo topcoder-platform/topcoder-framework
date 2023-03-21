@@ -24,7 +24,9 @@ export class ChallengeTrackDomain {
 
   protected readonly client: ChallengeTrackClient = new ChallengeTrackClient(
     `${this.grpcServerHost}:${this.grpcServerPort}`,
-    GrpcClient.credentials,
+    this.grpcServerHost.indexOf("topcoder") == -1
+      ? GrpcClient.credentials
+      : GrpcClient.secureCredentials,
     GrpcClient.clientOptions
   );
 

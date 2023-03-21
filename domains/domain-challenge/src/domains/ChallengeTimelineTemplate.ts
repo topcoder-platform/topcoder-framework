@@ -25,7 +25,9 @@ export class ChallengeTimelineTemplateDomain {
   protected readonly client: ChallengeTimelineTemplateClient =
     new ChallengeTimelineTemplateClient(
       `${this.grpcServerHost}:${this.grpcServerPort}`,
-      GrpcClient.credentials,
+      this.grpcServerHost.indexOf("topcoder") == -1
+        ? GrpcClient.credentials
+        : GrpcClient.secureCredentials,
       GrpcClient.clientOptions
     );
 
