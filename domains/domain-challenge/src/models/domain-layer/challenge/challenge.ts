@@ -95,6 +95,8 @@ export interface Challenge_Phase {
   id: string;
   isOpen: boolean;
   constraints: Challenge_Phase_Constraint[];
+  description?: string | undefined;
+  predecessor?: string | undefined;
 }
 
 export interface Challenge_Phase_Constraint {
@@ -1337,6 +1339,8 @@ function createBaseChallenge_Phase(): Challenge_Phase {
     id: "",
     isOpen: false,
     constraints: [],
+    description: undefined,
+    predecessor: undefined,
   };
 }
 
@@ -1386,6 +1390,12 @@ export const Challenge_Phase = {
     }
     for (const v of message.constraints) {
       Challenge_Phase_Constraint.encode(v!, writer.uint32(82).fork()).ldelim();
+    }
+    if (message.description !== undefined) {
+      writer.uint32(90).string(message.description);
+    }
+    if (message.predecessor !== undefined) {
+      writer.uint32(98).string(message.predecessor);
     }
     return writer;
   },
@@ -1437,6 +1447,12 @@ export const Challenge_Phase = {
             Challenge_Phase_Constraint.decode(reader, reader.uint32())
           );
           break;
+        case 11:
+          message.description = reader.string();
+          break;
+        case 12:
+          message.predecessor = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1469,6 +1485,12 @@ export const Challenge_Phase = {
             Challenge_Phase_Constraint.fromJSON(e)
           )
         : [],
+      description: isSet(object.description)
+        ? String(object.description)
+        : undefined,
+      predecessor: isSet(object.predecessor)
+        ? String(object.predecessor)
+        : undefined,
     };
   },
 
@@ -1495,6 +1517,10 @@ export const Challenge_Phase = {
     } else {
       obj.constraints = [];
     }
+    message.description !== undefined &&
+      (obj.description = message.description);
+    message.predecessor !== undefined &&
+      (obj.predecessor = message.predecessor);
     return obj;
   },
 
@@ -1521,6 +1547,8 @@ export const Challenge_Phase = {
       object.constraints?.map((e) =>
         Challenge_Phase_Constraint.fromPartial(e)
       ) || [];
+    message.description = object.description ?? undefined;
+    message.predecessor = object.predecessor ?? undefined;
     return message;
   },
 };
