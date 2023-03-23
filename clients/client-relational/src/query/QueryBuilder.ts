@@ -2,6 +2,7 @@ import { ScanCriteria, Value } from "@topcoder-framework/lib-common";
 import { TableColumn } from "../interfaces/TableColumns";
 import {
   ColumnType,
+  ColumnValue,
   Operator,
   Query,
   Value as RelationalValue,
@@ -84,6 +85,29 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
   public insert<CreateInput extends Record<string, unknown>>(
     input: CreateInput
   ): Build {
+    const auditFields: ColumnValue[] = [];
+    if (this.schema.columns?.create_date) {
+      auditFields.push({
+        column: "create_date",
+        value: {
+          value: {
+            $case: "datetimeValue",
+            datetimeValue: "CURRENT",
+          },
+        },
+      });
+    }
+    if (this.schema.columns?.modify_date) {
+      auditFields.push({
+        column: "modify_date",
+        value: {
+          value: {
+            $case: "datetimeValue",
+            datetimeValue: "CURRENT",
+          },
+        },
+      });
+    }
     this.#query = {
       query: {
         $case: "insert",
@@ -91,24 +115,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
           schema: this.schema.dbSchema,
           table: this.schema.tableName,
           columnValue: [
-            {
-              column: "create_date",
-              value: {
-                value: {
-                  $case: "datetimeValue",
-                  datetimeValue: "CURRENT",
-                },
-              },
-            },
-            {
-              column: "modify_date",
-              value: {
-                value: {
-                  $case: "datetimeValue",
-                  datetimeValue: "CURRENT",
-                },
-              },
-            },
+            ...auditFields,
             ...Object.entries(input)
               .filter(([, value]) => value !== undefined)
               .map(([key, value]) => ({
