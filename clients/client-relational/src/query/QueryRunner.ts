@@ -94,9 +94,9 @@ export class QueryRunner {
       case "doubleValue":
         return value.value.doubleValue;
       case "dateValue":
-        return new Date(value.value.dateValue).getTime();
+        return value.value.dateValue;
       case "datetimeValue":
-        return new Date(value.value.datetimeValue).getTime();
+        return value.value.datetimeValue;
     }
 
     throw new Error("Unexpected value");
