@@ -18,7 +18,6 @@ export interface PhaseTypeList {
 
 export interface PhaseDependency {
   dependentPhaseId: number;
-  dependencyPhaseId: number;
   dependencyStart: number;
   dependentStart: number;
   lagTime: number;
@@ -325,7 +324,6 @@ export const PhaseTypeList = {
 function createBasePhaseDependency(): PhaseDependency {
   return {
     dependentPhaseId: 0,
-    dependencyPhaseId: 0,
     dependencyStart: 0,
     dependentStart: 0,
     lagTime: 0,
@@ -344,29 +342,26 @@ export const PhaseDependency = {
     if (message.dependentPhaseId !== 0) {
       writer.uint32(8).int32(message.dependentPhaseId);
     }
-    if (message.dependencyPhaseId !== 0) {
-      writer.uint32(16).int32(message.dependencyPhaseId);
-    }
     if (message.dependencyStart !== 0) {
-      writer.uint32(24).int64(message.dependencyStart);
+      writer.uint32(16).int64(message.dependencyStart);
     }
     if (message.dependentStart !== 0) {
-      writer.uint32(32).int64(message.dependentStart);
+      writer.uint32(24).int64(message.dependentStart);
     }
     if (message.lagTime !== 0) {
-      writer.uint32(40).int64(message.lagTime);
+      writer.uint32(32).int64(message.lagTime);
     }
     if (message.createUser !== 0) {
-      writer.uint32(48).int32(message.createUser);
+      writer.uint32(40).int32(message.createUser);
     }
     if (message.createDate !== 0) {
-      writer.uint32(56).int64(message.createDate);
+      writer.uint32(48).int64(message.createDate);
     }
     if (message.modifyUser !== 0) {
-      writer.uint32(64).int32(message.modifyUser);
+      writer.uint32(56).int32(message.modifyUser);
     }
     if (message.modifyDate !== 0) {
-      writer.uint32(72).int64(message.modifyDate);
+      writer.uint32(64).int64(message.modifyDate);
     }
     return writer;
   },
@@ -382,27 +377,24 @@ export const PhaseDependency = {
           message.dependentPhaseId = reader.int32();
           break;
         case 2:
-          message.dependencyPhaseId = reader.int32();
-          break;
-        case 3:
           message.dependencyStart = longToNumber(reader.int64() as Long);
           break;
-        case 4:
+        case 3:
           message.dependentStart = longToNumber(reader.int64() as Long);
           break;
-        case 5:
+        case 4:
           message.lagTime = longToNumber(reader.int64() as Long);
           break;
-        case 6:
+        case 5:
           message.createUser = reader.int32();
           break;
-        case 7:
+        case 6:
           message.createDate = longToNumber(reader.int64() as Long);
           break;
-        case 8:
+        case 7:
           message.modifyUser = reader.int32();
           break;
-        case 9:
+        case 8:
           message.modifyDate = longToNumber(reader.int64() as Long);
           break;
         default:
@@ -417,9 +409,6 @@ export const PhaseDependency = {
     return {
       dependentPhaseId: isSet(object.dependentPhaseId)
         ? Number(object.dependentPhaseId)
-        : 0,
-      dependencyPhaseId: isSet(object.dependencyPhaseId)
-        ? Number(object.dependencyPhaseId)
         : 0,
       dependencyStart: isSet(object.dependencyStart)
         ? Number(object.dependencyStart)
@@ -439,8 +428,6 @@ export const PhaseDependency = {
     const obj: any = {};
     message.dependentPhaseId !== undefined &&
       (obj.dependentPhaseId = Math.round(message.dependentPhaseId));
-    message.dependencyPhaseId !== undefined &&
-      (obj.dependencyPhaseId = Math.round(message.dependencyPhaseId));
     message.dependencyStart !== undefined &&
       (obj.dependencyStart = Math.round(message.dependencyStart));
     message.dependentStart !== undefined &&
@@ -469,7 +456,6 @@ export const PhaseDependency = {
   ): PhaseDependency {
     const message = createBasePhaseDependency();
     message.dependentPhaseId = object.dependentPhaseId ?? 0;
-    message.dependencyPhaseId = object.dependencyPhaseId ?? 0;
     message.dependencyStart = object.dependencyStart ?? 0;
     message.dependentStart = object.dependentStart ?? 0;
     message.lagTime = object.lagTime ?? 0;
@@ -1084,7 +1070,7 @@ export const ProjectPhase = {
       writer.uint32(72).int64(message.actualEndTime);
     }
     if (message.duration !== 0) {
-      writer.uint32(80).int64(message.duration);
+      writer.uint32(80).int32(message.duration);
     }
     if (message.createUser !== undefined) {
       writer.uint32(88).int32(message.createUser);
@@ -1136,7 +1122,7 @@ export const ProjectPhase = {
           message.actualEndTime = longToNumber(reader.int64() as Long);
           break;
         case 10:
-          message.duration = longToNumber(reader.int64() as Long);
+          message.duration = reader.int32();
           break;
         case 11:
           message.createUser = reader.int32();
@@ -1527,7 +1513,7 @@ export const CreateProjectPhaseInput = {
       writer.uint32(66).string(message.actualEndTime);
     }
     if (message.duration !== 0) {
-      writer.uint32(72).int64(message.duration);
+      writer.uint32(72).int32(message.duration);
     }
     return writer;
   },
@@ -1567,7 +1553,7 @@ export const CreateProjectPhaseInput = {
           message.actualEndTime = reader.string();
           break;
         case 9:
-          message.duration = longToNumber(reader.int64() as Long);
+          message.duration = reader.int32();
           break;
         default:
           reader.skipType(tag & 7);

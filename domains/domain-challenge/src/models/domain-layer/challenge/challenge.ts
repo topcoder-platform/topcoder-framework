@@ -23,8 +23,8 @@ export interface Challenge {
   prizeSets: Challenge_PrizeSet[];
   tags: string[];
   projectId?: number | undefined;
-  startDate?: string | undefined;
-  endDate?: string | undefined;
+  startDate?: number | undefined;
+  endDate?: number | undefined;
   status: string;
   attachments: string[];
   groups: string[];
@@ -94,21 +94,12 @@ export interface Challenge_Phase {
   phaseId: string;
   id: string;
   isOpen: boolean;
-  constraints: Challenge_Phase_Constraint[];
-  description?: string | undefined;
-  predecessor?: string | undefined;
-}
-
-export interface Challenge_Phase_Constraint {
-  name: string;
-  value: number;
 }
 
 export interface Challenge_Winner {
   handle: string;
   placement: number;
   userId: number;
-  type?: string | undefined;
 }
 
 export interface Challenge_Task {
@@ -155,8 +146,8 @@ export interface CreateChallengeInput {
   prizeSets: Challenge_PrizeSet[];
   tags: string[];
   projectId?: number | undefined;
-  startDate?: string | undefined;
-  endDate?: string | undefined;
+  startDate?: number | undefined;
+  endDate?: number | undefined;
   status: string;
   attachments: string[];
   groups: string[];
@@ -169,75 +160,37 @@ export interface UpdateChallengeInput {
 }
 
 export interface UpdateChallengeInput_UpdateInput {
+  id: string;
+  legacyId?: number | undefined;
   name?: string | undefined;
   typeId?: string | undefined;
   trackId?: string | undefined;
-  timelineTemplateId?: string | undefined;
   legacy?: Challenge_Legacy | undefined;
   billing?: Challenge_Billing | undefined;
   description?: string | undefined;
   privateDescription?: string | undefined;
   descriptionFormat?: string | undefined;
-  task?: Challenge_Task | undefined;
-  winnerUpdate?: UpdateChallengeInput_UpdateInput_WinnerUpdate | undefined;
-  discussionUpdate?:
-    | UpdateChallengeInput_UpdateInput_DiscussionUpdate
-    | undefined;
-  metadataUpdate?: UpdateChallengeInput_UpdateInput_MetadataUpdate | undefined;
-  phaseUpdate?: UpdateChallengeInput_UpdateInput_PhaseUpdate | undefined;
-  eventUpdate?: UpdateChallengeInput_UpdateInput_EventUpdate | undefined;
-  termUpdate?: UpdateChallengeInput_UpdateInput_TermUpdate | undefined;
-  prizeSetUpdate?: UpdateChallengeInput_UpdateInput_PrizeSetUpdate | undefined;
-  tagUpdate?: UpdateChallengeInput_UpdateInput_TagsUpdate | undefined;
-  attachmentUpdate?:
-    | UpdateChallengeInput_UpdateInput_AttachmentsUpdate
-    | undefined;
-  groupUpdate?: UpdateChallengeInput_UpdateInput_GroupsUpdate | undefined;
-  projectId?: number | undefined;
-  startDate?: string | undefined;
-  endDate?: string | undefined;
-  status?: string | undefined;
-  overview?: Challenge_Overview | undefined;
-}
-
-export interface UpdateChallengeInput_UpdateInput_WinnerUpdate {
-  winners: Challenge_Winner[];
-}
-
-export interface UpdateChallengeInput_UpdateInput_DiscussionUpdate {
-  discussions: Challenge_Discussion[];
-}
-
-export interface UpdateChallengeInput_UpdateInput_MetadataUpdate {
   metadata: Challenge_Metadata[];
-}
-
-export interface UpdateChallengeInput_UpdateInput_PhaseUpdate {
+  task?: Challenge_Task | undefined;
+  timelineTemplateId?: string | undefined;
   phases: Challenge_Phase[];
-}
-
-export interface UpdateChallengeInput_UpdateInput_EventUpdate {
   events: Challenge_Event[];
-}
-
-export interface UpdateChallengeInput_UpdateInput_TermUpdate {
   terms: Challenge_Term[];
-}
-
-export interface UpdateChallengeInput_UpdateInput_PrizeSetUpdate {
   prizeSets: Challenge_PrizeSet[];
-}
-
-export interface UpdateChallengeInput_UpdateInput_TagsUpdate {
   tags: string[];
-}
-
-export interface UpdateChallengeInput_UpdateInput_AttachmentsUpdate {
+  projectId?: number | undefined;
+  startDate?: number | undefined;
+  endDate?: number | undefined;
+  status?: string | undefined;
   attachments: string[];
-}
-
-export interface UpdateChallengeInput_UpdateInput_GroupsUpdate {
   groups: string[];
+  winners: Challenge_Winner[];
+  discussions: Challenge_Discussion[];
+  createdBy?: string | undefined;
+  updatedBy?: string | undefined;
+  created?: number | undefined;
+  updated?: number | undefined;
+  overview?: Challenge_Overview | undefined;
 }
 
 export interface UpdateChallengeInputForACL {
@@ -395,10 +348,10 @@ export const Challenge = {
       writer.uint32(152).int32(message.projectId);
     }
     if (message.startDate !== undefined) {
-      writer.uint32(162).string(message.startDate);
+      writer.uint32(160).int64(message.startDate);
     }
     if (message.endDate !== undefined) {
-      writer.uint32(170).string(message.endDate);
+      writer.uint32(168).int64(message.endDate);
     }
     if (message.status !== "") {
       writer.uint32(178).string(message.status);
@@ -505,10 +458,10 @@ export const Challenge = {
           message.projectId = reader.int32();
           break;
         case 20:
-          message.startDate = reader.string();
+          message.startDate = longToNumber(reader.int64() as Long);
           break;
         case 21:
-          message.endDate = reader.string();
+          message.endDate = longToNumber(reader.int64() as Long);
           break;
         case 22:
           message.status = reader.string();
@@ -597,8 +550,8 @@ export const Challenge = {
         ? object.tags.map((e: any) => String(e))
         : [],
       projectId: isSet(object.projectId) ? Number(object.projectId) : undefined,
-      startDate: isSet(object.startDate) ? String(object.startDate) : undefined,
-      endDate: isSet(object.endDate) ? String(object.endDate) : undefined,
+      startDate: isSet(object.startDate) ? Number(object.startDate) : undefined,
+      endDate: isSet(object.endDate) ? Number(object.endDate) : undefined,
       status: isSet(object.status) ? String(object.status) : "",
       attachments: Array.isArray(object?.attachments)
         ? object.attachments.map((e: any) => String(e))
@@ -692,8 +645,10 @@ export const Challenge = {
     }
     message.projectId !== undefined &&
       (obj.projectId = Math.round(message.projectId));
-    message.startDate !== undefined && (obj.startDate = message.startDate);
-    message.endDate !== undefined && (obj.endDate = message.endDate);
+    message.startDate !== undefined &&
+      (obj.startDate = Math.round(message.startDate));
+    message.endDate !== undefined &&
+      (obj.endDate = Math.round(message.endDate));
     message.status !== undefined && (obj.status = message.status);
     if (message.attachments) {
       obj.attachments = message.attachments.map((e) => e);
@@ -1375,9 +1330,6 @@ function createBaseChallenge_Phase(): Challenge_Phase {
     phaseId: "",
     id: "",
     isOpen: false,
-    constraints: [],
-    description: undefined,
-    predecessor: undefined,
   };
 }
 
@@ -1387,7 +1339,7 @@ export const Challenge_Phase = {
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.duration !== 0) {
-      writer.uint32(8).int64(message.duration);
+      writer.uint32(8).int32(message.duration);
     }
     if (message.scheduledStartDate !== undefined) {
       Timestamp.encode(
@@ -1425,15 +1377,6 @@ export const Challenge_Phase = {
     if (message.isOpen === true) {
       writer.uint32(72).bool(message.isOpen);
     }
-    for (const v of message.constraints) {
-      Challenge_Phase_Constraint.encode(v!, writer.uint32(82).fork()).ldelim();
-    }
-    if (message.description !== undefined) {
-      writer.uint32(90).string(message.description);
-    }
-    if (message.predecessor !== undefined) {
-      writer.uint32(98).string(message.predecessor);
-    }
     return writer;
   },
 
@@ -1445,7 +1388,7 @@ export const Challenge_Phase = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.duration = longToNumber(reader.int64() as Long);
+          message.duration = reader.int32();
           break;
         case 2:
           message.scheduledStartDate = fromTimestamp(
@@ -1479,17 +1422,6 @@ export const Challenge_Phase = {
         case 9:
           message.isOpen = reader.bool();
           break;
-        case 10:
-          message.constraints.push(
-            Challenge_Phase_Constraint.decode(reader, reader.uint32())
-          );
-          break;
-        case 11:
-          message.description = reader.string();
-          break;
-        case 12:
-          message.predecessor = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1517,17 +1449,6 @@ export const Challenge_Phase = {
       phaseId: isSet(object.phaseId) ? String(object.phaseId) : "",
       id: isSet(object.id) ? String(object.id) : "",
       isOpen: isSet(object.isOpen) ? Boolean(object.isOpen) : false,
-      constraints: Array.isArray(object?.constraints)
-        ? object.constraints.map((e: any) =>
-            Challenge_Phase_Constraint.fromJSON(e)
-          )
-        : [],
-      description: isSet(object.description)
-        ? String(object.description)
-        : undefined,
-      predecessor: isSet(object.predecessor)
-        ? String(object.predecessor)
-        : undefined,
     };
   },
 
@@ -1547,17 +1468,6 @@ export const Challenge_Phase = {
     message.phaseId !== undefined && (obj.phaseId = message.phaseId);
     message.id !== undefined && (obj.id = message.id);
     message.isOpen !== undefined && (obj.isOpen = message.isOpen);
-    if (message.constraints) {
-      obj.constraints = message.constraints.map((e) =>
-        e ? Challenge_Phase_Constraint.toJSON(e) : undefined
-      );
-    } else {
-      obj.constraints = [];
-    }
-    message.description !== undefined &&
-      (obj.description = message.description);
-    message.predecessor !== undefined &&
-      (obj.predecessor = message.predecessor);
     return obj;
   },
 
@@ -1580,90 +1490,12 @@ export const Challenge_Phase = {
     message.phaseId = object.phaseId ?? "";
     message.id = object.id ?? "";
     message.isOpen = object.isOpen ?? false;
-    message.constraints =
-      object.constraints?.map((e) =>
-        Challenge_Phase_Constraint.fromPartial(e)
-      ) || [];
-    message.description = object.description ?? undefined;
-    message.predecessor = object.predecessor ?? undefined;
-    return message;
-  },
-};
-
-function createBaseChallenge_Phase_Constraint(): Challenge_Phase_Constraint {
-  return { name: "", value: 0 };
-}
-
-export const Challenge_Phase_Constraint = {
-  encode(
-    message: Challenge_Phase_Constraint,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.name !== "") {
-      writer.uint32(10).string(message.name);
-    }
-    if (message.value !== 0) {
-      writer.uint32(16).int32(message.value);
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): Challenge_Phase_Constraint {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseChallenge_Phase_Constraint();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.name = reader.string();
-          break;
-        case 2:
-          message.value = reader.int32();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): Challenge_Phase_Constraint {
-    return {
-      name: isSet(object.name) ? String(object.name) : "",
-      value: isSet(object.value) ? Number(object.value) : 0,
-    };
-  },
-
-  toJSON(message: Challenge_Phase_Constraint): unknown {
-    const obj: any = {};
-    message.name !== undefined && (obj.name = message.name);
-    message.value !== undefined && (obj.value = Math.round(message.value));
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<Challenge_Phase_Constraint>, I>>(
-    base?: I
-  ): Challenge_Phase_Constraint {
-    return Challenge_Phase_Constraint.fromPartial(base ?? {});
-  },
-
-  fromPartial<I extends Exact<DeepPartial<Challenge_Phase_Constraint>, I>>(
-    object: I
-  ): Challenge_Phase_Constraint {
-    const message = createBaseChallenge_Phase_Constraint();
-    message.name = object.name ?? "";
-    message.value = object.value ?? 0;
     return message;
   },
 };
 
 function createBaseChallenge_Winner(): Challenge_Winner {
-  return { handle: "", placement: 0, userId: 0, type: undefined };
+  return { handle: "", placement: 0, userId: 0 };
 }
 
 export const Challenge_Winner = {
@@ -1679,9 +1511,6 @@ export const Challenge_Winner = {
     }
     if (message.userId !== 0) {
       writer.uint32(24).int32(message.userId);
-    }
-    if (message.type !== undefined) {
-      writer.uint32(34).string(message.type);
     }
     return writer;
   },
@@ -1702,9 +1531,6 @@ export const Challenge_Winner = {
         case 3:
           message.userId = reader.int32();
           break;
-        case 4:
-          message.type = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1718,7 +1544,6 @@ export const Challenge_Winner = {
       handle: isSet(object.handle) ? String(object.handle) : "",
       placement: isSet(object.placement) ? Number(object.placement) : 0,
       userId: isSet(object.userId) ? Number(object.userId) : 0,
-      type: isSet(object.type) ? String(object.type) : undefined,
     };
   },
 
@@ -1728,7 +1553,6 @@ export const Challenge_Winner = {
     message.placement !== undefined &&
       (obj.placement = Math.round(message.placement));
     message.userId !== undefined && (obj.userId = Math.round(message.userId));
-    message.type !== undefined && (obj.type = message.type);
     return obj;
   },
 
@@ -1745,7 +1569,6 @@ export const Challenge_Winner = {
     message.handle = object.handle ?? "";
     message.placement = object.placement ?? 0;
     message.userId = object.userId ?? 0;
-    message.type = object.type ?? undefined;
     return message;
   },
 };
@@ -2003,7 +1826,7 @@ export const Challenge_Overview = {
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.totalPrizes !== 0) {
-      writer.uint32(13).float(message.totalPrizes);
+      writer.uint32(8).int32(message.totalPrizes);
     }
     return writer;
   },
@@ -2016,7 +1839,7 @@ export const Challenge_Overview = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.totalPrizes = reader.float();
+          message.totalPrizes = reader.int32();
           break;
         default:
           reader.skipType(tag & 7);
@@ -2035,7 +1858,7 @@ export const Challenge_Overview = {
   toJSON(message: Challenge_Overview): unknown {
     const obj: any = {};
     message.totalPrizes !== undefined &&
-      (obj.totalPrizes = message.totalPrizes);
+      (obj.totalPrizes = Math.round(message.totalPrizes));
     return obj;
   },
 
@@ -2213,10 +2036,10 @@ export const CreateChallengeInput = {
       writer.uint32(136).int32(message.projectId);
     }
     if (message.startDate !== undefined) {
-      writer.uint32(146).string(message.startDate);
+      writer.uint32(144).int64(message.startDate);
     }
     if (message.endDate !== undefined) {
-      writer.uint32(154).string(message.endDate);
+      writer.uint32(152).int64(message.endDate);
     }
     if (message.status !== "") {
       writer.uint32(162).string(message.status);
@@ -2299,10 +2122,10 @@ export const CreateChallengeInput = {
           message.projectId = reader.int32();
           break;
         case 18:
-          message.startDate = reader.string();
+          message.startDate = longToNumber(reader.int64() as Long);
           break;
         case 19:
-          message.endDate = reader.string();
+          message.endDate = longToNumber(reader.int64() as Long);
           break;
         case 20:
           message.status = reader.string();
@@ -2371,8 +2194,8 @@ export const CreateChallengeInput = {
         ? object.tags.map((e: any) => String(e))
         : [],
       projectId: isSet(object.projectId) ? Number(object.projectId) : undefined,
-      startDate: isSet(object.startDate) ? String(object.startDate) : undefined,
-      endDate: isSet(object.endDate) ? String(object.endDate) : undefined,
+      startDate: isSet(object.startDate) ? Number(object.startDate) : undefined,
+      endDate: isSet(object.endDate) ? Number(object.endDate) : undefined,
       status: isSet(object.status) ? String(object.status) : "",
       attachments: Array.isArray(object?.attachments)
         ? object.attachments.map((e: any) => String(e))
@@ -2453,8 +2276,10 @@ export const CreateChallengeInput = {
     }
     message.projectId !== undefined &&
       (obj.projectId = Math.round(message.projectId));
-    message.startDate !== undefined && (obj.startDate = message.startDate);
-    message.endDate !== undefined && (obj.endDate = message.endDate);
+    message.startDate !== undefined &&
+      (obj.startDate = Math.round(message.startDate));
+    message.endDate !== undefined &&
+      (obj.endDate = Math.round(message.endDate));
     message.status !== undefined && (obj.status = message.status);
     if (message.attachments) {
       obj.attachments = message.attachments.map((e) => e);
@@ -2627,30 +2452,36 @@ export const UpdateChallengeInput = {
 
 function createBaseUpdateChallengeInput_UpdateInput(): UpdateChallengeInput_UpdateInput {
   return {
+    id: "",
+    legacyId: undefined,
     name: undefined,
     typeId: undefined,
     trackId: undefined,
-    timelineTemplateId: undefined,
     legacy: undefined,
     billing: undefined,
     description: undefined,
     privateDescription: undefined,
     descriptionFormat: undefined,
+    metadata: [],
     task: undefined,
-    winnerUpdate: undefined,
-    discussionUpdate: undefined,
-    metadataUpdate: undefined,
-    phaseUpdate: undefined,
-    eventUpdate: undefined,
-    termUpdate: undefined,
-    prizeSetUpdate: undefined,
-    tagUpdate: undefined,
-    attachmentUpdate: undefined,
-    groupUpdate: undefined,
+    timelineTemplateId: undefined,
+    phases: [],
+    events: [],
+    terms: [],
+    prizeSets: [],
+    tags: [],
     projectId: undefined,
     startDate: undefined,
     endDate: undefined,
     status: undefined,
+    attachments: [],
+    groups: [],
+    winners: [],
+    discussions: [],
+    createdBy: undefined,
+    updatedBy: undefined,
+    created: undefined,
+    updated: undefined,
     overview: undefined,
   };
 }
@@ -2660,118 +2491,106 @@ export const UpdateChallengeInput_UpdateInput = {
     message: UpdateChallengeInput_UpdateInput,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
+    if (message.id !== "") {
+      writer.uint32(10).string(message.id);
+    }
+    if (message.legacyId !== undefined) {
+      writer.uint32(16).int32(message.legacyId);
+    }
     if (message.name !== undefined) {
-      writer.uint32(10).string(message.name);
+      writer.uint32(26).string(message.name);
     }
     if (message.typeId !== undefined) {
-      writer.uint32(18).string(message.typeId);
+      writer.uint32(34).string(message.typeId);
     }
     if (message.trackId !== undefined) {
-      writer.uint32(26).string(message.trackId);
-    }
-    if (message.timelineTemplateId !== undefined) {
-      writer.uint32(34).string(message.timelineTemplateId);
+      writer.uint32(42).string(message.trackId);
     }
     if (message.legacy !== undefined) {
       Challenge_Legacy.encode(
         message.legacy,
-        writer.uint32(42).fork()
+        writer.uint32(50).fork()
       ).ldelim();
     }
     if (message.billing !== undefined) {
       Challenge_Billing.encode(
         message.billing,
-        writer.uint32(50).fork()
+        writer.uint32(58).fork()
       ).ldelim();
     }
     if (message.description !== undefined) {
-      writer.uint32(58).string(message.description);
+      writer.uint32(66).string(message.description);
     }
     if (message.privateDescription !== undefined) {
-      writer.uint32(66).string(message.privateDescription);
+      writer.uint32(74).string(message.privateDescription);
     }
     if (message.descriptionFormat !== undefined) {
-      writer.uint32(74).string(message.descriptionFormat);
+      writer.uint32(82).string(message.descriptionFormat);
+    }
+    for (const v of message.metadata) {
+      Challenge_Metadata.encode(v!, writer.uint32(90).fork()).ldelim();
     }
     if (message.task !== undefined) {
-      Challenge_Task.encode(message.task, writer.uint32(82).fork()).ldelim();
+      Challenge_Task.encode(message.task, writer.uint32(98).fork()).ldelim();
     }
-    if (message.winnerUpdate !== undefined) {
-      UpdateChallengeInput_UpdateInput_WinnerUpdate.encode(
-        message.winnerUpdate,
-        writer.uint32(90).fork()
-      ).ldelim();
+    if (message.timelineTemplateId !== undefined) {
+      writer.uint32(106).string(message.timelineTemplateId);
     }
-    if (message.discussionUpdate !== undefined) {
-      UpdateChallengeInput_UpdateInput_DiscussionUpdate.encode(
-        message.discussionUpdate,
-        writer.uint32(98).fork()
-      ).ldelim();
+    for (const v of message.phases) {
+      Challenge_Phase.encode(v!, writer.uint32(114).fork()).ldelim();
     }
-    if (message.metadataUpdate !== undefined) {
-      UpdateChallengeInput_UpdateInput_MetadataUpdate.encode(
-        message.metadataUpdate,
-        writer.uint32(106).fork()
-      ).ldelim();
+    for (const v of message.events) {
+      Challenge_Event.encode(v!, writer.uint32(122).fork()).ldelim();
     }
-    if (message.phaseUpdate !== undefined) {
-      UpdateChallengeInput_UpdateInput_PhaseUpdate.encode(
-        message.phaseUpdate,
-        writer.uint32(114).fork()
-      ).ldelim();
+    for (const v of message.terms) {
+      Challenge_Term.encode(v!, writer.uint32(130).fork()).ldelim();
     }
-    if (message.eventUpdate !== undefined) {
-      UpdateChallengeInput_UpdateInput_EventUpdate.encode(
-        message.eventUpdate,
-        writer.uint32(122).fork()
-      ).ldelim();
+    for (const v of message.prizeSets) {
+      Challenge_PrizeSet.encode(v!, writer.uint32(138).fork()).ldelim();
     }
-    if (message.termUpdate !== undefined) {
-      UpdateChallengeInput_UpdateInput_TermUpdate.encode(
-        message.termUpdate,
-        writer.uint32(130).fork()
-      ).ldelim();
-    }
-    if (message.prizeSetUpdate !== undefined) {
-      UpdateChallengeInput_UpdateInput_PrizeSetUpdate.encode(
-        message.prizeSetUpdate,
-        writer.uint32(138).fork()
-      ).ldelim();
-    }
-    if (message.tagUpdate !== undefined) {
-      UpdateChallengeInput_UpdateInput_TagsUpdate.encode(
-        message.tagUpdate,
-        writer.uint32(146).fork()
-      ).ldelim();
-    }
-    if (message.attachmentUpdate !== undefined) {
-      UpdateChallengeInput_UpdateInput_AttachmentsUpdate.encode(
-        message.attachmentUpdate,
-        writer.uint32(154).fork()
-      ).ldelim();
-    }
-    if (message.groupUpdate !== undefined) {
-      UpdateChallengeInput_UpdateInput_GroupsUpdate.encode(
-        message.groupUpdate,
-        writer.uint32(162).fork()
-      ).ldelim();
+    for (const v of message.tags) {
+      writer.uint32(146).string(v!);
     }
     if (message.projectId !== undefined) {
-      writer.uint32(168).int32(message.projectId);
+      writer.uint32(152).int32(message.projectId);
     }
     if (message.startDate !== undefined) {
-      writer.uint32(178).string(message.startDate);
+      writer.uint32(160).int64(message.startDate);
     }
     if (message.endDate !== undefined) {
-      writer.uint32(186).string(message.endDate);
+      writer.uint32(168).int64(message.endDate);
     }
     if (message.status !== undefined) {
-      writer.uint32(194).string(message.status);
+      writer.uint32(178).string(message.status);
+    }
+    for (const v of message.attachments) {
+      writer.uint32(186).string(v!);
+    }
+    for (const v of message.groups) {
+      writer.uint32(194).string(v!);
+    }
+    for (const v of message.winners) {
+      Challenge_Winner.encode(v!, writer.uint32(202).fork()).ldelim();
+    }
+    for (const v of message.discussions) {
+      Challenge_Discussion.encode(v!, writer.uint32(210).fork()).ldelim();
+    }
+    if (message.createdBy !== undefined) {
+      writer.uint32(218).string(message.createdBy);
+    }
+    if (message.updatedBy !== undefined) {
+      writer.uint32(226).string(message.updatedBy);
+    }
+    if (message.created !== undefined) {
+      writer.uint32(232).int64(message.created);
+    }
+    if (message.updated !== undefined) {
+      writer.uint32(240).int64(message.updated);
     }
     if (message.overview !== undefined) {
       Challenge_Overview.encode(
         message.overview,
-        writer.uint32(202).fork()
+        writer.uint32(250).fork()
       ).ldelim();
     }
     return writer;
@@ -2788,118 +2607,104 @@ export const UpdateChallengeInput_UpdateInput = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.name = reader.string();
+          message.id = reader.string();
           break;
         case 2:
-          message.typeId = reader.string();
+          message.legacyId = reader.int32();
           break;
         case 3:
-          message.trackId = reader.string();
+          message.name = reader.string();
           break;
         case 4:
-          message.timelineTemplateId = reader.string();
+          message.typeId = reader.string();
           break;
         case 5:
-          message.legacy = Challenge_Legacy.decode(reader, reader.uint32());
+          message.trackId = reader.string();
           break;
         case 6:
-          message.billing = Challenge_Billing.decode(reader, reader.uint32());
+          message.legacy = Challenge_Legacy.decode(reader, reader.uint32());
           break;
         case 7:
-          message.description = reader.string();
+          message.billing = Challenge_Billing.decode(reader, reader.uint32());
           break;
         case 8:
-          message.privateDescription = reader.string();
+          message.description = reader.string();
           break;
         case 9:
-          message.descriptionFormat = reader.string();
+          message.privateDescription = reader.string();
           break;
         case 10:
-          message.task = Challenge_Task.decode(reader, reader.uint32());
+          message.descriptionFormat = reader.string();
           break;
         case 11:
-          message.winnerUpdate =
-            UpdateChallengeInput_UpdateInput_WinnerUpdate.decode(
-              reader,
-              reader.uint32()
-            );
+          message.metadata.push(
+            Challenge_Metadata.decode(reader, reader.uint32())
+          );
           break;
         case 12:
-          message.discussionUpdate =
-            UpdateChallengeInput_UpdateInput_DiscussionUpdate.decode(
-              reader,
-              reader.uint32()
-            );
+          message.task = Challenge_Task.decode(reader, reader.uint32());
           break;
         case 13:
-          message.metadataUpdate =
-            UpdateChallengeInput_UpdateInput_MetadataUpdate.decode(
-              reader,
-              reader.uint32()
-            );
+          message.timelineTemplateId = reader.string();
           break;
         case 14:
-          message.phaseUpdate =
-            UpdateChallengeInput_UpdateInput_PhaseUpdate.decode(
-              reader,
-              reader.uint32()
-            );
+          message.phases.push(Challenge_Phase.decode(reader, reader.uint32()));
           break;
         case 15:
-          message.eventUpdate =
-            UpdateChallengeInput_UpdateInput_EventUpdate.decode(
-              reader,
-              reader.uint32()
-            );
+          message.events.push(Challenge_Event.decode(reader, reader.uint32()));
           break;
         case 16:
-          message.termUpdate =
-            UpdateChallengeInput_UpdateInput_TermUpdate.decode(
-              reader,
-              reader.uint32()
-            );
+          message.terms.push(Challenge_Term.decode(reader, reader.uint32()));
           break;
         case 17:
-          message.prizeSetUpdate =
-            UpdateChallengeInput_UpdateInput_PrizeSetUpdate.decode(
-              reader,
-              reader.uint32()
-            );
+          message.prizeSets.push(
+            Challenge_PrizeSet.decode(reader, reader.uint32())
+          );
           break;
         case 18:
-          message.tagUpdate =
-            UpdateChallengeInput_UpdateInput_TagsUpdate.decode(
-              reader,
-              reader.uint32()
-            );
+          message.tags.push(reader.string());
           break;
         case 19:
-          message.attachmentUpdate =
-            UpdateChallengeInput_UpdateInput_AttachmentsUpdate.decode(
-              reader,
-              reader.uint32()
-            );
-          break;
-        case 20:
-          message.groupUpdate =
-            UpdateChallengeInput_UpdateInput_GroupsUpdate.decode(
-              reader,
-              reader.uint32()
-            );
-          break;
-        case 21:
           message.projectId = reader.int32();
           break;
+        case 20:
+          message.startDate = longToNumber(reader.int64() as Long);
+          break;
+        case 21:
+          message.endDate = longToNumber(reader.int64() as Long);
+          break;
         case 22:
-          message.startDate = reader.string();
-          break;
-        case 23:
-          message.endDate = reader.string();
-          break;
-        case 24:
           message.status = reader.string();
           break;
+        case 23:
+          message.attachments.push(reader.string());
+          break;
+        case 24:
+          message.groups.push(reader.string());
+          break;
         case 25:
+          message.winners.push(
+            Challenge_Winner.decode(reader, reader.uint32())
+          );
+          break;
+        case 26:
+          message.discussions.push(
+            Challenge_Discussion.decode(reader, reader.uint32())
+          );
+          break;
+        case 27:
+          message.createdBy = reader.string();
+          break;
+        case 28:
+          message.updatedBy = reader.string();
+          break;
+        case 29:
+          message.created = longToNumber(reader.int64() as Long);
+          break;
+        case 30:
+          message.updated = longToNumber(reader.int64() as Long);
+          break;
+        case 31:
           message.overview = Challenge_Overview.decode(reader, reader.uint32());
           break;
         default:
@@ -2912,12 +2717,11 @@ export const UpdateChallengeInput_UpdateInput = {
 
   fromJSON(object: any): UpdateChallengeInput_UpdateInput {
     return {
+      id: isSet(object.id) ? String(object.id) : "",
+      legacyId: isSet(object.legacyId) ? Number(object.legacyId) : undefined,
       name: isSet(object.name) ? String(object.name) : undefined,
       typeId: isSet(object.typeId) ? String(object.typeId) : undefined,
       trackId: isSet(object.trackId) ? String(object.trackId) : undefined,
-      timelineTemplateId: isSet(object.timelineTemplateId)
-        ? String(object.timelineTemplateId)
-        : undefined,
       legacy: isSet(object.legacy)
         ? Challenge_Legacy.fromJSON(object.legacy)
         : undefined,
@@ -2933,61 +2737,50 @@ export const UpdateChallengeInput_UpdateInput = {
       descriptionFormat: isSet(object.descriptionFormat)
         ? String(object.descriptionFormat)
         : undefined,
+      metadata: Array.isArray(object?.metadata)
+        ? object.metadata.map((e: any) => Challenge_Metadata.fromJSON(e))
+        : [],
       task: isSet(object.task)
         ? Challenge_Task.fromJSON(object.task)
         : undefined,
-      winnerUpdate: isSet(object.winnerUpdate)
-        ? UpdateChallengeInput_UpdateInput_WinnerUpdate.fromJSON(
-            object.winnerUpdate
-          )
+      timelineTemplateId: isSet(object.timelineTemplateId)
+        ? String(object.timelineTemplateId)
         : undefined,
-      discussionUpdate: isSet(object.discussionUpdate)
-        ? UpdateChallengeInput_UpdateInput_DiscussionUpdate.fromJSON(
-            object.discussionUpdate
-          )
-        : undefined,
-      metadataUpdate: isSet(object.metadataUpdate)
-        ? UpdateChallengeInput_UpdateInput_MetadataUpdate.fromJSON(
-            object.metadataUpdate
-          )
-        : undefined,
-      phaseUpdate: isSet(object.phaseUpdate)
-        ? UpdateChallengeInput_UpdateInput_PhaseUpdate.fromJSON(
-            object.phaseUpdate
-          )
-        : undefined,
-      eventUpdate: isSet(object.eventUpdate)
-        ? UpdateChallengeInput_UpdateInput_EventUpdate.fromJSON(
-            object.eventUpdate
-          )
-        : undefined,
-      termUpdate: isSet(object.termUpdate)
-        ? UpdateChallengeInput_UpdateInput_TermUpdate.fromJSON(
-            object.termUpdate
-          )
-        : undefined,
-      prizeSetUpdate: isSet(object.prizeSetUpdate)
-        ? UpdateChallengeInput_UpdateInput_PrizeSetUpdate.fromJSON(
-            object.prizeSetUpdate
-          )
-        : undefined,
-      tagUpdate: isSet(object.tagUpdate)
-        ? UpdateChallengeInput_UpdateInput_TagsUpdate.fromJSON(object.tagUpdate)
-        : undefined,
-      attachmentUpdate: isSet(object.attachmentUpdate)
-        ? UpdateChallengeInput_UpdateInput_AttachmentsUpdate.fromJSON(
-            object.attachmentUpdate
-          )
-        : undefined,
-      groupUpdate: isSet(object.groupUpdate)
-        ? UpdateChallengeInput_UpdateInput_GroupsUpdate.fromJSON(
-            object.groupUpdate
-          )
-        : undefined,
+      phases: Array.isArray(object?.phases)
+        ? object.phases.map((e: any) => Challenge_Phase.fromJSON(e))
+        : [],
+      events: Array.isArray(object?.events)
+        ? object.events.map((e: any) => Challenge_Event.fromJSON(e))
+        : [],
+      terms: Array.isArray(object?.terms)
+        ? object.terms.map((e: any) => Challenge_Term.fromJSON(e))
+        : [],
+      prizeSets: Array.isArray(object?.prizeSets)
+        ? object.prizeSets.map((e: any) => Challenge_PrizeSet.fromJSON(e))
+        : [],
+      tags: Array.isArray(object?.tags)
+        ? object.tags.map((e: any) => String(e))
+        : [],
       projectId: isSet(object.projectId) ? Number(object.projectId) : undefined,
-      startDate: isSet(object.startDate) ? String(object.startDate) : undefined,
-      endDate: isSet(object.endDate) ? String(object.endDate) : undefined,
+      startDate: isSet(object.startDate) ? Number(object.startDate) : undefined,
+      endDate: isSet(object.endDate) ? Number(object.endDate) : undefined,
       status: isSet(object.status) ? String(object.status) : undefined,
+      attachments: Array.isArray(object?.attachments)
+        ? object.attachments.map((e: any) => String(e))
+        : [],
+      groups: Array.isArray(object?.groups)
+        ? object.groups.map((e: any) => String(e))
+        : [],
+      winners: Array.isArray(object?.winners)
+        ? object.winners.map((e: any) => Challenge_Winner.fromJSON(e))
+        : [],
+      discussions: Array.isArray(object?.discussions)
+        ? object.discussions.map((e: any) => Challenge_Discussion.fromJSON(e))
+        : [],
+      createdBy: isSet(object.createdBy) ? String(object.createdBy) : undefined,
+      updatedBy: isSet(object.updatedBy) ? String(object.updatedBy) : undefined,
+      created: isSet(object.created) ? Number(object.created) : undefined,
+      updated: isSet(object.updated) ? Number(object.updated) : undefined,
       overview: isSet(object.overview)
         ? Challenge_Overview.fromJSON(object.overview)
         : undefined,
@@ -2996,11 +2789,12 @@ export const UpdateChallengeInput_UpdateInput = {
 
   toJSON(message: UpdateChallengeInput_UpdateInput): unknown {
     const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    message.legacyId !== undefined &&
+      (obj.legacyId = Math.round(message.legacyId));
     message.name !== undefined && (obj.name = message.name);
     message.typeId !== undefined && (obj.typeId = message.typeId);
     message.trackId !== undefined && (obj.trackId = message.trackId);
-    message.timelineTemplateId !== undefined &&
-      (obj.timelineTemplateId = message.timelineTemplateId);
     message.legacy !== undefined &&
       (obj.legacy = message.legacy
         ? Challenge_Legacy.toJSON(message.legacy)
@@ -3015,71 +2809,89 @@ export const UpdateChallengeInput_UpdateInput = {
       (obj.privateDescription = message.privateDescription);
     message.descriptionFormat !== undefined &&
       (obj.descriptionFormat = message.descriptionFormat);
+    if (message.metadata) {
+      obj.metadata = message.metadata.map((e) =>
+        e ? Challenge_Metadata.toJSON(e) : undefined
+      );
+    } else {
+      obj.metadata = [];
+    }
     message.task !== undefined &&
       (obj.task = message.task
         ? Challenge_Task.toJSON(message.task)
         : undefined);
-    message.winnerUpdate !== undefined &&
-      (obj.winnerUpdate = message.winnerUpdate
-        ? UpdateChallengeInput_UpdateInput_WinnerUpdate.toJSON(
-            message.winnerUpdate
-          )
-        : undefined);
-    message.discussionUpdate !== undefined &&
-      (obj.discussionUpdate = message.discussionUpdate
-        ? UpdateChallengeInput_UpdateInput_DiscussionUpdate.toJSON(
-            message.discussionUpdate
-          )
-        : undefined);
-    message.metadataUpdate !== undefined &&
-      (obj.metadataUpdate = message.metadataUpdate
-        ? UpdateChallengeInput_UpdateInput_MetadataUpdate.toJSON(
-            message.metadataUpdate
-          )
-        : undefined);
-    message.phaseUpdate !== undefined &&
-      (obj.phaseUpdate = message.phaseUpdate
-        ? UpdateChallengeInput_UpdateInput_PhaseUpdate.toJSON(
-            message.phaseUpdate
-          )
-        : undefined);
-    message.eventUpdate !== undefined &&
-      (obj.eventUpdate = message.eventUpdate
-        ? UpdateChallengeInput_UpdateInput_EventUpdate.toJSON(
-            message.eventUpdate
-          )
-        : undefined);
-    message.termUpdate !== undefined &&
-      (obj.termUpdate = message.termUpdate
-        ? UpdateChallengeInput_UpdateInput_TermUpdate.toJSON(message.termUpdate)
-        : undefined);
-    message.prizeSetUpdate !== undefined &&
-      (obj.prizeSetUpdate = message.prizeSetUpdate
-        ? UpdateChallengeInput_UpdateInput_PrizeSetUpdate.toJSON(
-            message.prizeSetUpdate
-          )
-        : undefined);
-    message.tagUpdate !== undefined &&
-      (obj.tagUpdate = message.tagUpdate
-        ? UpdateChallengeInput_UpdateInput_TagsUpdate.toJSON(message.tagUpdate)
-        : undefined);
-    message.attachmentUpdate !== undefined &&
-      (obj.attachmentUpdate = message.attachmentUpdate
-        ? UpdateChallengeInput_UpdateInput_AttachmentsUpdate.toJSON(
-            message.attachmentUpdate
-          )
-        : undefined);
-    message.groupUpdate !== undefined &&
-      (obj.groupUpdate = message.groupUpdate
-        ? UpdateChallengeInput_UpdateInput_GroupsUpdate.toJSON(
-            message.groupUpdate
-          )
-        : undefined);
+    message.timelineTemplateId !== undefined &&
+      (obj.timelineTemplateId = message.timelineTemplateId);
+    if (message.phases) {
+      obj.phases = message.phases.map((e) =>
+        e ? Challenge_Phase.toJSON(e) : undefined
+      );
+    } else {
+      obj.phases = [];
+    }
+    if (message.events) {
+      obj.events = message.events.map((e) =>
+        e ? Challenge_Event.toJSON(e) : undefined
+      );
+    } else {
+      obj.events = [];
+    }
+    if (message.terms) {
+      obj.terms = message.terms.map((e) =>
+        e ? Challenge_Term.toJSON(e) : undefined
+      );
+    } else {
+      obj.terms = [];
+    }
+    if (message.prizeSets) {
+      obj.prizeSets = message.prizeSets.map((e) =>
+        e ? Challenge_PrizeSet.toJSON(e) : undefined
+      );
+    } else {
+      obj.prizeSets = [];
+    }
+    if (message.tags) {
+      obj.tags = message.tags.map((e) => e);
+    } else {
+      obj.tags = [];
+    }
     message.projectId !== undefined &&
       (obj.projectId = Math.round(message.projectId));
-    message.startDate !== undefined && (obj.startDate = message.startDate);
-    message.endDate !== undefined && (obj.endDate = message.endDate);
+    message.startDate !== undefined &&
+      (obj.startDate = Math.round(message.startDate));
+    message.endDate !== undefined &&
+      (obj.endDate = Math.round(message.endDate));
     message.status !== undefined && (obj.status = message.status);
+    if (message.attachments) {
+      obj.attachments = message.attachments.map((e) => e);
+    } else {
+      obj.attachments = [];
+    }
+    if (message.groups) {
+      obj.groups = message.groups.map((e) => e);
+    } else {
+      obj.groups = [];
+    }
+    if (message.winners) {
+      obj.winners = message.winners.map((e) =>
+        e ? Challenge_Winner.toJSON(e) : undefined
+      );
+    } else {
+      obj.winners = [];
+    }
+    if (message.discussions) {
+      obj.discussions = message.discussions.map((e) =>
+        e ? Challenge_Discussion.toJSON(e) : undefined
+      );
+    } else {
+      obj.discussions = [];
+    }
+    message.createdBy !== undefined && (obj.createdBy = message.createdBy);
+    message.updatedBy !== undefined && (obj.updatedBy = message.updatedBy);
+    message.created !== undefined &&
+      (obj.created = Math.round(message.created));
+    message.updated !== undefined &&
+      (obj.updated = Math.round(message.updated));
     message.overview !== undefined &&
       (obj.overview = message.overview
         ? Challenge_Overview.toJSON(message.overview)
@@ -3097,10 +2909,11 @@ export const UpdateChallengeInput_UpdateInput = {
     I extends Exact<DeepPartial<UpdateChallengeInput_UpdateInput>, I>
   >(object: I): UpdateChallengeInput_UpdateInput {
     const message = createBaseUpdateChallengeInput_UpdateInput();
+    message.id = object.id ?? "";
+    message.legacyId = object.legacyId ?? undefined;
     message.name = object.name ?? undefined;
     message.typeId = object.typeId ?? undefined;
     message.trackId = object.trackId ?? undefined;
-    message.timelineTemplateId = object.timelineTemplateId ?? undefined;
     message.legacy =
       object.legacy !== undefined && object.legacy !== null
         ? Challenge_Legacy.fromPartial(object.legacy)
@@ -3112,861 +2925,40 @@ export const UpdateChallengeInput_UpdateInput = {
     message.description = object.description ?? undefined;
     message.privateDescription = object.privateDescription ?? undefined;
     message.descriptionFormat = object.descriptionFormat ?? undefined;
+    message.metadata =
+      object.metadata?.map((e) => Challenge_Metadata.fromPartial(e)) || [];
     message.task =
       object.task !== undefined && object.task !== null
         ? Challenge_Task.fromPartial(object.task)
         : undefined;
-    message.winnerUpdate =
-      object.winnerUpdate !== undefined && object.winnerUpdate !== null
-        ? UpdateChallengeInput_UpdateInput_WinnerUpdate.fromPartial(
-            object.winnerUpdate
-          )
-        : undefined;
-    message.discussionUpdate =
-      object.discussionUpdate !== undefined && object.discussionUpdate !== null
-        ? UpdateChallengeInput_UpdateInput_DiscussionUpdate.fromPartial(
-            object.discussionUpdate
-          )
-        : undefined;
-    message.metadataUpdate =
-      object.metadataUpdate !== undefined && object.metadataUpdate !== null
-        ? UpdateChallengeInput_UpdateInput_MetadataUpdate.fromPartial(
-            object.metadataUpdate
-          )
-        : undefined;
-    message.phaseUpdate =
-      object.phaseUpdate !== undefined && object.phaseUpdate !== null
-        ? UpdateChallengeInput_UpdateInput_PhaseUpdate.fromPartial(
-            object.phaseUpdate
-          )
-        : undefined;
-    message.eventUpdate =
-      object.eventUpdate !== undefined && object.eventUpdate !== null
-        ? UpdateChallengeInput_UpdateInput_EventUpdate.fromPartial(
-            object.eventUpdate
-          )
-        : undefined;
-    message.termUpdate =
-      object.termUpdate !== undefined && object.termUpdate !== null
-        ? UpdateChallengeInput_UpdateInput_TermUpdate.fromPartial(
-            object.termUpdate
-          )
-        : undefined;
-    message.prizeSetUpdate =
-      object.prizeSetUpdate !== undefined && object.prizeSetUpdate !== null
-        ? UpdateChallengeInput_UpdateInput_PrizeSetUpdate.fromPartial(
-            object.prizeSetUpdate
-          )
-        : undefined;
-    message.tagUpdate =
-      object.tagUpdate !== undefined && object.tagUpdate !== null
-        ? UpdateChallengeInput_UpdateInput_TagsUpdate.fromPartial(
-            object.tagUpdate
-          )
-        : undefined;
-    message.attachmentUpdate =
-      object.attachmentUpdate !== undefined && object.attachmentUpdate !== null
-        ? UpdateChallengeInput_UpdateInput_AttachmentsUpdate.fromPartial(
-            object.attachmentUpdate
-          )
-        : undefined;
-    message.groupUpdate =
-      object.groupUpdate !== undefined && object.groupUpdate !== null
-        ? UpdateChallengeInput_UpdateInput_GroupsUpdate.fromPartial(
-            object.groupUpdate
-          )
-        : undefined;
+    message.timelineTemplateId = object.timelineTemplateId ?? undefined;
+    message.phases =
+      object.phases?.map((e) => Challenge_Phase.fromPartial(e)) || [];
+    message.events =
+      object.events?.map((e) => Challenge_Event.fromPartial(e)) || [];
+    message.terms =
+      object.terms?.map((e) => Challenge_Term.fromPartial(e)) || [];
+    message.prizeSets =
+      object.prizeSets?.map((e) => Challenge_PrizeSet.fromPartial(e)) || [];
+    message.tags = object.tags?.map((e) => e) || [];
     message.projectId = object.projectId ?? undefined;
     message.startDate = object.startDate ?? undefined;
     message.endDate = object.endDate ?? undefined;
     message.status = object.status ?? undefined;
+    message.attachments = object.attachments?.map((e) => e) || [];
+    message.groups = object.groups?.map((e) => e) || [];
+    message.winners =
+      object.winners?.map((e) => Challenge_Winner.fromPartial(e)) || [];
+    message.discussions =
+      object.discussions?.map((e) => Challenge_Discussion.fromPartial(e)) || [];
+    message.createdBy = object.createdBy ?? undefined;
+    message.updatedBy = object.updatedBy ?? undefined;
+    message.created = object.created ?? undefined;
+    message.updated = object.updated ?? undefined;
     message.overview =
       object.overview !== undefined && object.overview !== null
         ? Challenge_Overview.fromPartial(object.overview)
         : undefined;
-    return message;
-  },
-};
-
-function createBaseUpdateChallengeInput_UpdateInput_WinnerUpdate(): UpdateChallengeInput_UpdateInput_WinnerUpdate {
-  return { winners: [] };
-}
-
-export const UpdateChallengeInput_UpdateInput_WinnerUpdate = {
-  encode(
-    message: UpdateChallengeInput_UpdateInput_WinnerUpdate,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    for (const v of message.winners) {
-      Challenge_Winner.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateChallengeInput_UpdateInput_WinnerUpdate {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUpdateChallengeInput_UpdateInput_WinnerUpdate();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.winners.push(
-            Challenge_Winner.decode(reader, reader.uint32())
-          );
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): UpdateChallengeInput_UpdateInput_WinnerUpdate {
-    return {
-      winners: Array.isArray(object?.winners)
-        ? object.winners.map((e: any) => Challenge_Winner.fromJSON(e))
-        : [],
-    };
-  },
-
-  toJSON(message: UpdateChallengeInput_UpdateInput_WinnerUpdate): unknown {
-    const obj: any = {};
-    if (message.winners) {
-      obj.winners = message.winners.map((e) =>
-        e ? Challenge_Winner.toJSON(e) : undefined
-      );
-    } else {
-      obj.winners = [];
-    }
-    return obj;
-  },
-
-  create<
-    I extends Exact<
-      DeepPartial<UpdateChallengeInput_UpdateInput_WinnerUpdate>,
-      I
-    >
-  >(base?: I): UpdateChallengeInput_UpdateInput_WinnerUpdate {
-    return UpdateChallengeInput_UpdateInput_WinnerUpdate.fromPartial(
-      base ?? {}
-    );
-  },
-
-  fromPartial<
-    I extends Exact<
-      DeepPartial<UpdateChallengeInput_UpdateInput_WinnerUpdate>,
-      I
-    >
-  >(object: I): UpdateChallengeInput_UpdateInput_WinnerUpdate {
-    const message = createBaseUpdateChallengeInput_UpdateInput_WinnerUpdate();
-    message.winners =
-      object.winners?.map((e) => Challenge_Winner.fromPartial(e)) || [];
-    return message;
-  },
-};
-
-function createBaseUpdateChallengeInput_UpdateInput_DiscussionUpdate(): UpdateChallengeInput_UpdateInput_DiscussionUpdate {
-  return { discussions: [] };
-}
-
-export const UpdateChallengeInput_UpdateInput_DiscussionUpdate = {
-  encode(
-    message: UpdateChallengeInput_UpdateInput_DiscussionUpdate,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    for (const v of message.discussions) {
-      Challenge_Discussion.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateChallengeInput_UpdateInput_DiscussionUpdate {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message =
-      createBaseUpdateChallengeInput_UpdateInput_DiscussionUpdate();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.discussions.push(
-            Challenge_Discussion.decode(reader, reader.uint32())
-          );
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): UpdateChallengeInput_UpdateInput_DiscussionUpdate {
-    return {
-      discussions: Array.isArray(object?.discussions)
-        ? object.discussions.map((e: any) => Challenge_Discussion.fromJSON(e))
-        : [],
-    };
-  },
-
-  toJSON(message: UpdateChallengeInput_UpdateInput_DiscussionUpdate): unknown {
-    const obj: any = {};
-    if (message.discussions) {
-      obj.discussions = message.discussions.map((e) =>
-        e ? Challenge_Discussion.toJSON(e) : undefined
-      );
-    } else {
-      obj.discussions = [];
-    }
-    return obj;
-  },
-
-  create<
-    I extends Exact<
-      DeepPartial<UpdateChallengeInput_UpdateInput_DiscussionUpdate>,
-      I
-    >
-  >(base?: I): UpdateChallengeInput_UpdateInput_DiscussionUpdate {
-    return UpdateChallengeInput_UpdateInput_DiscussionUpdate.fromPartial(
-      base ?? {}
-    );
-  },
-
-  fromPartial<
-    I extends Exact<
-      DeepPartial<UpdateChallengeInput_UpdateInput_DiscussionUpdate>,
-      I
-    >
-  >(object: I): UpdateChallengeInput_UpdateInput_DiscussionUpdate {
-    const message =
-      createBaseUpdateChallengeInput_UpdateInput_DiscussionUpdate();
-    message.discussions =
-      object.discussions?.map((e) => Challenge_Discussion.fromPartial(e)) || [];
-    return message;
-  },
-};
-
-function createBaseUpdateChallengeInput_UpdateInput_MetadataUpdate(): UpdateChallengeInput_UpdateInput_MetadataUpdate {
-  return { metadata: [] };
-}
-
-export const UpdateChallengeInput_UpdateInput_MetadataUpdate = {
-  encode(
-    message: UpdateChallengeInput_UpdateInput_MetadataUpdate,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    for (const v of message.metadata) {
-      Challenge_Metadata.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateChallengeInput_UpdateInput_MetadataUpdate {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUpdateChallengeInput_UpdateInput_MetadataUpdate();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.metadata.push(
-            Challenge_Metadata.decode(reader, reader.uint32())
-          );
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): UpdateChallengeInput_UpdateInput_MetadataUpdate {
-    return {
-      metadata: Array.isArray(object?.metadata)
-        ? object.metadata.map((e: any) => Challenge_Metadata.fromJSON(e))
-        : [],
-    };
-  },
-
-  toJSON(message: UpdateChallengeInput_UpdateInput_MetadataUpdate): unknown {
-    const obj: any = {};
-    if (message.metadata) {
-      obj.metadata = message.metadata.map((e) =>
-        e ? Challenge_Metadata.toJSON(e) : undefined
-      );
-    } else {
-      obj.metadata = [];
-    }
-    return obj;
-  },
-
-  create<
-    I extends Exact<
-      DeepPartial<UpdateChallengeInput_UpdateInput_MetadataUpdate>,
-      I
-    >
-  >(base?: I): UpdateChallengeInput_UpdateInput_MetadataUpdate {
-    return UpdateChallengeInput_UpdateInput_MetadataUpdate.fromPartial(
-      base ?? {}
-    );
-  },
-
-  fromPartial<
-    I extends Exact<
-      DeepPartial<UpdateChallengeInput_UpdateInput_MetadataUpdate>,
-      I
-    >
-  >(object: I): UpdateChallengeInput_UpdateInput_MetadataUpdate {
-    const message = createBaseUpdateChallengeInput_UpdateInput_MetadataUpdate();
-    message.metadata =
-      object.metadata?.map((e) => Challenge_Metadata.fromPartial(e)) || [];
-    return message;
-  },
-};
-
-function createBaseUpdateChallengeInput_UpdateInput_PhaseUpdate(): UpdateChallengeInput_UpdateInput_PhaseUpdate {
-  return { phases: [] };
-}
-
-export const UpdateChallengeInput_UpdateInput_PhaseUpdate = {
-  encode(
-    message: UpdateChallengeInput_UpdateInput_PhaseUpdate,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    for (const v of message.phases) {
-      Challenge_Phase.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateChallengeInput_UpdateInput_PhaseUpdate {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUpdateChallengeInput_UpdateInput_PhaseUpdate();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.phases.push(Challenge_Phase.decode(reader, reader.uint32()));
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): UpdateChallengeInput_UpdateInput_PhaseUpdate {
-    return {
-      phases: Array.isArray(object?.phases)
-        ? object.phases.map((e: any) => Challenge_Phase.fromJSON(e))
-        : [],
-    };
-  },
-
-  toJSON(message: UpdateChallengeInput_UpdateInput_PhaseUpdate): unknown {
-    const obj: any = {};
-    if (message.phases) {
-      obj.phases = message.phases.map((e) =>
-        e ? Challenge_Phase.toJSON(e) : undefined
-      );
-    } else {
-      obj.phases = [];
-    }
-    return obj;
-  },
-
-  create<
-    I extends Exact<
-      DeepPartial<UpdateChallengeInput_UpdateInput_PhaseUpdate>,
-      I
-    >
-  >(base?: I): UpdateChallengeInput_UpdateInput_PhaseUpdate {
-    return UpdateChallengeInput_UpdateInput_PhaseUpdate.fromPartial(base ?? {});
-  },
-
-  fromPartial<
-    I extends Exact<
-      DeepPartial<UpdateChallengeInput_UpdateInput_PhaseUpdate>,
-      I
-    >
-  >(object: I): UpdateChallengeInput_UpdateInput_PhaseUpdate {
-    const message = createBaseUpdateChallengeInput_UpdateInput_PhaseUpdate();
-    message.phases =
-      object.phases?.map((e) => Challenge_Phase.fromPartial(e)) || [];
-    return message;
-  },
-};
-
-function createBaseUpdateChallengeInput_UpdateInput_EventUpdate(): UpdateChallengeInput_UpdateInput_EventUpdate {
-  return { events: [] };
-}
-
-export const UpdateChallengeInput_UpdateInput_EventUpdate = {
-  encode(
-    message: UpdateChallengeInput_UpdateInput_EventUpdate,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    for (const v of message.events) {
-      Challenge_Event.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateChallengeInput_UpdateInput_EventUpdate {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUpdateChallengeInput_UpdateInput_EventUpdate();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.events.push(Challenge_Event.decode(reader, reader.uint32()));
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): UpdateChallengeInput_UpdateInput_EventUpdate {
-    return {
-      events: Array.isArray(object?.events)
-        ? object.events.map((e: any) => Challenge_Event.fromJSON(e))
-        : [],
-    };
-  },
-
-  toJSON(message: UpdateChallengeInput_UpdateInput_EventUpdate): unknown {
-    const obj: any = {};
-    if (message.events) {
-      obj.events = message.events.map((e) =>
-        e ? Challenge_Event.toJSON(e) : undefined
-      );
-    } else {
-      obj.events = [];
-    }
-    return obj;
-  },
-
-  create<
-    I extends Exact<
-      DeepPartial<UpdateChallengeInput_UpdateInput_EventUpdate>,
-      I
-    >
-  >(base?: I): UpdateChallengeInput_UpdateInput_EventUpdate {
-    return UpdateChallengeInput_UpdateInput_EventUpdate.fromPartial(base ?? {});
-  },
-
-  fromPartial<
-    I extends Exact<
-      DeepPartial<UpdateChallengeInput_UpdateInput_EventUpdate>,
-      I
-    >
-  >(object: I): UpdateChallengeInput_UpdateInput_EventUpdate {
-    const message = createBaseUpdateChallengeInput_UpdateInput_EventUpdate();
-    message.events =
-      object.events?.map((e) => Challenge_Event.fromPartial(e)) || [];
-    return message;
-  },
-};
-
-function createBaseUpdateChallengeInput_UpdateInput_TermUpdate(): UpdateChallengeInput_UpdateInput_TermUpdate {
-  return { terms: [] };
-}
-
-export const UpdateChallengeInput_UpdateInput_TermUpdate = {
-  encode(
-    message: UpdateChallengeInput_UpdateInput_TermUpdate,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    for (const v of message.terms) {
-      Challenge_Term.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateChallengeInput_UpdateInput_TermUpdate {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUpdateChallengeInput_UpdateInput_TermUpdate();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.terms.push(Challenge_Term.decode(reader, reader.uint32()));
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): UpdateChallengeInput_UpdateInput_TermUpdate {
-    return {
-      terms: Array.isArray(object?.terms)
-        ? object.terms.map((e: any) => Challenge_Term.fromJSON(e))
-        : [],
-    };
-  },
-
-  toJSON(message: UpdateChallengeInput_UpdateInput_TermUpdate): unknown {
-    const obj: any = {};
-    if (message.terms) {
-      obj.terms = message.terms.map((e) =>
-        e ? Challenge_Term.toJSON(e) : undefined
-      );
-    } else {
-      obj.terms = [];
-    }
-    return obj;
-  },
-
-  create<
-    I extends Exact<DeepPartial<UpdateChallengeInput_UpdateInput_TermUpdate>, I>
-  >(base?: I): UpdateChallengeInput_UpdateInput_TermUpdate {
-    return UpdateChallengeInput_UpdateInput_TermUpdate.fromPartial(base ?? {});
-  },
-
-  fromPartial<
-    I extends Exact<DeepPartial<UpdateChallengeInput_UpdateInput_TermUpdate>, I>
-  >(object: I): UpdateChallengeInput_UpdateInput_TermUpdate {
-    const message = createBaseUpdateChallengeInput_UpdateInput_TermUpdate();
-    message.terms =
-      object.terms?.map((e) => Challenge_Term.fromPartial(e)) || [];
-    return message;
-  },
-};
-
-function createBaseUpdateChallengeInput_UpdateInput_PrizeSetUpdate(): UpdateChallengeInput_UpdateInput_PrizeSetUpdate {
-  return { prizeSets: [] };
-}
-
-export const UpdateChallengeInput_UpdateInput_PrizeSetUpdate = {
-  encode(
-    message: UpdateChallengeInput_UpdateInput_PrizeSetUpdate,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    for (const v of message.prizeSets) {
-      Challenge_PrizeSet.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateChallengeInput_UpdateInput_PrizeSetUpdate {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUpdateChallengeInput_UpdateInput_PrizeSetUpdate();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.prizeSets.push(
-            Challenge_PrizeSet.decode(reader, reader.uint32())
-          );
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): UpdateChallengeInput_UpdateInput_PrizeSetUpdate {
-    return {
-      prizeSets: Array.isArray(object?.prizeSets)
-        ? object.prizeSets.map((e: any) => Challenge_PrizeSet.fromJSON(e))
-        : [],
-    };
-  },
-
-  toJSON(message: UpdateChallengeInput_UpdateInput_PrizeSetUpdate): unknown {
-    const obj: any = {};
-    if (message.prizeSets) {
-      obj.prizeSets = message.prizeSets.map((e) =>
-        e ? Challenge_PrizeSet.toJSON(e) : undefined
-      );
-    } else {
-      obj.prizeSets = [];
-    }
-    return obj;
-  },
-
-  create<
-    I extends Exact<
-      DeepPartial<UpdateChallengeInput_UpdateInput_PrizeSetUpdate>,
-      I
-    >
-  >(base?: I): UpdateChallengeInput_UpdateInput_PrizeSetUpdate {
-    return UpdateChallengeInput_UpdateInput_PrizeSetUpdate.fromPartial(
-      base ?? {}
-    );
-  },
-
-  fromPartial<
-    I extends Exact<
-      DeepPartial<UpdateChallengeInput_UpdateInput_PrizeSetUpdate>,
-      I
-    >
-  >(object: I): UpdateChallengeInput_UpdateInput_PrizeSetUpdate {
-    const message = createBaseUpdateChallengeInput_UpdateInput_PrizeSetUpdate();
-    message.prizeSets =
-      object.prizeSets?.map((e) => Challenge_PrizeSet.fromPartial(e)) || [];
-    return message;
-  },
-};
-
-function createBaseUpdateChallengeInput_UpdateInput_TagsUpdate(): UpdateChallengeInput_UpdateInput_TagsUpdate {
-  return { tags: [] };
-}
-
-export const UpdateChallengeInput_UpdateInput_TagsUpdate = {
-  encode(
-    message: UpdateChallengeInput_UpdateInput_TagsUpdate,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    for (const v of message.tags) {
-      writer.uint32(10).string(v!);
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateChallengeInput_UpdateInput_TagsUpdate {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUpdateChallengeInput_UpdateInput_TagsUpdate();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.tags.push(reader.string());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): UpdateChallengeInput_UpdateInput_TagsUpdate {
-    return {
-      tags: Array.isArray(object?.tags)
-        ? object.tags.map((e: any) => String(e))
-        : [],
-    };
-  },
-
-  toJSON(message: UpdateChallengeInput_UpdateInput_TagsUpdate): unknown {
-    const obj: any = {};
-    if (message.tags) {
-      obj.tags = message.tags.map((e) => e);
-    } else {
-      obj.tags = [];
-    }
-    return obj;
-  },
-
-  create<
-    I extends Exact<DeepPartial<UpdateChallengeInput_UpdateInput_TagsUpdate>, I>
-  >(base?: I): UpdateChallengeInput_UpdateInput_TagsUpdate {
-    return UpdateChallengeInput_UpdateInput_TagsUpdate.fromPartial(base ?? {});
-  },
-
-  fromPartial<
-    I extends Exact<DeepPartial<UpdateChallengeInput_UpdateInput_TagsUpdate>, I>
-  >(object: I): UpdateChallengeInput_UpdateInput_TagsUpdate {
-    const message = createBaseUpdateChallengeInput_UpdateInput_TagsUpdate();
-    message.tags = object.tags?.map((e) => e) || [];
-    return message;
-  },
-};
-
-function createBaseUpdateChallengeInput_UpdateInput_AttachmentsUpdate(): UpdateChallengeInput_UpdateInput_AttachmentsUpdate {
-  return { attachments: [] };
-}
-
-export const UpdateChallengeInput_UpdateInput_AttachmentsUpdate = {
-  encode(
-    message: UpdateChallengeInput_UpdateInput_AttachmentsUpdate,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    for (const v of message.attachments) {
-      writer.uint32(10).string(v!);
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateChallengeInput_UpdateInput_AttachmentsUpdate {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message =
-      createBaseUpdateChallengeInput_UpdateInput_AttachmentsUpdate();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.attachments.push(reader.string());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): UpdateChallengeInput_UpdateInput_AttachmentsUpdate {
-    return {
-      attachments: Array.isArray(object?.attachments)
-        ? object.attachments.map((e: any) => String(e))
-        : [],
-    };
-  },
-
-  toJSON(message: UpdateChallengeInput_UpdateInput_AttachmentsUpdate): unknown {
-    const obj: any = {};
-    if (message.attachments) {
-      obj.attachments = message.attachments.map((e) => e);
-    } else {
-      obj.attachments = [];
-    }
-    return obj;
-  },
-
-  create<
-    I extends Exact<
-      DeepPartial<UpdateChallengeInput_UpdateInput_AttachmentsUpdate>,
-      I
-    >
-  >(base?: I): UpdateChallengeInput_UpdateInput_AttachmentsUpdate {
-    return UpdateChallengeInput_UpdateInput_AttachmentsUpdate.fromPartial(
-      base ?? {}
-    );
-  },
-
-  fromPartial<
-    I extends Exact<
-      DeepPartial<UpdateChallengeInput_UpdateInput_AttachmentsUpdate>,
-      I
-    >
-  >(object: I): UpdateChallengeInput_UpdateInput_AttachmentsUpdate {
-    const message =
-      createBaseUpdateChallengeInput_UpdateInput_AttachmentsUpdate();
-    message.attachments = object.attachments?.map((e) => e) || [];
-    return message;
-  },
-};
-
-function createBaseUpdateChallengeInput_UpdateInput_GroupsUpdate(): UpdateChallengeInput_UpdateInput_GroupsUpdate {
-  return { groups: [] };
-}
-
-export const UpdateChallengeInput_UpdateInput_GroupsUpdate = {
-  encode(
-    message: UpdateChallengeInput_UpdateInput_GroupsUpdate,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    for (const v of message.groups) {
-      writer.uint32(10).string(v!);
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): UpdateChallengeInput_UpdateInput_GroupsUpdate {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUpdateChallengeInput_UpdateInput_GroupsUpdate();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.groups.push(reader.string());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): UpdateChallengeInput_UpdateInput_GroupsUpdate {
-    return {
-      groups: Array.isArray(object?.groups)
-        ? object.groups.map((e: any) => String(e))
-        : [],
-    };
-  },
-
-  toJSON(message: UpdateChallengeInput_UpdateInput_GroupsUpdate): unknown {
-    const obj: any = {};
-    if (message.groups) {
-      obj.groups = message.groups.map((e) => e);
-    } else {
-      obj.groups = [];
-    }
-    return obj;
-  },
-
-  create<
-    I extends Exact<
-      DeepPartial<UpdateChallengeInput_UpdateInput_GroupsUpdate>,
-      I
-    >
-  >(base?: I): UpdateChallengeInput_UpdateInput_GroupsUpdate {
-    return UpdateChallengeInput_UpdateInput_GroupsUpdate.fromPartial(
-      base ?? {}
-    );
-  },
-
-  fromPartial<
-    I extends Exact<
-      DeepPartial<UpdateChallengeInput_UpdateInput_GroupsUpdate>,
-      I
-    >
-  >(object: I): UpdateChallengeInput_UpdateInput_GroupsUpdate {
-    const message = createBaseUpdateChallengeInput_UpdateInput_GroupsUpdate();
-    message.groups = object.groups?.map((e) => e) || [];
     return message;
   },
 };
