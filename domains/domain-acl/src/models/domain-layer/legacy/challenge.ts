@@ -7,9 +7,9 @@ export interface LegacyChallenge {
   projectStatusId: number;
   projectCategoryId: number;
   createUser: number;
-  createDate: number;
+  createDate: string;
   modifyUser: number;
-  modifyDate: number;
+  modifyDate: string;
   tcDirectProjectId: number;
 }
 
@@ -81,9 +81,9 @@ function createBaseLegacyChallenge(): LegacyChallenge {
     projectStatusId: 0,
     projectCategoryId: 0,
     createUser: 0,
-    createDate: 0,
+    createDate: "",
     modifyUser: 0,
-    modifyDate: 0,
+    modifyDate: "",
     tcDirectProjectId: 0,
   };
 }
@@ -105,14 +105,14 @@ export const LegacyChallenge = {
     if (message.createUser !== 0) {
       writer.uint32(32).int32(message.createUser);
     }
-    if (message.createDate !== 0) {
-      writer.uint32(40).int64(message.createDate);
+    if (message.createDate !== "") {
+      writer.uint32(42).string(message.createDate);
     }
     if (message.modifyUser !== 0) {
       writer.uint32(48).int32(message.modifyUser);
     }
-    if (message.modifyDate !== 0) {
-      writer.uint32(56).int64(message.modifyDate);
+    if (message.modifyDate !== "") {
+      writer.uint32(58).string(message.modifyDate);
     }
     if (message.tcDirectProjectId !== 0) {
       writer.uint32(64).int64(message.tcDirectProjectId);
@@ -140,13 +140,13 @@ export const LegacyChallenge = {
           message.createUser = reader.int32();
           break;
         case 5:
-          message.createDate = longToNumber(reader.int64() as Long);
+          message.createDate = reader.string();
           break;
         case 6:
           message.modifyUser = reader.int32();
           break;
         case 7:
-          message.modifyDate = longToNumber(reader.int64() as Long);
+          message.modifyDate = reader.string();
           break;
         case 8:
           message.tcDirectProjectId = longToNumber(reader.int64() as Long);
@@ -169,9 +169,9 @@ export const LegacyChallenge = {
         ? Number(object.projectCategoryId)
         : 0,
       createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
-      createDate: isSet(object.createDate) ? Number(object.createDate) : 0,
+      createDate: isSet(object.createDate) ? String(object.createDate) : "",
       modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : 0,
-      modifyDate: isSet(object.modifyDate) ? Number(object.modifyDate) : 0,
+      modifyDate: isSet(object.modifyDate) ? String(object.modifyDate) : "",
       tcDirectProjectId: isSet(object.tcDirectProjectId)
         ? Number(object.tcDirectProjectId)
         : 0,
@@ -188,12 +188,10 @@ export const LegacyChallenge = {
       (obj.projectCategoryId = Math.round(message.projectCategoryId));
     message.createUser !== undefined &&
       (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
+    message.createDate !== undefined && (obj.createDate = message.createDate);
     message.modifyUser !== undefined &&
       (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    message.modifyDate !== undefined && (obj.modifyDate = message.modifyDate);
     message.tcDirectProjectId !== undefined &&
       (obj.tcDirectProjectId = Math.round(message.tcDirectProjectId));
     return obj;
@@ -213,9 +211,9 @@ export const LegacyChallenge = {
     message.projectStatusId = object.projectStatusId ?? 0;
     message.projectCategoryId = object.projectCategoryId ?? 0;
     message.createUser = object.createUser ?? 0;
-    message.createDate = object.createDate ?? 0;
+    message.createDate = object.createDate ?? "";
     message.modifyUser = object.modifyUser ?? 0;
-    message.modifyDate = object.modifyDate ?? 0;
+    message.modifyDate = object.modifyDate ?? "";
     message.tcDirectProjectId = object.tcDirectProjectId ?? 0;
     return message;
   },
