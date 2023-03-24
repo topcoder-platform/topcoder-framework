@@ -424,7 +424,7 @@ export const Phase = {
       writer.uint32(58).string(message.actualEndTime);
     }
     if (message.duration !== 0) {
-      writer.uint32(64).int32(message.duration);
+      writer.uint32(64).int64(message.duration);
     }
     Object.entries(message.phaseCriteria).forEach(([key, value]) => {
       Phase_PhaseCriteriaEntry.encode(
@@ -464,7 +464,7 @@ export const Phase = {
           message.actualEndTime = reader.string();
           break;
         case 8:
-          message.duration = reader.int32();
+          message.duration = longToNumber(reader.int64() as Long);
           break;
         case 9:
           const entry9 = Phase_PhaseCriteriaEntry.decode(

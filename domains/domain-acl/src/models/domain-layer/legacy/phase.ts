@@ -1084,7 +1084,7 @@ export const ProjectPhase = {
       writer.uint32(72).int64(message.actualEndTime);
     }
     if (message.duration !== 0) {
-      writer.uint32(80).int32(message.duration);
+      writer.uint32(80).int64(message.duration);
     }
     if (message.createUser !== undefined) {
       writer.uint32(88).int32(message.createUser);
@@ -1136,7 +1136,7 @@ export const ProjectPhase = {
           message.actualEndTime = longToNumber(reader.int64() as Long);
           break;
         case 10:
-          message.duration = reader.int32();
+          message.duration = longToNumber(reader.int64() as Long);
           break;
         case 11:
           message.createUser = reader.int32();
@@ -1527,7 +1527,7 @@ export const CreateProjectPhaseInput = {
       writer.uint32(66).string(message.actualEndTime);
     }
     if (message.duration !== 0) {
-      writer.uint32(72).int32(message.duration);
+      writer.uint32(72).int64(message.duration);
     }
     return writer;
   },
@@ -1567,7 +1567,7 @@ export const CreateProjectPhaseInput = {
           message.actualEndTime = reader.string();
           break;
         case 9:
-          message.duration = reader.int32();
+          message.duration = longToNumber(reader.int64() as Long);
           break;
         default:
           reader.skipType(tag & 7);
