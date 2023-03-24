@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.5](https://github.com/topcoder-platform/topcoder-framework/compare/v0.10.4...v0.10.5) (2023-03-24)
+
+**Note:** Version bump only for package @topcoder-framework/domain-resource
+
 ## [0.10.4](https://github.com/topcoder-platform/topcoder-framework/compare/v0.10.3...v0.10.4) (2023-03-24)
 
 **Note:** Version bump only for package @topcoder-framework/domain-resource
