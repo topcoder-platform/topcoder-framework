@@ -108,6 +108,7 @@ export interface Challenge_Winner {
   handle: string;
   placement: number;
   userId: number;
+  type?: string | undefined;
 }
 
 export interface Challenge_Task {
@@ -177,29 +178,25 @@ export interface UpdateChallengeInput_UpdateInput {
   description?: string | undefined;
   privateDescription?: string | undefined;
   descriptionFormat?: string | undefined;
+  task?: Challenge_Task | undefined;
   winnerUpdate?: UpdateChallengeInput_UpdateInput_WinnerUpdate | undefined;
   discussionUpdate?:
     | UpdateChallengeInput_UpdateInput_DiscussionUpdate
     | undefined;
   metadataUpdate?: UpdateChallengeInput_UpdateInput_MetadataUpdate | undefined;
-  task?: Challenge_Task | undefined;
   phaseUpdate?: UpdateChallengeInput_UpdateInput_PhaseUpdate | undefined;
   eventUpdate?: UpdateChallengeInput_UpdateInput_EventUpdate | undefined;
   termUpdate?: UpdateChallengeInput_UpdateInput_TermUpdate | undefined;
   prizeSetUpdate?: UpdateChallengeInput_UpdateInput_PrizeSetUpdate | undefined;
   tagUpdate?: UpdateChallengeInput_UpdateInput_TagsUpdate | undefined;
-  projectId?: number | undefined;
-  startDate?: number | undefined;
-  endDate?: number | undefined;
-  status?: string | undefined;
   attachmentUpdate?:
     | UpdateChallengeInput_UpdateInput_AttachmentsUpdate
     | undefined;
   groupUpdate?: UpdateChallengeInput_UpdateInput_GroupsUpdate | undefined;
-  createdBy?: string | undefined;
-  updatedBy?: string | undefined;
-  created?: number | undefined;
-  updated?: number | undefined;
+  projectId?: number | undefined;
+  startDate?: number | undefined;
+  endDate?: number | undefined;
+  status?: string | undefined;
   overview?: Challenge_Overview | undefined;
 }
 
@@ -1668,7 +1665,7 @@ export const Challenge_Phase_Constraint = {
 };
 
 function createBaseChallenge_Winner(): Challenge_Winner {
-  return { handle: "", placement: 0, userId: 0 };
+  return { handle: "", placement: 0, userId: 0, type: undefined };
 }
 
 export const Challenge_Winner = {
@@ -1684,6 +1681,9 @@ export const Challenge_Winner = {
     }
     if (message.userId !== 0) {
       writer.uint32(24).int32(message.userId);
+    }
+    if (message.type !== undefined) {
+      writer.uint32(34).string(message.type);
     }
     return writer;
   },
@@ -1704,6 +1704,9 @@ export const Challenge_Winner = {
         case 3:
           message.userId = reader.int32();
           break;
+        case 4:
+          message.type = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1717,6 +1720,7 @@ export const Challenge_Winner = {
       handle: isSet(object.handle) ? String(object.handle) : "",
       placement: isSet(object.placement) ? Number(object.placement) : 0,
       userId: isSet(object.userId) ? Number(object.userId) : 0,
+      type: isSet(object.type) ? String(object.type) : undefined,
     };
   },
 
@@ -1726,6 +1730,7 @@ export const Challenge_Winner = {
     message.placement !== undefined &&
       (obj.placement = Math.round(message.placement));
     message.userId !== undefined && (obj.userId = Math.round(message.userId));
+    message.type !== undefined && (obj.type = message.type);
     return obj;
   },
 
@@ -1742,6 +1747,7 @@ export const Challenge_Winner = {
     message.handle = object.handle ?? "";
     message.placement = object.placement ?? 0;
     message.userId = object.userId ?? 0;
+    message.type = object.type ?? undefined;
     return message;
   },
 };
@@ -2634,25 +2640,21 @@ function createBaseUpdateChallengeInput_UpdateInput(): UpdateChallengeInput_Upda
     description: undefined,
     privateDescription: undefined,
     descriptionFormat: undefined,
+    task: undefined,
     winnerUpdate: undefined,
     discussionUpdate: undefined,
     metadataUpdate: undefined,
-    task: undefined,
     phaseUpdate: undefined,
     eventUpdate: undefined,
     termUpdate: undefined,
     prizeSetUpdate: undefined,
     tagUpdate: undefined,
+    attachmentUpdate: undefined,
+    groupUpdate: undefined,
     projectId: undefined,
     startDate: undefined,
     endDate: undefined,
     status: undefined,
-    attachmentUpdate: undefined,
-    groupUpdate: undefined,
-    createdBy: undefined,
-    updatedBy: undefined,
-    created: undefined,
-    updated: undefined,
     overview: undefined,
   };
 }
@@ -2695,26 +2697,26 @@ export const UpdateChallengeInput_UpdateInput = {
     if (message.descriptionFormat !== undefined) {
       writer.uint32(74).string(message.descriptionFormat);
     }
+    if (message.task !== undefined) {
+      Challenge_Task.encode(message.task, writer.uint32(82).fork()).ldelim();
+    }
     if (message.winnerUpdate !== undefined) {
       UpdateChallengeInput_UpdateInput_WinnerUpdate.encode(
         message.winnerUpdate,
-        writer.uint32(82).fork()
+        writer.uint32(90).fork()
       ).ldelim();
     }
     if (message.discussionUpdate !== undefined) {
       UpdateChallengeInput_UpdateInput_DiscussionUpdate.encode(
         message.discussionUpdate,
-        writer.uint32(90).fork()
+        writer.uint32(98).fork()
       ).ldelim();
     }
     if (message.metadataUpdate !== undefined) {
       UpdateChallengeInput_UpdateInput_MetadataUpdate.encode(
         message.metadataUpdate,
-        writer.uint32(98).fork()
+        writer.uint32(106).fork()
       ).ldelim();
-    }
-    if (message.task !== undefined) {
-      Challenge_Task.encode(message.task, writer.uint32(106).fork()).ldelim();
     }
     if (message.phaseUpdate !== undefined) {
       UpdateChallengeInput_UpdateInput_PhaseUpdate.encode(
@@ -2746,46 +2748,34 @@ export const UpdateChallengeInput_UpdateInput = {
         writer.uint32(146).fork()
       ).ldelim();
     }
-    if (message.projectId !== undefined) {
-      writer.uint32(152).int32(message.projectId);
-    }
-    if (message.startDate !== undefined) {
-      writer.uint32(160).int64(message.startDate);
-    }
-    if (message.endDate !== undefined) {
-      writer.uint32(168).int64(message.endDate);
-    }
-    if (message.status !== undefined) {
-      writer.uint32(178).string(message.status);
-    }
     if (message.attachmentUpdate !== undefined) {
       UpdateChallengeInput_UpdateInput_AttachmentsUpdate.encode(
         message.attachmentUpdate,
-        writer.uint32(186).fork()
+        writer.uint32(154).fork()
       ).ldelim();
     }
     if (message.groupUpdate !== undefined) {
       UpdateChallengeInput_UpdateInput_GroupsUpdate.encode(
         message.groupUpdate,
-        writer.uint32(194).fork()
+        writer.uint32(162).fork()
       ).ldelim();
     }
-    if (message.createdBy !== undefined) {
-      writer.uint32(202).string(message.createdBy);
+    if (message.projectId !== undefined) {
+      writer.uint32(168).int32(message.projectId);
     }
-    if (message.updatedBy !== undefined) {
-      writer.uint32(210).string(message.updatedBy);
+    if (message.startDate !== undefined) {
+      writer.uint32(176).int64(message.startDate);
     }
-    if (message.created !== undefined) {
-      writer.uint32(216).int64(message.created);
+    if (message.endDate !== undefined) {
+      writer.uint32(184).int64(message.endDate);
     }
-    if (message.updated !== undefined) {
-      writer.uint32(304).int64(message.updated);
+    if (message.status !== undefined) {
+      writer.uint32(194).string(message.status);
     }
     if (message.overview !== undefined) {
       Challenge_Overview.encode(
         message.overview,
-        writer.uint32(234).fork()
+        writer.uint32(202).fork()
       ).ldelim();
     }
     return writer;
@@ -2829,28 +2819,28 @@ export const UpdateChallengeInput_UpdateInput = {
           message.descriptionFormat = reader.string();
           break;
         case 10:
+          message.task = Challenge_Task.decode(reader, reader.uint32());
+          break;
+        case 11:
           message.winnerUpdate =
             UpdateChallengeInput_UpdateInput_WinnerUpdate.decode(
               reader,
               reader.uint32()
             );
           break;
-        case 11:
+        case 12:
           message.discussionUpdate =
             UpdateChallengeInput_UpdateInput_DiscussionUpdate.decode(
               reader,
               reader.uint32()
             );
           break;
-        case 12:
+        case 13:
           message.metadataUpdate =
             UpdateChallengeInput_UpdateInput_MetadataUpdate.decode(
               reader,
               reader.uint32()
             );
-          break;
-        case 13:
-          message.task = Challenge_Task.decode(reader, reader.uint32());
           break;
         case 14:
           message.phaseUpdate =
@@ -2888,44 +2878,32 @@ export const UpdateChallengeInput_UpdateInput = {
             );
           break;
         case 19:
-          message.projectId = reader.int32();
-          break;
-        case 20:
-          message.startDate = longToNumber(reader.int64() as Long);
-          break;
-        case 21:
-          message.endDate = longToNumber(reader.int64() as Long);
-          break;
-        case 22:
-          message.status = reader.string();
-          break;
-        case 23:
           message.attachmentUpdate =
             UpdateChallengeInput_UpdateInput_AttachmentsUpdate.decode(
               reader,
               reader.uint32()
             );
           break;
-        case 24:
+        case 20:
           message.groupUpdate =
             UpdateChallengeInput_UpdateInput_GroupsUpdate.decode(
               reader,
               reader.uint32()
             );
           break;
+        case 21:
+          message.projectId = reader.int32();
+          break;
+        case 22:
+          message.startDate = longToNumber(reader.int64() as Long);
+          break;
+        case 23:
+          message.endDate = longToNumber(reader.int64() as Long);
+          break;
+        case 24:
+          message.status = reader.string();
+          break;
         case 25:
-          message.createdBy = reader.string();
-          break;
-        case 26:
-          message.updatedBy = reader.string();
-          break;
-        case 27:
-          message.created = longToNumber(reader.int64() as Long);
-          break;
-        case 38:
-          message.updated = longToNumber(reader.int64() as Long);
-          break;
-        case 29:
           message.overview = Challenge_Overview.decode(reader, reader.uint32());
           break;
         default:
@@ -2959,6 +2937,9 @@ export const UpdateChallengeInput_UpdateInput = {
       descriptionFormat: isSet(object.descriptionFormat)
         ? String(object.descriptionFormat)
         : undefined,
+      task: isSet(object.task)
+        ? Challenge_Task.fromJSON(object.task)
+        : undefined,
       winnerUpdate: isSet(object.winnerUpdate)
         ? UpdateChallengeInput_UpdateInput_WinnerUpdate.fromJSON(
             object.winnerUpdate
@@ -2973,9 +2954,6 @@ export const UpdateChallengeInput_UpdateInput = {
         ? UpdateChallengeInput_UpdateInput_MetadataUpdate.fromJSON(
             object.metadataUpdate
           )
-        : undefined,
-      task: isSet(object.task)
-        ? Challenge_Task.fromJSON(object.task)
         : undefined,
       phaseUpdate: isSet(object.phaseUpdate)
         ? UpdateChallengeInput_UpdateInput_PhaseUpdate.fromJSON(
@@ -3000,10 +2978,6 @@ export const UpdateChallengeInput_UpdateInput = {
       tagUpdate: isSet(object.tagUpdate)
         ? UpdateChallengeInput_UpdateInput_TagsUpdate.fromJSON(object.tagUpdate)
         : undefined,
-      projectId: isSet(object.projectId) ? Number(object.projectId) : undefined,
-      startDate: isSet(object.startDate) ? Number(object.startDate) : undefined,
-      endDate: isSet(object.endDate) ? Number(object.endDate) : undefined,
-      status: isSet(object.status) ? String(object.status) : undefined,
       attachmentUpdate: isSet(object.attachmentUpdate)
         ? UpdateChallengeInput_UpdateInput_AttachmentsUpdate.fromJSON(
             object.attachmentUpdate
@@ -3014,10 +2988,10 @@ export const UpdateChallengeInput_UpdateInput = {
             object.groupUpdate
           )
         : undefined,
-      createdBy: isSet(object.createdBy) ? String(object.createdBy) : undefined,
-      updatedBy: isSet(object.updatedBy) ? String(object.updatedBy) : undefined,
-      created: isSet(object.created) ? Number(object.created) : undefined,
-      updated: isSet(object.updated) ? Number(object.updated) : undefined,
+      projectId: isSet(object.projectId) ? Number(object.projectId) : undefined,
+      startDate: isSet(object.startDate) ? Number(object.startDate) : undefined,
+      endDate: isSet(object.endDate) ? Number(object.endDate) : undefined,
+      status: isSet(object.status) ? String(object.status) : undefined,
       overview: isSet(object.overview)
         ? Challenge_Overview.fromJSON(object.overview)
         : undefined,
@@ -3045,6 +3019,10 @@ export const UpdateChallengeInput_UpdateInput = {
       (obj.privateDescription = message.privateDescription);
     message.descriptionFormat !== undefined &&
       (obj.descriptionFormat = message.descriptionFormat);
+    message.task !== undefined &&
+      (obj.task = message.task
+        ? Challenge_Task.toJSON(message.task)
+        : undefined);
     message.winnerUpdate !== undefined &&
       (obj.winnerUpdate = message.winnerUpdate
         ? UpdateChallengeInput_UpdateInput_WinnerUpdate.toJSON(
@@ -3062,10 +3040,6 @@ export const UpdateChallengeInput_UpdateInput = {
         ? UpdateChallengeInput_UpdateInput_MetadataUpdate.toJSON(
             message.metadataUpdate
           )
-        : undefined);
-    message.task !== undefined &&
-      (obj.task = message.task
-        ? Challenge_Task.toJSON(message.task)
         : undefined);
     message.phaseUpdate !== undefined &&
       (obj.phaseUpdate = message.phaseUpdate
@@ -3093,13 +3067,6 @@ export const UpdateChallengeInput_UpdateInput = {
       (obj.tagUpdate = message.tagUpdate
         ? UpdateChallengeInput_UpdateInput_TagsUpdate.toJSON(message.tagUpdate)
         : undefined);
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.startDate !== undefined &&
-      (obj.startDate = Math.round(message.startDate));
-    message.endDate !== undefined &&
-      (obj.endDate = Math.round(message.endDate));
-    message.status !== undefined && (obj.status = message.status);
     message.attachmentUpdate !== undefined &&
       (obj.attachmentUpdate = message.attachmentUpdate
         ? UpdateChallengeInput_UpdateInput_AttachmentsUpdate.toJSON(
@@ -3112,12 +3079,13 @@ export const UpdateChallengeInput_UpdateInput = {
             message.groupUpdate
           )
         : undefined);
-    message.createdBy !== undefined && (obj.createdBy = message.createdBy);
-    message.updatedBy !== undefined && (obj.updatedBy = message.updatedBy);
-    message.created !== undefined &&
-      (obj.created = Math.round(message.created));
-    message.updated !== undefined &&
-      (obj.updated = Math.round(message.updated));
+    message.projectId !== undefined &&
+      (obj.projectId = Math.round(message.projectId));
+    message.startDate !== undefined &&
+      (obj.startDate = Math.round(message.startDate));
+    message.endDate !== undefined &&
+      (obj.endDate = Math.round(message.endDate));
+    message.status !== undefined && (obj.status = message.status);
     message.overview !== undefined &&
       (obj.overview = message.overview
         ? Challenge_Overview.toJSON(message.overview)
@@ -3150,6 +3118,10 @@ export const UpdateChallengeInput_UpdateInput = {
     message.description = object.description ?? undefined;
     message.privateDescription = object.privateDescription ?? undefined;
     message.descriptionFormat = object.descriptionFormat ?? undefined;
+    message.task =
+      object.task !== undefined && object.task !== null
+        ? Challenge_Task.fromPartial(object.task)
+        : undefined;
     message.winnerUpdate =
       object.winnerUpdate !== undefined && object.winnerUpdate !== null
         ? UpdateChallengeInput_UpdateInput_WinnerUpdate.fromPartial(
@@ -3167,10 +3139,6 @@ export const UpdateChallengeInput_UpdateInput = {
         ? UpdateChallengeInput_UpdateInput_MetadataUpdate.fromPartial(
             object.metadataUpdate
           )
-        : undefined;
-    message.task =
-      object.task !== undefined && object.task !== null
-        ? Challenge_Task.fromPartial(object.task)
         : undefined;
     message.phaseUpdate =
       object.phaseUpdate !== undefined && object.phaseUpdate !== null
@@ -3202,10 +3170,6 @@ export const UpdateChallengeInput_UpdateInput = {
             object.tagUpdate
           )
         : undefined;
-    message.projectId = object.projectId ?? undefined;
-    message.startDate = object.startDate ?? undefined;
-    message.endDate = object.endDate ?? undefined;
-    message.status = object.status ?? undefined;
     message.attachmentUpdate =
       object.attachmentUpdate !== undefined && object.attachmentUpdate !== null
         ? UpdateChallengeInput_UpdateInput_AttachmentsUpdate.fromPartial(
@@ -3218,10 +3182,10 @@ export const UpdateChallengeInput_UpdateInput = {
             object.groupUpdate
           )
         : undefined;
-    message.createdBy = object.createdBy ?? undefined;
-    message.updatedBy = object.updatedBy ?? undefined;
-    message.created = object.created ?? undefined;
-    message.updated = object.updated ?? undefined;
+    message.projectId = object.projectId ?? undefined;
+    message.startDate = object.startDate ?? undefined;
+    message.endDate = object.endDate ?? undefined;
+    message.status = object.status ?? undefined;
     message.overview =
       object.overview !== undefined && object.overview !== null
         ? Challenge_Overview.fromPartial(object.overview)
