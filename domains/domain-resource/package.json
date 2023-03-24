@@ -1,6 +1,6 @@
 {
   "name": "@topcoder-framework/domain-resource",
-  "version": "0.10.3",
+  "version": "0.10.4",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -15,8 +15,8 @@
   "author": "Rakib Ansary <rakibansary@topcoder.com>",
   "license": "ISC",
   "dependencies": {
-    "@topcoder-framework/client-relational": "^0.10.3",
-    "@topcoder-framework/lib-common": "^0.10.3",
+    "@topcoder-framework/client-relational": "^0.10.4",
+    "@topcoder-framework/lib-common": "^0.10.4",
     "dotenv": "^16.0.3",
     "tslib": "^2.4.1"
   },
