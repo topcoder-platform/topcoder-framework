@@ -94,8 +94,13 @@ export interface UpdateChallengeInput_GroupUpdate {
   groups: string[];
 }
 
+export interface UpdateChallengeInput_Term {
+  id: string;
+  roleId: string;
+}
+
 export interface UpdateChallengeInput_TermUpdate {
-  terms: string[];
+  terms: UpdateChallengeInput_Term[];
 }
 
 export interface CloseChallengeInput {
@@ -1552,6 +1557,78 @@ export const UpdateChallengeInput_GroupUpdate = {
   },
 };
 
+function createBaseUpdateChallengeInput_Term(): UpdateChallengeInput_Term {
+  return { id: "", roleId: "" };
+}
+
+export const UpdateChallengeInput_Term = {
+  encode(
+    message: UpdateChallengeInput_Term,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.id !== "") {
+      writer.uint32(10).string(message.id);
+    }
+    if (message.roleId !== "") {
+      writer.uint32(18).string(message.roleId);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): UpdateChallengeInput_Term {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUpdateChallengeInput_Term();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = reader.string();
+          break;
+        case 2:
+          message.roleId = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UpdateChallengeInput_Term {
+    return {
+      id: isSet(object.id) ? String(object.id) : "",
+      roleId: isSet(object.roleId) ? String(object.roleId) : "",
+    };
+  },
+
+  toJSON(message: UpdateChallengeInput_Term): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    message.roleId !== undefined && (obj.roleId = message.roleId);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<UpdateChallengeInput_Term>, I>>(
+    base?: I
+  ): UpdateChallengeInput_Term {
+    return UpdateChallengeInput_Term.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<UpdateChallengeInput_Term>, I>>(
+    object: I
+  ): UpdateChallengeInput_Term {
+    const message = createBaseUpdateChallengeInput_Term();
+    message.id = object.id ?? "";
+    message.roleId = object.roleId ?? "";
+    return message;
+  },
+};
+
 function createBaseUpdateChallengeInput_TermUpdate(): UpdateChallengeInput_TermUpdate {
   return { terms: [] };
 }
@@ -1562,7 +1639,7 @@ export const UpdateChallengeInput_TermUpdate = {
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     for (const v of message.terms) {
-      writer.uint32(10).string(v!);
+      UpdateChallengeInput_Term.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
@@ -1578,7 +1655,9 @@ export const UpdateChallengeInput_TermUpdate = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.terms.push(reader.string());
+          message.terms.push(
+            UpdateChallengeInput_Term.decode(reader, reader.uint32())
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -1591,7 +1670,7 @@ export const UpdateChallengeInput_TermUpdate = {
   fromJSON(object: any): UpdateChallengeInput_TermUpdate {
     return {
       terms: Array.isArray(object?.terms)
-        ? object.terms.map((e: any) => String(e))
+        ? object.terms.map((e: any) => UpdateChallengeInput_Term.fromJSON(e))
         : [],
     };
   },
@@ -1599,7 +1678,9 @@ export const UpdateChallengeInput_TermUpdate = {
   toJSON(message: UpdateChallengeInput_TermUpdate): unknown {
     const obj: any = {};
     if (message.terms) {
-      obj.terms = message.terms.map((e) => e);
+      obj.terms = message.terms.map((e) =>
+        e ? UpdateChallengeInput_Term.toJSON(e) : undefined
+      );
     } else {
       obj.terms = [];
     }
@@ -1616,7 +1697,8 @@ export const UpdateChallengeInput_TermUpdate = {
     object: I
   ): UpdateChallengeInput_TermUpdate {
     const message = createBaseUpdateChallengeInput_TermUpdate();
-    message.terms = object.terms?.map((e) => e) || [];
+    message.terms =
+      object.terms?.map((e) => UpdateChallengeInput_Term.fromPartial(e)) || [];
     return message;
   },
 };
