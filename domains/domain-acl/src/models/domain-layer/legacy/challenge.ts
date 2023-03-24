@@ -66,6 +66,7 @@ export interface CreateChallengeInput_ProjectInfoEntry {
 }
 
 export interface UpdateChallengeInput {
+  projectId: number;
   name?: string | undefined;
   projectStatusId?: number | undefined;
   prizeUpdate?: UpdateChallengeInput_PrizeUpdate | undefined;
@@ -1034,6 +1035,7 @@ export const CreateChallengeInput_ProjectInfoEntry = {
 
 function createBaseUpdateChallengeInput(): UpdateChallengeInput {
   return {
+    projectId: 0,
     name: undefined,
     projectStatusId: undefined,
     prizeUpdate: undefined,
@@ -1050,43 +1052,46 @@ export const UpdateChallengeInput = {
     message: UpdateChallengeInput,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
+    if (message.projectId !== 0) {
+      writer.uint32(8).int32(message.projectId);
+    }
     if (message.name !== undefined) {
-      writer.uint32(10).string(message.name);
+      writer.uint32(18).string(message.name);
     }
     if (message.projectStatusId !== undefined) {
-      writer.uint32(16).int32(message.projectStatusId);
+      writer.uint32(24).int32(message.projectStatusId);
     }
     if (message.prizeUpdate !== undefined) {
       UpdateChallengeInput_PrizeUpdate.encode(
         message.prizeUpdate,
-        writer.uint32(26).fork()
+        writer.uint32(34).fork()
       ).ldelim();
     }
     if (message.phaseUpdate !== undefined) {
       UpdateChallengeInput_PhaseUpdate.encode(
         message.phaseUpdate,
-        writer.uint32(34).fork()
+        writer.uint32(42).fork()
       ).ldelim();
     }
     if (message.groupUpdate !== undefined) {
       UpdateChallengeInput_GroupUpdate.encode(
         message.groupUpdate,
-        writer.uint32(42).fork()
+        writer.uint32(50).fork()
       ).ldelim();
     }
     if (message.termUpdate !== undefined) {
       UpdateChallengeInput_TermUpdate.encode(
         message.termUpdate,
-        writer.uint32(50).fork()
+        writer.uint32(58).fork()
       ).ldelim();
     }
     if (message.billingProject !== 0) {
-      writer.uint32(56).int32(message.billingProject);
+      writer.uint32(64).int32(message.billingProject);
     }
     Object.entries(message.projectInfo).forEach(([key, value]) => {
       UpdateChallengeInput_ProjectInfoEntry.encode(
         { key: key as any, value },
-        writer.uint32(66).fork()
+        writer.uint32(74).fork()
       ).ldelim();
     });
     return writer;
@@ -1103,45 +1108,48 @@ export const UpdateChallengeInput = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.name = reader.string();
+          message.projectId = reader.int32();
           break;
         case 2:
-          message.projectStatusId = reader.int32();
+          message.name = reader.string();
           break;
         case 3:
+          message.projectStatusId = reader.int32();
+          break;
+        case 4:
           message.prizeUpdate = UpdateChallengeInput_PrizeUpdate.decode(
             reader,
             reader.uint32()
           );
           break;
-        case 4:
+        case 5:
           message.phaseUpdate = UpdateChallengeInput_PhaseUpdate.decode(
             reader,
             reader.uint32()
           );
           break;
-        case 5:
+        case 6:
           message.groupUpdate = UpdateChallengeInput_GroupUpdate.decode(
             reader,
             reader.uint32()
           );
           break;
-        case 6:
+        case 7:
           message.termUpdate = UpdateChallengeInput_TermUpdate.decode(
             reader,
             reader.uint32()
           );
           break;
-        case 7:
+        case 8:
           message.billingProject = reader.int32();
           break;
-        case 8:
-          const entry8 = UpdateChallengeInput_ProjectInfoEntry.decode(
+        case 9:
+          const entry9 = UpdateChallengeInput_ProjectInfoEntry.decode(
             reader,
             reader.uint32()
           );
-          if (entry8.value !== undefined) {
-            message.projectInfo[entry8.key] = entry8.value;
+          if (entry9.value !== undefined) {
+            message.projectInfo[entry9.key] = entry9.value;
           }
           break;
         default:
@@ -1154,6 +1162,7 @@ export const UpdateChallengeInput = {
 
   fromJSON(object: any): UpdateChallengeInput {
     return {
+      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
       name: isSet(object.name) ? String(object.name) : undefined,
       projectStatusId: isSet(object.projectStatusId)
         ? Number(object.projectStatusId)
@@ -1187,6 +1196,8 @@ export const UpdateChallengeInput = {
 
   toJSON(message: UpdateChallengeInput): unknown {
     const obj: any = {};
+    message.projectId !== undefined &&
+      (obj.projectId = Math.round(message.projectId));
     message.name !== undefined && (obj.name = message.name);
     message.projectStatusId !== undefined &&
       (obj.projectStatusId = Math.round(message.projectStatusId));
@@ -1227,6 +1238,7 @@ export const UpdateChallengeInput = {
     object: I
   ): UpdateChallengeInput {
     const message = createBaseUpdateChallengeInput();
+    message.projectId = object.projectId ?? 0;
     message.name = object.name ?? undefined;
     message.projectStatusId = object.projectStatusId ?? undefined;
     message.prizeUpdate =
