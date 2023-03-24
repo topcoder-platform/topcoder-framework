@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.1](https://github.com/topcoder-platform/topcoder-framework/compare/v0.9.0...v0.9.1) (2023-03-24)
+
+### Bug Fixes
+
+- use topcoder-interface v0.0.33 ([c6e9f0a](https://github.com/topcoder-platform/topcoder-framework/commit/c6e9f0a86653a61b67faebd6373718f733655f8b))
+
 # [0.9.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.8.0...v0.9.0) (2023-03-24)
 
 ### Features
