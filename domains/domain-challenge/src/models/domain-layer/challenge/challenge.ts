@@ -125,12 +125,12 @@ export interface Challenge_PrizeSet {
 }
 
 export interface Challenge_PrizeSet_Prize {
-  value: number;
+  amountInCents: number;
   type: string;
 }
 
 export interface Challenge_Overview {
-  totalPrizes: number;
+  totalPrizesInCents: number;
 }
 
 export interface ChallengeList {
@@ -1922,7 +1922,7 @@ export const Challenge_PrizeSet = {
 };
 
 function createBaseChallenge_PrizeSet_Prize(): Challenge_PrizeSet_Prize {
-  return { value: 0, type: "" };
+  return { amountInCents: 0, type: "" };
 }
 
 export const Challenge_PrizeSet_Prize = {
@@ -1930,8 +1930,8 @@ export const Challenge_PrizeSet_Prize = {
     message: Challenge_PrizeSet_Prize,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.value !== 0) {
-      writer.uint32(13).float(message.value);
+    if (message.amountInCents !== 0) {
+      writer.uint32(8).int64(message.amountInCents);
     }
     if (message.type !== "") {
       writer.uint32(18).string(message.type);
@@ -1950,7 +1950,7 @@ export const Challenge_PrizeSet_Prize = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.value = reader.float();
+          message.amountInCents = longToNumber(reader.int64() as Long);
           break;
         case 2:
           message.type = reader.string();
@@ -1965,14 +1965,17 @@ export const Challenge_PrizeSet_Prize = {
 
   fromJSON(object: any): Challenge_PrizeSet_Prize {
     return {
-      value: isSet(object.value) ? Number(object.value) : 0,
+      amountInCents: isSet(object.amountInCents)
+        ? Number(object.amountInCents)
+        : 0,
       type: isSet(object.type) ? String(object.type) : "",
     };
   },
 
   toJSON(message: Challenge_PrizeSet_Prize): unknown {
     const obj: any = {};
-    message.value !== undefined && (obj.value = message.value);
+    message.amountInCents !== undefined &&
+      (obj.amountInCents = Math.round(message.amountInCents));
     message.type !== undefined && (obj.type = message.type);
     return obj;
   },
@@ -1987,14 +1990,14 @@ export const Challenge_PrizeSet_Prize = {
     object: I
   ): Challenge_PrizeSet_Prize {
     const message = createBaseChallenge_PrizeSet_Prize();
-    message.value = object.value ?? 0;
+    message.amountInCents = object.amountInCents ?? 0;
     message.type = object.type ?? "";
     return message;
   },
 };
 
 function createBaseChallenge_Overview(): Challenge_Overview {
-  return { totalPrizes: 0 };
+  return { totalPrizesInCents: 0 };
 }
 
 export const Challenge_Overview = {
@@ -2002,8 +2005,8 @@ export const Challenge_Overview = {
     message: Challenge_Overview,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.totalPrizes !== 0) {
-      writer.uint32(13).float(message.totalPrizes);
+    if (message.totalPrizesInCents !== 0) {
+      writer.uint32(8).int64(message.totalPrizesInCents);
     }
     return writer;
   },
@@ -2016,7 +2019,7 @@ export const Challenge_Overview = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.totalPrizes = reader.float();
+          message.totalPrizesInCents = longToNumber(reader.int64() as Long);
           break;
         default:
           reader.skipType(tag & 7);
@@ -2028,14 +2031,16 @@ export const Challenge_Overview = {
 
   fromJSON(object: any): Challenge_Overview {
     return {
-      totalPrizes: isSet(object.totalPrizes) ? Number(object.totalPrizes) : 0,
+      totalPrizesInCents: isSet(object.totalPrizesInCents)
+        ? Number(object.totalPrizesInCents)
+        : 0,
     };
   },
 
   toJSON(message: Challenge_Overview): unknown {
     const obj: any = {};
-    message.totalPrizes !== undefined &&
-      (obj.totalPrizes = message.totalPrizes);
+    message.totalPrizesInCents !== undefined &&
+      (obj.totalPrizesInCents = Math.round(message.totalPrizesInCents));
     return obj;
   },
 
@@ -2049,7 +2054,7 @@ export const Challenge_Overview = {
     object: I
   ): Challenge_Overview {
     const message = createBaseChallenge_Overview();
-    message.totalPrizes = object.totalPrizes ?? 0;
+    message.totalPrizesInCents = object.totalPrizesInCents ?? 0;
     return message;
   },
 };
