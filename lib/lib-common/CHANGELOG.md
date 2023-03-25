@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.8](https://github.com/topcoder-platform/topcoder-framework/compare/v0.10.7...v0.10.8) (2023-03-25)
+
+### Bug Fixes
+
+- remove billing_project from create and update ([1bd0f14](https://github.com/topcoder-platform/topcoder-framework/commit/1bd0f14d5bec5fcd38c310a9229b4b2c2ac8be58))
+
 ## [0.10.7](https://github.com/topcoder-platform/topcoder-framework/compare/v0.10.6...v0.10.7) (2023-03-25)
 
 ### Bug Fixes

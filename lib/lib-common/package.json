@@ -1,6 +1,6 @@
 {
   "name": "@topcoder-framework/lib-common",
-  "version": "0.10.7",
+  "version": "0.10.8",
   "description": "",
   "main": "./dist-cjs/index.js",
   "types": "./dist-es/index.d.ts",
