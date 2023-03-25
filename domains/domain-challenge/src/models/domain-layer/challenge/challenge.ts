@@ -126,7 +126,7 @@ export interface Challenge_PrizeSet {
 
 export interface Challenge_PrizeSet_Prize {
   amountInCents?: number | undefined;
-  amount?: number | undefined;
+  value?: number | undefined;
   type: string;
 }
 
@@ -1924,7 +1924,7 @@ export const Challenge_PrizeSet = {
 };
 
 function createBaseChallenge_PrizeSet_Prize(): Challenge_PrizeSet_Prize {
-  return { amountInCents: undefined, amount: undefined, type: "" };
+  return { amountInCents: undefined, value: undefined, type: "" };
 }
 
 export const Challenge_PrizeSet_Prize = {
@@ -1935,8 +1935,8 @@ export const Challenge_PrizeSet_Prize = {
     if (message.amountInCents !== undefined) {
       writer.uint32(8).int64(message.amountInCents);
     }
-    if (message.amount !== undefined) {
-      writer.uint32(21).float(message.amount);
+    if (message.value !== undefined) {
+      writer.uint32(21).float(message.value);
     }
     if (message.type !== "") {
       writer.uint32(26).string(message.type);
@@ -1958,7 +1958,7 @@ export const Challenge_PrizeSet_Prize = {
           message.amountInCents = longToNumber(reader.int64() as Long);
           break;
         case 2:
-          message.amount = reader.float();
+          message.value = reader.float();
           break;
         case 3:
           message.type = reader.string();
@@ -1976,7 +1976,7 @@ export const Challenge_PrizeSet_Prize = {
       amountInCents: isSet(object.amountInCents)
         ? Number(object.amountInCents)
         : undefined,
-      amount: isSet(object.amount) ? Number(object.amount) : undefined,
+      value: isSet(object.value) ? Number(object.value) : undefined,
       type: isSet(object.type) ? String(object.type) : "",
     };
   },
@@ -1985,7 +1985,7 @@ export const Challenge_PrizeSet_Prize = {
     const obj: any = {};
     message.amountInCents !== undefined &&
       (obj.amountInCents = Math.round(message.amountInCents));
-    message.amount !== undefined && (obj.amount = message.amount);
+    message.value !== undefined && (obj.value = message.value);
     message.type !== undefined && (obj.type = message.type);
     return obj;
   },
@@ -2001,7 +2001,7 @@ export const Challenge_PrizeSet_Prize = {
   ): Challenge_PrizeSet_Prize {
     const message = createBaseChallenge_PrizeSet_Prize();
     message.amountInCents = object.amountInCents ?? undefined;
-    message.amount = object.amount ?? undefined;
+    message.value = object.value ?? undefined;
     message.type = object.type ?? "";
     return message;
   },
