@@ -1,6 +1,6 @@
 {
   "name": "@topcoder-framework/client-relational",
-  "version": "0.10.8",
+  "version": "0.10.9",
   "description": "Topcoder gRPC client stub for relational gRPC service",
   "main": "./dist-cjs/index.js",
   "types": "./dist-es/index.d.ts",
