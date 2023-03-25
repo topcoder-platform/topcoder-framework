@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.11](https://github.com/topcoder-platform/topcoder-framework/compare/v0.10.10...v0.10.11) (2023-03-25)
+
+### Bug Fixes
+
+- remove duplicate definition ([f6090a8](https://github.com/topcoder-platform/topcoder-framework/commit/f6090a875c6adfa4debbe9b822b51a674c9f4f41))
+- save prize amount in cents ([74e8c17](https://github.com/topcoder-platform/topcoder-framework/commit/74e8c172505b3c4ba024731b99e5f7e2d6ccfac5))
+
 ## [0.10.10](https://github.com/topcoder-platform/topcoder-framework/compare/v0.10.9...v0.10.10) (2023-03-25)
 
 ### Bug Fixes
