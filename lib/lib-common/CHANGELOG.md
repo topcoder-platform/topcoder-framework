@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.10](https://github.com/topcoder-platform/topcoder-framework/compare/v0.10.9...v0.10.10) (2023-03-25)
+
+### Bug Fixes
+
+- use cents to represent monetary values ([3a9cf59](https://github.com/topcoder-platform/topcoder-framework/commit/3a9cf59a9cd8207b7fa396b304becb8d0d35155a))
+
 ## [0.10.8](https://github.com/topcoder-platform/topcoder-framework/compare/v0.10.7...v0.10.8) (2023-03-25)
 
 ### Bug Fixes
