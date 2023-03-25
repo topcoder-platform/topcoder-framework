@@ -85,6 +85,8 @@ export class QueryRunner {
     switch (value.value?.$case) {
       case "intValue":
         return value.value.intValue;
+      case "longValue":
+        return value.value.longValue;
       case "stringValue":
         return value.value.stringValue;
       case "floatValue":

@@ -376,6 +376,10 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
       return { value: { $case: "intValue", intValue: value as number } };
     }
 
+    if (dataType === ColumnType.COLUMN_TYPE_LONG) {
+      return { value: { $case: "longValue", longValue: value as number } };
+    }
+
     if (dataType === ColumnType.COLUMN_TYPE_FLOAT) {
       return { value: { $case: "floatValue", floatValue: value as number } };
     }
