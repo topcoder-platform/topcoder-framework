@@ -57,6 +57,7 @@ export interface CreateChallengeInput {
   confidentialityType: string;
   projectInfo: { [key: number]: string };
   phases: Phase[];
+  groups: number[];
 }
 
 export interface CreateChallengeInput_ProjectInfoEntry {
@@ -88,7 +89,7 @@ export interface UpdateChallengeInput_PhaseUpdate {
 }
 
 export interface UpdateChallengeInput_GroupUpdate {
-  groups: string[];
+  groups: number[];
 }
 
 export interface UpdateChallengeInput_Term {
@@ -737,6 +738,7 @@ function createBaseCreateChallengeInput(): CreateChallengeInput {
     confidentialityType: "",
     projectInfo: {},
     phases: [],
+    groups: [],
   };
 }
 
@@ -781,6 +783,11 @@ export const CreateChallengeInput = {
     for (const v of message.phases) {
       Phase.encode(v!, writer.uint32(90).fork()).ldelim();
     }
+    writer.uint32(98).fork();
+    for (const v of message.groups) {
+      writer.int32(v);
+    }
+    writer.ldelim();
     return writer;
   },
 
@@ -833,6 +840,16 @@ export const CreateChallengeInput = {
         case 11:
           message.phases.push(Phase.decode(reader, reader.uint32()));
           break;
+        case 12:
+          if ((tag & 7) === 2) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.groups.push(reader.int32());
+            }
+          } else {
+            message.groups.push(reader.int32());
+          }
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -880,6 +897,9 @@ export const CreateChallengeInput = {
       phases: Array.isArray(object?.phases)
         ? object.phases.map((e: any) => Phase.fromJSON(e))
         : [],
+      groups: Array.isArray(object?.groups)
+        ? object.groups.map((e: any) => Number(e))
+        : [],
     };
   },
 
@@ -917,6 +937,11 @@ export const CreateChallengeInput = {
     } else {
       obj.phases = [];
     }
+    if (message.groups) {
+      obj.groups = message.groups.map((e) => Math.round(e));
+    } else {
+      obj.groups = [];
+    }
     return obj;
   },
 
@@ -949,6 +974,7 @@ export const CreateChallengeInput = {
       return acc;
     }, {});
     message.phases = object.phases?.map((e) => Phase.fromPartial(e)) || [];
+    message.groups = object.groups?.map((e) => e) || [];
     return message;
   },
 };
@@ -1461,9 +1487,11 @@ export const UpdateChallengeInput_GroupUpdate = {
     message: UpdateChallengeInput_GroupUpdate,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
+    writer.uint32(10).fork();
     for (const v of message.groups) {
-      writer.uint32(10).string(v!);
+      writer.int32(v);
     }
+    writer.ldelim();
     return writer;
   },
 
@@ -1478,7 +1506,14 @@ export const UpdateChallengeInput_GroupUpdate = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.groups.push(reader.string());
+          if ((tag & 7) === 2) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.groups.push(reader.int32());
+            }
+          } else {
+            message.groups.push(reader.int32());
+          }
           break;
         default:
           reader.skipType(tag & 7);
@@ -1491,7 +1526,7 @@ export const UpdateChallengeInput_GroupUpdate = {
   fromJSON(object: any): UpdateChallengeInput_GroupUpdate {
     return {
       groups: Array.isArray(object?.groups)
-        ? object.groups.map((e: any) => String(e))
+        ? object.groups.map((e: any) => Number(e))
         : [],
     };
   },
@@ -1499,7 +1534,7 @@ export const UpdateChallengeInput_GroupUpdate = {
   toJSON(message: UpdateChallengeInput_GroupUpdate): unknown {
     const obj: any = {};
     if (message.groups) {
-      obj.groups = message.groups.map((e) => e);
+      obj.groups = message.groups.map((e) => Math.round(e));
     } else {
       obj.groups = [];
     }
