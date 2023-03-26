@@ -110,7 +110,12 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
               },
             },
             ...Object.entries(input)
-              .filter(([, value]) => value !== undefined)
+              .filter(
+                ([key, value]) =>
+                  value !== undefined &&
+                  key !== "createDate" &&
+                  key !== "modifyDate"
+              )
               .map(([key, value]) => ({
                 column: this.schema.columns[key]?.name ?? key,
                 value: this.toRelationalValue(key, value),
@@ -148,7 +153,9 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
               },
             },
             ...Object.entries(input)
-              .filter(([, value]) => value !== undefined)
+              .filter(
+                ([key, value]) => value !== undefined && key !== "modifyDate"
+              )
               .map(([key, value]) => ({
                 column: this.schema.columns[key]?.name ?? key,
                 value: this.toRelationalValue(key, value),
