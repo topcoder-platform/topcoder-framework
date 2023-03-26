@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.13](https://github.com/topcoder-platform/topcoder-framework/compare/v0.10.12...v0.10.13) (2023-03-26)
+
+### Bug Fixes
+
+- use protobuf v0.0.46 ([71b8367](https://github.com/topcoder-platform/topcoder-framework/commit/71b83674939ab3d74104e7bb33ed4aafb7697ac1))
+
 ## [0.10.12](https://github.com/topcoder-platform/topcoder-framework/compare/v0.10.11...v0.10.12) (2023-03-25)
 
 ### Bug Fixes
