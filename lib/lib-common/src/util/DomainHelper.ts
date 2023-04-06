@@ -16,7 +16,7 @@ export class DomainHelper {
         key,
         operator: Operator.OPERATOR_EQUAL,
         value: criteria[key],
-      });
+      } as ScanCriteria);
     }
 
     return scanCriteria;
@@ -25,9 +25,7 @@ export class DomainHelper {
   public static getLookupCriteria(key: string, value: unknown): LookupCriteria {
     return {
       key,
-      value: {
-        value: Value.wrap(value),
-      },
-    };
+      value,
+    } as LookupCriteria;
   }
 }

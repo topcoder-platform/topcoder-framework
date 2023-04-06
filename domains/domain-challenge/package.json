@@ -27,7 +27,7 @@
     "@grpc/grpc-js": "^1.8.0",
     "@topcoder-framework/client-relational": "^0.10.13",
     "@topcoder-framework/lib-common": "^0.10.13",
-    "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.46",
+    "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.47",
     "tslib": "^2.4.1"
   },
   "devDependencies": {
