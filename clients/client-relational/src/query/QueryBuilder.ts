@@ -84,49 +84,63 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
   public insert<CreateInput extends Record<string, unknown>>(
     input: CreateInput
   ): Build {
+    let createAuditColumnName = "create_date";
+    let tableHasCreateAudit = false;
+
+    if (this.schema.columns.createDate != null) {
+      tableHasCreateAudit = true;
+      createAuditColumnName = this.schema.columns.createDate.name;
+    } else if (this.schema.columns.createTime != null) {
+      tableHasCreateAudit = true;
+      createAuditColumnName = this.schema.columns.createTime.name;
+    }
+
     this.#query = {
       query: {
         $case: "insert",
         insert: {
           schema: this.schema.dbSchema,
           table: this.schema.tableName,
-          columnValue: [
-            {
-              column: "create_date",
-              value: {
-                value: {
-                  $case: "datetimeValue",
-                  datetimeValue: "CURRENT",
-                },
-              },
-            },
-            {
-              column: "modify_date",
-              value: {
-                value: {
-                  $case: "datetimeValue",
-                  datetimeValue: "CURRENT",
-                },
-              },
-            },
-            ...Object.entries(input)
-              .filter(
-                ([key, value]) =>
-                  value !== undefined &&
-                  key !== "createDate" &&
-                  key !== "modifyDate"
-              )
-              .map(([key, value]) => ({
-                column: this.schema.columns[key]?.name ?? key,
-                value: this.toRelationalValue(key, value),
-              })),
-          ],
+          columnValue: Object.entries(input)
+            .filter(
+              ([key, value]) =>
+                value !== undefined &&
+                key !== "createDate" &&
+                key !== "modifyDate"
+            )
+            .map(([key, value]) => ({
+              column: this.schema.columns[key]?.name ?? key,
+              value: this.toRelationalValue(key, value),
+            })),
           idTable: this.schema.tableName,
           idColumn: this.schema.idColumn ?? undefined,
           idSequence: this.schema.idSequence ?? undefined,
         },
       },
     };
+
+    if (tableHasCreateAudit && this.#query.query?.$case === "insert") {
+      this.#query.query.insert.columnValue.push(
+        {
+          column: createAuditColumnName,
+          value: {
+            value: {
+              $case: "datetimeValue",
+              datetimeValue: "CURRENT",
+            },
+          },
+        },
+        {
+          column: "modify_date",
+          value: {
+            value: {
+              $case: "datetimeValue",
+              datetimeValue: "CURRENT",
+            },
+          },
+        }
+      );
+    }
 
     return {
       build: this.build.bind(this),

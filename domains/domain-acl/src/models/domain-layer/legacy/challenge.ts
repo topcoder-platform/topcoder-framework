@@ -68,6 +68,7 @@ export interface CreateChallengeInput_ProjectInfoEntry {
 export interface UpdateChallengeInput {
   projectId: number;
   projectStatusId?: number | undefined;
+  name?: string | undefined;
   prizeUpdate?: UpdateChallengeInput_PrizeUpdate | undefined;
   phaseUpdate?: UpdateChallengeInput_PhaseUpdate | undefined;
   groupUpdate?: UpdateChallengeInput_GroupUpdate | undefined;
@@ -1229,6 +1230,7 @@ function createBaseUpdateChallengeInput(): UpdateChallengeInput {
   return {
     projectId: 0,
     projectStatusId: undefined,
+    name: undefined,
     prizeUpdate: undefined,
     phaseUpdate: undefined,
     groupUpdate: undefined,
@@ -1248,34 +1250,37 @@ export const UpdateChallengeInput = {
     if (message.projectStatusId !== undefined) {
       writer.uint32(16).int32(message.projectStatusId);
     }
+    if (message.name !== undefined) {
+      writer.uint32(26).string(message.name);
+    }
     if (message.prizeUpdate !== undefined) {
       UpdateChallengeInput_PrizeUpdate.encode(
         message.prizeUpdate,
-        writer.uint32(26).fork()
+        writer.uint32(34).fork()
       ).ldelim();
     }
     if (message.phaseUpdate !== undefined) {
       UpdateChallengeInput_PhaseUpdate.encode(
         message.phaseUpdate,
-        writer.uint32(34).fork()
+        writer.uint32(42).fork()
       ).ldelim();
     }
     if (message.groupUpdate !== undefined) {
       UpdateChallengeInput_GroupUpdate.encode(
         message.groupUpdate,
-        writer.uint32(42).fork()
+        writer.uint32(50).fork()
       ).ldelim();
     }
     if (message.termUpdate !== undefined) {
       UpdateChallengeInput_TermUpdate.encode(
         message.termUpdate,
-        writer.uint32(50).fork()
+        writer.uint32(58).fork()
       ).ldelim();
     }
     Object.entries(message.projectInfo).forEach(([key, value]) => {
       UpdateChallengeInput_ProjectInfoEntry.encode(
         { key: key as any, value },
-        writer.uint32(58).fork()
+        writer.uint32(66).fork()
       ).ldelim();
     });
     return writer;
@@ -1311,17 +1316,14 @@ export const UpdateChallengeInput = {
             break;
           }
 
-          message.prizeUpdate = UpdateChallengeInput_PrizeUpdate.decode(
-            reader,
-            reader.uint32()
-          );
+          message.name = reader.string();
           continue;
         case 4:
           if (tag != 34) {
             break;
           }
 
-          message.phaseUpdate = UpdateChallengeInput_PhaseUpdate.decode(
+          message.prizeUpdate = UpdateChallengeInput_PrizeUpdate.decode(
             reader,
             reader.uint32()
           );
@@ -1331,7 +1333,7 @@ export const UpdateChallengeInput = {
             break;
           }
 
-          message.groupUpdate = UpdateChallengeInput_GroupUpdate.decode(
+          message.phaseUpdate = UpdateChallengeInput_PhaseUpdate.decode(
             reader,
             reader.uint32()
           );
@@ -1341,7 +1343,7 @@ export const UpdateChallengeInput = {
             break;
           }
 
-          message.termUpdate = UpdateChallengeInput_TermUpdate.decode(
+          message.groupUpdate = UpdateChallengeInput_GroupUpdate.decode(
             reader,
             reader.uint32()
           );
@@ -1351,12 +1353,22 @@ export const UpdateChallengeInput = {
             break;
           }
 
-          const entry7 = UpdateChallengeInput_ProjectInfoEntry.decode(
+          message.termUpdate = UpdateChallengeInput_TermUpdate.decode(
             reader,
             reader.uint32()
           );
-          if (entry7.value !== undefined) {
-            message.projectInfo[entry7.key] = entry7.value;
+          continue;
+        case 8:
+          if (tag != 66) {
+            break;
+          }
+
+          const entry8 = UpdateChallengeInput_ProjectInfoEntry.decode(
+            reader,
+            reader.uint32()
+          );
+          if (entry8.value !== undefined) {
+            message.projectInfo[entry8.key] = entry8.value;
           }
           continue;
       }
@@ -1374,6 +1386,7 @@ export const UpdateChallengeInput = {
       projectStatusId: isSet(object.projectStatusId)
         ? Number(object.projectStatusId)
         : undefined,
+      name: isSet(object.name) ? String(object.name) : undefined,
       prizeUpdate: isSet(object.prizeUpdate)
         ? UpdateChallengeInput_PrizeUpdate.fromJSON(object.prizeUpdate)
         : undefined,
@@ -1404,6 +1417,7 @@ export const UpdateChallengeInput = {
       (obj.projectId = Math.round(message.projectId));
     message.projectStatusId !== undefined &&
       (obj.projectStatusId = Math.round(message.projectStatusId));
+    message.name !== undefined && (obj.name = message.name);
     message.prizeUpdate !== undefined &&
       (obj.prizeUpdate = message.prizeUpdate
         ? UpdateChallengeInput_PrizeUpdate.toJSON(message.prizeUpdate)
@@ -1441,6 +1455,7 @@ export const UpdateChallengeInput = {
     const message = createBaseUpdateChallengeInput();
     message.projectId = object.projectId ?? 0;
     message.projectStatusId = object.projectStatusId ?? undefined;
+    message.name = object.name ?? undefined;
     message.prizeUpdate =
       object.prizeUpdate !== undefined && object.prizeUpdate !== null
         ? UpdateChallengeInput_PrizeUpdate.fromPartial(object.prizeUpdate)
