@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.15](https://github.com/topcoder-platform/topcoder-framework/compare/v0.10.14...v0.10.15) (2023-04-07)
+
+**Note:** Version bump only for package @topcoder-framework/lib-logger
+
 ## [0.10.14](https://github.com/topcoder-platform/topcoder-framework/compare/v0.10.13...v0.10.14) (2023-04-06)
 
 **Note:** Version bump only for package @topcoder-framework/lib-logger
