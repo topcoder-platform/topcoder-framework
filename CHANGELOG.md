@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.10.15...v0.11.0) (2023-04-14)
+
+### Features
+
+- support double values ([#30](https://github.com/topcoder-platform/topcoder-framework/issues/30)) ([3a9ddbf](https://github.com/topcoder-platform/topcoder-framework/commit/3a9ddbf8ce3070bca0e9f45039f25693f428c583))
+
 ## [0.10.15](https://github.com/topcoder-platform/topcoder-framework/compare/v0.10.14...v0.10.15) (2023-04-07)
 
 ### Bug Fixes
