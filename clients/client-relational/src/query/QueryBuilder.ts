@@ -405,6 +405,10 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
       return { value: { $case: "floatValue", floatValue: value as number } };
     }
 
+    if (dataType === ColumnType.COLUMN_TYPE_DOUBLE) {
+      return { value: { $case: "doubleValue", doubleValue: value as number } };
+    }
+
     if (dataType === ColumnType.COLUMN_TYPE_DATE) {
       return { value: { $case: "dateValue", dateValue: value as string } };
     }
