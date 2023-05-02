@@ -84,7 +84,10 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
   public insert<CreateInput extends Record<string, unknown>>(
     input: CreateInput
   ): Build {
+    // TODO: This is a hack to get the create and modify audit columns, we need to either use the same "column name" or add a new property to the schema
     let createAuditColumnName = "create_date";
+    let updateAuditColumnName = "modify_date";
+
     let tableHasCreateAudit = false;
 
     if (this.schema.columns.createDate != null) {
@@ -93,6 +96,14 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     } else if (this.schema.columns.createTime != null) {
       tableHasCreateAudit = true;
       createAuditColumnName = this.schema.columns.createTime.name;
+    }
+
+    if (this.schema.columns.modifyDate != null) {
+      updateAuditColumnName = this.schema.columns.modifyDate.name;
+    } else if (this.schema.columns.modifyTime != null) {
+      updateAuditColumnName = this.schema.columns.modifyTime.name;
+    } else if (this.schema.columns.dateModified != null) {
+      updateAuditColumnName = this.schema.columns.dateModified.name;
     }
 
     this.#query = {
@@ -131,7 +142,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
           },
         },
         {
-          column: "modify_date",
+          column: updateAuditColumnName,
           value: {
             value: {
               $case: "datetimeValue",
@@ -150,6 +161,19 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
   public update<UpdateInput extends Record<string, unknown>>(
     input: UpdateInput
   ): Update {
+    let updateAuditColumnName = "modify_date";
+    let auditColumnKey = "modifyDate";
+
+    if (this.schema.columns.modifyDate != null) {
+      updateAuditColumnName = this.schema.columns.modifyDate.name;
+    } else if (this.schema.columns.modifyTime != null) {
+      updateAuditColumnName = this.schema.columns.modifyTime.name;
+      auditColumnKey = "modifyTime";
+    } else if (this.schema.columns.dateModified != null) {
+      updateAuditColumnName = this.schema.columns.dateModified.name;
+      auditColumnKey = "dateModified";
+    }
+
     this.#query = {
       query: {
         $case: "update",
@@ -158,7 +182,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
           table: this.schema.tableName,
           columnValue: [
             {
-              column: "modify_date",
+              column: updateAuditColumnName,
               value: {
                 value: {
                   $case: "datetimeValue",
@@ -168,7 +192,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
             },
             ...Object.entries(input)
               .filter(
-                ([key, value]) => value !== undefined && key !== "modifyDate"
+                ([key, value]) => value !== undefined && key !== auditColumnKey
               )
               .map(([key, value]) => ({
                 column: this.schema.columns[key]?.name ?? key,
