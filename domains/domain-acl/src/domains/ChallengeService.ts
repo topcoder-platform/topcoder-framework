@@ -2,18 +2,16 @@ import { Metadata } from "@grpc/grpc-js";
 import {
   CheckExistsResult,
   CreateResult,
-  Empty,
-  LookupCriteria,
+  PhaseFactRequest,
+  PhaseFactResponse,
   UpdateResult,
 } from "@topcoder-framework/lib-common";
 import { promisify } from "util";
 import { GrpcClient } from "../common/GrpcClient";
 import {
-  CloseChallengeInput,
   CreateChallengeInput,
   LegacyChallenge,
   LegacyChallengeId,
-  LegacyChallengeList,
   UpdateChallengeInput,
 } from "../models/domain-layer/legacy/challenge";
 import { LegacyChallengeClient } from "../models/domain-layer/legacy/services/challenge";
@@ -50,15 +48,6 @@ export class ChallengeDomain {
     )(param, metadata);
   }
 
-  public async lookup(
-    param: LookupCriteria,
-    metadata: Metadata = new Metadata()
-  ) {
-    return promisify<LookupCriteria, Metadata, LegacyChallengeList>(
-      this.client.lookup.bind(this.client)
-    )(param, metadata);
-  }
-
   public async getLegacyChallenge(
     param: LegacyChallengeId,
     metadata: Metadata = new Metadata()
@@ -77,21 +66,12 @@ export class ChallengeDomain {
     )(param, metadata);
   }
 
-  public async activate(
-    param: LegacyChallengeId,
+  public async getPhaseFacts(
+    param: PhaseFactRequest,
     metadata: Metadata = new Metadata()
   ) {
-    return promisify<LegacyChallengeId, Metadata, Empty>(
-      this.client.activate.bind(this.client)
-    )(param, metadata);
-  }
-
-  public async closeChallenge(
-    param: CloseChallengeInput,
-    metadata: Metadata = new Metadata()
-  ) {
-    return promisify<CloseChallengeInput, Metadata, LegacyChallenge>(
-      this.client.closeChallenge.bind(this.client)
+    return promisify<PhaseFactRequest, Metadata, PhaseFactResponse>(
+      this.client.getPhaseFacts.bind(this.client)
     )(param, metadata);
   }
 }
