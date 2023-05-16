@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.11.1...v0.12.0) (2023-05-16)
+
+### Features
+
+- add interfaces for fetching phase facts ([241e60b](https://github.com/topcoder-platform/topcoder-framework/commit/241e60b61ddad37440234cde4e68e5f8fc6f4490))
+
 # [0.11.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.10.15...v0.11.0) (2023-04-14)
 
 **Note:** Version bump only for package @topcoder-framework/lib-common
