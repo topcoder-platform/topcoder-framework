@@ -8,8 +8,8 @@
   "scripts": {
     "build:proto": "scripty",
     "build": "scripty",
-    "build:es": "scripty",
     "build:app": "scripty",
+    "build:es": "scripty",
     "build:types": "scripty",
     "build:include:deps": "scripty",
     "clean": "scripty",
