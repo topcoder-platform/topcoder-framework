@@ -289,7 +289,7 @@ export interface PhaseFactResponse {
 
 export interface PhaseFactResponse_FactResponse {
   fact: PhaseFact;
-  response: boolean;
+  response?: any;
 }
 
 function createBaseScanCriteria(): ScanCriteria {
@@ -325,28 +325,28 @@ export const ScanCriteria = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.key = reader.string();
           continue;
         case 2:
-          if (tag != 16) {
+          if (tag !== 16) {
             break;
           }
 
           message.operator = reader.int32() as any;
           continue;
         case 3:
-          if (tag != 26) {
+          if (tag !== 26) {
             break;
           }
 
           message.value = Value.unwrap(Value.decode(reader, reader.uint32()));
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -420,21 +420,21 @@ export const ScanRequest = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.criteria.push(ScanCriteria.decode(reader, reader.uint32()));
           continue;
         case 2:
-          if (tag != 18) {
+          if (tag !== 18) {
             break;
           }
 
           message.nextToken = reader.string();
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -506,14 +506,14 @@ export const ScanResult = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.nextToken = reader.string();
           continue;
         case 2:
-          if (tag != 18) {
+          if (tag !== 18) {
             break;
           }
 
@@ -522,7 +522,7 @@ export const ScanResult = {
           );
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -591,7 +591,7 @@ export const CreateResult = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 8) {
+          if (tag !== 8) {
             break;
           }
 
@@ -601,14 +601,14 @@ export const CreateResult = {
           };
           continue;
         case 2:
-          if (tag != 18) {
+          if (tag !== 18) {
             break;
           }
 
           message.kind = { $case: "stringId", stringId: reader.string() };
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -690,21 +690,21 @@ export const UpdateResult = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 8) {
+          if (tag !== 8) {
             break;
           }
 
           message.updatedCount = longToNumber(reader.int64() as Long);
           continue;
         case 2:
-          if (tag != 18) {
+          if (tag !== 18) {
             break;
           }
 
           message.message = reader.string();
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -769,14 +769,14 @@ export const CheckExistsResult = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 8) {
+          if (tag !== 8) {
             break;
           }
 
           message.exists = reader.bool();
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -839,21 +839,21 @@ export const LookupCriteria = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.key = reader.string();
           continue;
         case 3:
-          if (tag != 26) {
+          if (tag !== 26) {
             break;
           }
 
           message.value = Value.unwrap(Value.decode(reader, reader.uint32()));
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -924,7 +924,7 @@ export const GoogleProtobufTypesPlaceholder = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
@@ -933,14 +933,14 @@ export const GoogleProtobufTypesPlaceholder = {
           );
           continue;
         case 2:
-          if (tag != 18) {
+          if (tag !== 18) {
             break;
           }
 
           message.empty = Empty.decode(reader, reader.uint32());
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -1011,19 +1011,20 @@ export const PhaseFactRequest = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 8) {
+          if (tag !== 8) {
             break;
           }
 
           message.legacyId = reader.int32();
           continue;
         case 2:
-          if (tag == 16) {
+          if (tag === 16) {
             message.facts.push(reader.int32() as any);
+
             continue;
           }
 
-          if (tag == 18) {
+          if (tag === 18) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
               message.facts.push(reader.int32() as any);
@@ -1034,7 +1035,7 @@ export const PhaseFactRequest = {
 
           break;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -1106,7 +1107,7 @@ export const PhaseFactResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
@@ -1115,7 +1116,7 @@ export const PhaseFactResponse = {
           );
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -1164,7 +1165,7 @@ export const PhaseFactResponse = {
 };
 
 function createBasePhaseFactResponse_FactResponse(): PhaseFactResponse_FactResponse {
-  return { fact: 0, response: false };
+  return { fact: 0, response: undefined };
 }
 
 export const PhaseFactResponse_FactResponse = {
@@ -1175,8 +1176,11 @@ export const PhaseFactResponse_FactResponse = {
     if (message.fact !== 0) {
       writer.uint32(8).int32(message.fact);
     }
-    if (message.response === true) {
-      writer.uint32(16).bool(message.response);
+    if (message.response !== undefined) {
+      Value.encode(
+        Value.wrap(message.response),
+        writer.uint32(18).fork()
+      ).ldelim();
     }
     return writer;
   },
@@ -1193,21 +1197,23 @@ export const PhaseFactResponse_FactResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 8) {
+          if (tag !== 8) {
             break;
           }
 
           message.fact = reader.int32() as any;
           continue;
         case 2:
-          if (tag != 16) {
+          if (tag !== 18) {
             break;
           }
 
-          message.response = reader.bool();
+          message.response = Value.unwrap(
+            Value.decode(reader, reader.uint32())
+          );
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -1218,7 +1224,7 @@ export const PhaseFactResponse_FactResponse = {
   fromJSON(object: any): PhaseFactResponse_FactResponse {
     return {
       fact: isSet(object.fact) ? phaseFactFromJSON(object.fact) : 0,
-      response: isSet(object.response) ? Boolean(object.response) : false,
+      response: isSet(object?.response) ? object.response : undefined,
     };
   },
 
@@ -1240,7 +1246,7 @@ export const PhaseFactResponse_FactResponse = {
   ): PhaseFactResponse_FactResponse {
     const message = createBasePhaseFactResponse_FactResponse();
     message.fact = object.fact ?? 0;
-    message.response = object.response ?? false;
+    message.response = object.response ?? undefined;
     return message;
   },
 };
@@ -1302,8 +1308,8 @@ function toTimestamp(dateStr: string): Timestamp {
 }
 
 function fromTimestamp(t: Timestamp): string {
-  let millis = t.seconds * 1_000;
-  millis += t.nanos / 1_000_000;
+  let millis = (t.seconds || 0) * 1_000;
+  millis += (t.nanos || 0) / 1_000_000;
   return new Date(millis).toISOString();
 }
 
