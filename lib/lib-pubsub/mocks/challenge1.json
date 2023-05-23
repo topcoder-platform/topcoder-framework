@@ -1,0 +1,253 @@
+[
+  {
+    "id": "ad9b428f-58f1-4cd4-9995-0048f911d1d8",
+    "name": "P_TMC_CREDIT_CARD_INFO_EMAIL Query Improvement",
+    "typeId": "dc876fa4-ef2d-4eee-b701-b555fcc6544c",
+    "trackId": "9b6fc876-f4d9-4ccb-9dfd-419247628825",
+    "legacy": {
+      "track": "DEVELOP",
+      "subTrack": "FIRST_2_FINISH",
+      "forumId": 0,
+      "directProjectId": 36071,
+      "reviewType": "INTERNAL",
+      "confidentialityType": "public",
+      "pureV5Task": false,
+      "reviewScorecardId": 30002160
+    },
+    "description": "# P_TMC_CREDIT_CARD_INFO_EMAIL Query Improvement\n\n# Challenge Objectives\n\nIn this F2F, we are going to improve the query for SP P_TMC_CREDIT_CARD_INFO_EMAIL and implementation TmcCreditCardInfoEmailServiceImpl.\n\n# Technology Stack\n- JDK 8\n- Querydsl 5.0.0\n- Junit v5\n- MS SQL Server 2014 and 2019 ( Make sure your submission works on both versions )\n- **Infinispan-core-5.2.11.Final-redhat-1**\n\n# Individual Requirements\n- As join condition for qPatientPhone, instead of checking with patient_num, please reference another table to join qPatientPhone.\n- Remove the '(qPatientPhone.patientPhoneNum.ne(INVALID_PHONE_NUMS_0)).and(qPatientPhone.patientPhoneNum.ne(INVALID_PHONE_NUMS_9))' from the query, and filter using java code.\n- Update the sql file to be consistent with the Java Code.\n- Update unit tests accordingly.\n- Winner is responsible to create PR in repository.\n\n# Submission Guidelines\nPlease submit a .zip file that includes:\n\n- the codes (including the implementation, unit tests and demo application, etc.)\n- Deployment guide must be created\n- any other document can help the user to deploy and test the application",
+    "descriptionFormat": "markdown",
+    "metadata": [],
+    "timelineTemplateId": "0a0fed34-cb5a-47f5-b0cb-6e2ee7de8dcb",
+    "phases": [
+      {
+        "duration": 2592000,
+        "scheduledEndDate": "2023-06-16T02:56:00.000Z",
+        "isOpen": true,
+        "name": "Registration",
+        "phaseId": "a93544bc-c165-4af4-b55e-18f3593b457a",
+        "actualStartDate": "2023-05-17T02:56:54.000Z",
+        "description": "Registration Phase",
+        "id": "cf8a4885-a807-4722-8f11-1de1863fc844",
+        "constraints": [
+          {
+            "name": "Number of Registrants",
+            "value": 1
+          }
+        ],
+        "scheduledStartDate": "2023-05-17T02:56:54.000Z"
+      },
+      {
+        "duration": 2592000,
+        "scheduledEndDate": "2023-06-16T03:03:00.000Z",
+        "isOpen": true,
+        "name": "Submission",
+        "phaseId": "6950164f-3c5e-4bdc-abc8-22aaf5a1bd49",
+        "actualStartDate": "2023-05-17T03:03:11.000Z",
+        "description": "Submission Phase",
+        "id": "7e4a0e9b-9239-42eb-9161-e15454fcb610",
+        "constraints": [],
+        "scheduledStartDate": "2023-05-17T03:03:11.000Z"
+      },
+      {
+        "duration": 86400,
+        "scheduledEndDate": "2023-05-17T08:32:29.000Z",
+        "actualEndDate": "2023-05-17T08:32:29.000Z",
+        "isOpen": false,
+        "name": "Iterative Review",
+        "phaseId": "003a4b14-de5d-43fc-9e35-835dbeb6af1f",
+        "actualStartDate": "2023-05-17T04:01:13.000Z",
+        "description": "Iterative Review Phase",
+        "id": "8fb120ad-4c44-4898-83d1-43bacd605464",
+        "predecessor": "6950164f-3c5e-4bdc-abc8-22aaf5a1bd49",
+        "constraints": [
+          {
+            "name": "Scorecard",
+            "value": 30002160
+          },
+          {
+            "name": "Number of Reviewers",
+            "value": 1
+          }
+        ],
+        "scheduledStartDate": "2023-05-17T04:01:13.000Z"
+      }
+    ],
+    "events": [],
+    "terms": [
+      {
+        "roleId": "732339e7-8e30-49d7-9198-cccf9451e221",
+        "id": "564a981e-6840-4a5c-894e-d5ad22e9cd6f"
+      },
+      {
+        "roleId": "732339e7-8e30-49d7-9198-cccf9451e221",
+        "id": "c41e90e5-4d0e-4811-bd09-38ff72674490"
+      }
+    ],
+    "prizeSets": [
+      {
+        "prizes": [
+          {
+            "type": "USD",
+            "value": 50
+          }
+        ],
+        "type": "placement"
+      },
+      {
+        "prizes": [
+          {
+            "type": "USD",
+            "value": 100
+          }
+        ],
+        "type": "copilot"
+      }
+    ],
+    "tags": ["Java", "SQL Server"],
+    "projectId": 33357,
+    "startDate": "2023-05-17T02:56:54.000Z",
+    "endDate": "2023-06-16T03:03:00.000Z",
+    "status": "Completed",
+    "attachments": [],
+    "groups": [],
+    "winners": [
+      {
+        "handle": "xxcxy",
+        "placement": 1
+      }
+    ],
+    "discussions": [
+      {
+        "provider": "vanilla",
+        "name": "P_TMC_CREDIT_CARD_INFO_EMAIL Query Improvement Discussion",
+        "id": "ed5caf9d-dc3f-48ce-93c5-8d5951a6b0f8",
+        "type": "challenge",
+        "url": "https://discussions.topcoder.com/categories/ad9b428f-58f1-4cd4-9995-0048f911d1d8"
+      }
+    ],
+    "createdBy": "morehappiness",
+    "updatedBy": "tcwebservice",
+    "created": "2023-05-17T02:53:27.772Z",
+    "updated": "2023-05-17T08:32:29.519Z",
+    "overview": {
+      "totalPrizes": 50
+    },
+    "numOfSubmissions": 1,
+    "numOfRegistrants": 5,
+    "currentPhaseNames": ["Registration", "Submission"],
+    "registrationStartDate": "2023-05-17T02:55:00.000Z",
+    "registrationEndDate": "2023-06-16T02:56:00.000Z",
+    "submissionStartDate": "2023-05-17T03:03:11.000Z",
+    "submissionEndDate": "2023-06-16T03:03:00.000Z",
+    "track": "Development",
+    "type": "First2Finish",
+    "legacyId": 30352409,
+    "emsiSkills": [
+      {
+        "skillId": "KS126JR6F5V2TRCLB1H5",
+        "confidence": 1,
+        "name": "Microsoft SQL Servers",
+        "category": {
+          "name": "Information Technology",
+          "id": 17
+        },
+        "subcategory": {
+          "name": "Databases",
+          "id": 479
+        }
+      },
+      {
+        "skillId": "KS97N5XPZIV25LIW6TXP",
+        "confidence": 1,
+        "name": "Infinispan",
+        "category": {
+          "name": "Information Technology",
+          "id": 17
+        },
+        "subcategory": {
+          "name": "Cloud Solutions",
+          "id": 382
+        }
+      },
+      {
+        "skillId": "KS125LJ6SDQF89N2J4ZP",
+        "confidence": 1,
+        "name": "Junit",
+        "category": {
+          "name": "Information Technology",
+          "id": 17
+        },
+        "subcategory": {
+          "name": "Test Automation",
+          "id": 484
+        }
+      },
+      {
+        "skillId": "KS120SX72T8B5VLXS1VN",
+        "confidence": 1,
+        "name": "Unit Testing",
+        "category": {
+          "name": "Information Technology",
+          "id": 17
+        },
+        "subcategory": {
+          "name": "Software Quality Assurance",
+          "id": 477
+        }
+      },
+      {
+        "skillId": "KS440W865GC4VRBW6LJP",
+        "confidence": 1,
+        "name": "SQL (Programming Language)",
+        "category": {
+          "name": "Information Technology",
+          "id": 17
+        },
+        "subcategory": {
+          "name": "Query Languages",
+          "id": 464
+        }
+      },
+      {
+        "skillId": "KS125G6747QLJBX4T7MV",
+        "confidence": 1,
+        "name": "Java Development Kit",
+        "category": {
+          "name": "Information Technology",
+          "id": 17
+        },
+        "subcategory": {
+          "name": "Java",
+          "id": 437
+        }
+      },
+      {
+        "skillId": "KS120076FGP5WGWYMP0F",
+        "confidence": 1,
+        "name": "Java (Programming Language)",
+        "category": {
+          "name": "Information Technology",
+          "id": 17
+        },
+        "subcategory": {
+          "name": "Java",
+          "id": 437
+        }
+      }
+    ],
+    "currentPhase": {
+      "duration": 2592000,
+      "scheduledEndDate": "2023-06-16T03:03:00.000Z",
+      "isOpen": true,
+      "name": "Submission",
+      "phaseId": "6950164f-3c5e-4bdc-abc8-22aaf5a1bd49",
+      "actualStartDate": "2023-05-17T03:03:11.000Z",
+      "description": "Submission Phase",
+      "id": "7e4a0e9b-9239-42eb-9161-e15454fcb610",
+      "constraints": [],
+      "scheduledStartDate": "2023-05-17T03:03:11.000Z",
+      "predecessor": "6950164f-3c5e-4bdc-abc8-22aaf5a1bd49"
+    },
+    "numOfCheckpointSubmissions": 0
+  }
+]

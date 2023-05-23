@@ -1,0 +1,45 @@
+{
+  "name": "@topcoder-framework/lib-pubsub",
+  "version": "0.11.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "scripty",
+    "build:es": "scripty",
+    "build:app": "scripty",
+    "build:include:deps": "scripty",
+    "clean": "scripty",
+    "lint": "scripty",
+    "topic:create": "ts-node ./local/create-topic.ts",
+    "topic:publish": "ts-node ./local/publish.ts"
+  },
+  "scripty": {
+    "path": "../../scripts/packages",
+    "windowsPath": "../../scripts-win/packages"
+  },
+  "author": "Himani Raghav <himani.raghav@topcoder.com>",
+  "license": "ISC",
+  "volta": {
+    "node": "18.16.0",
+    "typescript": "4.9.3",
+    "yarn": "1.22.19"
+  },
+  "dependencies": {
+    "@aws-sdk/client-sns": "^3.329.0",
+    "@aws-sdk/client-sqs": "^3.329.0",
+    "@topcoder-framework/lib-common": "^0.11.0",
+    "lodash": "^4.17.21",
+    "tslib": "^2.4.1"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
+    "@types/lodash": "^4.14.189",
+    "@types/node": "^18.11.9",
+    "concurrently": "^7.5.0",
+    "typedoc": "^0.23.21",
+    "typescript": "^4.9.3"
+  },
+  "files": [
+    "dist-*"
+  ]
+}

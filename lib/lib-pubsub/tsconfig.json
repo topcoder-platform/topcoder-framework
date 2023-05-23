@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.cjs.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "dist-cjs",
+    "rootDir": "src",
+    "composite": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "local", "mocks"],
+  "rules": {
+    "@typescript-eslint/await-thenable": "off"
+  }
+}

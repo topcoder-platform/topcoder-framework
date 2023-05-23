@@ -1,0 +1,157 @@
+[
+  {
+    "id": "21731d2d-8647-466f-a485-b7edd03b5e2e",
+    "name": "Pump Failure Detection Data Science Challenge",
+    "typeId": "927abff4-7af9-4145-8ba1-577c16e64e2e",
+    "trackId": "c0f5d461-8219-4c14-878a-c3a3f356466d",
+    "legacy": {
+      "track": "DEVELOP",
+      "subTrack": "CODE",
+      "forumId": 0,
+      "directProjectId": 38271,
+      "reviewType": "INTERNAL",
+      "confidentialityType": "public",
+      "pureV5Task": false,
+      "reviewScorecardId": 30002133
+    },
+    "description": "TODO",
+    "descriptionFormat": "markdown",
+    "metadata": [
+      {
+        "name": "show_data_dashboard",
+        "value": "true"
+      }
+    ],
+    "timelineTemplateId": "6969125a-a12f-4b89-8de6-e66b0056f36b",
+    "phases": [
+      {
+        "duration": 2419200,
+        "scheduledEndDate": "2023-06-16T17:00:00.000Z",
+        "isOpen": false,
+        "name": "Registration",
+        "phaseId": "a93544bc-c165-4af4-b55e-18f3593b457a",
+        "description": "Registration Phase",
+        "id": "a581c868-371b-4577-9d43-57698bfe92c5",
+        "constraints": [
+          {
+            "name": "Number of Registrants",
+            "value": 1
+          }
+        ],
+        "scheduledStartDate": "2023-05-19T17:00:00.000Z"
+      },
+      {
+        "duration": 2419200,
+        "scheduledEndDate": "2023-06-16T17:05:00.000Z",
+        "isOpen": false,
+        "name": "Submission",
+        "phaseId": "6950164f-3c5e-4bdc-abc8-22aaf5a1bd49",
+        "description": "Submission Phase",
+        "id": "369cc5cc-2d0c-4f32-b908-8742f0ae4d17",
+        "constraints": [],
+        "scheduledStartDate": "2023-05-19T17:05:00.000Z"
+      },
+      {
+        "duration": 604800,
+        "scheduledEndDate": "2023-06-23T17:05:00.000Z",
+        "isOpen": false,
+        "name": "Review",
+        "phaseId": "aa5a3f78-79e0-4bf7-93ff-b11e8f5b398b",
+        "description": "Review Phase",
+        "id": "efaf7b22-9444-4dc2-bda5-4fd63080eec4",
+        "predecessor": "6950164f-3c5e-4bdc-abc8-22aaf5a1bd49",
+        "constraints": [
+          {
+            "name": "Scorecard",
+            "value": 30002133
+          },
+          {
+            "name": "Number of Reviewers",
+            "value": 2
+          }
+        ],
+        "scheduledStartDate": "2023-06-16T17:05:00.000Z"
+      }
+    ],
+    "events": [],
+    "terms": [
+      {
+        "roleId": "732339e7-8e30-49d7-9198-cccf9451e221",
+        "id": "564a981e-6840-4a5c-894e-d5ad22e9cd6f"
+      }
+    ],
+    "prizeSets": [
+      {
+        "prizes": [
+          {
+            "type": "USD",
+            "value": 5000
+          }
+        ],
+        "type": "copilot"
+      },
+      {
+        "prizes": [
+          {
+            "type": "USD",
+            "value": 6500
+          },
+          {
+            "type": "USD",
+            "value": 5000
+          },
+          {
+            "type": "USD",
+            "value": 4000
+          },
+          {
+            "type": "USD",
+            "value": 2000
+          },
+          {
+            "type": "USD",
+            "value": 1000
+          },
+          {
+            "type": "USD",
+            "value": 500
+          }
+        ],
+        "type": "placement"
+      }
+    ],
+    "tags": ["Data Science Match"],
+    "projectId": 35546,
+    "startDate": "2023-05-19T17:00:00.000Z",
+    "endDate": "2023-06-23T17:05:00.000Z",
+    "status": "Draft",
+    "attachments": [],
+    "groups": [],
+    "discussions": [
+      {
+        "provider": "vanilla",
+        "name": "Pump Failure Detection Data Science Challenge Discussion",
+        "id": "ce40349b-2f14-4c0e-b2f3-562f2d6fc3d3",
+        "type": "challenge",
+        "url": "https://discussions.topcoder.com/categories/21731d2d-8647-466f-a485-b7edd03b5e2e"
+      }
+    ],
+    "createdBy": "walrus71",
+    "updatedBy": "walrus71",
+    "created": "2023-05-15T10:10:53.968Z",
+    "updated": "2023-05-15T10:10:53.968Z",
+    "overview": {
+      "totalPrizes": 19000
+    },
+    "numOfSubmissions": 0,
+    "numOfRegistrants": 0,
+    "currentPhaseNames": [],
+    "registrationStartDate": "2023-05-19T17:00:00.000Z",
+    "registrationEndDate": "2023-06-16T17:00:00.000Z",
+    "submissionStartDate": "2023-05-19T17:05:00.000Z",
+    "submissionEndDate": "2023-06-16T17:05:00.000Z",
+    "track": "Data Science",
+    "type": "Challenge",
+    "legacyId": 30352251
+  }
+]

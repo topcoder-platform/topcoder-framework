@@ -1,0 +1,530 @@
+{
+  "id": "1cbab89e-b354-4f20-afa6-db0269bf66ca",
+  "name": "ZIO UI Updates and 3rd Party App Integration Design Challenge",
+  "typeId": "927abff4-7af9-4145-8ba1-577c16e64e2e",
+  "trackId": "5fa04185-041f-49a6-bfd1-fe82533cd6c8",
+  "legacy": {
+    "track": "DESIGN",
+    "subTrack": "WEB_DESIGNS",
+    "forumId": 0,
+    "directProjectId": 39790,
+    "reviewType": "INTERNAL",
+    "confidentialityType": "public",
+    "pureV5Task": false,
+    "screeningScorecardId": 30001363,
+    "reviewScorecardId": 30001031
+  },
+  "description": "### CHALLENGE DESCRIPTION\nWelcome to the \"**ZIO UI Updates and 3rd Party App Integration Design Challenge**\"! \n\nThe goal of this challenge is to expand our existing app by integrating third-party app/portals and upgrade our application UI/UX so it can handle any new development in the future such as new additional navigation, features, or more sections.\n\nRead the challenge specification carefully and watch the forums for any questions or feedback concerning this challenge. Let us know if you have any questions in the challenge forum!\n\n### ROUND 1\n**Submit your initial designs for checkpoint review. Feel free to add any screens which are necessary to explain your concept.**\n01) 3rd Party Main Entry Screen \n02) 3rd Party Consent Page - First Time User\n03) 3rd Party Reminder Page - Returning User\n04) Dual Brand Design Frame Screen\n05) Extensible Layout and Universal Navigation\n06) Landing Page for Multiple Accounts/Plans\n* As part of your checkpoint submission, upload your designs into the MarvelApp prototype so we can provide direct feedback on your designs. Please include the MarvelApp Prototype URL in your notes.txt. Make sure all pages have the correct flow. Use the proper file numbers, (1, 2, 3, etc.)\n\n### ROUND 2\n**Submit your final designs plus checkpoint feedback implemented. Feel free to add any screens which are necessary to explain your concept. For round 2, we wish to see the complete set of designs for all requirements.**\n01) 3rd Party Main Entry Screen \n02) 3rd Party Consent Page - First Time User\n03) 3rd Party Reminder Page - Returning User\n04) Dual Brand Design Frame Screen\n05) Extensible Layout and Universal Navigation\n06) Landing Page for Multiple Accounts/Plans\n* As part of your final submission, you must replace your checkpoint submission with the final submission into the MarvelApp prototype so we can provide direct feedback on your designs. Please include the MarvelApp Prototype URL in your notes.txt. Make sure all pages have the correct flow. Use the proper file numbers, (1, 2, 3, etc.)\n* If you're not submitting in the Checkpoint/Round 1, you are not eligible to submit in the Final/Round 2\n\n### CHALLENGE OBJECTIVES\n* 6 hybrid mobile design screens and it’s interactions\n* UI/UX design screens that able to accommodate the integration between our existing app called “ZIO” with third-party portals/apps\n* Extensible design screens that able to handle more sections/content in the future for navigation, content, features, etc\n* UI design that ready for Production stage\n* Design that strictly follow our branding guidelines\n\n### PROJECT BRIEF\n* ZIO is an application for international employees to check the value of their policy whether it's up or down, update their personal information and change their investment strategy. This app will be used by the user mostly to administer their saving plan and to manage their individual Retirement Accounts\n* We want to integrate two 3rd party apps to ZIO app to help empower, educate and inform users on making better strategic decisions in the app, both 3rd party apps are:\n  * [Zogo](https://zogo.com/) is a gamified investment education learning tool\n  * [Nudge](https://www.nudge-global.com/) is a story/storyline based financial wellbeing tool\n* Via this challenge, we want to ensure that integration with these 3rd party apps (Zogo and Nudge) or for any future inclusions can be done seamlessly to ZIO app\n\n### TARGET AUDIENCE\n* ZIO App User is general public, which includes individuals, commercial, and corporate customers from age 16 to 75+ from all genders\n\n### SCREENS REQUIREMENTS\n**01) 3rd Party Main Entry Screen**  \n* This challenge purpose is to expanding the existing ZIO app design, please find the existing app from challenge forum. \n* We need a starting point from the existing application where the user can connect to the 3rd party applications. These are not necessarily linked to existing app usage, but the idea is that these 3rd party apps will help users make better strategic decisions. Please figure out the best approach to incorporate this as part of the user experience. It could be part of the main navigation, a dashboard or contextual to the user's account\n* As a starter, we envisage the starting point to be an icon/widget within the opening screen that will entice the members to open the 3rd party solutions to either learn about investments or to manage their financial well being\n* In the future, there might be more 3rd party apps integrated to this app, please consider this when designing the screens\n### \n**02) 3rd Party Consent Page - First Time User**\n* Propose a smooth UX and good UI  for integrating “Zogo” and “Nudge” to our “ZIO” app\n* We need to ensure the users are fully aware and know that they are accessing 3rd party content. Therefore, we will need a screen/page/pop-up/or other interaction approach that you think will be the best way to display a link to the 3rd party T&Cs, Privacy Disclaimers and Cookies which need to be accepted before progressing. \n* This consent page is only required when entering the content for the first time\n### \n**03) 3rd Party Reminder Page - Returning User**\n* We will need another screen/page/pop-up/or other interaction when the user returns and uses the application again next time, it can be some simplified message that notifies the user that they are entering a 3rd party provider area \n### \n**04) Dual Brand Design Screen**\n* Enablement of users to navigate to 3rd party content without leaving the app\n* When our members enter the 3rd party environment, we want them to know that the service provided is delivered by a third party\n* We will need a screen where it shows content and features from 3rd party app in our ZIO app \n* This screen needs to follow the consistency of extensible layout and universal navigation\n* This screen should become a template later in the future, where it can be applied globally throughout the ZIO app that clearly notify the user that they are accessing data from a 3rd party app within the ZIO app (not leaving the app)\n### \n**05) Extensible Layout and Universal Navigation**\n* You will need to rethink the general UI layout and the overall navigation from the existing ZIO app and propose a new UI screen that is expandable for future use when we want to add more pages, features, enhancements, or content\n* For navigation, it should utilize icons and use universally understandable language/ text labels \n* Show us the new layout in action, choose 3 screens from our existing app (check existing marvel) to showcase your design suggestion\n### \n**06) Landing Page for Multiple Accounts/Plans**\n* In the future, our users can switch between multiple accounts/plans. Please think about this as well. You need to introduce future-proof UI/UX design screens; so that a user with multiple profiles will not need to log out or log in every time they need to review multiple policies as part of their profile. One that can be expanded when the app vendors want to publish more options for the user to navigate the app's features and page\n\n### DEVICE SPECIFICATIONS\nThis application will need to accommodate the following devices:\n* Portrait version for both iPhone and Android\n* iOS iphone 12 size: 1125px x 2436 px (width x height)\n* Android devices of similar dimensions as it is currently a hybrid app\n\n### BRANDING GUIDELINES\n* Follow branding guidelines (check forum for branding)\n\n### DESIGN CONSIDERATION\n* Smooth UX Full awareness of giving consent to the 3rd party app access  \n* Clear UI for user to be aware that the content comes from the 3rd party app without leaving our app \n* Clean, Simple, and Sharp UI that following our branding guidelines strictly\n* Clear navigation for our user when entering or leaving the 3rd party app \n* Navigation should utilize icons or universally understandable labels\n* UI design template/framework that can be used globally and extensible when we want to add another 3rd party apps, or add more pages, features and content in the future\n* As a reference of WHAT NOT TO DO, we’ve attached a [HASTEE screenshot](https://drive.google.com/drive/folders/139WS8T_RACBK55CEO8pAP-UvhqLbOcya?usp=sharing) as an example of a previously integrated third-party app in the ZIO app to provide some examples of how this has been done in the past. The problem with this approach is that it was added without much thought and we can't extend/expand the app for more future features from the HASTEE to the ZIO app or add another 3rd party app\n\n### JUDGING CRITERIA\n* Creativity: Impactful - the solution is different or unique from what is already out there and can be implemented\n* Exploration: Flexible - follow the provided screen requirements section and propose improvements or different paths that positively impact the user goals\n* Aesthetics: Hi-fidelity design - provide a top-notch finished looking visual design\n* Branding: Strict - carefully follow the provided guidelines and stick to them\n\n### MARVEL PROTOTYPE\n* We need you to upload your screens to Marvel App\n* Please request for 2 marvel app (iPhone and Android) in the challenge forum\n* You MUST include your Marvel app URL (in your marvel app prototype, click on share and then copy the link & share it with your notes/comment on this link while you upload)\n* You MUST ADD hotspot to your Marvel App prototype so client can navigate and understand the flow (even if you have created your files in Figma)\n\n### STOCK ARTWORK\n* Stock fonts, photos and icons can be used as per [Topcoder policies](https://www.topcoder.com/thrive/articles/stock-artwork-font-and-icon-policies)\n\n### FINAL DELIVERABLES\n* An archive called Source.zip file to include: All original source files created with a tool as: Figma, Adobe XD, or Sketch (note: if your source file is in Figma, you should attach the source file in the submitted zip on Topcoder)\n* An archive called Submission.zip file to include: all your images in PNG / JPG format\n* Your declaration files to include any notes about fonts usage, photo and icon declaration and link to your Marvel project\n\n### FINAL FIX\n* As part of the final fixes phase, you may be asked to modify your files, add or remove screens or combine details to create a final presentation",
+  "descriptionFormat": "markdown",
+  "metadata": [
+    {
+      "name": "fileTypes",
+      "value": "[\"Figma\",\"Sketch\",\"Adobe XD\"]"
+    },
+    {
+      "name": "allowStockArt",
+      "value": "true"
+    },
+    {
+      "name": "submissionLimit",
+      "value": "{\"unlimited\":\"true\",\"limit\":\"false\",\"count\":\"\"}"
+    }
+  ],
+  "timelineTemplateId": "d4201ca4-8437-4d63-9957-3f7708184b07",
+  "phases": [
+    {
+      "duration": 441636,
+      "scheduledEndDate": "2023-05-20T14:00:00.000Z",
+      "isOpen": true,
+      "name": "Registration",
+      "phaseId": "a93544bc-c165-4af4-b55e-18f3593b457a",
+      "actualStartDate": "2023-05-15T11:20:24.000Z",
+      "description": "Registration Phase",
+      "id": "132fc5d4-ad29-4cac-af1b-e8a1ec1bb185",
+      "constraints": [
+        {
+          "name": "Number of Registrants",
+          "value": 1
+        }
+      ],
+      "scheduledStartDate": "2023-05-15T11:20:24.000Z"
+    },
+    {
+      "duration": 441617,
+      "scheduledEndDate": "2023-05-20T14:00:00.000Z",
+      "isOpen": true,
+      "name": "Checkpoint Submission",
+      "phaseId": "d8a2cdbe-84d1-4687-ab75-78a6a7efdcc8",
+      "actualStartDate": "2023-05-15T11:20:43.000Z",
+      "description": "Checkpoint Submission Phase",
+      "id": "1e5dc832-da00-40af-9650-ba7acf38cf29",
+      "constraints": [],
+      "scheduledStartDate": "2023-05-15T11:20:43.000Z"
+    },
+    {
+      "duration": 21600,
+      "scheduledEndDate": "2023-05-20T20:00:00.000Z",
+      "isOpen": false,
+      "name": "Checkpoint Screening",
+      "phaseId": "ce1afb4c-74f9-496b-9e4b-087ae73ab032",
+      "description": "Checkpoint Screening Phase",
+      "id": "2748f376-4ccd-4e56-9fbc-34a247c091e0",
+      "predecessor": "d8a2cdbe-84d1-4687-ab75-78a6a7efdcc8",
+      "constraints": [
+        {
+          "name": "Scorecard",
+          "value": 30001364
+        }
+      ],
+      "scheduledStartDate": "2023-05-20T14:00:00.000Z"
+    },
+    {
+      "duration": 237600,
+      "scheduledEndDate": "2023-05-23T14:00:00.000Z",
+      "isOpen": false,
+      "name": "Checkpoint Review",
+      "phaseId": "84b43897-2aab-44d6-a95a-42c433657eed",
+      "description": "Checkpoint Review Phase",
+      "id": "c0c4caf7-7451-4983-976e-fc50af668bbf",
+      "predecessor": "ce1afb4c-74f9-496b-9e4b-087ae73ab032",
+      "constraints": [
+        {
+          "name": "Scorecard",
+          "value": 30001004
+        }
+      ],
+      "scheduledStartDate": "2023-05-20T20:00:00.000Z"
+    },
+    {
+      "duration": 345600,
+      "scheduledEndDate": "2023-05-27T14:00:00.000Z",
+      "isOpen": false,
+      "name": "Submission",
+      "phaseId": "6950164f-3c5e-4bdc-abc8-22aaf5a1bd49",
+      "description": "Submission Phase",
+      "id": "ae067c61-f3e9-45ee-aa56-9483a03e568b",
+      "predecessor": "84b43897-2aab-44d6-a95a-42c433657eed",
+      "constraints": [],
+      "scheduledStartDate": "2023-05-23T14:00:00.000Z"
+    },
+    {
+      "duration": 21600,
+      "scheduledEndDate": "2023-05-27T20:00:00.000Z",
+      "isOpen": false,
+      "name": "Screening",
+      "phaseId": "2d7d3d85-0b29-4989-b3b4-be7f2b1d0aa6",
+      "description": "Screening Phase",
+      "id": "c3299f05-667d-45fe-b9aa-e9139e65bd3f",
+      "predecessor": "6950164f-3c5e-4bdc-abc8-22aaf5a1bd49",
+      "constraints": [
+        {
+          "name": "Scorecard",
+          "value": 30001363
+        }
+      ],
+      "scheduledStartDate": "2023-05-27T14:00:00.000Z"
+    },
+    {
+      "duration": 518400,
+      "scheduledEndDate": "2023-06-02T20:00:00.000Z",
+      "isOpen": false,
+      "name": "Review",
+      "phaseId": "aa5a3f78-79e0-4bf7-93ff-b11e8f5b398b",
+      "description": "Review Phase",
+      "id": "0e2ea282-cbfe-49b9-87eb-43507698e6e5",
+      "predecessor": "2d7d3d85-0b29-4989-b3b4-be7f2b1d0aa6",
+      "constraints": [
+        {
+          "name": "Scorecard",
+          "value": 30001031
+        },
+        {
+          "name": "Number of Reviewers",
+          "value": 2
+        }
+      ],
+      "scheduledStartDate": "2023-05-27T20:00:00.000Z"
+    },
+    {
+      "duration": 518400,
+      "scheduledEndDate": "2023-06-08T20:00:00.000Z",
+      "isOpen": false,
+      "name": "Approval",
+      "phaseId": "ad985cff-ad3e-44de-b54e-3992505ba0ae",
+      "description": "Approval Phase",
+      "id": "4ec6f20f-c7e8-4aa9-975c-c5341374b5bf",
+      "predecessor": "aa5a3f78-79e0-4bf7-93ff-b11e8f5b398b",
+      "constraints": [
+        {
+          "name": "Scorecard",
+          "value": 30000720
+        },
+        {
+          "name": "Number of Reviewers",
+          "value": 1
+        }
+      ],
+      "scheduledStartDate": "2023-06-02T20:00:00.000Z"
+    }
+  ],
+  "events": [],
+  "terms": [
+    {
+      "roleId": "732339e7-8e30-49d7-9198-cccf9451e221",
+      "id": "564a981e-6840-4a5c-894e-d5ad22e9cd6f"
+    },
+    {
+      "roleId": "732339e7-8e30-49d7-9198-cccf9451e221",
+      "id": "c41e90e5-4d0e-4811-bd09-38ff72674490"
+    }
+  ],
+  "prizeSets": [
+    {
+      "prizes": [
+        {
+          "type": "USD",
+          "value": 400
+        }
+      ],
+      "description": "Copilot Payment",
+      "type": "copilot"
+    },
+    {
+      "prizes": [
+        {
+          "type": "USD",
+          "value": 1200
+        },
+        {
+          "type": "USD",
+          "value": 600
+        },
+        {
+          "type": "USD",
+          "value": 150
+        }
+      ],
+      "type": "placement"
+    },
+    {
+      "prizes": [
+        {
+          "type": "USD",
+          "value": 100
+        },
+        {
+          "type": "USD",
+          "value": 100
+        },
+        {
+          "type": "USD",
+          "value": 100
+        },
+        {
+          "type": "USD",
+          "value": 100
+        },
+        {
+          "type": "USD",
+          "value": 100
+        }
+      ],
+      "description": "Checkpoint Prizes",
+      "type": "checkpoint"
+    }
+  ],
+  "tags": ["Widget or Mobile Screen Design"],
+  "projectId": 37078,
+  "startDate": "2023-05-15T11:20:24.000Z",
+  "endDate": "2023-06-08T20:00:00.000Z",
+  "status": "Active",
+  "attachments": [],
+  "groups": [],
+  "discussions": [
+    {
+      "provider": "vanilla",
+      "name": "ZIO UI Updates and 3rd Party App Integration Design Challenge Discussion",
+      "id": "79de4706-d6b8-447b-9db1-efc4530f25ef",
+      "type": "challenge",
+      "url": "https://discussions.topcoder.com/categories/1cbab89e-b354-4f20-afa6-db0269bf66ca"
+    }
+  ],
+  "createdBy": "fajar.mln",
+  "updatedBy": "tcwebservice",
+  "created": "2023-05-15T06:44:15.747Z",
+  "updated": "2023-05-15T11:28:28.375Z",
+  "overview": {
+    "totalPrizes": 1950
+  },
+  "numOfSubmissions": 0,
+  "numOfRegistrants": 38,
+  "currentPhaseNames": ["Registration", "Checkpoint Submission"],
+  "registrationStartDate": "2023-05-15T15:00:00.000Z",
+  "registrationEndDate": "2023-05-20T14:00:00.000Z",
+  "submissionStartDate": "2023-05-23T14:00:00.000Z",
+  "submissionEndDate": "2023-05-27T14:00:00.000Z",
+  "track": "Design",
+  "type": "Challenge",
+  "legacyId": 30352184,
+  "emsiSkills": [
+    {
+      "skillId": "KS124H568S1F92XY25VR",
+      "confidence": 1,
+      "name": "User Interface (UI) Design",
+      "category": {
+        "name": "Design",
+        "id": 7
+      },
+      "subcategory": {
+        "name": "User Interface and User Experience (UI/UX) Design",
+        "id": 178
+      }
+    },
+    {
+      "skillId": "KS441726FF2HBJTL448F",
+      "confidence": 1,
+      "name": "Target Audience",
+      "category": {
+        "name": "Marketing and Public Relations",
+        "id": 22
+      },
+      "subcategory": {
+        "name": "Market Analysis",
+        "id": 549
+      }
+    },
+    {
+      "skillId": "ESF80FF10258D686691A",
+      "confidence": 1,
+      "name": "Aesthetics",
+      "category": {
+        "name": "Design",
+        "id": 7
+      },
+      "subcategory": {
+        "name": "Creative Design",
+        "id": 172
+      }
+    },
+    {
+      "skillId": "KS441PL6JPXW200W0GRQ",
+      "confidence": 1,
+      "name": "User Experience (UX)",
+      "category": {
+        "name": "Design",
+        "id": 7
+      },
+      "subcategory": {
+        "name": "User Interface and User Experience (UI/UX) Design",
+        "id": 178
+      }
+    },
+    {
+      "skillId": "ES4E81D4E042F468C897",
+      "confidence": 1,
+      "name": "Strategic Decision-Making",
+      "category": {
+        "name": "Business",
+        "id": 5
+      },
+      "subcategory": {
+        "name": "Business Strategy",
+        "id": 155
+      }
+    },
+    {
+      "skillId": "KSY5BARETSBO5XH7J28G",
+      "confidence": 1,
+      "name": "Brand Design",
+      "category": {
+        "name": "Design",
+        "id": 7
+      },
+      "subcategory": {
+        "name": "Graphic and Visual Design",
+        "id": 174
+      }
+    },
+    {
+      "skillId": "KSLSPDN6JP86XZFXABFJ",
+      "confidence": 1,
+      "name": "Design Consideration",
+      "category": {
+        "name": "Manufacturing and Production",
+        "id": 21
+      },
+      "subcategory": {
+        "name": "Manufacturing Design",
+        "id": 531
+      }
+    },
+    {
+      "skillId": "KS1202B652YN84D9KXMX",
+      "confidence": 1,
+      "name": "User Experience (UX) Design",
+      "category": {
+        "name": "Design",
+        "id": 7
+      },
+      "subcategory": {
+        "name": "User Interface and User Experience (UI/UX) Design",
+        "id": 178
+      }
+    },
+    {
+      "skillId": "KS125BG6MXPZSGP32FS2",
+      "confidence": 1,
+      "name": "Investment Strategy",
+      "category": {
+        "name": "Finance",
+        "id": 13
+      },
+      "subcategory": {
+        "name": "Investment Management",
+        "id": 281
+      }
+    },
+    {
+      "skillId": "KS1253M6FNQNPWSFM74S",
+      "confidence": 1,
+      "name": "Individual Retirement Account",
+      "category": {
+        "name": "Finance",
+        "id": 13
+      },
+      "subcategory": {
+        "name": "Investment Management",
+        "id": 281
+      }
+    },
+    {
+      "skillId": "ES5269FD2583B0B9875C",
+      "confidence": 1,
+      "name": "Figma (Design Software)",
+      "category": {
+        "name": "Design",
+        "id": 7
+      },
+      "subcategory": {
+        "name": "User Interface and User Experience (UI/UX) Design",
+        "id": 178
+      }
+    },
+    {
+      "skillId": "ESC27AAFB5C81308A6AA",
+      "confidence": 1,
+      "name": "Adobe XD",
+      "category": {
+        "name": "Design",
+        "id": 7
+      },
+      "subcategory": {
+        "name": "User Interface and User Experience (UI/UX) Design",
+        "id": 178
+      }
+    },
+    {
+      "skillId": "ES7D007E896BF43B4EC9",
+      "confidence": 1,
+      "name": "Visual Design",
+      "category": {
+        "name": "Design",
+        "id": 7
+      },
+      "subcategory": {
+        "name": "Graphic and Visual Design",
+        "id": 174
+      }
+    },
+    {
+      "skillId": "KS441LY691MT0N689MWR",
+      "confidence": 0.999965250492096,
+      "name": "User Interface (UI)",
+      "category": {
+        "name": "Design",
+        "id": 7
+      },
+      "subcategory": {
+        "name": "User Interface and User Experience (UI/UX) Design",
+        "id": 178
+      }
+    },
+    {
+      "skillId": "KS122HK6LN2MZHFY69GJ",
+      "confidence": 0.9999591112136841,
+      "name": "Creativity",
+      "category": {
+        "name": "Physical and Inherent Abilities",
+        "id": 26
+      },
+      "subcategory": {
+        "name": "Personal Attributes",
+        "id": 578
+      }
+    },
+    {
+      "skillId": "KS121CX75Q8F638ZCJVZ",
+      "confidence": 0.9998787045478821,
+      "name": "Investments",
+      "category": {
+        "name": "Finance",
+        "id": 13
+      },
+      "subcategory": {
+        "name": "General Finance",
+        "id": 655
+      }
+    },
+    {
+      "skillId": "KS120KG6WHGRLKG6DFS3",
+      "confidence": 0.9980837106704712,
+      "name": "Apple IOS",
+      "category": {
+        "name": "Information Technology",
+        "id": 17
+      },
+      "subcategory": {
+        "name": "iOS Development",
+        "id": 434
+      }
+    },
+    {
+      "skillId": "KS7G4ML61B2JX1H1003Z",
+      "confidence": 0.997664749622345,
+      "name": "Branding",
+      "category": {
+        "name": "Marketing and Public Relations",
+        "id": 22
+      },
+      "subcategory": {
+        "name": "Brand Management",
+        "id": 544
+      }
+    },
+    {
+      "skillId": "ES2AAD427D871251857E",
+      "confidence": 0.5,
+      "name": "Smartphone Operation",
+      "category": {
+        "name": "Information Technology",
+        "id": 17
+      },
+      "subcategory": {
+        "name": "Basic Technical Knowledge",
+        "id": 376
+      }
+    }
+  ],
+  "currentPhase": {
+    "duration": 441617,
+    "scheduledEndDate": "2023-05-20T14:00:00.000Z",
+    "isOpen": true,
+    "name": "Checkpoint Submission",
+    "phaseId": "d8a2cdbe-84d1-4687-ab75-78a6a7efdcc8",
+    "actualStartDate": "2023-05-15T11:20:43.000Z",
+    "description": "Checkpoint Submission Phase",
+    "id": "1e5dc832-da00-40af-9650-ba7acf38cf29",
+    "constraints": [],
+    "scheduledStartDate": "2023-05-15T11:20:43.000Z"
+  }
+}
