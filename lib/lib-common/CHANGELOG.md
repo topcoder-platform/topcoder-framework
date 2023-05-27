@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.1](https://github.com/topcoder-platform/topcoder-framework/compare/v0.13.0...v0.13.1) (2023-05-27)
+
+### Bug Fixes
+
+- **lib-common:** add phase facts ([56ff48e](https://github.com/topcoder-platform/topcoder-framework/commit/56ff48ead1760a55047ac5faa89fe4d10c571480))
+
 # [0.13.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.12.1...v0.13.0) (2023-05-21)
 
 ### Features
