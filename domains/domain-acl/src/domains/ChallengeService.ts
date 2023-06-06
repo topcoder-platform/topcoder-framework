@@ -2,8 +2,6 @@ import { Metadata } from "@grpc/grpc-js";
 import {
   CheckExistsResult,
   CreateResult,
-  PhaseFactRequest,
-  PhaseFactResponse,
   UpdateResult,
 } from "@topcoder-framework/lib-common";
 import { promisify } from "util";
@@ -63,15 +61,6 @@ export class ChallengeDomain {
   ) {
     return promisify<UpdateChallengeInput, Metadata, UpdateResult>(
       this.client.update.bind(this.client)
-    )(param, metadata);
-  }
-
-  public async getPhaseFacts(
-    param: PhaseFactRequest,
-    metadata: Metadata = new Metadata()
-  ) {
-    return promisify<PhaseFactRequest, Metadata, PhaseFactResponse>(
-      this.client.getPhaseFacts.bind(this.client)
     )(param, metadata);
   }
 }
