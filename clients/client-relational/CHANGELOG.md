@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.14.2](https://github.com/topcoder-platform/topcoder-framework/compare/v0.14.1...v0.14.2) (2023-06-06)
+
+### Bug Fixes
+
+- add client stub to get phase facts ([0f91b07](https://github.com/topcoder-platform/topcoder-framework/commit/0f91b0735e5894e6efe91c7e18aff9edc7256a0a))
+
 # [0.14.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.13.1...v0.14.0) (2023-06-06)
 
 ### Features
