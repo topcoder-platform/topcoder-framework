@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.13.1...v0.14.0) (2023-06-06)
+
+### Features
+
+- add query service ([#31](https://github.com/topcoder-platform/topcoder-framework/issues/31)) ([2479b58](https://github.com/topcoder-platform/topcoder-framework/commit/2479b58f8ef140036c880516aa1d5770be8616bf))
+
 ## [0.13.1](https://github.com/topcoder-platform/topcoder-framework/compare/v0.13.0...v0.13.1) (2023-05-27)
 
 ### Bug Fixes
