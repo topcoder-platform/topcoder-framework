@@ -14,8 +14,6 @@ import {
 import {
   Empty,
   LookupCriteria,
-  PhaseFactRequest,
-  PhaseFactResponse,
   ScanRequest,
   ScanResult,
 } from "@topcoder-framework/lib-common";
@@ -96,22 +94,6 @@ export const ChallengeService = {
       Buffer.from(Empty.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
-  /**
-   * This is a necessary indirection (challenge-api -> domain-challenge -> acl)
-   * When we have a proper review API in place, these requests can go to
-   * review-api or domain-review directly.
-   */
-  getPhaseFacts: {
-    path: "/topcoder.domain.service.challenge.Challenge/GetPhaseFacts",
-    requestStream: false,
-    responseStream: false,
-    requestSerialize: (value: PhaseFactRequest) =>
-      Buffer.from(PhaseFactRequest.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => PhaseFactRequest.decode(value),
-    responseSerialize: (value: PhaseFactResponse) =>
-      Buffer.from(PhaseFactResponse.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => PhaseFactResponse.decode(value),
-  },
 } as const;
 
 export interface ChallengeServer extends UntypedServiceImplementation {
@@ -121,12 +103,6 @@ export interface ChallengeServer extends UntypedServiceImplementation {
   update: handleUnaryCall<UpdateChallengeInput, ChallengeList>;
   delete: handleUnaryCall<LookupCriteria, ChallengeList>;
   updateForAcl: handleUnaryCall<UpdateChallengeInputForACL, Empty>;
-  /**
-   * This is a necessary indirection (challenge-api -> domain-challenge -> acl)
-   * When we have a proper review API in place, these requests can go to
-   * review-api or domain-review directly.
-   */
-  getPhaseFacts: handleUnaryCall<PhaseFactRequest, PhaseFactResponse>;
 }
 
 export interface ChallengeClient extends Client {
@@ -219,26 +195,6 @@ export interface ChallengeClient extends Client {
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Empty) => void
-  ): ClientUnaryCall;
-  /**
-   * This is a necessary indirection (challenge-api -> domain-challenge -> acl)
-   * When we have a proper review API in place, these requests can go to
-   * review-api or domain-review directly.
-   */
-  getPhaseFacts(
-    request: PhaseFactRequest,
-    callback: (error: ServiceError | null, response: PhaseFactResponse) => void
-  ): ClientUnaryCall;
-  getPhaseFacts(
-    request: PhaseFactRequest,
-    metadata: Metadata,
-    callback: (error: ServiceError | null, response: PhaseFactResponse) => void
-  ): ClientUnaryCall;
-  getPhaseFacts(
-    request: PhaseFactRequest,
-    metadata: Metadata,
-    options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: PhaseFactResponse) => void
   ): ClientUnaryCall;
 }
 
