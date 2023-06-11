@@ -290,6 +290,7 @@ export interface UpdateChallengeInputForACL_WinnersACL {
 export interface UpdateChallengeInputForACL_WinnerACL {
   handle: string;
   placement: number;
+  userId: number;
 }
 
 function createBaseChallenge(): Challenge {
@@ -5575,7 +5576,7 @@ export const UpdateChallengeInputForACL_WinnersACL = {
 };
 
 function createBaseUpdateChallengeInputForACL_WinnerACL(): UpdateChallengeInputForACL_WinnerACL {
-  return { handle: "", placement: 0 };
+  return { handle: "", placement: 0, userId: 0 };
 }
 
 export const UpdateChallengeInputForACL_WinnerACL = {
@@ -5588,6 +5589,9 @@ export const UpdateChallengeInputForACL_WinnerACL = {
     }
     if (message.placement !== 0) {
       writer.uint32(16).int32(message.placement);
+    }
+    if (message.userId !== 0) {
+      writer.uint32(24).int32(message.userId);
     }
     return writer;
   },
@@ -5617,6 +5621,13 @@ export const UpdateChallengeInputForACL_WinnerACL = {
 
           message.placement = reader.int32();
           continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.userId = reader.int32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -5630,6 +5641,7 @@ export const UpdateChallengeInputForACL_WinnerACL = {
     return {
       handle: isSet(object.handle) ? String(object.handle) : "",
       placement: isSet(object.placement) ? Number(object.placement) : 0,
+      userId: isSet(object.userId) ? Number(object.userId) : 0,
     };
   },
 
@@ -5638,6 +5650,7 @@ export const UpdateChallengeInputForACL_WinnerACL = {
     message.handle !== undefined && (obj.handle = message.handle);
     message.placement !== undefined &&
       (obj.placement = Math.round(message.placement));
+    message.userId !== undefined && (obj.userId = Math.round(message.userId));
     return obj;
   },
 
@@ -5653,6 +5666,7 @@ export const UpdateChallengeInputForACL_WinnerACL = {
     const message = createBaseUpdateChallengeInputForACL_WinnerACL();
     message.handle = object.handle ?? "";
     message.placement = object.placement ?? 0;
+    message.userId = object.userId ?? 0;
     return message;
   },
 };
