@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.16.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.15.0...v0.16.0) (2023-06-12)
+
+### Features
+
+- add userid to winners array ([#32](https://github.com/topcoder-platform/topcoder-framework/issues/32)) ([e460207](https://github.com/topcoder-platform/topcoder-framework/commit/e460207fd3befb9ec1fcbe942a04035f2848faca))
+
 # [0.15.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.14.2...v0.15.0) (2023-06-06)
 
 ### Features

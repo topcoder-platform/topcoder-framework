@@ -1,6 +1,6 @@
 {
   "name": "@topcoder-framework/domain-acl",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "description": "Topcoder Anti-Corruption Layer",
   "main": "./dist-cjs/index.js",
   "types": "./dist-es/index.d.ts",
@@ -25,8 +25,8 @@
   "license": "ISC",
   "dependencies": {
     "@grpc/grpc-js": "^1.8.7",
-    "@topcoder-framework/client-relational": "^0.15.0",
-    "@topcoder-framework/lib-common": "^0.15.0",
+    "@topcoder-framework/client-relational": "^0.16.0",
+    "@topcoder-framework/lib-common": "^0.16.0",
     "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.54",
     "tslib": "^2.4.1"
   },
