@@ -10,8 +10,6 @@ export interface Problem {
   problemTypeId: number;
   proposedDifficultyId: number;
   acceptSubmissions: number;
-  createDate: string;
-  modifyDate: string;
 }
 
 function createBaseProblem(): Problem {
@@ -24,8 +22,6 @@ function createBaseProblem(): Problem {
     problemTypeId: 0,
     proposedDifficultyId: 0,
     acceptSubmissions: 0,
-    createDate: "",
-    modifyDate: "",
   };
 }
 
@@ -57,12 +53,6 @@ export const Problem = {
     }
     if (message.acceptSubmissions !== 0) {
       writer.uint32(64).int32(message.acceptSubmissions);
-    }
-    if (message.createDate !== "") {
-      writer.uint32(74).string(message.createDate);
-    }
-    if (message.modifyDate !== "") {
-      writer.uint32(82).string(message.modifyDate);
     }
     return writer;
   },
@@ -131,20 +121,6 @@ export const Problem = {
 
           message.acceptSubmissions = reader.int32();
           continue;
-        case 9:
-          if (tag !== 74) {
-            break;
-          }
-
-          message.createDate = reader.string();
-          continue;
-        case 10:
-          if (tag !== 82) {
-            break;
-          }
-
-          message.modifyDate = reader.string();
-          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -172,8 +148,6 @@ export const Problem = {
       acceptSubmissions: isSet(object.acceptSubmissions)
         ? Number(object.acceptSubmissions)
         : 0,
-      createDate: isSet(object.createDate) ? String(object.createDate) : "",
-      modifyDate: isSet(object.modifyDate) ? String(object.modifyDate) : "",
     };
   },
 
@@ -194,8 +168,6 @@ export const Problem = {
       (obj.proposedDifficultyId = Math.round(message.proposedDifficultyId));
     message.acceptSubmissions !== undefined &&
       (obj.acceptSubmissions = Math.round(message.acceptSubmissions));
-    message.createDate !== undefined && (obj.createDate = message.createDate);
-    message.modifyDate !== undefined && (obj.modifyDate = message.modifyDate);
     return obj;
   },
 
@@ -213,8 +185,6 @@ export const Problem = {
     message.problemTypeId = object.problemTypeId ?? 0;
     message.proposedDifficultyId = object.proposedDifficultyId ?? 0;
     message.acceptSubmissions = object.acceptSubmissions ?? 0;
-    message.createDate = object.createDate ?? "";
-    message.modifyDate = object.modifyDate ?? "";
     return message;
   },
 };
