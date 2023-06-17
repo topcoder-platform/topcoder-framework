@@ -26,7 +26,7 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.8.0",
     "rimraf": "^3.0.2",
-    "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.55",
+    "topcoder-interface": "github:topcoder-platform/plat-interface-definition#v0.0.56-beta-1",
     "tslib": "^2.4.1"
   },
   "devDependencies": {
