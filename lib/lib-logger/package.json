@@ -1,6 +1,6 @@
 {
   "name": "@topcoder-framework/lib-logger",
-  "version": "0.16.1",
+  "version": "0.17.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -24,8 +24,8 @@
     "npm": "9.1.2"
   },
   "dependencies": {
-    "@topcoder-framework/client-relational": "^0.16.1",
-    "@topcoder-framework/lib-common": "^0.16.1",
+    "@topcoder-framework/client-relational": "^0.17.0",
+    "@topcoder-framework/lib-common": "^0.17.0",
     "@types/lodash": "^4.14.189",
     "joi": "^17.7.0",
     "lodash": "^4.17.21",
