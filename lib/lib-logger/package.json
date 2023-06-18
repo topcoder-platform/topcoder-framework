@@ -10,7 +10,8 @@
     "build:app": "scripty",
     "build:include:deps": "scripty",
     "clean": "scripty",
-    "lint": "scripty"
+    "lint": "scripty",
+    "format": "scripty"
   },
   "scripty": {
     "path": "../../scripts/packages",
