@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.18.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.17.0...v0.18.0) (2023-06-18)
+
+### Features
+
+- **domain-challenge:** add phase facts service ([8a59cab](https://github.com/topcoder-platform/topcoder-framework/commit/8a59cabd14ded1817e956776bc9015ebd40b4d27))
+
 # [0.17.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.16.1...v0.17.0) (2023-06-17)
 
 ### Features
