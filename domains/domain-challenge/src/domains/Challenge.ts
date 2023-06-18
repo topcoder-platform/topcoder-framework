@@ -16,7 +16,8 @@ import {
   LookupCriteria,
   ScanRequest,
   ScanResult,
-  UpdateResult,
+  PhaseFactRequest,
+  PhaseFactResponse,
 } from "@topcoder-framework/lib-common";
 
 export class ChallengeDomain {
@@ -84,6 +85,15 @@ export class ChallengeDomain {
   ) {
     return promisify<LookupCriteria, Metadata, ChallengeList>(
       this.client.delete.bind(this.client)
+    )(param, metadata);
+  }
+
+  public async getPhaseFacts(
+    param: PhaseFactRequest,
+    metadata: Metadata = new Metadata()
+  ) {
+    return promisify<PhaseFactRequest, Metadata, PhaseFactResponse>(
+      this.client.getPhaseFacts.bind(this.client)
     )(param, metadata);
   }
 }
