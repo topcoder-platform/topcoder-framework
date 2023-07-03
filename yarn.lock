@@ -1200,9 +1200,9 @@
   integrity sha512-GpSwvyXOcOOlV70vbnzjj4fW5xW/FdUF6nQEt1ENy7m4ZCczi1+/buVUPAqmGfqznsORNFzUMjctTIp8a9tuCQ==
 
 "@yarnpkg/parsers@^3.0.0-rc.18":
-  version "3.0.0-rc.48"
-  resolved "https://registry.yarnpkg.com/@yarnpkg/parsers/-/parsers-3.0.0-rc.48.tgz#5dee27c8a56d59216560ff8e7c5960f96451f0c9"
-  integrity sha512-LqrqO/f5y7QAeqx5gv5tYraIbas+kDNUmK7npiuqhl4t9Ddl1EIs9QXWE6TD9hISvKwm6yjU32HmD0HlfPaXtA==
+  version "3.0.0-rc.48.1"
+  resolved "https://registry.yarnpkg.com/@yarnpkg/parsers/-/parsers-3.0.0-rc.48.1.tgz#8636c24c02c888f2602a464edfd7fb113d75e937"
+  integrity sha512-qEewJouhRvaecGjbkjz9kMKn96UASbDodNrE5MYy2TrXkHcisIkbMxZdGBYfAq+s1dFtCSx/5H4k5bEkfakM+A==
   dependencies:
     js-yaml "^3.10.0"
     tslib "^2.4.0"
@@ -5273,14 +5273,15 @@ readable-stream@3, readable-stream@^3.0.0, readable-stream@^3.0.2, readable-stre
     util-deprecate "^1.0.1"
 
 readable-stream@^4.1.0:
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-4.4.1.tgz#fa0f0878c3bc0c12b6a82e4e58c5dc160e1faaa2"
-  integrity sha512-llAHX9QC25bz5RPIoTeJxPaA/hgryaldValRhVZ2fK9bzbmFiscpz8fw6iBTvJfAk1w4FC1KXQme/nO7fbKyKg==
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-4.4.2.tgz#e6aced27ad3b9d726d8308515b9a1b98dc1b9d13"
+  integrity sha512-Lk/fICSyIhodxy1IDK2HazkeGjSmezAWX2egdtJnYhtzKEsBPJowlI6F6LPb5tqIQILrMbx22S5o3GuJavPusA==
   dependencies:
     abort-controller "^3.0.0"
     buffer "^6.0.3"
     events "^3.3.0"
     process "^0.11.10"
+    string_decoder "^1.3.0"
 
 readable-stream@~2.3.6:
   version "2.3.8"
@@ -5732,7 +5733,7 @@ string-width@^5.0.0, string-width@^5.0.1, string-width@^5.1.2:
     emoji-regex "^9.2.2"
     strip-ansi "^7.0.1"
 
-string_decoder@^1.1.1:
+string_decoder@^1.1.1, string_decoder@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-1.3.0.tgz#42f114594a46cf1a8e30b0a84f56c78c3edac21e"
   integrity sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA==
@@ -5953,9 +5954,9 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-"topcoder-interface@github:topcoder-platform/plat-interface-definition#v0.0.56-beta-2":
+"topcoder-interface@github:topcoder-platform/plat-interface-definition#v0.0.56":
   version "1.0.0"
-  resolved "https://codeload.github.com/topcoder-platform/plat-interface-definition/tar.gz/dd63b3f8aee86ab64dcfc04e84f8adfd633bd336"
+  resolved "https://codeload.github.com/topcoder-platform/plat-interface-definition/tar.gz/ba65ef794552c35ffa86346ca29110531833bcc0"
 
 tr46@~0.0.3:
   version "0.0.3"

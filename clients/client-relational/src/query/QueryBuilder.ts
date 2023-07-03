@@ -1,4 +1,8 @@
-import { ScanCriteria, Value } from "@topcoder-framework/lib-common";
+import {
+  ScanCriteria,
+  Value,
+  Operator as LibCommonOperator,
+} from "@topcoder-framework/lib-common";
 import { TableColumn } from "../interfaces/TableColumns";
 import {
   ColumnType,
@@ -242,7 +246,11 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
       for (const input of inputs as ScanCriteria[]) {
         this.#query.query.select.where.push({
           key: this.schema.columns[input.key].name,
-          operator: Operator.OPERATOR_EQUAL, // TODO: map from @topcoder-framework/lib-common Operator to RelationalOperator
+          // TODO: map from @topcoder-framework/lib-common Operator to RelationalOperator
+          operator:
+            input.operator === LibCommonOperator.OPERATOR_NOT_EQUAL
+              ? Operator.OPERATOR_NOT_EQUAL
+              : Operator.OPERATOR_EQUAL,
           value: this.toRelationalValue(input.key, input.value),
         });
       }
@@ -286,7 +294,10 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
         for (const input of inputs as ScanCriteria[]) {
           this.#query.query.update.where.push({
             key: this.schema.columns[input.key].name,
-            operator: Operator.OPERATOR_EQUAL, // TODO: map from @topcoder-framework/lib-common Operator to RelationalOperator
+            operator:
+              input.operator === LibCommonOperator.OPERATOR_NOT_EQUAL
+                ? Operator.OPERATOR_NOT_EQUAL
+                : Operator.OPERATOR_EQUAL,
             value: this.toRelationalValue(input.key, input.value),
           });
         }
@@ -319,7 +330,10 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
         for (const input of inputs as ScanCriteria[]) {
           this.#query.query.delete.where.push({
             key: this.schema.columns[input.key].name,
-            operator: Operator.OPERATOR_EQUAL, // TODO: map from @topcoder-framework/lib-common Operator to RelationalOperator
+            operator:
+              input.operator === LibCommonOperator.OPERATOR_NOT_EQUAL
+                ? Operator.OPERATOR_NOT_EQUAL
+                : Operator.OPERATOR_EQUAL,
             value: this.toRelationalValue(input.key, input.value),
           });
         }
