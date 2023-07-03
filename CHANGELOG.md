@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.18.1...v0.19.0) (2023-07-03)
+
+### Features
+
+- add phase to close in update for acl input ([1e0c8c8](https://github.com/topcoder-platform/topcoder-framework/commit/1e0c8c8e357b69df2e0760e82a71a61738db0895))
+
 ## [0.18.1](https://github.com/topcoder-platform/topcoder-framework/compare/v0.18.0...v0.18.1) (2023-06-18)
 
 **Note:** Version bump only for package topcoder-framework
