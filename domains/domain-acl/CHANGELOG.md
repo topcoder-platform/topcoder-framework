@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.19.0...v0.20.0) (2023-07-03)
+
+### Features
+
+- **client-relational:** add support for not equal clauses ([93ced00](https://github.com/topcoder-platform/topcoder-framework/commit/93ced006d5ee77d0c87532ea7818d2a7c4d6d558))
+
 # [0.19.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.18.1...v0.19.0) (2023-07-03)
 
 ### Features
