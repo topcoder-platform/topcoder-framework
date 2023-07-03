@@ -264,6 +264,7 @@ export interface UpdateChallengeInputForACL_UpdateInputForACL {
   prizeSets?: UpdateChallengeInputForACL_PrizeSetsACL | undefined;
   overview?: Challenge_Overview | undefined;
   winners?: UpdateChallengeInputForACL_WinnersACL | undefined;
+  phaseToClose?: string | undefined;
 }
 
 export interface UpdateChallengeInputForACL_PhasesACL {
@@ -4771,6 +4772,7 @@ function createBaseUpdateChallengeInputForACL_UpdateInputForACL(): UpdateChallen
     prizeSets: undefined,
     overview: undefined,
     winners: undefined,
+    phaseToClose: undefined,
   };
 }
 
@@ -4859,6 +4861,9 @@ export const UpdateChallengeInputForACL_UpdateInputForACL = {
         message.winners,
         writer.uint32(114).fork()
       ).ldelim();
+    }
+    if (message.phaseToClose !== undefined) {
+      writer.uint32(122).string(message.phaseToClose);
     }
     return writer;
   },
@@ -5003,6 +5008,13 @@ export const UpdateChallengeInputForACL_UpdateInputForACL = {
             reader.uint32()
           );
           continue;
+        case 15:
+          if (tag !== 122) {
+            break;
+          }
+
+          message.phaseToClose = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -5052,6 +5064,9 @@ export const UpdateChallengeInputForACL_UpdateInputForACL = {
       winners: isSet(object.winners)
         ? UpdateChallengeInputForACL_WinnersACL.fromJSON(object.winners)
         : undefined,
+      phaseToClose: isSet(object.phaseToClose)
+        ? String(object.phaseToClose)
+        : undefined,
     };
   },
 
@@ -5098,6 +5113,8 @@ export const UpdateChallengeInputForACL_UpdateInputForACL = {
       (obj.winners = message.winners
         ? UpdateChallengeInputForACL_WinnersACL.toJSON(message.winners)
         : undefined);
+    message.phaseToClose !== undefined &&
+      (obj.phaseToClose = message.phaseToClose);
     return obj;
   },
 
@@ -5155,6 +5172,7 @@ export const UpdateChallengeInputForACL_UpdateInputForACL = {
       object.winners !== undefined && object.winners !== null
         ? UpdateChallengeInputForACL_WinnersACL.fromPartial(object.winners)
         : undefined;
+    message.phaseToClose = object.phaseToClose ?? undefined;
     return message;
   },
 };
