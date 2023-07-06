@@ -137,7 +137,25 @@ export class QueryRunner {
           }),
         };
       case "insertResult":
-        return { lastInsertId: queryResponse.result.insertResult.lastInsertId };
+        switch (queryResponse.result.insertResult.insertResultType?.$case) {
+          case "affectedRows":
+            return {
+              affectedRows:
+                queryResponse.result.insertResult.insertResultType.affectedRows,
+            };
+          case "lastInsertId":
+            return {
+              lastInsertId:
+                queryResponse.result.insertResult.insertResultType.lastInsertId,
+            };
+          case "row":
+            return {
+              rows: [queryResponse.result.insertResult.insertResultType.row],
+            };
+          default:
+            throw new Error("Unexpected query insert result");
+        }
+
       case "updateResult":
         return { affectedRows: queryResponse.result.updateResult.affectedRows };
       case "deleteResult":

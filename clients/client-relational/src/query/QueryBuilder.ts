@@ -130,6 +130,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
           idTable: this.schema.tableName,
           idColumn: this.schema.idColumn ?? undefined,
           idSequence: this.schema.idSequence ?? undefined,
+          returningFields: this.schema.returningFields ?? [],
         },
       },
     };

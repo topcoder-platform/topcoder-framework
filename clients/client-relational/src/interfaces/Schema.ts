@@ -8,4 +8,5 @@ export type Schema<T extends Record<string, any>> = {
   idSequence?: string;
   idTable?: string;
   columns: TableColumns<T>;
+  returningFields?: string[];
 };

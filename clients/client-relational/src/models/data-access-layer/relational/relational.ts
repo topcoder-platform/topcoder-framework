@@ -310,6 +310,7 @@ export interface InsertQuery {
   idColumn?: string | undefined;
   idSequence?: string | undefined;
   idTable?: string | undefined;
+  returningFields: string[];
 }
 
 export interface BulkInsertQuery {
@@ -360,7 +361,13 @@ export interface RawQueryResult {
 }
 
 export interface InsertQueryResult {
-  lastInsertId: number;
+  insertResultType?:
+    | { $case: "lastInsertId"; lastInsertId: number }
+    | { $case: "row"; row: Row }
+    | {
+        $case: "affectedRows";
+        affectedRows: number;
+      };
 }
 
 export interface UpdateQueryResult {
@@ -1362,6 +1369,7 @@ function createBaseInsertQuery(): InsertQuery {
     idColumn: undefined,
     idSequence: undefined,
     idTable: undefined,
+    returningFields: [],
   };
 }
 
@@ -1387,6 +1395,9 @@ export const InsertQuery = {
     }
     if (message.idTable !== undefined) {
       writer.uint32(50).string(message.idTable);
+    }
+    for (const v of message.returningFields) {
+      writer.uint32(58).string(v!);
     }
     return writer;
   },
@@ -1441,6 +1452,13 @@ export const InsertQuery = {
 
           message.idTable = reader.string();
           continue;
+        case 7:
+          if (tag !== 58) {
+            break;
+          }
+
+          message.returningFields.push(reader.string());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1462,6 +1480,9 @@ export const InsertQuery = {
         ? String(object.idSequence)
         : undefined,
       idTable: isSet(object.idTable) ? String(object.idTable) : undefined,
+      returningFields: Array.isArray(object?.returningFields)
+        ? object.returningFields.map((e: any) => String(e))
+        : [],
     };
   },
 
@@ -1479,6 +1500,11 @@ export const InsertQuery = {
     message.idColumn !== undefined && (obj.idColumn = message.idColumn);
     message.idSequence !== undefined && (obj.idSequence = message.idSequence);
     message.idTable !== undefined && (obj.idTable = message.idTable);
+    if (message.returningFields) {
+      obj.returningFields = message.returningFields.map((e) => e);
+    } else {
+      obj.returningFields = [];
+    }
     return obj;
   },
 
@@ -1497,6 +1523,7 @@ export const InsertQuery = {
     message.idColumn = object.idColumn ?? undefined;
     message.idSequence = object.idSequence ?? undefined;
     message.idTable = object.idTable ?? undefined;
+    message.returningFields = object.returningFields?.map((e) => e) || [];
     return message;
   },
 };
@@ -2385,7 +2412,7 @@ export const RawQueryResult = {
 };
 
 function createBaseInsertQueryResult(): InsertQueryResult {
-  return { lastInsertId: 0 };
+  return { insertResultType: undefined };
 }
 
 export const InsertQueryResult = {
@@ -2393,8 +2420,19 @@ export const InsertQueryResult = {
     message: InsertQueryResult,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.lastInsertId !== 0) {
-      writer.uint32(8).uint64(message.lastInsertId);
+    switch (message.insertResultType?.$case) {
+      case "lastInsertId":
+        writer.uint32(8).uint64(message.insertResultType.lastInsertId);
+        break;
+      case "row":
+        Row.encode(
+          message.insertResultType.row,
+          writer.uint32(18).fork()
+        ).ldelim();
+        break;
+      case "affectedRows":
+        writer.uint32(24).uint64(message.insertResultType.affectedRows);
+        break;
     }
     return writer;
   },
@@ -2412,7 +2450,30 @@ export const InsertQueryResult = {
             break;
           }
 
-          message.lastInsertId = longToNumber(reader.uint64() as Long);
+          message.insertResultType = {
+            $case: "lastInsertId",
+            lastInsertId: longToNumber(reader.uint64() as Long),
+          };
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.insertResultType = {
+            $case: "row",
+            row: Row.decode(reader, reader.uint32()),
+          };
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.insertResultType = {
+            $case: "affectedRows",
+            affectedRows: longToNumber(reader.uint64() as Long),
+          };
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -2425,16 +2486,26 @@ export const InsertQueryResult = {
 
   fromJSON(object: any): InsertQueryResult {
     return {
-      lastInsertId: isSet(object.lastInsertId)
-        ? Number(object.lastInsertId)
-        : 0,
+      insertResultType: isSet(object.lastInsertId)
+        ? { $case: "lastInsertId", lastInsertId: Number(object.lastInsertId) }
+        : isSet(object.row)
+        ? { $case: "row", row: Row.fromJSON(object.row) }
+        : isSet(object.affectedRows)
+        ? { $case: "affectedRows", affectedRows: Number(object.affectedRows) }
+        : undefined,
     };
   },
 
   toJSON(message: InsertQueryResult): unknown {
     const obj: any = {};
-    message.lastInsertId !== undefined &&
-      (obj.lastInsertId = Math.round(message.lastInsertId));
+    message.insertResultType?.$case === "lastInsertId" &&
+      (obj.lastInsertId = Math.round(message.insertResultType?.lastInsertId));
+    message.insertResultType?.$case === "row" &&
+      (obj.row = message.insertResultType?.row
+        ? Row.toJSON(message.insertResultType?.row)
+        : undefined);
+    message.insertResultType?.$case === "affectedRows" &&
+      (obj.affectedRows = Math.round(message.insertResultType?.affectedRows));
     return obj;
   },
 
@@ -2448,7 +2519,36 @@ export const InsertQueryResult = {
     object: I
   ): InsertQueryResult {
     const message = createBaseInsertQueryResult();
-    message.lastInsertId = object.lastInsertId ?? 0;
+    if (
+      object.insertResultType?.$case === "lastInsertId" &&
+      object.insertResultType?.lastInsertId !== undefined &&
+      object.insertResultType?.lastInsertId !== null
+    ) {
+      message.insertResultType = {
+        $case: "lastInsertId",
+        lastInsertId: object.insertResultType.lastInsertId,
+      };
+    }
+    if (
+      object.insertResultType?.$case === "row" &&
+      object.insertResultType?.row !== undefined &&
+      object.insertResultType?.row !== null
+    ) {
+      message.insertResultType = {
+        $case: "row",
+        row: Row.fromPartial(object.insertResultType.row),
+      };
+    }
+    if (
+      object.insertResultType?.$case === "affectedRows" &&
+      object.insertResultType?.affectedRows !== undefined &&
+      object.insertResultType?.affectedRows !== null
+    ) {
+      message.insertResultType = {
+        $case: "affectedRows",
+        affectedRows: object.insertResultType.affectedRows,
+      };
+    }
     return message;
   },
 };
