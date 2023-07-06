@@ -14,8 +14,10 @@ export interface Transaction {
   rollback(): void;
 }
 
+export type RowValueType = string | number | boolean | null;
+
 export interface QueryResult {
-  rows?: { [key: string]: any }[];
+  rows?: { [key: string]: RowValueType }[];
   lastInsertId?: number;
   affectedRows?: number;
 }
@@ -81,7 +83,10 @@ export class QueryRunner {
     };
   }
 
-  private unwrapValue(value: RelationalValue): number | string | boolean {
+  private unwrapValue(value: RelationalValue): RowValueType {
+    if (_.isUndefined(value.value)) {
+      return null;
+    }
     switch (value.value?.$case) {
       case "intValue":
         return value.value.intValue;
@@ -111,7 +116,7 @@ export class QueryRunner {
     switch (queryResponse.result?.$case) {
       case "rawResult": {
         const rows = queryResponse.result.rawResult?.rows.map(({ values }) => {
-          const retObject: { [key: string]: number | string | boolean } = {};
+          const retObject: { [key: string]: RowValueType } = {};
           Object.entries(values).forEach(([key, value]) => {
             retObject[key] = this.unwrapValue(value);
           });
@@ -125,7 +130,7 @@ export class QueryRunner {
       case "selectResult":
         return {
           rows: queryResponse.result.selectResult.rows.map(({ values }) => {
-            const retObject: { [key: string]: number | string | boolean } = {};
+            const retObject: { [key: string]: RowValueType } = {};
 
             column.forEach((col) => {
               retObject[_.camelCase(col.name)] = this.unwrapValue(
@@ -150,7 +155,12 @@ export class QueryRunner {
             };
           case "row":
             return {
-              rows: [queryResponse.result.insertResult.insertResultType.row],
+              rows: [
+                _.mapValues(
+                  queryResponse.result.insertResult.insertResultType.row.values,
+                  (v) => this.unwrapValue(v)
+                ),
+              ],
             };
           default:
             throw new Error("Unexpected query insert result");
