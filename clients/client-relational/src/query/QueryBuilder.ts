@@ -9,13 +9,22 @@ import {
   Operator,
   Query,
   Value as RelationalValue,
+  WhereCriteria,
+  WhereCondition as Wheres,
 } from "../models/data-access-layer/relational/relational";
 
 import { BaseQuery } from "./BaseQuery";
+import _ from "lodash";
 
-export type WhereCondition =
-  | [column: TableColumn, operator: Operator, value: RelationalValue]
-  | ScanCriteria[];
+type Condition = [
+  column: TableColumn,
+  operator: Operator,
+  value: RelationalValue
+];
+
+type ConditionGroup = [group: "and" | "or", conditions: Condition[]];
+
+export type WhereCondition = Condition | ScanCriteria[] | ConditionGroup;
 
 interface Build {
   build: () => Query;
@@ -232,6 +241,14 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     };
   }
 
+  public and(conditions: Condition[]): ConditionGroup {
+    return ["and", conditions];
+  }
+
+  public or(conditions: Condition[]): ConditionGroup {
+    return ["or", conditions];
+  }
+
   // private orderBy(column: TableColumn, direction: "asc" | "desc") {}
 
   private where(...inputs: WhereCondition): Where {
@@ -245,36 +262,15 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
 
     if (this.isScanCriteria(inputs[0])) {
       for (const input of inputs as ScanCriteria[]) {
-        this.#query.query.select.where.push({
-          key: this.schema.columns[input.key].name,
-          // TODO: map from @topcoder-framework/lib-common Operator to RelationalOperator
-          operator:
-            input.operator === LibCommonOperator.OPERATOR_NOT_EQUAL
-              ? Operator.OPERATOR_NOT_EQUAL
-              : Operator.OPERATOR_EQUAL,
-          value: this.toRelationalValue(input.key, input.value),
-        });
+        this.#query.query.select.where.push(this.buildForScanCriteria(input));
       }
-      return {
-        andWhere: this.where.bind(this),
-        //   orderBy: this.orderBy.bind(this),
-        limit: this.limit.bind(this),
-        offset: this.offset.bind(this),
-        build: this.build.bind(this),
-      };
+    } else if (this.isConditionGroup(inputs)) {
+      this.#query.query.select.where.push(this.buildForConditionGroup(inputs));
+    } else {
+      this.#query.query.select.where.push(
+        this.buildForCondition(inputs as Condition)
+      );
     }
-
-    const [column, operator, value] = inputs as [
-      TableColumn,
-      Operator,
-      RelationalValue
-    ];
-
-    this.#query.query.select.where.push({
-      key: column.name,
-      operator,
-      value,
-    });
 
     return {
       andWhere: this.where.bind(this),
@@ -293,78 +289,91 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     if (this.#query?.query?.$case === "update") {
       if (this.isScanCriteria(inputs[0])) {
         for (const input of inputs as ScanCriteria[]) {
-          this.#query.query.update.where.push({
-            key: this.schema.columns[input.key].name,
-            operator:
-              input.operator === LibCommonOperator.OPERATOR_NOT_EQUAL
-                ? Operator.OPERATOR_NOT_EQUAL
-                : Operator.OPERATOR_EQUAL,
-            value: this.toRelationalValue(input.key, input.value),
-          });
+          this.#query.query.update.where.push(this.buildForScanCriteria(input));
         }
-        return {
-          andWhere: this.whereForModify.bind(this),
-          build: this.build.bind(this),
-        };
+      } else if (this.isConditionGroup(inputs)) {
+        this.#query.query.update.where.push(
+          this.buildForConditionGroup(inputs)
+        );
+      } else {
+        this.#query.query.update.where.push(
+          this.buildForCondition(inputs as Condition)
+        );
       }
-
-      const [column, operator, value] = inputs as [
-        TableColumn,
-        Operator,
-        RelationalValue
-      ];
-
-      this.#query.query.update.where.push({
-        key: column.name,
-        operator,
-        value,
-      });
-
-      return {
-        andWhere: this.whereForModify.bind(this),
-        build: this.build.bind(this),
-      };
-    }
-
-    if (this.#query?.query?.$case === "delete") {
+    } else if (this.#query?.query?.$case === "delete") {
       if (this.isScanCriteria(inputs[0])) {
         for (const input of inputs as ScanCriteria[]) {
-          this.#query.query.delete.where.push({
-            key: this.schema.columns[input.key].name,
-            operator:
-              input.operator === LibCommonOperator.OPERATOR_NOT_EQUAL
-                ? Operator.OPERATOR_NOT_EQUAL
-                : Operator.OPERATOR_EQUAL,
-            value: this.toRelationalValue(input.key, input.value),
-          });
+          this.#query.query.delete.where.push(this.buildForScanCriteria(input));
         }
-        return {
-          andWhere: this.whereForModify.bind(this),
-          build: this.build.bind(this),
-        };
+      } else if (this.isConditionGroup(inputs)) {
+        this.#query.query.delete.where.push(
+          this.buildForConditionGroup(inputs)
+        );
+      } else {
+        this.#query.query.delete.where.push(
+          this.buildForCondition(inputs as Condition)
+        );
       }
-
-      const [column, operator, value] = inputs as [
-        TableColumn,
-        Operator,
-        RelationalValue
-      ];
-
-      this.#query.query.delete.where.push({
-        key: column.name,
-        operator,
-        value,
-      });
-
-      return {
-        andWhere: this.whereForModify.bind(this),
-        build: this.build.bind(this),
-      };
     }
 
     return {
       andWhere: this.whereForModify.bind(this),
       build: this.build.bind(this),
+    };
+  }
+
+  private buildForConditionGroup(
+    conditionGroup: ConditionGroup
+  ): Partial<WhereCriteria> {
+    const [group, conditions] = conditionGroup;
+
+    const wheres: Wheres[] = _.map(conditions, (condition) => {
+      const [column, operator, value] = condition;
+      return {
+        key: column.name,
+        operator,
+        value,
+      };
+    });
+
+    const whereType: Partial<WhereCriteria> = {};
+    if (group === "and") {
+      whereType.whereType = { $case: "and", and: { where: wheres } };
+    } else {
+      whereType.whereType = { $case: "or", or: { where: wheres } };
+    }
+
+    return whereType;
+  }
+
+  private buildForCondition(condition: Condition): Partial<WhereCriteria> {
+    const [column, operator, value] = condition;
+
+    return {
+      whereType: {
+        $case: "condition",
+        condition: {
+          key: column.name,
+          operator,
+          value,
+        },
+      },
+    };
+  }
+
+  private buildForScanCriteria(criteria: ScanCriteria): Partial<WhereCriteria> {
+    return {
+      whereType: {
+        $case: "condition",
+        condition: {
+          key: this.schema.columns[criteria.key].name,
+          operator:
+            criteria.operator === LibCommonOperator.OPERATOR_NOT_EQUAL
+              ? Operator.OPERATOR_NOT_EQUAL
+              : Operator.OPERATOR_EQUAL,
+          value: this.toRelationalValue(criteria.key, criteria.value),
+        },
+      },
     };
   }
 
@@ -405,6 +414,15 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
       typeof criteria === "object" &&
       typeof (criteria as ScanCriteria).key === "string" &&
       typeof (criteria as ScanCriteria).operator !== "undefined"
+    );
+  }
+
+  private isConditionGroup(criteria: unknown): criteria is ConditionGroup {
+    return (
+      criteria != null &&
+      typeof criteria === "object" &&
+      typeof (criteria as ConditionGroup)[0] === "string" &&
+      typeof (criteria as ConditionGroup)[1] === "object"
     );
   }
 

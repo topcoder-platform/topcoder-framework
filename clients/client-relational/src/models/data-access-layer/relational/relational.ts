@@ -266,10 +266,28 @@ export interface Column {
   type?: ColumnType | undefined;
 }
 
-export interface WhereCriteria {
+export interface WhereCondition {
   operator: Operator;
   key: string;
   value?: Value;
+}
+
+export interface AndWhere {
+  where: WhereCondition[];
+}
+
+export interface OrWhere {
+  where: WhereCondition[];
+}
+
+export interface WhereCriteria {
+  whereType?:
+    | { $case: "condition"; condition: WhereCondition }
+    | { $case: "and"; and: AndWhere }
+    | {
+        $case: "or";
+        or: OrWhere;
+      };
 }
 
 export interface RawQuery {
@@ -759,13 +777,13 @@ export const Column = {
   },
 };
 
-function createBaseWhereCriteria(): WhereCriteria {
+function createBaseWhereCondition(): WhereCondition {
   return { operator: 0, key: "", value: undefined };
 }
 
-export const WhereCriteria = {
+export const WhereCondition = {
   encode(
-    message: WhereCriteria,
+    message: WhereCondition,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.operator !== 0) {
@@ -780,11 +798,11 @@ export const WhereCriteria = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): WhereCriteria {
+  decode(input: _m0.Reader | Uint8Array, length?: number): WhereCondition {
     const reader =
       input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseWhereCriteria();
+    const message = createBaseWhereCondition();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -818,7 +836,7 @@ export const WhereCriteria = {
     return message;
   },
 
-  fromJSON(object: any): WhereCriteria {
+  fromJSON(object: any): WhereCondition {
     return {
       operator: isSet(object.operator) ? operatorFromJSON(object.operator) : 0,
       key: isSet(object.key) ? String(object.key) : "",
@@ -826,13 +844,283 @@ export const WhereCriteria = {
     };
   },
 
-  toJSON(message: WhereCriteria): unknown {
+  toJSON(message: WhereCondition): unknown {
     const obj: any = {};
     message.operator !== undefined &&
       (obj.operator = operatorToJSON(message.operator));
     message.key !== undefined && (obj.key = message.key);
     message.value !== undefined &&
       (obj.value = message.value ? Value.toJSON(message.value) : undefined);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<WhereCondition>, I>>(
+    base?: I
+  ): WhereCondition {
+    return WhereCondition.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<WhereCondition>, I>>(
+    object: I
+  ): WhereCondition {
+    const message = createBaseWhereCondition();
+    message.operator = object.operator ?? 0;
+    message.key = object.key ?? "";
+    message.value =
+      object.value !== undefined && object.value !== null
+        ? Value.fromPartial(object.value)
+        : undefined;
+    return message;
+  },
+};
+
+function createBaseAndWhere(): AndWhere {
+  return { where: [] };
+}
+
+export const AndWhere = {
+  encode(
+    message: AndWhere,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    for (const v of message.where) {
+      WhereCondition.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): AndWhere {
+    const reader =
+      input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseAndWhere();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.where.push(WhereCondition.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): AndWhere {
+    return {
+      where: Array.isArray(object?.where)
+        ? object.where.map((e: any) => WhereCondition.fromJSON(e))
+        : [],
+    };
+  },
+
+  toJSON(message: AndWhere): unknown {
+    const obj: any = {};
+    if (message.where) {
+      obj.where = message.where.map((e) =>
+        e ? WhereCondition.toJSON(e) : undefined
+      );
+    } else {
+      obj.where = [];
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<AndWhere>, I>>(base?: I): AndWhere {
+    return AndWhere.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<AndWhere>, I>>(object: I): AndWhere {
+    const message = createBaseAndWhere();
+    message.where =
+      object.where?.map((e) => WhereCondition.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBaseOrWhere(): OrWhere {
+  return { where: [] };
+}
+
+export const OrWhere = {
+  encode(
+    message: OrWhere,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    for (const v of message.where) {
+      WhereCondition.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): OrWhere {
+    const reader =
+      input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseOrWhere();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.where.push(WhereCondition.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): OrWhere {
+    return {
+      where: Array.isArray(object?.where)
+        ? object.where.map((e: any) => WhereCondition.fromJSON(e))
+        : [],
+    };
+  },
+
+  toJSON(message: OrWhere): unknown {
+    const obj: any = {};
+    if (message.where) {
+      obj.where = message.where.map((e) =>
+        e ? WhereCondition.toJSON(e) : undefined
+      );
+    } else {
+      obj.where = [];
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<OrWhere>, I>>(base?: I): OrWhere {
+    return OrWhere.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<OrWhere>, I>>(object: I): OrWhere {
+    const message = createBaseOrWhere();
+    message.where =
+      object.where?.map((e) => WhereCondition.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBaseWhereCriteria(): WhereCriteria {
+  return { whereType: undefined };
+}
+
+export const WhereCriteria = {
+  encode(
+    message: WhereCriteria,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    switch (message.whereType?.$case) {
+      case "condition":
+        WhereCondition.encode(
+          message.whereType.condition,
+          writer.uint32(10).fork()
+        ).ldelim();
+        break;
+      case "and":
+        AndWhere.encode(
+          message.whereType.and,
+          writer.uint32(18).fork()
+        ).ldelim();
+        break;
+      case "or":
+        OrWhere.encode(message.whereType.or, writer.uint32(26).fork()).ldelim();
+        break;
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): WhereCriteria {
+    const reader =
+      input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseWhereCriteria();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.whereType = {
+            $case: "condition",
+            condition: WhereCondition.decode(reader, reader.uint32()),
+          };
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.whereType = {
+            $case: "and",
+            and: AndWhere.decode(reader, reader.uint32()),
+          };
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.whereType = {
+            $case: "or",
+            or: OrWhere.decode(reader, reader.uint32()),
+          };
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): WhereCriteria {
+    return {
+      whereType: isSet(object.condition)
+        ? {
+            $case: "condition",
+            condition: WhereCondition.fromJSON(object.condition),
+          }
+        : isSet(object.and)
+        ? { $case: "and", and: AndWhere.fromJSON(object.and) }
+        : isSet(object.or)
+        ? { $case: "or", or: OrWhere.fromJSON(object.or) }
+        : undefined,
+    };
+  },
+
+  toJSON(message: WhereCriteria): unknown {
+    const obj: any = {};
+    message.whereType?.$case === "condition" &&
+      (obj.condition = message.whereType?.condition
+        ? WhereCondition.toJSON(message.whereType?.condition)
+        : undefined);
+    message.whereType?.$case === "and" &&
+      (obj.and = message.whereType?.and
+        ? AndWhere.toJSON(message.whereType?.and)
+        : undefined);
+    message.whereType?.$case === "or" &&
+      (obj.or = message.whereType?.or
+        ? OrWhere.toJSON(message.whereType?.or)
+        : undefined);
     return obj;
   },
 
@@ -846,12 +1134,36 @@ export const WhereCriteria = {
     object: I
   ): WhereCriteria {
     const message = createBaseWhereCriteria();
-    message.operator = object.operator ?? 0;
-    message.key = object.key ?? "";
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? Value.fromPartial(object.value)
-        : undefined;
+    if (
+      object.whereType?.$case === "condition" &&
+      object.whereType?.condition !== undefined &&
+      object.whereType?.condition !== null
+    ) {
+      message.whereType = {
+        $case: "condition",
+        condition: WhereCondition.fromPartial(object.whereType.condition),
+      };
+    }
+    if (
+      object.whereType?.$case === "and" &&
+      object.whereType?.and !== undefined &&
+      object.whereType?.and !== null
+    ) {
+      message.whereType = {
+        $case: "and",
+        and: AndWhere.fromPartial(object.whereType.and),
+      };
+    }
+    if (
+      object.whereType?.$case === "or" &&
+      object.whereType?.or !== undefined &&
+      object.whereType?.or !== null
+    ) {
+      message.whereType = {
+        $case: "or",
+        or: OrWhere.fromPartial(object.whereType.or),
+      };
+    }
     return message;
   },
 };
