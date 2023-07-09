@@ -273,11 +273,11 @@ export interface WhereCondition {
 }
 
 export interface AndWhere {
-  where: WhereCondition[];
+  where: WhereCriteria[];
 }
 
 export interface OrWhere {
-  where: WhereCondition[];
+  where: WhereCriteria[];
 }
 
 export interface WhereCriteria {
@@ -884,7 +884,7 @@ export const AndWhere = {
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     for (const v of message.where) {
-      WhereCondition.encode(v!, writer.uint32(10).fork()).ldelim();
+      WhereCriteria.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
@@ -902,7 +902,7 @@ export const AndWhere = {
             break;
           }
 
-          message.where.push(WhereCondition.decode(reader, reader.uint32()));
+          message.where.push(WhereCriteria.decode(reader, reader.uint32()));
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -916,7 +916,7 @@ export const AndWhere = {
   fromJSON(object: any): AndWhere {
     return {
       where: Array.isArray(object?.where)
-        ? object.where.map((e: any) => WhereCondition.fromJSON(e))
+        ? object.where.map((e: any) => WhereCriteria.fromJSON(e))
         : [],
     };
   },
@@ -925,7 +925,7 @@ export const AndWhere = {
     const obj: any = {};
     if (message.where) {
       obj.where = message.where.map((e) =>
-        e ? WhereCondition.toJSON(e) : undefined
+        e ? WhereCriteria.toJSON(e) : undefined
       );
     } else {
       obj.where = [];
@@ -940,7 +940,7 @@ export const AndWhere = {
   fromPartial<I extends Exact<DeepPartial<AndWhere>, I>>(object: I): AndWhere {
     const message = createBaseAndWhere();
     message.where =
-      object.where?.map((e) => WhereCondition.fromPartial(e)) || [];
+      object.where?.map((e) => WhereCriteria.fromPartial(e)) || [];
     return message;
   },
 };
@@ -955,7 +955,7 @@ export const OrWhere = {
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     for (const v of message.where) {
-      WhereCondition.encode(v!, writer.uint32(10).fork()).ldelim();
+      WhereCriteria.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
@@ -973,7 +973,7 @@ export const OrWhere = {
             break;
           }
 
-          message.where.push(WhereCondition.decode(reader, reader.uint32()));
+          message.where.push(WhereCriteria.decode(reader, reader.uint32()));
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -987,7 +987,7 @@ export const OrWhere = {
   fromJSON(object: any): OrWhere {
     return {
       where: Array.isArray(object?.where)
-        ? object.where.map((e: any) => WhereCondition.fromJSON(e))
+        ? object.where.map((e: any) => WhereCriteria.fromJSON(e))
         : [],
     };
   },
@@ -996,7 +996,7 @@ export const OrWhere = {
     const obj: any = {};
     if (message.where) {
       obj.where = message.where.map((e) =>
-        e ? WhereCondition.toJSON(e) : undefined
+        e ? WhereCriteria.toJSON(e) : undefined
       );
     } else {
       obj.where = [];
@@ -1011,7 +1011,7 @@ export const OrWhere = {
   fromPartial<I extends Exact<DeepPartial<OrWhere>, I>>(object: I): OrWhere {
     const message = createBaseOrWhere();
     message.where =
-      object.where?.map((e) => WhereCondition.fromPartial(e)) || [];
+      object.where?.map((e) => WhereCriteria.fromPartial(e)) || [];
     return message;
   },
 };

@@ -10,7 +10,6 @@ import {
   Query,
   Value as RelationalValue,
   WhereCriteria,
-  WhereCondition as Wheres,
 } from "../models/data-access-layer/relational/relational";
 
 import { BaseQuery } from "./BaseQuery";
@@ -22,7 +21,7 @@ type Condition = [
   value: RelationalValue
 ];
 
-type ConditionGroup = [group: "and" | "or", conditions: Condition[]];
+type ConditionGroup = [group: "and" | "or", conditions: WhereCondition[]];
 
 export type WhereCondition = Condition | ScanCriteria[] | ConditionGroup;
 
@@ -327,12 +326,20 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
   ): Partial<WhereCriteria> {
     const [group, conditions] = conditionGroup;
 
-    const wheres: Wheres[] = _.map(conditions, (condition) => {
-      const [column, operator, value] = condition;
+    const wheres: WhereCriteria[] = _.map(conditions, (condition) => {
+      if (this.isConditionGroup(condition)) {
+        return this.buildForConditionGroup(condition);
+      }
+      const [column, operator, value] = condition as Condition;
       return {
-        key: column.name,
-        operator,
-        value,
+        whereType: {
+          $case: "condition",
+          condition: {
+            key: column.name,
+            operator,
+            value,
+          },
+        },
       };
     });
 
