@@ -266,7 +266,7 @@ export interface Column {
   type?: ColumnType | undefined;
 }
 
-export interface WhereCondition {
+export interface Condition {
   operator: Operator;
   key: string;
   value?: Value;
@@ -282,7 +282,7 @@ export interface OrWhere {
 
 export interface WhereCriteria {
   whereType?:
-    | { $case: "condition"; condition: WhereCondition }
+    | { $case: "condition"; condition: Condition }
     | { $case: "and"; and: AndWhere }
     | {
         $case: "or";
@@ -777,13 +777,13 @@ export const Column = {
   },
 };
 
-function createBaseWhereCondition(): WhereCondition {
+function createBaseCondition(): Condition {
   return { operator: 0, key: "", value: undefined };
 }
 
-export const WhereCondition = {
+export const Condition = {
   encode(
-    message: WhereCondition,
+    message: Condition,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.operator !== 0) {
@@ -798,11 +798,11 @@ export const WhereCondition = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): WhereCondition {
+  decode(input: _m0.Reader | Uint8Array, length?: number): Condition {
     const reader =
       input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseWhereCondition();
+    const message = createBaseCondition();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -836,7 +836,7 @@ export const WhereCondition = {
     return message;
   },
 
-  fromJSON(object: any): WhereCondition {
+  fromJSON(object: any): Condition {
     return {
       operator: isSet(object.operator) ? operatorFromJSON(object.operator) : 0,
       key: isSet(object.key) ? String(object.key) : "",
@@ -844,7 +844,7 @@ export const WhereCondition = {
     };
   },
 
-  toJSON(message: WhereCondition): unknown {
+  toJSON(message: Condition): unknown {
     const obj: any = {};
     message.operator !== undefined &&
       (obj.operator = operatorToJSON(message.operator));
@@ -854,16 +854,14 @@ export const WhereCondition = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<WhereCondition>, I>>(
-    base?: I
-  ): WhereCondition {
-    return WhereCondition.fromPartial(base ?? {});
+  create<I extends Exact<DeepPartial<Condition>, I>>(base?: I): Condition {
+    return Condition.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<WhereCondition>, I>>(
+  fromPartial<I extends Exact<DeepPartial<Condition>, I>>(
     object: I
-  ): WhereCondition {
-    const message = createBaseWhereCondition();
+  ): Condition {
+    const message = createBaseCondition();
     message.operator = object.operator ?? 0;
     message.key = object.key ?? "";
     message.value =
@@ -1027,7 +1025,7 @@ export const WhereCriteria = {
   ): _m0.Writer {
     switch (message.whereType?.$case) {
       case "condition":
-        WhereCondition.encode(
+        Condition.encode(
           message.whereType.condition,
           writer.uint32(10).fork()
         ).ldelim();
@@ -1060,7 +1058,7 @@ export const WhereCriteria = {
 
           message.whereType = {
             $case: "condition",
-            condition: WhereCondition.decode(reader, reader.uint32()),
+            condition: Condition.decode(reader, reader.uint32()),
           };
           continue;
         case 2:
@@ -1097,7 +1095,7 @@ export const WhereCriteria = {
       whereType: isSet(object.condition)
         ? {
             $case: "condition",
-            condition: WhereCondition.fromJSON(object.condition),
+            condition: Condition.fromJSON(object.condition),
           }
         : isSet(object.and)
         ? { $case: "and", and: AndWhere.fromJSON(object.and) }
@@ -1111,7 +1109,7 @@ export const WhereCriteria = {
     const obj: any = {};
     message.whereType?.$case === "condition" &&
       (obj.condition = message.whereType?.condition
-        ? WhereCondition.toJSON(message.whereType?.condition)
+        ? Condition.toJSON(message.whereType?.condition)
         : undefined);
     message.whereType?.$case === "and" &&
       (obj.and = message.whereType?.and
@@ -1141,7 +1139,7 @@ export const WhereCriteria = {
     ) {
       message.whereType = {
         $case: "condition",
-        condition: WhereCondition.fromPartial(object.whereType.condition),
+        condition: Condition.fromPartial(object.whereType.condition),
       };
     }
     if (

@@ -15,15 +15,18 @@ import {
 import { BaseQuery } from "./BaseQuery";
 import _ from "lodash";
 
-type Condition = [
-  column: TableColumn,
-  operator: Operator,
-  value: RelationalValue
-];
+interface Condition {
+  column: TableColumn;
+  operator: Operator;
+  value: RelationalValue;
+}
 
-type ConditionGroup = [group: "and" | "or", conditions: WhereCondition[]];
+interface ConditionGroup {
+  group: "and" | "or";
+  conditions: WhereCondition;
+}
 
-export type WhereCondition = Condition | ScanCriteria[] | ConditionGroup;
+export type WhereCondition = Condition[] | ScanCriteria[] | ConditionGroup[];
 
 interface Build {
   build: () => Query;
@@ -56,6 +59,14 @@ interface Update extends Build {
 
 interface Delete {
   where: (...inputs: WhereCondition) => WhereForModify;
+}
+
+export function and(...conditions: Condition[]): ConditionGroup {
+  return { group: "and", conditions };
+}
+
+export function or(...conditions: Condition[]): ConditionGroup {
+  return { group: "or", conditions };
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -240,14 +251,6 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     };
   }
 
-  public and(conditions: Condition[]): ConditionGroup {
-    return ["and", conditions];
-  }
-
-  public or(conditions: Condition[]): ConditionGroup {
-    return ["or", conditions];
-  }
-
   // private orderBy(column: TableColumn, direction: "asc" | "desc") {}
 
   private where(...inputs: WhereCondition): Where {
@@ -259,16 +262,16 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
       throw new Error("Where requires at least one argument");
     }
 
-    if (this.isScanCriteria(inputs[0])) {
-      for (const input of inputs as ScanCriteria[]) {
-        this.#query.query.select.where.push(this.buildForScanCriteria(input));
+    for (const input of inputs) {
+      if (this.isScanCriteria(input)) {
+        for (const scan of inputs as ScanCriteria[]) {
+          this.#query.query.select.where.push(this.buildForScanCriteria(scan));
+        }
+      } else if (this.isConditionGroup(input)) {
+        this.#query.query.select.where.push(this.buildForConditionGroup(input));
+      } else {
+        this.#query.query.select.where.push(this.buildForCondition(input));
       }
-    } else if (this.isConditionGroup(inputs)) {
-      this.#query.query.select.where.push(this.buildForConditionGroup(inputs));
-    } else {
-      this.#query.query.select.where.push(
-        this.buildForCondition(inputs as Condition)
-      );
     }
 
     return {
@@ -286,32 +289,36 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     }
 
     if (this.#query?.query?.$case === "update") {
-      if (this.isScanCriteria(inputs[0])) {
-        for (const input of inputs as ScanCriteria[]) {
-          this.#query.query.update.where.push(this.buildForScanCriteria(input));
+      for (const input of inputs) {
+        if (this.isScanCriteria(input)) {
+          for (const scan of inputs as ScanCriteria[]) {
+            this.#query.query.update.where.push(
+              this.buildForScanCriteria(scan)
+            );
+          }
+        } else if (this.isConditionGroup(input)) {
+          this.#query.query.update.where.push(
+            this.buildForConditionGroup(input)
+          );
+        } else {
+          this.#query.query.update.where.push(this.buildForCondition(input));
         }
-      } else if (this.isConditionGroup(inputs)) {
-        this.#query.query.update.where.push(
-          this.buildForConditionGroup(inputs)
-        );
-      } else {
-        this.#query.query.update.where.push(
-          this.buildForCondition(inputs as Condition)
-        );
       }
     } else if (this.#query?.query?.$case === "delete") {
-      if (this.isScanCriteria(inputs[0])) {
-        for (const input of inputs as ScanCriteria[]) {
-          this.#query.query.delete.where.push(this.buildForScanCriteria(input));
+      for (const input of inputs) {
+        if (this.isScanCriteria(input)) {
+          for (const scan of inputs as ScanCriteria[]) {
+            this.#query.query.delete.where.push(
+              this.buildForScanCriteria(scan)
+            );
+          }
+        } else if (this.isConditionGroup(input)) {
+          this.#query.query.delete.where.push(
+            this.buildForConditionGroup(input)
+          );
+        } else {
+          this.#query.query.delete.where.push(this.buildForCondition(input));
         }
-      } else if (this.isConditionGroup(inputs)) {
-        this.#query.query.delete.where.push(
-          this.buildForConditionGroup(inputs)
-        );
-      } else {
-        this.#query.query.delete.where.push(
-          this.buildForCondition(inputs as Condition)
-        );
       }
     }
 
@@ -324,13 +331,13 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
   private buildForConditionGroup(
     conditionGroup: ConditionGroup
   ): Partial<WhereCriteria> {
-    const [group, conditions] = conditionGroup;
+    const { group, conditions } = conditionGroup;
 
     const wheres: WhereCriteria[] = _.map(conditions, (condition) => {
       if (this.isConditionGroup(condition)) {
         return this.buildForConditionGroup(condition);
       }
-      const [column, operator, value] = condition as Condition;
+      const { column, operator, value } = condition as Condition;
       return {
         whereType: {
           $case: "condition",
@@ -354,7 +361,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
   }
 
   private buildForCondition(condition: Condition): Partial<WhereCriteria> {
-    const [column, operator, value] = condition;
+    const { column, operator, value } = condition;
 
     return {
       whereType: {
@@ -428,8 +435,8 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     return (
       criteria != null &&
       typeof criteria === "object" &&
-      typeof (criteria as ConditionGroup)[0] === "string" &&
-      typeof (criteria as ConditionGroup)[1] === "object"
+      typeof (criteria as ConditionGroup).group === "string" &&
+      typeof (criteria as ConditionGroup).conditions === "object"
     );
   }
 
