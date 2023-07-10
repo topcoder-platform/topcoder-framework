@@ -15,18 +15,23 @@ import {
 import { BaseQuery } from "./BaseQuery";
 import _ from "lodash";
 
-interface Condition {
-  column: TableColumn;
-  operator: Operator;
-  value: RelationalValue;
-}
+export type ConditionTuple = [
+  column: TableColumn,
+  operator: Operator,
+  value: RelationalValue
+];
 
-interface ConditionGroup {
-  group: "and" | "or";
-  conditions: WhereCondition[];
-}
+export type ConditionGroup = [
+  group: "and" | "or",
+  conditions: WhereGroupCondition[]
+];
 
-export type WhereCondition = Condition | ScanCriteria | ConditionGroup;
+export type WhereCondition = ConditionTuple | ScanCriteria[];
+
+export type WhereGroupCondition =
+  | ConditionTuple
+  | ScanCriteria
+  | ConditionGroup;
 
 interface Build {
   build: () => Query;
@@ -38,35 +43,40 @@ interface Limit extends Build {
 }
 
 interface Where extends Build {
-  andWhere: (...inputs: WhereCondition[]) => Where;
+  andWhere: (...inputs: WhereCondition) => Where;
+  andWhereGroup: (...inputs: WhereGroupCondition[]) => Where;
   limit: (limit: number) => Limit;
   offset: (offset: number) => Build;
 }
 
 interface WhereForModify extends Build {
-  andWhere: (...inputs: WhereCondition[]) => WhereForModify;
+  andWhere: (...inputs: WhereCondition) => WhereForModify;
+  andWhereGroup: (...inputs: WhereGroupCondition[]) => WhereForModify;
 }
 
 interface Select extends Build {
-  where: (...inputs: WhereCondition[]) => Where;
+  where: (...inputs: WhereCondition) => Where;
+  whereGroup: (...inputs: WhereGroupCondition[]) => Where;
   limit: (limit: number) => Limit;
   offset: (offset: number) => Build;
 }
 
 interface Update extends Build {
-  where: (...inputs: WhereCondition[]) => WhereForModify;
+  where: (...inputs: WhereCondition) => WhereForModify;
+  whereGroup: (...inputs: WhereGroupCondition[]) => WhereForModify;
 }
 
 interface Delete {
-  where: (...inputs: WhereCondition[]) => WhereForModify;
+  where: (...inputs: WhereCondition) => WhereForModify;
+  whereGroup: (...inputs: WhereGroupCondition[]) => WhereForModify;
 }
 
-export function and(...conditions: Condition[]): ConditionGroup {
-  return { group: "and", conditions };
+export function and(...conditions: WhereGroupCondition[]): ConditionGroup {
+  return ["and", conditions];
 }
 
-export function or(...conditions: Condition[]): ConditionGroup {
-  return { group: "or", conditions };
+export function or(...conditions: WhereGroupCondition[]): ConditionGroup {
+  return ["or", conditions];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -97,6 +107,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
 
     return {
       where: this.where.bind(this),
+      whereGroup: this.whereGroup.bind(this),
       //   orderBy: this.orderBy.bind(this),
       limit: this.limit.bind(this),
       offset: this.offset.bind(this),
@@ -230,6 +241,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
 
     return {
       where: this.whereForModify.bind(this),
+      whereGroup: this.whereGroupForModify.bind(this),
       build: this.build.bind(this),
     };
   }
@@ -248,12 +260,40 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
 
     return {
       where: this.whereForModify.bind(this),
+      whereGroup: this.whereGroupForModify.bind(this),
     };
   }
 
   // private orderBy(column: TableColumn, direction: "asc" | "desc") {}
 
-  private where(...inputs: WhereCondition[]): Where {
+  private where(...inputs: WhereCondition): Where {
+    if (this.#query?.query?.$case !== "select") {
+      throw new Error("Where can only be used in select queries");
+    }
+
+    if (!inputs.length) {
+      throw new Error("Where requires at least one argument");
+    }
+
+    if (this.isScanCriteriaArray(inputs)) {
+      for (const input of inputs) {
+        this.#query.query.select.where.push(this.buildForScanCriteria(input));
+      }
+    } else {
+      this.#query.query.select.where.push(this.buildForCondition(inputs));
+    }
+
+    return {
+      andWhere: this.where.bind(this),
+      andWhereGroup: this.whereGroup.bind(this),
+      //   orderBy: this.orderBy.bind(this),
+      limit: this.limit.bind(this),
+      offset: this.offset.bind(this),
+      build: this.build.bind(this),
+    };
+  }
+
+  private whereGroup(...inputs: WhereGroupCondition[]): Where {
     if (this.#query?.query?.$case !== "select") {
       throw new Error("Where can only be used in select queries");
     }
@@ -274,6 +314,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
 
     return {
       andWhere: this.where.bind(this),
+      andWhereGroup: this.whereGroup.bind(this),
       //   orderBy: this.orderBy.bind(this),
       limit: this.limit.bind(this),
       offset: this.offset.bind(this),
@@ -281,7 +322,39 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     };
   }
 
-  private whereForModify(...inputs: WhereCondition[]): WhereForModify {
+  private whereForModify(...inputs: WhereCondition): WhereForModify {
+    if (!inputs.length) {
+      throw new Error("Where requires at least one argument");
+    }
+
+    if (this.#query?.query?.$case === "update") {
+      if (this.isScanCriteriaArray(inputs)) {
+        for (const input of inputs) {
+          this.#query.query.update.where.push(this.buildForScanCriteria(input));
+        }
+      } else {
+        this.#query.query.update.where.push(this.buildForCondition(inputs));
+      }
+    } else if (this.#query?.query?.$case === "delete") {
+      if (this.isScanCriteriaArray(inputs)) {
+        for (const input of inputs) {
+          this.#query.query.delete.where.push(this.buildForScanCriteria(input));
+        }
+      } else {
+        this.#query.query.delete.where.push(this.buildForCondition(inputs));
+      }
+    }
+
+    return {
+      andWhere: this.whereForModify.bind(this),
+      andWhereGroup: this.whereGroup.bind(this),
+      build: this.build.bind(this),
+    };
+  }
+
+  private whereGroupForModify(
+    ...inputs: WhereGroupCondition[]
+  ): WhereForModify {
     if (!inputs.length) {
       throw new Error("Where requires at least one argument");
     }
@@ -314,6 +387,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
 
     return {
       andWhere: this.whereForModify.bind(this),
+      andWhereGroup: this.whereGroup.bind(this),
       build: this.build.bind(this),
     };
   }
@@ -321,23 +395,16 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
   private buildForConditionGroup(
     conditionGroup: ConditionGroup
   ): Partial<WhereCriteria> {
-    const { group, conditions } = conditionGroup;
+    const [group, conditions] = conditionGroup;
 
     const wheres: WhereCriteria[] = _.map(conditions, (condition) => {
       if (this.isConditionGroup(condition)) {
         return this.buildForConditionGroup(condition);
+      } else if (this.isScanCriteria(condition)) {
+        return this.buildForScanCriteria(condition);
+      } else {
+        return this.buildForCondition(condition);
       }
-      const { column, operator, value } = condition as Condition;
-      return {
-        whereType: {
-          $case: "condition",
-          condition: {
-            key: column.name,
-            operator,
-            value,
-          },
-        },
-      };
     });
 
     const whereType: Partial<WhereCriteria> = {};
@@ -350,8 +417,8 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     return whereType;
   }
 
-  private buildForCondition(condition: Condition): Partial<WhereCriteria> {
-    const { column, operator, value } = condition;
+  private buildForCondition(condition: ConditionTuple): Partial<WhereCriteria> {
+    const [column, operator, value] = condition;
 
     return {
       whereType: {
@@ -412,21 +479,29 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     return this.#query;
   }
 
+  private isScanCriteriaArray(criteria: unknown): criteria is ScanCriteria[] {
+    return (
+      criteria != null &&
+      _.isArray(criteria) &&
+      this.isScanCriteria(criteria[0])
+    );
+  }
+
   private isScanCriteria(criteria: unknown): criteria is ScanCriteria {
     return (
       criteria != null &&
-      typeof criteria === "object" &&
-      typeof (criteria as ScanCriteria).key === "string" &&
-      typeof (criteria as ScanCriteria).operator !== "undefined"
+      _.isObject(criteria) &&
+      _.has(criteria, "key") &&
+      _.has(criteria, "operator")
     );
   }
 
   private isConditionGroup(criteria: unknown): criteria is ConditionGroup {
     return (
-      criteria != null &&
-      typeof criteria === "object" &&
-      typeof (criteria as ConditionGroup).group === "string" &&
-      typeof (criteria as ConditionGroup).conditions === "object"
+      _.isArray(criteria) &&
+      criteria.length === 2 &&
+      criteria[0] in ["and", "or"] &&
+      _.isArray(criteria[2])
     );
   }
 
@@ -441,10 +516,6 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
 
   private toRelationalValue(key: string, value: unknown): RelationalValue {
     const dataType: ColumnType = this.schema.columns[key].type;
-
-    if (this.isWKTValue(value)) {
-      value = Value.unwrap(value);
-    }
 
     if (this.isWKTValue(value)) {
       value = Value.unwrap(value);
