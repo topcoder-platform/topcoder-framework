@@ -23,10 +23,10 @@ interface Condition {
 
 interface ConditionGroup {
   group: "and" | "or";
-  conditions: WhereCondition;
+  conditions: WhereCondition[];
 }
 
-export type WhereCondition = Condition[] | ScanCriteria[] | ConditionGroup[];
+export type WhereCondition = Condition | ScanCriteria | ConditionGroup;
 
 interface Build {
   build: () => Query;
@@ -38,27 +38,27 @@ interface Limit extends Build {
 }
 
 interface Where extends Build {
-  andWhere: (...inputs: WhereCondition) => Where;
+  andWhere: (...inputs: WhereCondition[]) => Where;
   limit: (limit: number) => Limit;
   offset: (offset: number) => Build;
 }
 
 interface WhereForModify extends Build {
-  andWhere: (...inputs: WhereCondition) => WhereForModify;
+  andWhere: (...inputs: WhereCondition[]) => WhereForModify;
 }
 
 interface Select extends Build {
-  where: (...inputs: WhereCondition) => Where;
+  where: (...inputs: WhereCondition[]) => Where;
   limit: (limit: number) => Limit;
   offset: (offset: number) => Build;
 }
 
 interface Update extends Build {
-  where: (...inputs: WhereCondition) => WhereForModify;
+  where: (...inputs: WhereCondition[]) => WhereForModify;
 }
 
 interface Delete {
-  where: (...inputs: WhereCondition) => WhereForModify;
+  where: (...inputs: WhereCondition[]) => WhereForModify;
 }
 
 export function and(...conditions: Condition[]): ConditionGroup {
@@ -253,7 +253,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
 
   // private orderBy(column: TableColumn, direction: "asc" | "desc") {}
 
-  private where(...inputs: WhereCondition): Where {
+  private where(...inputs: WhereCondition[]): Where {
     if (this.#query?.query?.$case !== "select") {
       throw new Error("Where can only be used in select queries");
     }
@@ -264,9 +264,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
 
     for (const input of inputs) {
       if (this.isScanCriteria(input)) {
-        for (const scan of inputs as ScanCriteria[]) {
-          this.#query.query.select.where.push(this.buildForScanCriteria(scan));
-        }
+        this.#query.query.select.where.push(this.buildForScanCriteria(input));
       } else if (this.isConditionGroup(input)) {
         this.#query.query.select.where.push(this.buildForConditionGroup(input));
       } else {
@@ -283,7 +281,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     };
   }
 
-  private whereForModify(...inputs: WhereCondition): WhereForModify {
+  private whereForModify(...inputs: WhereCondition[]): WhereForModify {
     if (!inputs.length) {
       throw new Error("Where requires at least one argument");
     }
@@ -291,11 +289,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     if (this.#query?.query?.$case === "update") {
       for (const input of inputs) {
         if (this.isScanCriteria(input)) {
-          for (const scan of inputs as ScanCriteria[]) {
-            this.#query.query.update.where.push(
-              this.buildForScanCriteria(scan)
-            );
-          }
+          this.#query.query.update.where.push(this.buildForScanCriteria(input));
         } else if (this.isConditionGroup(input)) {
           this.#query.query.update.where.push(
             this.buildForConditionGroup(input)
@@ -307,11 +301,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     } else if (this.#query?.query?.$case === "delete") {
       for (const input of inputs) {
         if (this.isScanCriteria(input)) {
-          for (const scan of inputs as ScanCriteria[]) {
-            this.#query.query.delete.where.push(
-              this.buildForScanCriteria(scan)
-            );
-          }
+          this.#query.query.delete.where.push(this.buildForScanCriteria(input));
         } else if (this.isConditionGroup(input)) {
           this.#query.query.delete.where.push(
             this.buildForConditionGroup(input)
