@@ -261,14 +261,15 @@ export interface Value {
 }
 
 export interface Column {
-  tableName?: string | undefined;
+  schema?: string | undefined;
+  tableName: string;
   name: string;
-  type?: ColumnType | undefined;
+  type: ColumnType;
 }
 
 export interface Condition {
   operator: Operator;
-  key: string;
+  key?: Column;
   value?: Value;
 }
 
@@ -686,7 +687,7 @@ export const Value = {
 };
 
 function createBaseColumn(): Column {
-  return { tableName: undefined, name: "", type: undefined };
+  return { schema: undefined, tableName: "", name: "", type: 0 };
 }
 
 export const Column = {
@@ -694,14 +695,17 @@ export const Column = {
     message: Column,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.tableName !== undefined) {
-      writer.uint32(10).string(message.tableName);
+    if (message.schema !== undefined) {
+      writer.uint32(10).string(message.schema);
+    }
+    if (message.tableName !== "") {
+      writer.uint32(18).string(message.tableName);
     }
     if (message.name !== "") {
-      writer.uint32(18).string(message.name);
+      writer.uint32(26).string(message.name);
     }
-    if (message.type !== undefined) {
-      writer.uint32(24).int32(message.type);
+    if (message.type !== 0) {
+      writer.uint32(32).int32(message.type);
     }
     return writer;
   },
@@ -719,17 +723,24 @@ export const Column = {
             break;
           }
 
-          message.tableName = reader.string();
+          message.schema = reader.string();
           continue;
         case 2:
           if (tag !== 18) {
             break;
           }
 
-          message.name = reader.string();
+          message.tableName = reader.string();
           continue;
         case 3:
-          if (tag !== 24) {
+          if (tag !== 26) {
+            break;
+          }
+
+          message.name = reader.string();
+          continue;
+        case 4:
+          if (tag !== 32) {
             break;
           }
 
@@ -746,21 +757,19 @@ export const Column = {
 
   fromJSON(object: any): Column {
     return {
-      tableName: isSet(object.tableName) ? String(object.tableName) : undefined,
+      schema: isSet(object.schema) ? String(object.schema) : undefined,
+      tableName: isSet(object.tableName) ? String(object.tableName) : "",
       name: isSet(object.name) ? String(object.name) : "",
-      type: isSet(object.type) ? columnTypeFromJSON(object.type) : undefined,
+      type: isSet(object.type) ? columnTypeFromJSON(object.type) : 0,
     };
   },
 
   toJSON(message: Column): unknown {
     const obj: any = {};
+    message.schema !== undefined && (obj.schema = message.schema);
     message.tableName !== undefined && (obj.tableName = message.tableName);
     message.name !== undefined && (obj.name = message.name);
-    message.type !== undefined &&
-      (obj.type =
-        message.type !== undefined
-          ? columnTypeToJSON(message.type)
-          : undefined);
+    message.type !== undefined && (obj.type = columnTypeToJSON(message.type));
     return obj;
   },
 
@@ -770,15 +779,16 @@ export const Column = {
 
   fromPartial<I extends Exact<DeepPartial<Column>, I>>(object: I): Column {
     const message = createBaseColumn();
-    message.tableName = object.tableName ?? undefined;
+    message.schema = object.schema ?? undefined;
+    message.tableName = object.tableName ?? "";
     message.name = object.name ?? "";
-    message.type = object.type ?? undefined;
+    message.type = object.type ?? 0;
     return message;
   },
 };
 
 function createBaseCondition(): Condition {
-  return { operator: 0, key: "", value: undefined };
+  return { operator: 0, key: undefined, value: undefined };
 }
 
 export const Condition = {
@@ -789,8 +799,8 @@ export const Condition = {
     if (message.operator !== 0) {
       writer.uint32(8).int32(message.operator);
     }
-    if (message.key !== "") {
-      writer.uint32(18).string(message.key);
+    if (message.key !== undefined) {
+      Column.encode(message.key, writer.uint32(18).fork()).ldelim();
     }
     if (message.value !== undefined) {
       Value.encode(message.value, writer.uint32(26).fork()).ldelim();
@@ -818,7 +828,7 @@ export const Condition = {
             break;
           }
 
-          message.key = reader.string();
+          message.key = Column.decode(reader, reader.uint32());
           continue;
         case 3:
           if (tag !== 26) {
@@ -839,7 +849,7 @@ export const Condition = {
   fromJSON(object: any): Condition {
     return {
       operator: isSet(object.operator) ? operatorFromJSON(object.operator) : 0,
-      key: isSet(object.key) ? String(object.key) : "",
+      key: isSet(object.key) ? Column.fromJSON(object.key) : undefined,
       value: isSet(object.value) ? Value.fromJSON(object.value) : undefined,
     };
   },
@@ -848,7 +858,8 @@ export const Condition = {
     const obj: any = {};
     message.operator !== undefined &&
       (obj.operator = operatorToJSON(message.operator));
-    message.key !== undefined && (obj.key = message.key);
+    message.key !== undefined &&
+      (obj.key = message.key ? Column.toJSON(message.key) : undefined);
     message.value !== undefined &&
       (obj.value = message.value ? Value.toJSON(message.value) : undefined);
     return obj;
@@ -863,7 +874,10 @@ export const Condition = {
   ): Condition {
     const message = createBaseCondition();
     message.operator = object.operator ?? 0;
-    message.key = object.key ?? "";
+    message.key =
+      object.key !== undefined && object.key !== null
+        ? Column.fromPartial(object.key)
+        : undefined;
     message.value =
       object.value !== undefined && object.value !== null
         ? Value.fromPartial(object.value)

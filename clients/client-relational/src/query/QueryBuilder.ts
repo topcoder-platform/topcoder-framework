@@ -1,37 +1,33 @@
 import {
-  ScanCriteria,
-  Value,
-  Operator as LibCommonOperator,
-} from "@topcoder-framework/lib-common";
-import { TableColumn } from "../interfaces/TableColumns";
-import {
   ColumnType,
   Operator,
   Query,
   Value as RelationalValue,
   WhereCriteria,
+  Column,
+  Join as JoinModel,
+  JoinType,
 } from "../models/data-access-layer/relational/relational";
 
 import { BaseQuery } from "./BaseQuery";
 import _ from "lodash";
 
-export type ConditionTuple = [
-  column: TableColumn,
-  operator: Operator,
-  value: RelationalValue
-];
+export type Join = Omit<JoinModel, "type">;
 
 export type ConditionGroup = [
   group: "and" | "or",
   conditions: WhereGroupCondition[]
 ];
 
-export type WhereCondition = ConditionTuple | ScanCriteria[];
+export type WhereCondition = [
+  column: Column,
+  operator: Operator,
+  value: ValueTypes
+];
 
-export type WhereGroupCondition =
-  | ConditionTuple
-  | ScanCriteria
-  | ConditionGroup;
+export type WhereGroupCondition = WhereCondition | ConditionGroup;
+
+export type ValueTypes = string | number | boolean | null;
 
 interface Build {
   build: () => Query;
@@ -55,6 +51,10 @@ interface WhereForModify extends Build {
 }
 
 interface Select extends Build {
+  join: (join: Join) => Select;
+  leftJoin: (join: Join) => Select;
+  rightJoin: (join: Join) => Select;
+  fullJoin: (join: Join) => Select;
   where: (...inputs: WhereCondition) => Where;
   whereGroup: (...inputs: WhereGroupCondition[]) => Where;
   limit: (limit: number) => Limit;
@@ -80,10 +80,12 @@ export function or(...conditions: WhereGroupCondition[]): ConditionGroup {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
+export class QueryBuilder<
+  T extends Record<string, ValueTypes>
+> extends BaseQuery<T> {
   #query: Query | null = null;
 
-  public select(...columns: TableColumn[]): Select {
+  public select(...columns: Column[]): Select {
     this.#query = {
       query: {
         $case: "select",
@@ -91,7 +93,8 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
           schema: this.schema.dbSchema,
           table: this.schema.tableName,
           column: columns.map((col) => ({
-            tableName: this.schema.tableName,
+            schema: col.schema,
+            tableName: col.tableName,
             name: col.name,
             type: col.type,
           })),
@@ -106,6 +109,10 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     };
 
     return {
+      join: this.join.bind(this, JoinType.JOIN_TYPE_INNER),
+      leftJoin: this.join.bind(this, JoinType.JOIN_TYPE_LEFT),
+      rightJoin: this.join.bind(this, JoinType.JOIN_TYPE_RIGHT),
+      fullJoin: this.join.bind(this, JoinType.JOIN_TYPE_FULL),
       where: this.where.bind(this),
       whereGroup: this.whereGroup.bind(this),
       //   orderBy: this.orderBy.bind(this),
@@ -115,9 +122,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     };
   }
 
-  public insert<CreateInput extends Record<string, unknown>>(
-    input: CreateInput
-  ): Build {
+  public insert(input: Partial<T>): Build {
     // TODO: This is a hack to get the create and modify audit columns, we need to either use the same "column name" or add a new property to the schema
     let createAuditColumnName = "create_date";
     let updateAuditColumnName = "modify_date";
@@ -155,7 +160,10 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
             )
             .map(([key, value]) => ({
               column: this.schema.columns[key]?.name ?? key,
-              value: this.toRelationalValue(key, value),
+              value: this.toRelationalValue(
+                this.schema.columns[key].type,
+                value as T[string]
+              ),
             })),
           idTable: this.schema.tableName,
           idColumn: this.schema.idColumn ?? undefined,
@@ -193,9 +201,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     };
   }
 
-  public update<UpdateInput extends Record<string, unknown>>(
-    input: UpdateInput
-  ): Update {
+  public update(input: Partial<T>): Update {
     let updateAuditColumnName = "modify_date";
     let auditColumnKey = "modifyDate";
 
@@ -225,14 +231,19 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
                 },
               },
             },
-            ...Object.entries(input)
-              .filter(
-                ([key, value]) => value !== undefined && key !== auditColumnKey
-              )
-              .map(([key, value]) => ({
+            ..._.map(
+              _.filter(
+                _.entries(input),
+                ([key, value]) => value !== undefined && key != auditColumnKey
+              ),
+              ([key, value]) => ({
                 column: this.schema.columns[key]?.name ?? key,
-                value: this.toRelationalValue(key, value),
-              })),
+                value: this.toRelationalValue(
+                  this.schema.columns[key].type,
+                  value as T[string]
+                ),
+              })
+            ),
           ],
           where: [],
         },
@@ -264,6 +275,25 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     };
   }
 
+  private join(type: JoinType, join: Join): Select {
+    if (this.#query?.query?.$case !== "select") {
+      throw new Error("Where can only be used in select queries");
+    }
+    this.#query?.query.select.join.push(_.assign({}, join, { type }));
+    return {
+      join: this.join.bind(this, JoinType.JOIN_TYPE_INNER),
+      leftJoin: this.join.bind(this, JoinType.JOIN_TYPE_LEFT),
+      rightJoin: this.join.bind(this, JoinType.JOIN_TYPE_RIGHT),
+      fullJoin: this.join.bind(this, JoinType.JOIN_TYPE_FULL),
+      where: this.where.bind(this),
+      whereGroup: this.whereGroup.bind(this),
+      //   orderBy: this.orderBy.bind(this),
+      limit: this.limit.bind(this),
+      offset: this.offset.bind(this),
+      build: this.build.bind(this),
+    };
+  }
+
   // private orderBy(column: TableColumn, direction: "asc" | "desc") {}
 
   private where(...inputs: WhereCondition): Where {
@@ -275,13 +305,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
       throw new Error("Where requires at least one argument");
     }
 
-    if (this.isScanCriteriaArray(inputs)) {
-      for (const input of inputs) {
-        this.#query.query.select.where.push(this.buildForScanCriteria(input));
-      }
-    } else {
-      this.#query.query.select.where.push(this.buildForCondition(inputs));
-    }
+    this.#query.query.select.where.push(this.buildForCondition(inputs));
 
     return {
       andWhere: this.where.bind(this),
@@ -303,9 +327,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     }
 
     for (const input of inputs) {
-      if (this.isScanCriteria(input)) {
-        this.#query.query.select.where.push(this.buildForScanCriteria(input));
-      } else if (this.isConditionGroup(input)) {
+      if (this.isConditionGroup(input)) {
         this.#query.query.select.where.push(this.buildForConditionGroup(input));
       } else {
         this.#query.query.select.where.push(this.buildForCondition(input));
@@ -328,21 +350,9 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     }
 
     if (this.#query?.query?.$case === "update") {
-      if (this.isScanCriteriaArray(inputs)) {
-        for (const input of inputs) {
-          this.#query.query.update.where.push(this.buildForScanCriteria(input));
-        }
-      } else {
-        this.#query.query.update.where.push(this.buildForCondition(inputs));
-      }
+      this.#query.query.update.where.push(this.buildForCondition(inputs));
     } else if (this.#query?.query?.$case === "delete") {
-      if (this.isScanCriteriaArray(inputs)) {
-        for (const input of inputs) {
-          this.#query.query.delete.where.push(this.buildForScanCriteria(input));
-        }
-      } else {
-        this.#query.query.delete.where.push(this.buildForCondition(inputs));
-      }
+      this.#query.query.delete.where.push(this.buildForCondition(inputs));
     }
 
     return {
@@ -361,9 +371,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
 
     if (this.#query?.query?.$case === "update") {
       for (const input of inputs) {
-        if (this.isScanCriteria(input)) {
-          this.#query.query.update.where.push(this.buildForScanCriteria(input));
-        } else if (this.isConditionGroup(input)) {
+        if (this.isConditionGroup(input)) {
           this.#query.query.update.where.push(
             this.buildForConditionGroup(input)
           );
@@ -373,9 +381,7 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
       }
     } else if (this.#query?.query?.$case === "delete") {
       for (const input of inputs) {
-        if (this.isScanCriteria(input)) {
-          this.#query.query.delete.where.push(this.buildForScanCriteria(input));
-        } else if (this.isConditionGroup(input)) {
+        if (this.isConditionGroup(input)) {
           this.#query.query.delete.where.push(
             this.buildForConditionGroup(input)
           );
@@ -400,8 +406,6 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     const wheres: WhereCriteria[] = _.map(conditions, (condition) => {
       if (this.isConditionGroup(condition)) {
         return this.buildForConditionGroup(condition);
-      } else if (this.isScanCriteria(condition)) {
-        return this.buildForScanCriteria(condition);
       } else {
         return this.buildForCondition(condition);
       }
@@ -417,32 +421,16 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     return whereType;
   }
 
-  private buildForCondition(condition: ConditionTuple): Partial<WhereCriteria> {
+  private buildForCondition(condition: WhereCondition): Partial<WhereCriteria> {
     const [column, operator, value] = condition;
 
     return {
       whereType: {
         $case: "condition",
         condition: {
-          key: column.name,
+          key: column,
           operator,
-          value,
-        },
-      },
-    };
-  }
-
-  private buildForScanCriteria(criteria: ScanCriteria): Partial<WhereCriteria> {
-    return {
-      whereType: {
-        $case: "condition",
-        condition: {
-          key: this.schema.columns[criteria.key].name,
-          operator:
-            criteria.operator === LibCommonOperator.OPERATOR_NOT_EQUAL
-              ? Operator.OPERATOR_NOT_EQUAL
-              : Operator.OPERATOR_EQUAL,
-          value: this.toRelationalValue(criteria.key, criteria.value),
+          value: this.toRelationalValue(column.type, value),
         },
       },
     };
@@ -479,23 +467,6 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     return this.#query;
   }
 
-  private isScanCriteriaArray(criteria: unknown): criteria is ScanCriteria[] {
-    return (
-      criteria != null &&
-      _.isArray(criteria) &&
-      this.isScanCriteria(criteria[0])
-    );
-  }
-
-  private isScanCriteria(criteria: unknown): criteria is ScanCriteria {
-    return (
-      criteria != null &&
-      _.isObject(criteria) &&
-      _.has(criteria, "key") &&
-      _.has(criteria, "operator")
-    );
-  }
-
   private isConditionGroup(criteria: unknown): criteria is ConditionGroup {
     return (
       _.isArray(criteria) &&
@@ -505,62 +476,51 @@ export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
     );
   }
 
-  private isWKTValue(value: unknown): value is Value {
-    return (
-      typeof value === "object" &&
-      value != null &&
-      typeof (value as Value)?.kind != undefined &&
-      typeof (value as Value)?.kind?.$case === "string"
-    );
-  }
-
-  private toRelationalValue(key: string, value: unknown): RelationalValue {
-    const dataType: ColumnType = this.schema.columns[key].type;
-
-    if (this.isWKTValue(value)) {
-      value = Value.unwrap(value);
+  private toRelationalValue(
+    columnType: ColumnType,
+    value: ValueTypes
+  ): RelationalValue | undefined {
+    // is null or set null
+    if (value === null) {
+      return undefined;
     }
 
-    if (dataType == null) {
-      throw new Error(`Unknown column ${key}`);
-    }
-
-    if (dataType === ColumnType.COLUMN_TYPE_INT) {
+    if (columnType === ColumnType.COLUMN_TYPE_INT) {
       return { value: { $case: "intValue", intValue: value as number } };
     }
 
-    if (dataType === ColumnType.COLUMN_TYPE_LONG) {
+    if (columnType === ColumnType.COLUMN_TYPE_LONG) {
       return { value: { $case: "longValue", longValue: value as number } };
     }
 
-    if (dataType === ColumnType.COLUMN_TYPE_FLOAT) {
+    if (columnType === ColumnType.COLUMN_TYPE_FLOAT) {
       return { value: { $case: "floatValue", floatValue: value as number } };
     }
 
-    if (dataType === ColumnType.COLUMN_TYPE_DOUBLE) {
+    if (columnType === ColumnType.COLUMN_TYPE_DOUBLE) {
       return { value: { $case: "doubleValue", doubleValue: value as number } };
     }
 
-    if (dataType === ColumnType.COLUMN_TYPE_DATE) {
+    if (columnType === ColumnType.COLUMN_TYPE_DATE) {
       return { value: { $case: "dateValue", dateValue: value as string } };
     }
 
-    if (dataType == ColumnType.COLUMN_TYPE_DATETIME) {
+    if (columnType == ColumnType.COLUMN_TYPE_DATETIME) {
       return {
         value: { $case: "datetimeValue", datetimeValue: value as string },
       };
     }
 
-    if (dataType == ColumnType.COLUMN_TYPE_STRING) {
+    if (columnType == ColumnType.COLUMN_TYPE_STRING) {
       return { value: { $case: "stringValue", stringValue: value as string } };
     }
 
-    if (dataType == ColumnType.COLUMN_TYPE_BOOLEAN) {
+    if (columnType == ColumnType.COLUMN_TYPE_BOOLEAN) {
       return {
         value: { $case: "booleanValue", booleanValue: value as boolean },
       };
     }
 
-    throw new Error(`Unsupported data type ${dataType}`);
+    throw new Error(`Unsupported data type ${columnType}`);
   }
 }

@@ -1,6 +1,9 @@
-import { ColumnType } from "../models/data-access-layer/relational/relational";
+import {
+  Column,
+  ColumnType,
+} from "../models/data-access-layer/relational/relational";
 
-export type TableColumn = {
+export type TableColumn = Partial<Column> & {
   name: string;
   type: ColumnType;
 };
