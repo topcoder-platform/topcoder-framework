@@ -1,13 +1,5 @@
-import {
-  Column,
-  ColumnType,
-} from "../models/data-access-layer/relational/relational";
-
-export type TableColumn = Partial<Column> & {
-  name: string;
-  type: ColumnType;
-};
+import { TypedColumn } from "../models/data-access-layer/relational/relational";
 
 export type TableColumns<T extends Record<string, unknown>> = {
-  [Property in keyof T]: TableColumn;
+  [Property in keyof T]: TypedColumn;
 };

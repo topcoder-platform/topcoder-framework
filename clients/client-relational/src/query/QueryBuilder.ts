@@ -4,15 +4,18 @@ import {
   Query,
   Value as RelationalValue,
   WhereCriteria,
-  Column,
   Join as JoinModel,
   JoinType,
+  TypedColumn,
+  Table,
 } from "../models/data-access-layer/relational/relational";
 
 import { BaseQuery } from "./BaseQuery";
 import _ from "lodash";
 
-export type Join = Omit<JoinModel, "type">;
+type Join = Omit<JoinModel, "type"> & {
+  table: Table;
+};
 
 export type ConditionGroup = [
   group: "and" | "or",
@@ -20,9 +23,9 @@ export type ConditionGroup = [
 ];
 
 export type WhereCondition = [
-  column: Column,
+  column: TypedColumn,
   operator: Operator,
-  value: ValueTypes
+  ...value: ValueTypes[]
 ];
 
 export type WhereGroupCondition = WhereCondition | ConditionGroup;
@@ -61,6 +64,11 @@ interface Select extends Build {
   offset: (offset: number) => Build;
 }
 
+interface Insert extends Build {
+  return: (...returning: TypedColumn[]) => Build;
+  build: () => Query;
+}
+
 interface Update extends Build {
   where: (...inputs: WhereCondition) => WhereForModify;
   whereGroup: (...inputs: WhereGroupCondition[]) => WhereForModify;
@@ -80,24 +88,17 @@ export function or(...conditions: WhereGroupCondition[]): ConditionGroup {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class QueryBuilder<
-  T extends Record<string, ValueTypes>
-> extends BaseQuery<T> {
+export class QueryBuilder<T extends Record<string, any>> extends BaseQuery<T> {
   #query: Query | null = null;
 
-  public select(...columns: Column[]): Select {
+  public select(...columns: TypedColumn[]): Select {
     this.#query = {
       query: {
         $case: "select",
         select: {
-          schema: this.schema.dbSchema,
-          table: this.schema.tableName,
-          column: columns.map((col) => ({
-            schema: col.schema,
-            tableName: col.tableName,
-            name: col.name,
-            type: col.type,
-          })),
+          schema: this.model.schema,
+          table: this.model.tableName,
+          column: columns,
           where: [],
           join: [],
           groupBy: [],
@@ -122,35 +123,35 @@ export class QueryBuilder<
     };
   }
 
-  public insert(input: Partial<T>): Build {
+  public insert(input: Partial<T>): Insert {
     // TODO: This is a hack to get the create and modify audit columns, we need to either use the same "column name" or add a new property to the schema
     let createAuditColumnName = "create_date";
     let updateAuditColumnName = "modify_date";
 
     let tableHasCreateAudit = false;
 
-    if (this.schema.columns.createDate != null) {
+    if (this.model.columns.createDate != null) {
       tableHasCreateAudit = true;
-      createAuditColumnName = this.schema.columns.createDate.name;
-    } else if (this.schema.columns.createTime != null) {
+      createAuditColumnName = this.model.columns.createDate.name;
+    } else if (this.model.columns.createTime != null) {
       tableHasCreateAudit = true;
-      createAuditColumnName = this.schema.columns.createTime.name;
+      createAuditColumnName = this.model.columns.createTime.name;
     }
 
-    if (this.schema.columns.modifyDate != null) {
-      updateAuditColumnName = this.schema.columns.modifyDate.name;
-    } else if (this.schema.columns.modifyTime != null) {
-      updateAuditColumnName = this.schema.columns.modifyTime.name;
-    } else if (this.schema.columns.dateModified != null) {
-      updateAuditColumnName = this.schema.columns.dateModified.name;
+    if (this.model.columns.modifyDate != null) {
+      updateAuditColumnName = this.model.columns.modifyDate.name;
+    } else if (this.model.columns.modifyTime != null) {
+      updateAuditColumnName = this.model.columns.modifyTime.name;
+    } else if (this.model.columns.dateModified != null) {
+      updateAuditColumnName = this.model.columns.dateModified.name;
     }
 
     this.#query = {
       query: {
         $case: "insert",
         insert: {
-          schema: this.schema.dbSchema,
-          table: this.schema.tableName,
+          schema: this.model.schema,
+          table: this.model.tableName,
           columnValue: Object.entries(input)
             .filter(
               ([key, value]) =>
@@ -159,16 +160,13 @@ export class QueryBuilder<
                 key !== "modifyDate"
             )
             .map(([key, value]) => ({
-              column: this.schema.columns[key]?.name ?? key,
-              value: this.toRelationalValue(
-                this.schema.columns[key].type,
+              column: this.model.columns[key].name,
+              value: this.toRelationalValueForUpdate(
+                this.model.columns[key].type,
                 value as T[string]
               ),
             })),
-          idTable: this.schema.tableName,
-          idColumn: this.schema.idColumn ?? undefined,
-          idSequence: this.schema.idSequence ?? undefined,
-          returningFields: this.schema.returningFields ?? [],
+          returningFields: [],
         },
       },
     };
@@ -197,6 +195,7 @@ export class QueryBuilder<
     }
 
     return {
+      return: this.returning.bind(this),
       build: this.build.bind(this),
     };
   }
@@ -205,13 +204,13 @@ export class QueryBuilder<
     let updateAuditColumnName = "modify_date";
     let auditColumnKey = "modifyDate";
 
-    if (this.schema.columns.modifyDate != null) {
-      updateAuditColumnName = this.schema.columns.modifyDate.name;
-    } else if (this.schema.columns.modifyTime != null) {
-      updateAuditColumnName = this.schema.columns.modifyTime.name;
+    if (this.model.columns.modifyDate != null) {
+      updateAuditColumnName = this.model.columns.modifyDate.name;
+    } else if (this.model.columns.modifyTime != null) {
+      updateAuditColumnName = this.model.columns.modifyTime.name;
       auditColumnKey = "modifyTime";
-    } else if (this.schema.columns.dateModified != null) {
-      updateAuditColumnName = this.schema.columns.dateModified.name;
+    } else if (this.model.columns.dateModified != null) {
+      updateAuditColumnName = this.model.columns.dateModified.name;
       auditColumnKey = "dateModified";
     }
 
@@ -219,8 +218,8 @@ export class QueryBuilder<
       query: {
         $case: "update",
         update: {
-          schema: this.schema.dbSchema,
-          table: this.schema.tableName,
+          schema: this.model.schema,
+          table: this.model.tableName,
           columnValue: [
             {
               column: updateAuditColumnName,
@@ -237,9 +236,9 @@ export class QueryBuilder<
                 ([key, value]) => value !== undefined && key != auditColumnKey
               ),
               ([key, value]) => ({
-                column: this.schema.columns[key]?.name ?? key,
-                value: this.toRelationalValue(
-                  this.schema.columns[key].type,
+                column: this.model.columns[key].name,
+                value: this.toRelationalValueForUpdate(
+                  this.model.columns[key].type,
                   value as T[string]
                 ),
               })
@@ -262,8 +261,8 @@ export class QueryBuilder<
       query: {
         $case: "delete",
         delete: {
-          schema: this.schema.dbSchema,
-          table: this.schema.tableName,
+          schema: this.model.schema,
+          table: this.model.tableName,
           where: [],
         },
       },
@@ -422,7 +421,7 @@ export class QueryBuilder<
   }
 
   private buildForCondition(condition: WhereCondition): Partial<WhereCriteria> {
-    const [column, operator, value] = condition;
+    const [column, operator, ...value] = condition;
 
     return {
       whereType: {
@@ -459,6 +458,18 @@ export class QueryBuilder<
     };
   }
 
+  private returning(...returningFields: TypedColumn[]): Build {
+    if (this.#query?.query?.$case != "insert") {
+      throw new Error("Cannot set returning fields on non-insert query");
+    }
+    this.#query.query.insert.returningFields = _.map(returningFields, (rf) =>
+      _.pick(rf, ["name", "type", "alias"])
+    );
+    return {
+      build: this.build.bind(this),
+    };
+  }
+
   private build(): Query {
     if (!this.#query) {
       throw new Error("Query has not been built yet.");
@@ -476,7 +487,7 @@ export class QueryBuilder<
     );
   }
 
-  private toRelationalValue(
+  private toRelationalValueForUpdate(
     columnType: ColumnType,
     value: ValueTypes
   ): RelationalValue | undefined {
@@ -519,6 +530,74 @@ export class QueryBuilder<
       return {
         value: { $case: "booleanValue", booleanValue: value as boolean },
       };
+    }
+
+    throw new Error(`Unsupported data type ${columnType}`);
+  }
+
+  private toRelationalValue(
+    columnType: ColumnType,
+    values: ValueTypes[]
+  ): RelationalValue[] {
+    // is null or set null
+    if (values.length === 0) {
+      throw new Error(`Value array should not be empty`);
+    }
+
+    if (columnType === ColumnType.COLUMN_TYPE_INT) {
+      return _.map(values, (value) => {
+        return { value: { $case: "intValue", intValue: value as number } };
+      });
+    }
+
+    if (columnType === ColumnType.COLUMN_TYPE_LONG) {
+      return _.map(values, (value) => {
+        return { value: { $case: "longValue", longValue: value as number } };
+      });
+    }
+
+    if (columnType === ColumnType.COLUMN_TYPE_FLOAT) {
+      return _.map(values, (value) => {
+        return { value: { $case: "floatValue", floatValue: value as number } };
+      });
+    }
+
+    if (columnType === ColumnType.COLUMN_TYPE_DOUBLE) {
+      return _.map(values, (value) => {
+        return {
+          value: { $case: "doubleValue", doubleValue: value as number },
+        };
+      });
+    }
+
+    if (columnType === ColumnType.COLUMN_TYPE_DATE) {
+      return _.map(values, (value) => {
+        return { value: { $case: "dateValue", dateValue: value as string } };
+      });
+    }
+
+    if (columnType == ColumnType.COLUMN_TYPE_DATETIME) {
+      return _.map(values, (value) => {
+        return {
+          value: { $case: "datetimeValue", datetimeValue: value as string },
+        };
+      });
+    }
+
+    if (columnType == ColumnType.COLUMN_TYPE_STRING) {
+      return _.map(values, (value) => {
+        return {
+          value: { $case: "stringValue", stringValue: value as string },
+        };
+      });
+    }
+
+    if (columnType == ColumnType.COLUMN_TYPE_BOOLEAN) {
+      return _.map(values, (value) => {
+        return {
+          value: { $case: "booleanValue", booleanValue: value as boolean },
+        };
+      });
     }
 
     throw new Error(`Unsupported data type ${columnType}`);
