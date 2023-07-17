@@ -260,39 +260,80 @@ export interface Value {
     | { $case: "blobValue"; blobValue: Buffer };
 }
 
-export interface Column {
-  tableName?: string | undefined;
+export interface TypedColumn {
+  schema: string;
+  tableName: string;
   name: string;
-  type?: ColumnType | undefined;
+  alias?: string | undefined;
+  type: ColumnType;
+}
+
+export interface Column {
+  schema: string;
+  tableName: string;
+  name: string;
+}
+
+export interface ReturningColumn {
+  name: string;
+  alias?: string | undefined;
+  type: ColumnType;
+}
+
+export interface Condition {
+  operator: Operator;
+  key?: Column;
+  value: Value[];
+}
+
+export interface AndWhere {
+  where: WhereCriteria[];
+}
+
+export interface OrWhere {
+  where: WhereCriteria[];
 }
 
 export interface WhereCriteria {
-  operator: Operator;
-  key: string;
-  value?: Value;
+  whereType?:
+    | { $case: "condition"; condition: Condition }
+    | { $case: "and"; and: AndWhere }
+    | {
+        $case: "or";
+        or: OrWhere;
+      };
 }
 
 export interface RawQuery {
   query: string;
 }
 
+export interface Table {
+  schema: string;
+  tableName: string;
+}
+
+export interface JoinCondition {
+  operator: Operator;
+  left?: Column;
+  right?:
+    | { $case: "value"; value: Value }
+    | { $case: "column"; column: Column };
+}
+
 export interface Join {
   type: JoinType;
-  fromTableSchema?: string | undefined;
-  joinTableSchema?: string | undefined;
-  fromTable: string;
-  joinTable: string;
-  fromColumn: string;
-  joinColumn: string;
+  table?: Table;
+  conditions: JoinCondition[];
 }
 
 export interface SelectQuery {
-  schema?: string | undefined;
+  schema: string;
   table: string;
-  column: Column[];
+  column: TypedColumn[];
   where: WhereCriteria[];
-  groupBy: string[];
-  orderBy: string[];
+  groupBy: Column[];
+  orderBy: Column[];
   join: Join[];
   limit: number;
   offset: number;
@@ -304,12 +345,13 @@ export interface ColumnValue {
 }
 
 export interface InsertQuery {
-  schema?: string | undefined;
+  schema: string;
   table: string;
   columnValue: ColumnValue[];
   idColumn?: string | undefined;
   idSequence?: string | undefined;
   idTable?: string | undefined;
+  returningFields: ReturningColumn[];
 }
 
 export interface BulkInsertQuery {
@@ -317,14 +359,14 @@ export interface BulkInsertQuery {
 }
 
 export interface UpdateQuery {
-  schema?: string | undefined;
+  schema: string;
   table: string;
   columnValue: ColumnValue[];
   where: WhereCriteria[];
 }
 
 export interface DeleteQuery {
-  schema?: string | undefined;
+  schema: string;
   table: string;
   where: WhereCriteria[];
 }
@@ -360,7 +402,13 @@ export interface RawQueryResult {
 }
 
 export interface InsertQueryResult {
-  lastInsertId: number;
+  insertResultType?:
+    | { $case: "lastInsertId"; lastInsertId: number }
+    | { $case: "row"; row: Row }
+    | {
+        $case: "affectedRows";
+        affectedRows: number;
+      };
 }
 
 export interface UpdateQueryResult {
@@ -660,8 +708,124 @@ export const Value = {
   },
 };
 
+function createBaseTypedColumn(): TypedColumn {
+  return { schema: "", tableName: "", name: "", alias: undefined, type: 0 };
+}
+
+export const TypedColumn = {
+  encode(
+    message: TypedColumn,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.schema !== "") {
+      writer.uint32(10).string(message.schema);
+    }
+    if (message.tableName !== "") {
+      writer.uint32(18).string(message.tableName);
+    }
+    if (message.name !== "") {
+      writer.uint32(26).string(message.name);
+    }
+    if (message.alias !== undefined) {
+      writer.uint32(34).string(message.alias);
+    }
+    if (message.type !== 0) {
+      writer.uint32(40).int32(message.type);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): TypedColumn {
+    const reader =
+      input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTypedColumn();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.schema = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.tableName = reader.string();
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.name = reader.string();
+          continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.alias = reader.string();
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.type = reader.int32() as any;
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): TypedColumn {
+    return {
+      schema: isSet(object.schema) ? String(object.schema) : "",
+      tableName: isSet(object.tableName) ? String(object.tableName) : "",
+      name: isSet(object.name) ? String(object.name) : "",
+      alias: isSet(object.alias) ? String(object.alias) : undefined,
+      type: isSet(object.type) ? columnTypeFromJSON(object.type) : 0,
+    };
+  },
+
+  toJSON(message: TypedColumn): unknown {
+    const obj: any = {};
+    message.schema !== undefined && (obj.schema = message.schema);
+    message.tableName !== undefined && (obj.tableName = message.tableName);
+    message.name !== undefined && (obj.name = message.name);
+    message.alias !== undefined && (obj.alias = message.alias);
+    message.type !== undefined && (obj.type = columnTypeToJSON(message.type));
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<TypedColumn>, I>>(base?: I): TypedColumn {
+    return TypedColumn.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<TypedColumn>, I>>(
+    object: I
+  ): TypedColumn {
+    const message = createBaseTypedColumn();
+    message.schema = object.schema ?? "";
+    message.tableName = object.tableName ?? "";
+    message.name = object.name ?? "";
+    message.alias = object.alias ?? undefined;
+    message.type = object.type ?? 0;
+    return message;
+  },
+};
+
 function createBaseColumn(): Column {
-  return { tableName: undefined, name: "", type: undefined };
+  return { schema: "", tableName: "", name: "" };
 }
 
 export const Column = {
@@ -669,14 +833,14 @@ export const Column = {
     message: Column,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.tableName !== undefined) {
-      writer.uint32(10).string(message.tableName);
+    if (message.schema !== "") {
+      writer.uint32(10).string(message.schema);
+    }
+    if (message.tableName !== "") {
+      writer.uint32(18).string(message.tableName);
     }
     if (message.name !== "") {
-      writer.uint32(18).string(message.name);
-    }
-    if (message.type !== undefined) {
-      writer.uint32(24).int32(message.type);
+      writer.uint32(26).string(message.name);
     }
     return writer;
   },
@@ -694,14 +858,102 @@ export const Column = {
             break;
           }
 
-          message.tableName = reader.string();
+          message.schema = reader.string();
           continue;
         case 2:
           if (tag !== 18) {
             break;
           }
 
+          message.tableName = reader.string();
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
           message.name = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Column {
+    return {
+      schema: isSet(object.schema) ? String(object.schema) : "",
+      tableName: isSet(object.tableName) ? String(object.tableName) : "",
+      name: isSet(object.name) ? String(object.name) : "",
+    };
+  },
+
+  toJSON(message: Column): unknown {
+    const obj: any = {};
+    message.schema !== undefined && (obj.schema = message.schema);
+    message.tableName !== undefined && (obj.tableName = message.tableName);
+    message.name !== undefined && (obj.name = message.name);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Column>, I>>(base?: I): Column {
+    return Column.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<Column>, I>>(object: I): Column {
+    const message = createBaseColumn();
+    message.schema = object.schema ?? "";
+    message.tableName = object.tableName ?? "";
+    message.name = object.name ?? "";
+    return message;
+  },
+};
+
+function createBaseReturningColumn(): ReturningColumn {
+  return { name: "", alias: undefined, type: 0 };
+}
+
+export const ReturningColumn = {
+  encode(
+    message: ReturningColumn,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.name !== "") {
+      writer.uint32(10).string(message.name);
+    }
+    if (message.alias !== undefined) {
+      writer.uint32(18).string(message.alias);
+    }
+    if (message.type !== 0) {
+      writer.uint32(24).int32(message.type);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): ReturningColumn {
+    const reader =
+      input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseReturningColumn();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.name = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.alias = reader.string();
           continue;
         case 3:
           if (tag !== 24) {
@@ -719,65 +971,65 @@ export const Column = {
     return message;
   },
 
-  fromJSON(object: any): Column {
+  fromJSON(object: any): ReturningColumn {
     return {
-      tableName: isSet(object.tableName) ? String(object.tableName) : undefined,
       name: isSet(object.name) ? String(object.name) : "",
-      type: isSet(object.type) ? columnTypeFromJSON(object.type) : undefined,
+      alias: isSet(object.alias) ? String(object.alias) : undefined,
+      type: isSet(object.type) ? columnTypeFromJSON(object.type) : 0,
     };
   },
 
-  toJSON(message: Column): unknown {
+  toJSON(message: ReturningColumn): unknown {
     const obj: any = {};
-    message.tableName !== undefined && (obj.tableName = message.tableName);
     message.name !== undefined && (obj.name = message.name);
-    message.type !== undefined &&
-      (obj.type =
-        message.type !== undefined
-          ? columnTypeToJSON(message.type)
-          : undefined);
+    message.alias !== undefined && (obj.alias = message.alias);
+    message.type !== undefined && (obj.type = columnTypeToJSON(message.type));
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<Column>, I>>(base?: I): Column {
-    return Column.fromPartial(base ?? {});
+  create<I extends Exact<DeepPartial<ReturningColumn>, I>>(
+    base?: I
+  ): ReturningColumn {
+    return ReturningColumn.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<Column>, I>>(object: I): Column {
-    const message = createBaseColumn();
-    message.tableName = object.tableName ?? undefined;
+  fromPartial<I extends Exact<DeepPartial<ReturningColumn>, I>>(
+    object: I
+  ): ReturningColumn {
+    const message = createBaseReturningColumn();
     message.name = object.name ?? "";
-    message.type = object.type ?? undefined;
+    message.alias = object.alias ?? undefined;
+    message.type = object.type ?? 0;
     return message;
   },
 };
 
-function createBaseWhereCriteria(): WhereCriteria {
-  return { operator: 0, key: "", value: undefined };
+function createBaseCondition(): Condition {
+  return { operator: 0, key: undefined, value: [] };
 }
 
-export const WhereCriteria = {
+export const Condition = {
   encode(
-    message: WhereCriteria,
+    message: Condition,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.operator !== 0) {
       writer.uint32(8).int32(message.operator);
     }
-    if (message.key !== "") {
-      writer.uint32(18).string(message.key);
+    if (message.key !== undefined) {
+      Column.encode(message.key, writer.uint32(18).fork()).ldelim();
     }
-    if (message.value !== undefined) {
-      Value.encode(message.value, writer.uint32(26).fork()).ldelim();
+    for (const v of message.value) {
+      Value.encode(v!, writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): WhereCriteria {
+  decode(input: _m0.Reader | Uint8Array, length?: number): Condition {
     const reader =
       input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseWhereCriteria();
+    const message = createBaseCondition();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -793,14 +1045,274 @@ export const WhereCriteria = {
             break;
           }
 
-          message.key = reader.string();
+          message.key = Column.decode(reader, reader.uint32());
           continue;
         case 3:
           if (tag !== 26) {
             break;
           }
 
-          message.value = Value.decode(reader, reader.uint32());
+          message.value.push(Value.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Condition {
+    return {
+      operator: isSet(object.operator) ? operatorFromJSON(object.operator) : 0,
+      key: isSet(object.key) ? Column.fromJSON(object.key) : undefined,
+      value: Array.isArray(object?.value)
+        ? object.value.map((e: any) => Value.fromJSON(e))
+        : [],
+    };
+  },
+
+  toJSON(message: Condition): unknown {
+    const obj: any = {};
+    message.operator !== undefined &&
+      (obj.operator = operatorToJSON(message.operator));
+    message.key !== undefined &&
+      (obj.key = message.key ? Column.toJSON(message.key) : undefined);
+    if (message.value) {
+      obj.value = message.value.map((e) => (e ? Value.toJSON(e) : undefined));
+    } else {
+      obj.value = [];
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Condition>, I>>(base?: I): Condition {
+    return Condition.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<Condition>, I>>(
+    object: I
+  ): Condition {
+    const message = createBaseCondition();
+    message.operator = object.operator ?? 0;
+    message.key =
+      object.key !== undefined && object.key !== null
+        ? Column.fromPartial(object.key)
+        : undefined;
+    message.value = object.value?.map((e) => Value.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBaseAndWhere(): AndWhere {
+  return { where: [] };
+}
+
+export const AndWhere = {
+  encode(
+    message: AndWhere,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    for (const v of message.where) {
+      WhereCriteria.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): AndWhere {
+    const reader =
+      input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseAndWhere();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.where.push(WhereCriteria.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): AndWhere {
+    return {
+      where: Array.isArray(object?.where)
+        ? object.where.map((e: any) => WhereCriteria.fromJSON(e))
+        : [],
+    };
+  },
+
+  toJSON(message: AndWhere): unknown {
+    const obj: any = {};
+    if (message.where) {
+      obj.where = message.where.map((e) =>
+        e ? WhereCriteria.toJSON(e) : undefined
+      );
+    } else {
+      obj.where = [];
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<AndWhere>, I>>(base?: I): AndWhere {
+    return AndWhere.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<AndWhere>, I>>(object: I): AndWhere {
+    const message = createBaseAndWhere();
+    message.where =
+      object.where?.map((e) => WhereCriteria.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBaseOrWhere(): OrWhere {
+  return { where: [] };
+}
+
+export const OrWhere = {
+  encode(
+    message: OrWhere,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    for (const v of message.where) {
+      WhereCriteria.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): OrWhere {
+    const reader =
+      input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseOrWhere();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.where.push(WhereCriteria.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): OrWhere {
+    return {
+      where: Array.isArray(object?.where)
+        ? object.where.map((e: any) => WhereCriteria.fromJSON(e))
+        : [],
+    };
+  },
+
+  toJSON(message: OrWhere): unknown {
+    const obj: any = {};
+    if (message.where) {
+      obj.where = message.where.map((e) =>
+        e ? WhereCriteria.toJSON(e) : undefined
+      );
+    } else {
+      obj.where = [];
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<OrWhere>, I>>(base?: I): OrWhere {
+    return OrWhere.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<OrWhere>, I>>(object: I): OrWhere {
+    const message = createBaseOrWhere();
+    message.where =
+      object.where?.map((e) => WhereCriteria.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBaseWhereCriteria(): WhereCriteria {
+  return { whereType: undefined };
+}
+
+export const WhereCriteria = {
+  encode(
+    message: WhereCriteria,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    switch (message.whereType?.$case) {
+      case "condition":
+        Condition.encode(
+          message.whereType.condition,
+          writer.uint32(10).fork()
+        ).ldelim();
+        break;
+      case "and":
+        AndWhere.encode(
+          message.whereType.and,
+          writer.uint32(18).fork()
+        ).ldelim();
+        break;
+      case "or":
+        OrWhere.encode(message.whereType.or, writer.uint32(26).fork()).ldelim();
+        break;
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): WhereCriteria {
+    const reader =
+      input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseWhereCriteria();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.whereType = {
+            $case: "condition",
+            condition: Condition.decode(reader, reader.uint32()),
+          };
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.whereType = {
+            $case: "and",
+            and: AndWhere.decode(reader, reader.uint32()),
+          };
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.whereType = {
+            $case: "or",
+            or: OrWhere.decode(reader, reader.uint32()),
+          };
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -813,19 +1325,33 @@ export const WhereCriteria = {
 
   fromJSON(object: any): WhereCriteria {
     return {
-      operator: isSet(object.operator) ? operatorFromJSON(object.operator) : 0,
-      key: isSet(object.key) ? String(object.key) : "",
-      value: isSet(object.value) ? Value.fromJSON(object.value) : undefined,
+      whereType: isSet(object.condition)
+        ? {
+            $case: "condition",
+            condition: Condition.fromJSON(object.condition),
+          }
+        : isSet(object.and)
+        ? { $case: "and", and: AndWhere.fromJSON(object.and) }
+        : isSet(object.or)
+        ? { $case: "or", or: OrWhere.fromJSON(object.or) }
+        : undefined,
     };
   },
 
   toJSON(message: WhereCriteria): unknown {
     const obj: any = {};
-    message.operator !== undefined &&
-      (obj.operator = operatorToJSON(message.operator));
-    message.key !== undefined && (obj.key = message.key);
-    message.value !== undefined &&
-      (obj.value = message.value ? Value.toJSON(message.value) : undefined);
+    message.whereType?.$case === "condition" &&
+      (obj.condition = message.whereType?.condition
+        ? Condition.toJSON(message.whereType?.condition)
+        : undefined);
+    message.whereType?.$case === "and" &&
+      (obj.and = message.whereType?.and
+        ? AndWhere.toJSON(message.whereType?.and)
+        : undefined);
+    message.whereType?.$case === "or" &&
+      (obj.or = message.whereType?.or
+        ? OrWhere.toJSON(message.whereType?.or)
+        : undefined);
     return obj;
   },
 
@@ -839,12 +1365,36 @@ export const WhereCriteria = {
     object: I
   ): WhereCriteria {
     const message = createBaseWhereCriteria();
-    message.operator = object.operator ?? 0;
-    message.key = object.key ?? "";
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? Value.fromPartial(object.value)
-        : undefined;
+    if (
+      object.whereType?.$case === "condition" &&
+      object.whereType?.condition !== undefined &&
+      object.whereType?.condition !== null
+    ) {
+      message.whereType = {
+        $case: "condition",
+        condition: Condition.fromPartial(object.whereType.condition),
+      };
+    }
+    if (
+      object.whereType?.$case === "and" &&
+      object.whereType?.and !== undefined &&
+      object.whereType?.and !== null
+    ) {
+      message.whereType = {
+        $case: "and",
+        and: AndWhere.fromPartial(object.whereType.and),
+      };
+    }
+    if (
+      object.whereType?.$case === "or" &&
+      object.whereType?.or !== undefined &&
+      object.whereType?.or !== null
+    ) {
+      message.whereType = {
+        $case: "or",
+        or: OrWhere.fromPartial(object.whereType.or),
+      };
+    }
     return message;
   },
 };
@@ -909,16 +1459,225 @@ export const RawQuery = {
   },
 };
 
+function createBaseTable(): Table {
+  return { schema: "", tableName: "" };
+}
+
+export const Table = {
+  encode(message: Table, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.schema !== "") {
+      writer.uint32(10).string(message.schema);
+    }
+    if (message.tableName !== "") {
+      writer.uint32(18).string(message.tableName);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Table {
+    const reader =
+      input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTable();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.schema = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.tableName = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Table {
+    return {
+      schema: isSet(object.schema) ? String(object.schema) : "",
+      tableName: isSet(object.tableName) ? String(object.tableName) : "",
+    };
+  },
+
+  toJSON(message: Table): unknown {
+    const obj: any = {};
+    message.schema !== undefined && (obj.schema = message.schema);
+    message.tableName !== undefined && (obj.tableName = message.tableName);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Table>, I>>(base?: I): Table {
+    return Table.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<Table>, I>>(object: I): Table {
+    const message = createBaseTable();
+    message.schema = object.schema ?? "";
+    message.tableName = object.tableName ?? "";
+    return message;
+  },
+};
+
+function createBaseJoinCondition(): JoinCondition {
+  return { operator: 0, left: undefined, right: undefined };
+}
+
+export const JoinCondition = {
+  encode(
+    message: JoinCondition,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.operator !== 0) {
+      writer.uint32(8).int32(message.operator);
+    }
+    if (message.left !== undefined) {
+      Column.encode(message.left, writer.uint32(18).fork()).ldelim();
+    }
+    switch (message.right?.$case) {
+      case "value":
+        Value.encode(message.right.value, writer.uint32(26).fork()).ldelim();
+        break;
+      case "column":
+        Column.encode(message.right.column, writer.uint32(34).fork()).ldelim();
+        break;
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): JoinCondition {
+    const reader =
+      input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseJoinCondition();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.operator = reader.int32() as any;
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.left = Column.decode(reader, reader.uint32());
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.right = {
+            $case: "value",
+            value: Value.decode(reader, reader.uint32()),
+          };
+          continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.right = {
+            $case: "column",
+            column: Column.decode(reader, reader.uint32()),
+          };
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): JoinCondition {
+    return {
+      operator: isSet(object.operator) ? operatorFromJSON(object.operator) : 0,
+      left: isSet(object.left) ? Column.fromJSON(object.left) : undefined,
+      right: isSet(object.value)
+        ? { $case: "value", value: Value.fromJSON(object.value) }
+        : isSet(object.column)
+        ? { $case: "column", column: Column.fromJSON(object.column) }
+        : undefined,
+    };
+  },
+
+  toJSON(message: JoinCondition): unknown {
+    const obj: any = {};
+    message.operator !== undefined &&
+      (obj.operator = operatorToJSON(message.operator));
+    message.left !== undefined &&
+      (obj.left = message.left ? Column.toJSON(message.left) : undefined);
+    message.right?.$case === "value" &&
+      (obj.value = message.right?.value
+        ? Value.toJSON(message.right?.value)
+        : undefined);
+    message.right?.$case === "column" &&
+      (obj.column = message.right?.column
+        ? Column.toJSON(message.right?.column)
+        : undefined);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<JoinCondition>, I>>(
+    base?: I
+  ): JoinCondition {
+    return JoinCondition.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<JoinCondition>, I>>(
+    object: I
+  ): JoinCondition {
+    const message = createBaseJoinCondition();
+    message.operator = object.operator ?? 0;
+    message.left =
+      object.left !== undefined && object.left !== null
+        ? Column.fromPartial(object.left)
+        : undefined;
+    if (
+      object.right?.$case === "value" &&
+      object.right?.value !== undefined &&
+      object.right?.value !== null
+    ) {
+      message.right = {
+        $case: "value",
+        value: Value.fromPartial(object.right.value),
+      };
+    }
+    if (
+      object.right?.$case === "column" &&
+      object.right?.column !== undefined &&
+      object.right?.column !== null
+    ) {
+      message.right = {
+        $case: "column",
+        column: Column.fromPartial(object.right.column),
+      };
+    }
+    return message;
+  },
+};
+
 function createBaseJoin(): Join {
-  return {
-    type: 0,
-    fromTableSchema: undefined,
-    joinTableSchema: undefined,
-    fromTable: "",
-    joinTable: "",
-    fromColumn: "",
-    joinColumn: "",
-  };
+  return { type: 0, table: undefined, conditions: [] };
 }
 
 export const Join = {
@@ -926,23 +1685,11 @@ export const Join = {
     if (message.type !== 0) {
       writer.uint32(8).int32(message.type);
     }
-    if (message.fromTableSchema !== undefined) {
-      writer.uint32(18).string(message.fromTableSchema);
+    if (message.table !== undefined) {
+      Table.encode(message.table, writer.uint32(18).fork()).ldelim();
     }
-    if (message.joinTableSchema !== undefined) {
-      writer.uint32(26).string(message.joinTableSchema);
-    }
-    if (message.fromTable !== "") {
-      writer.uint32(34).string(message.fromTable);
-    }
-    if (message.joinTable !== "") {
-      writer.uint32(42).string(message.joinTable);
-    }
-    if (message.fromColumn !== "") {
-      writer.uint32(50).string(message.fromColumn);
-    }
-    if (message.joinColumn !== "") {
-      writer.uint32(58).string(message.joinColumn);
+    for (const v of message.conditions) {
+      JoinCondition.encode(v!, writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
@@ -967,42 +1714,16 @@ export const Join = {
             break;
           }
 
-          message.fromTableSchema = reader.string();
+          message.table = Table.decode(reader, reader.uint32());
           continue;
         case 3:
           if (tag !== 26) {
             break;
           }
 
-          message.joinTableSchema = reader.string();
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
-
-          message.fromTable = reader.string();
-          continue;
-        case 5:
-          if (tag !== 42) {
-            break;
-          }
-
-          message.joinTable = reader.string();
-          continue;
-        case 6:
-          if (tag !== 50) {
-            break;
-          }
-
-          message.fromColumn = reader.string();
-          continue;
-        case 7:
-          if (tag !== 58) {
-            break;
-          }
-
-          message.joinColumn = reader.string();
+          message.conditions.push(
+            JoinCondition.decode(reader, reader.uint32())
+          );
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -1016,30 +1737,25 @@ export const Join = {
   fromJSON(object: any): Join {
     return {
       type: isSet(object.type) ? joinTypeFromJSON(object.type) : 0,
-      fromTableSchema: isSet(object.fromTableSchema)
-        ? String(object.fromTableSchema)
-        : undefined,
-      joinTableSchema: isSet(object.joinTableSchema)
-        ? String(object.joinTableSchema)
-        : undefined,
-      fromTable: isSet(object.fromTable) ? String(object.fromTable) : "",
-      joinTable: isSet(object.joinTable) ? String(object.joinTable) : "",
-      fromColumn: isSet(object.fromColumn) ? String(object.fromColumn) : "",
-      joinColumn: isSet(object.joinColumn) ? String(object.joinColumn) : "",
+      table: isSet(object.table) ? Table.fromJSON(object.table) : undefined,
+      conditions: Array.isArray(object?.conditions)
+        ? object.conditions.map((e: any) => JoinCondition.fromJSON(e))
+        : [],
     };
   },
 
   toJSON(message: Join): unknown {
     const obj: any = {};
     message.type !== undefined && (obj.type = joinTypeToJSON(message.type));
-    message.fromTableSchema !== undefined &&
-      (obj.fromTableSchema = message.fromTableSchema);
-    message.joinTableSchema !== undefined &&
-      (obj.joinTableSchema = message.joinTableSchema);
-    message.fromTable !== undefined && (obj.fromTable = message.fromTable);
-    message.joinTable !== undefined && (obj.joinTable = message.joinTable);
-    message.fromColumn !== undefined && (obj.fromColumn = message.fromColumn);
-    message.joinColumn !== undefined && (obj.joinColumn = message.joinColumn);
+    message.table !== undefined &&
+      (obj.table = message.table ? Table.toJSON(message.table) : undefined);
+    if (message.conditions) {
+      obj.conditions = message.conditions.map((e) =>
+        e ? JoinCondition.toJSON(e) : undefined
+      );
+    } else {
+      obj.conditions = [];
+    }
     return obj;
   },
 
@@ -1050,19 +1766,19 @@ export const Join = {
   fromPartial<I extends Exact<DeepPartial<Join>, I>>(object: I): Join {
     const message = createBaseJoin();
     message.type = object.type ?? 0;
-    message.fromTableSchema = object.fromTableSchema ?? undefined;
-    message.joinTableSchema = object.joinTableSchema ?? undefined;
-    message.fromTable = object.fromTable ?? "";
-    message.joinTable = object.joinTable ?? "";
-    message.fromColumn = object.fromColumn ?? "";
-    message.joinColumn = object.joinColumn ?? "";
+    message.table =
+      object.table !== undefined && object.table !== null
+        ? Table.fromPartial(object.table)
+        : undefined;
+    message.conditions =
+      object.conditions?.map((e) => JoinCondition.fromPartial(e)) || [];
     return message;
   },
 };
 
 function createBaseSelectQuery(): SelectQuery {
   return {
-    schema: undefined,
+    schema: "",
     table: "",
     column: [],
     where: [],
@@ -1079,23 +1795,23 @@ export const SelectQuery = {
     message: SelectQuery,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.schema !== undefined) {
+    if (message.schema !== "") {
       writer.uint32(10).string(message.schema);
     }
     if (message.table !== "") {
       writer.uint32(18).string(message.table);
     }
     for (const v of message.column) {
-      Column.encode(v!, writer.uint32(26).fork()).ldelim();
+      TypedColumn.encode(v!, writer.uint32(26).fork()).ldelim();
     }
     for (const v of message.where) {
       WhereCriteria.encode(v!, writer.uint32(34).fork()).ldelim();
     }
     for (const v of message.groupBy) {
-      writer.uint32(42).string(v!);
+      Column.encode(v!, writer.uint32(42).fork()).ldelim();
     }
     for (const v of message.orderBy) {
-      writer.uint32(50).string(v!);
+      Column.encode(v!, writer.uint32(50).fork()).ldelim();
     }
     for (const v of message.join) {
       Join.encode(v!, writer.uint32(58).fork()).ldelim();
@@ -1136,7 +1852,7 @@ export const SelectQuery = {
             break;
           }
 
-          message.column.push(Column.decode(reader, reader.uint32()));
+          message.column.push(TypedColumn.decode(reader, reader.uint32()));
           continue;
         case 4:
           if (tag !== 34) {
@@ -1150,14 +1866,14 @@ export const SelectQuery = {
             break;
           }
 
-          message.groupBy.push(reader.string());
+          message.groupBy.push(Column.decode(reader, reader.uint32()));
           continue;
         case 6:
           if (tag !== 50) {
             break;
           }
 
-          message.orderBy.push(reader.string());
+          message.orderBy.push(Column.decode(reader, reader.uint32()));
           continue;
         case 7:
           if (tag !== 58) {
@@ -1191,19 +1907,19 @@ export const SelectQuery = {
 
   fromJSON(object: any): SelectQuery {
     return {
-      schema: isSet(object.schema) ? String(object.schema) : undefined,
+      schema: isSet(object.schema) ? String(object.schema) : "",
       table: isSet(object.table) ? String(object.table) : "",
       column: Array.isArray(object?.column)
-        ? object.column.map((e: any) => Column.fromJSON(e))
+        ? object.column.map((e: any) => TypedColumn.fromJSON(e))
         : [],
       where: Array.isArray(object?.where)
         ? object.where.map((e: any) => WhereCriteria.fromJSON(e))
         : [],
       groupBy: Array.isArray(object?.groupBy)
-        ? object.groupBy.map((e: any) => String(e))
+        ? object.groupBy.map((e: any) => Column.fromJSON(e))
         : [],
       orderBy: Array.isArray(object?.orderBy)
-        ? object.orderBy.map((e: any) => String(e))
+        ? object.orderBy.map((e: any) => Column.fromJSON(e))
         : [],
       join: Array.isArray(object?.join)
         ? object.join.map((e: any) => Join.fromJSON(e))
@@ -1219,7 +1935,7 @@ export const SelectQuery = {
     message.table !== undefined && (obj.table = message.table);
     if (message.column) {
       obj.column = message.column.map((e) =>
-        e ? Column.toJSON(e) : undefined
+        e ? TypedColumn.toJSON(e) : undefined
       );
     } else {
       obj.column = [];
@@ -1232,12 +1948,16 @@ export const SelectQuery = {
       obj.where = [];
     }
     if (message.groupBy) {
-      obj.groupBy = message.groupBy.map((e) => e);
+      obj.groupBy = message.groupBy.map((e) =>
+        e ? Column.toJSON(e) : undefined
+      );
     } else {
       obj.groupBy = [];
     }
     if (message.orderBy) {
-      obj.orderBy = message.orderBy.map((e) => e);
+      obj.orderBy = message.orderBy.map((e) =>
+        e ? Column.toJSON(e) : undefined
+      );
     } else {
       obj.orderBy = [];
     }
@@ -1259,13 +1979,14 @@ export const SelectQuery = {
     object: I
   ): SelectQuery {
     const message = createBaseSelectQuery();
-    message.schema = object.schema ?? undefined;
+    message.schema = object.schema ?? "";
     message.table = object.table ?? "";
-    message.column = object.column?.map((e) => Column.fromPartial(e)) || [];
+    message.column =
+      object.column?.map((e) => TypedColumn.fromPartial(e)) || [];
     message.where =
       object.where?.map((e) => WhereCriteria.fromPartial(e)) || [];
-    message.groupBy = object.groupBy?.map((e) => e) || [];
-    message.orderBy = object.orderBy?.map((e) => e) || [];
+    message.groupBy = object.groupBy?.map((e) => Column.fromPartial(e)) || [];
+    message.orderBy = object.orderBy?.map((e) => Column.fromPartial(e)) || [];
     message.join = object.join?.map((e) => Join.fromPartial(e)) || [];
     message.limit = object.limit ?? 0;
     message.offset = object.offset ?? 0;
@@ -1356,12 +2077,13 @@ export const ColumnValue = {
 
 function createBaseInsertQuery(): InsertQuery {
   return {
-    schema: undefined,
+    schema: "",
     table: "",
     columnValue: [],
     idColumn: undefined,
     idSequence: undefined,
     idTable: undefined,
+    returningFields: [],
   };
 }
 
@@ -1370,7 +2092,7 @@ export const InsertQuery = {
     message: InsertQuery,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.schema !== undefined) {
+    if (message.schema !== "") {
       writer.uint32(10).string(message.schema);
     }
     if (message.table !== "") {
@@ -1387,6 +2109,9 @@ export const InsertQuery = {
     }
     if (message.idTable !== undefined) {
       writer.uint32(50).string(message.idTable);
+    }
+    for (const v of message.returningFields) {
+      ReturningColumn.encode(v!, writer.uint32(58).fork()).ldelim();
     }
     return writer;
   },
@@ -1441,6 +2166,15 @@ export const InsertQuery = {
 
           message.idTable = reader.string();
           continue;
+        case 7:
+          if (tag !== 58) {
+            break;
+          }
+
+          message.returningFields.push(
+            ReturningColumn.decode(reader, reader.uint32())
+          );
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1452,7 +2186,7 @@ export const InsertQuery = {
 
   fromJSON(object: any): InsertQuery {
     return {
-      schema: isSet(object.schema) ? String(object.schema) : undefined,
+      schema: isSet(object.schema) ? String(object.schema) : "",
       table: isSet(object.table) ? String(object.table) : "",
       columnValue: Array.isArray(object?.columnValue)
         ? object.columnValue.map((e: any) => ColumnValue.fromJSON(e))
@@ -1462,6 +2196,9 @@ export const InsertQuery = {
         ? String(object.idSequence)
         : undefined,
       idTable: isSet(object.idTable) ? String(object.idTable) : undefined,
+      returningFields: Array.isArray(object?.returningFields)
+        ? object.returningFields.map((e: any) => ReturningColumn.fromJSON(e))
+        : [],
     };
   },
 
@@ -1479,6 +2216,13 @@ export const InsertQuery = {
     message.idColumn !== undefined && (obj.idColumn = message.idColumn);
     message.idSequence !== undefined && (obj.idSequence = message.idSequence);
     message.idTable !== undefined && (obj.idTable = message.idTable);
+    if (message.returningFields) {
+      obj.returningFields = message.returningFields.map((e) =>
+        e ? ReturningColumn.toJSON(e) : undefined
+      );
+    } else {
+      obj.returningFields = [];
+    }
     return obj;
   },
 
@@ -1490,13 +2234,15 @@ export const InsertQuery = {
     object: I
   ): InsertQuery {
     const message = createBaseInsertQuery();
-    message.schema = object.schema ?? undefined;
+    message.schema = object.schema ?? "";
     message.table = object.table ?? "";
     message.columnValue =
       object.columnValue?.map((e) => ColumnValue.fromPartial(e)) || [];
     message.idColumn = object.idColumn ?? undefined;
     message.idSequence = object.idSequence ?? undefined;
     message.idTable = object.idTable ?? undefined;
+    message.returningFields =
+      object.returningFields?.map((e) => ReturningColumn.fromPartial(e)) || [];
     return message;
   },
 };
@@ -1577,7 +2323,7 @@ export const BulkInsertQuery = {
 };
 
 function createBaseUpdateQuery(): UpdateQuery {
-  return { schema: undefined, table: "", columnValue: [], where: [] };
+  return { schema: "", table: "", columnValue: [], where: [] };
 }
 
 export const UpdateQuery = {
@@ -1585,7 +2331,7 @@ export const UpdateQuery = {
     message: UpdateQuery,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.schema !== undefined) {
+    if (message.schema !== "") {
       writer.uint32(10).string(message.schema);
     }
     if (message.table !== "") {
@@ -1647,7 +2393,7 @@ export const UpdateQuery = {
 
   fromJSON(object: any): UpdateQuery {
     return {
-      schema: isSet(object.schema) ? String(object.schema) : undefined,
+      schema: isSet(object.schema) ? String(object.schema) : "",
       table: isSet(object.table) ? String(object.table) : "",
       columnValue: Array.isArray(object?.columnValue)
         ? object.columnValue.map((e: any) => ColumnValue.fromJSON(e))
@@ -1687,7 +2433,7 @@ export const UpdateQuery = {
     object: I
   ): UpdateQuery {
     const message = createBaseUpdateQuery();
-    message.schema = object.schema ?? undefined;
+    message.schema = object.schema ?? "";
     message.table = object.table ?? "";
     message.columnValue =
       object.columnValue?.map((e) => ColumnValue.fromPartial(e)) || [];
@@ -1698,7 +2444,7 @@ export const UpdateQuery = {
 };
 
 function createBaseDeleteQuery(): DeleteQuery {
-  return { schema: undefined, table: "", where: [] };
+  return { schema: "", table: "", where: [] };
 }
 
 export const DeleteQuery = {
@@ -1706,7 +2452,7 @@ export const DeleteQuery = {
     message: DeleteQuery,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.schema !== undefined) {
+    if (message.schema !== "") {
       writer.uint32(10).string(message.schema);
     }
     if (message.table !== "") {
@@ -1758,7 +2504,7 @@ export const DeleteQuery = {
 
   fromJSON(object: any): DeleteQuery {
     return {
-      schema: isSet(object.schema) ? String(object.schema) : undefined,
+      schema: isSet(object.schema) ? String(object.schema) : "",
       table: isSet(object.table) ? String(object.table) : "",
       where: Array.isArray(object?.where)
         ? object.where.map((e: any) => WhereCriteria.fromJSON(e))
@@ -1788,7 +2534,7 @@ export const DeleteQuery = {
     object: I
   ): DeleteQuery {
     const message = createBaseDeleteQuery();
-    message.schema = object.schema ?? undefined;
+    message.schema = object.schema ?? "";
     message.table = object.table ?? "";
     message.where =
       object.where?.map((e) => WhereCriteria.fromPartial(e)) || [];
@@ -2385,7 +3131,7 @@ export const RawQueryResult = {
 };
 
 function createBaseInsertQueryResult(): InsertQueryResult {
-  return { lastInsertId: 0 };
+  return { insertResultType: undefined };
 }
 
 export const InsertQueryResult = {
@@ -2393,8 +3139,19 @@ export const InsertQueryResult = {
     message: InsertQueryResult,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.lastInsertId !== 0) {
-      writer.uint32(8).uint64(message.lastInsertId);
+    switch (message.insertResultType?.$case) {
+      case "lastInsertId":
+        writer.uint32(8).uint64(message.insertResultType.lastInsertId);
+        break;
+      case "row":
+        Row.encode(
+          message.insertResultType.row,
+          writer.uint32(18).fork()
+        ).ldelim();
+        break;
+      case "affectedRows":
+        writer.uint32(24).uint64(message.insertResultType.affectedRows);
+        break;
     }
     return writer;
   },
@@ -2412,7 +3169,30 @@ export const InsertQueryResult = {
             break;
           }
 
-          message.lastInsertId = longToNumber(reader.uint64() as Long);
+          message.insertResultType = {
+            $case: "lastInsertId",
+            lastInsertId: longToNumber(reader.uint64() as Long),
+          };
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.insertResultType = {
+            $case: "row",
+            row: Row.decode(reader, reader.uint32()),
+          };
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.insertResultType = {
+            $case: "affectedRows",
+            affectedRows: longToNumber(reader.uint64() as Long),
+          };
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -2425,16 +3205,26 @@ export const InsertQueryResult = {
 
   fromJSON(object: any): InsertQueryResult {
     return {
-      lastInsertId: isSet(object.lastInsertId)
-        ? Number(object.lastInsertId)
-        : 0,
+      insertResultType: isSet(object.lastInsertId)
+        ? { $case: "lastInsertId", lastInsertId: Number(object.lastInsertId) }
+        : isSet(object.row)
+        ? { $case: "row", row: Row.fromJSON(object.row) }
+        : isSet(object.affectedRows)
+        ? { $case: "affectedRows", affectedRows: Number(object.affectedRows) }
+        : undefined,
     };
   },
 
   toJSON(message: InsertQueryResult): unknown {
     const obj: any = {};
-    message.lastInsertId !== undefined &&
-      (obj.lastInsertId = Math.round(message.lastInsertId));
+    message.insertResultType?.$case === "lastInsertId" &&
+      (obj.lastInsertId = Math.round(message.insertResultType?.lastInsertId));
+    message.insertResultType?.$case === "row" &&
+      (obj.row = message.insertResultType?.row
+        ? Row.toJSON(message.insertResultType?.row)
+        : undefined);
+    message.insertResultType?.$case === "affectedRows" &&
+      (obj.affectedRows = Math.round(message.insertResultType?.affectedRows));
     return obj;
   },
 
@@ -2448,7 +3238,36 @@ export const InsertQueryResult = {
     object: I
   ): InsertQueryResult {
     const message = createBaseInsertQueryResult();
-    message.lastInsertId = object.lastInsertId ?? 0;
+    if (
+      object.insertResultType?.$case === "lastInsertId" &&
+      object.insertResultType?.lastInsertId !== undefined &&
+      object.insertResultType?.lastInsertId !== null
+    ) {
+      message.insertResultType = {
+        $case: "lastInsertId",
+        lastInsertId: object.insertResultType.lastInsertId,
+      };
+    }
+    if (
+      object.insertResultType?.$case === "row" &&
+      object.insertResultType?.row !== undefined &&
+      object.insertResultType?.row !== null
+    ) {
+      message.insertResultType = {
+        $case: "row",
+        row: Row.fromPartial(object.insertResultType.row),
+      };
+    }
+    if (
+      object.insertResultType?.$case === "affectedRows" &&
+      object.insertResultType?.affectedRows !== undefined &&
+      object.insertResultType?.affectedRows !== null
+    ) {
+      message.insertResultType = {
+        $case: "affectedRows",
+        affectedRows: object.insertResultType.affectedRows,
+      };
+    }
     return message;
   },
 };

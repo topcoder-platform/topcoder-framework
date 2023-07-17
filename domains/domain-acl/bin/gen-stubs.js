@@ -37,6 +37,7 @@ const protoConfig = [
   `--ts_proto_opt=Mgoogle/protobuf/empty.proto=@topcoder-framework/lib-common`,
   `--proto_path ${PROTO_DIR} ${PROTO_DIR}/domain-layer/legacy/*.proto`,
   `--proto_path ${PROTO_DIR} ${PROTO_DIR}/domain-layer/legacy/services/*.proto`,
+  `--experimental_allow_proto3_optional`,
 ];
 
 // https://github.com/stephenh/ts-proto#usage
