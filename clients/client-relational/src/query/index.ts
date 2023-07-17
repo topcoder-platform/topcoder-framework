@@ -1,2 +1,2 @@
 export * from "./QueryRunner";
-export * from "./QueryBuilder";
+export * from "./Model";

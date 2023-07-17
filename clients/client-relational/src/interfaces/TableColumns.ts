@@ -1,5 +1,10 @@
-import { TypedColumn } from "../models/data-access-layer/relational/relational";
+import { ColumnType } from "src/models/data-access-layer/relational/relational";
 
-export type TableColumns<T extends Record<string, unknown>> = {
-  [Property in keyof T]: TypedColumn;
+type TableColumn = {
+  name: string;
+  type: ColumnType;
+};
+
+export type TableColumns<T extends object> = {
+  [Property in keyof T]-?: TableColumn;
 };
