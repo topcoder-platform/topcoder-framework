@@ -8,7 +8,7 @@ import {
   verify,
 } from "jsonwebtoken";
 import JwksRSA, { JwksClient, SigningKey } from "jwks-rsa";
-import _, { set } from "lodash";
+import _ from "lodash";
 import { UnauthorizedError } from "./UnauthorizedError";
 
 const jwksClients: { [iss: string]: JwksClient } = {};
@@ -54,9 +54,9 @@ export type AuthOptions = {
    * @defaultValue `authUser`
    */
   requestProperty?: string;
-  cookieName?: string;
   getToken?: TokenGetter;
   isRevoked?: IsRevoked;
+  claimScope: string;
 } & Required<Pick<VerifyOptions, "issuer">> &
   Pick<VerifyOptions, "audience">;
 
@@ -72,8 +72,14 @@ type RSA = "RS256" | "RS384" | "RS512";
 export type ExpressAuthMiddleware = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
+  permissions?: Permissions
 ) => Promise<void>;
+
+export type Permissions = {
+  allowedRoles?: string[];
+  allowedScopes?: string[];
+};
 
 export const authenticator = (options: AuthOptions): ExpressAuthMiddleware => {
   const method: AuthMethod = validateAndGetMethod(options.method);
@@ -94,23 +100,21 @@ export const authenticator = (options: AuthOptions): ExpressAuthMiddleware => {
   const requestProperty = validateAndGetRequestProperty(
     options.requestProperty
   );
+  const claimScope = _.toString(options.claimScope);
 
   const middleware = async (
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
+    permissions?: Permissions
   ) => {
     try {
       const token = await tokenGetter(req);
       if (!token) {
-        if (credentialsRequired) {
-          throw new UnauthorizedError("No authorization token was found");
-        } else {
-          return next();
-        }
+        throw new UnauthorizedError("No authorization token was found");
       }
       const decodedToken = decode(token, { complete: true });
-      if (decodedToken === null) {
+      if (decodedToken === null || typeof decodedToken.payload == "string") {
         throw new UnauthorizedError("Invalid Token");
       }
       const algorithm = decodedToken.header.alg;
@@ -141,13 +145,51 @@ export const authenticator = (options: AuthOptions): ExpressAuthMiddleware => {
       if (options.isRevoked && (await options.isRevoked(req, decodedToken))) {
         throw new UnauthorizedError("The token has been revoked.");
       }
-      set(req, requestProperty, buildRequestProperty(decodedToken.payload));
+      const authProperty: AuthProperty = buildRequestProperty(
+        decodedToken.payload,
+        claimScope
+      );
+      _.set(req, requestProperty, authProperty);
+      if (credentialsRequired && permissions) {
+        validatePermissions(authProperty, permissions);
+      }
       next();
     } catch (err) {
-      next(err);
+      if (credentialsRequired) {
+        next(err);
+      } else {
+        next();
+      }
     }
   };
   return middleware;
+};
+
+const validatePermissions = (auth: AuthProperty, permissions: Permissions) => {
+  if (auth.isMachine) {
+    if (permissions.allowedScopes) {
+      if (
+        _.some(permissions.allowedScopes, (scope) =>
+          _.includes(auth.scopes, scope)
+        )
+      ) {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  } else {
+    if (permissions.allowedRoles) {
+      if (
+        _.some(permissions.allowedRoles, (role) => _.includes(auth.roles, role))
+      ) {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  }
+  throw new UnauthorizedError("");
 };
 
 const verifyHSAToken = async (
@@ -195,40 +237,31 @@ const verifyRSAToken = async (
 };
 
 type AuthProperty = {
-  userId: number;
-  handle: string;
-  roles: string[];
-  email: string;
+  userId?: string;
+  handle?: string;
+  roles?: string[];
+  email?: string;
   isMachine: boolean;
-  azpHash?: number;
+  scopes?: string[];
 };
 
-const buildRequestProperty = (token: JwtPayload): AuthProperty => {
-  const payload: Partial<AuthProperty> = {};
-  payload.userId = _.find(token, (_v, k) => _.includes(k, "userId"));
-  payload.handle = _.find(token, (_v, k) => _.includes(k, "handle"));
-  payload.roles = _.find(token, (_v, k) => _.includes(k, "roles"));
-  if (!token.email) {
-    payload.email = _.find(token, (_v, k) => _.includes(k, "email"));
-  }
-  const scopes = _.find(token, (_v, k) => _.includes(k, "scope"));
-  if (scopes) {
-    payload.scopes = scopes.split(" ");
-
-    const grantType = _.find(token, (_v, k) => _.includes(k, "gty"));
-    if (
-      grantType === "client-credentials" &&
-      !payload.userId &&
-      !payload.roles
-    ) {
-      payload.isMachine = true;
-      payload.userId = 0;
-      payload.handle = "";
-      try {
-        payload.azpHash = getAzpHash(token.azp);
-      } catch {
-        throw new UnauthorizedError("AZP not provided.");
-      }
+const buildRequestProperty = (
+  token: JwtPayload,
+  claimScope: string
+): AuthProperty => {
+  const payload: AuthProperty = {
+    userId: token[claimScope + "/userId"],
+    handle: token[claimScope + "/handle"],
+    roles: token[claimScope + "/roles"],
+    email: token.email ?? token[claimScope + "/email"],
+    isMachine: token.gty === "client-credentials",
+  };
+  if (payload.isMachine) {
+    const scopes = token[claimScope + "/scope"];
+    if (typeof scopes === "string") {
+      payload.scopes = scopes.split(" ");
+    } else if (_.isArray(scopes)) {
+      payload.scopes = scopes;
     }
   }
   return payload;
@@ -305,19 +338,6 @@ const getJwksClient = (
     });
   }
   return jwksClients[iss];
-};
-
-const getAzpHash = (azp: string) => {
-  if (!azp || azp.length === 0) {
-    throw new Error("AZP not provided.");
-  }
-  // default offset value
-  let azphash = 100000;
-  for (let i = 0; i < azp.length; i++) {
-    const v = azp.charCodeAt(i);
-    azphash += v * (i + 1);
-  }
-  return azphash * -1;
 };
 
 const validateAndGetAlgorithms = (algorithms?: unknown[]): Algorithm[] => {
