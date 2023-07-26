@@ -21,7 +21,7 @@ import { UnauthorizedError } from "./errors/UnauthorizedError";
 import { decode } from "jsonwebtoken";
 import _ from "lodash";
 
-export const authInterceptor = (options: AuthOptions): Interceptor => {
+export const grpcAuthenticator = (options: AuthOptions): Interceptor => {
   const tokenKey = validateAndGetTokenKey(options.tokenKey);
   const algorithms = validateAndGetAlgorithms(options.algorithms);
   const issuers = validateAndGetIssuers(options.issuer);
