@@ -1,0 +1,35 @@
+{
+  "name": "@topcoder-framework/lib-interceptor",
+  "version": "0.20.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "scripty",
+    "build:es": "scripty",
+    "build:app": "scripty",
+    "build:include:deps": "scripty",
+    "clean": "scripty",
+    "lint": "scripty",
+    "format": "scripty"
+  },
+  "scripty": {
+    "path": "../../scripts/packages",
+    "windowsPath": "../../scripts-win/packages"
+  },
+  "author": "Rakib Ansary <rakibansary@topcoder.com>",
+  "license": "ISC",
+  "volta": {
+    "node": "18.14.1",
+    "typescript": "4.9.3",
+    "npm": "9.1.2"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.8.0",
+    "@topcoder-framework/lib-common": "^0.20.0"
+  },
+  "devDependencies": {},
+  "files": [
+    "dist-*"
+  ],
+  "gitHead": "8c19fdcd36bcccc5e952aa909e4a30caf2943340"
+}
