@@ -1,6 +1,6 @@
 import { Metadata, status, StatusBuilder, StatusObject } from "@grpc/grpc-js";
 
-class ErrorHelper {
+export class ErrorHelper {
   public static wrapError(error: GrpcError): Partial<StatusObject> {
     if (error.code && error.details) {
       return error;
@@ -25,5 +25,3 @@ class ErrorHelper {
 }
 
 export type GrpcError = Partial<Error> & Partial<StatusObject>;
-
-export default ErrorHelper;
