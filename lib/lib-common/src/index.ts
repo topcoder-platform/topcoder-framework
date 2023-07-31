@@ -3,3 +3,4 @@ export * from "./models/google/protobuf/empty";
 export * from "./models/google/protobuf/struct";
 export * from "./models/google/protobuf/timestamp";
 export * from "./util/DomainHelper";
+export * from "./util/ErrorHelper";
