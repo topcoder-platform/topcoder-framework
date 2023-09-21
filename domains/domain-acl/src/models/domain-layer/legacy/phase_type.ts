@@ -133,28 +133,35 @@ export const LegacyPhaseType = {
 
   toJSON(message: LegacyPhaseType): unknown {
     const obj: any = {};
-    message.name !== undefined && (obj.name = Math.round(message.name));
-    message.phaseTypeId !== undefined &&
-      (obj.phaseTypeId = Math.round(message.phaseTypeId));
-    message.description !== undefined &&
-      (obj.description = message.description);
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    if (message.name !== 0) {
+      obj.name = Math.round(message.name);
+    }
+    if (message.phaseTypeId !== 0) {
+      obj.phaseTypeId = Math.round(message.phaseTypeId);
+    }
+    if (message.description !== "") {
+      obj.description = message.description;
+    }
+    if (message.createUser !== 0) {
+      obj.createUser = Math.round(message.createUser);
+    }
+    if (message.createDate !== 0) {
+      obj.createDate = Math.round(message.createDate);
+    }
+    if (message.modifyUser !== 0) {
+      obj.modifyUser = Math.round(message.modifyUser);
+    }
+    if (message.modifyDate !== 0) {
+      obj.modifyDate = Math.round(message.modifyDate);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<LegacyPhaseType>, I>>(
     base?: I
   ): LegacyPhaseType {
-    return LegacyPhaseType.fromPartial(base ?? {});
+    return LegacyPhaseType.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<LegacyPhaseType>, I>>(
     object: I
   ): LegacyPhaseType {
@@ -170,10 +177,10 @@ export const LegacyPhaseType = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

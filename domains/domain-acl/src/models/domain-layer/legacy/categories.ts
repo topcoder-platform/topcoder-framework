@@ -139,28 +139,35 @@ export const LegacyCategory = {
 
   toJSON(message: LegacyCategory): unknown {
     const obj: any = {};
-    message.categoryId !== undefined &&
-      (obj.categoryId = Math.round(message.categoryId));
-    message.parentCategoryId !== undefined &&
-      (obj.parentCategoryId = Math.round(message.parentCategoryId));
-    message.categoryName !== undefined &&
-      (obj.categoryName = message.categoryName);
-    message.categoryDescription !== undefined &&
-      (obj.categoryDescription = message.categoryDescription);
-    message.statusId !== undefined &&
-      (obj.statusId = Math.round(message.statusId));
-    message.viewable !== undefined &&
-      (obj.viewable = Math.round(message.viewable));
-    message.isCustom !== undefined && (obj.isCustom = message.isCustom);
+    if (message.categoryId !== 0) {
+      obj.categoryId = Math.round(message.categoryId);
+    }
+    if (message.parentCategoryId !== 0) {
+      obj.parentCategoryId = Math.round(message.parentCategoryId);
+    }
+    if (message.categoryName !== "") {
+      obj.categoryName = message.categoryName;
+    }
+    if (message.categoryDescription !== "") {
+      obj.categoryDescription = message.categoryDescription;
+    }
+    if (message.statusId !== 0) {
+      obj.statusId = Math.round(message.statusId);
+    }
+    if (message.viewable !== 0) {
+      obj.viewable = Math.round(message.viewable);
+    }
+    if (message.isCustom === true) {
+      obj.isCustom = message.isCustom;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<LegacyCategory>, I>>(
     base?: I
   ): LegacyCategory {
-    return LegacyCategory.fromPartial(base ?? {});
+    return LegacyCategory.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<LegacyCategory>, I>>(
     object: I
   ): LegacyCategory {
@@ -176,10 +183,10 @@ export const LegacyCategory = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

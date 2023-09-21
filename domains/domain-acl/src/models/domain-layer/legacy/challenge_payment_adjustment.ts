@@ -151,31 +151,38 @@ export const LegacyChallengePaymentAdjustment = {
 
   toJSON(message: LegacyChallengePaymentAdjustment): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.resourceRoleId !== undefined &&
-      (obj.resourceRoleId = Math.round(message.resourceRoleId));
-    message.multiplier !== undefined &&
-      (obj.multiplier = Math.round(message.multiplier));
-    message.fixedAmount !== undefined &&
-      (obj.fixedAmount = message.fixedAmount);
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.resourceRoleId !== 0) {
+      obj.resourceRoleId = Math.round(message.resourceRoleId);
+    }
+    if (message.multiplier !== 0) {
+      obj.multiplier = Math.round(message.multiplier);
+    }
+    if (message.fixedAmount !== 0) {
+      obj.fixedAmount = message.fixedAmount;
+    }
+    if (message.createUser !== 0) {
+      obj.createUser = Math.round(message.createUser);
+    }
+    if (message.createDate !== 0) {
+      obj.createDate = Math.round(message.createDate);
+    }
+    if (message.modifyUser !== 0) {
+      obj.modifyUser = Math.round(message.modifyUser);
+    }
+    if (message.modifyDate !== 0) {
+      obj.modifyDate = Math.round(message.modifyDate);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<LegacyChallengePaymentAdjustment>, I>>(
     base?: I
   ): LegacyChallengePaymentAdjustment {
-    return LegacyChallengePaymentAdjustment.fromPartial(base ?? {});
+    return LegacyChallengePaymentAdjustment.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<
     I extends Exact<DeepPartial<LegacyChallengePaymentAdjustment>, I>
   >(object: I): LegacyChallengePaymentAdjustment {
@@ -192,10 +199,10 @@ export const LegacyChallengePaymentAdjustment = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

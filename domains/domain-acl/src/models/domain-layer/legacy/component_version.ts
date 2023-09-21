@@ -190,32 +190,47 @@ export const LegacyComponentVersion = {
 
   toJSON(message: LegacyComponentVersion): unknown {
     const obj: any = {};
-    message.compVersId !== undefined &&
-      (obj.compVersId = Math.round(message.compVersId));
-    message.componentId !== undefined &&
-      (obj.componentId = Math.round(message.componentId));
-    message.version !== undefined &&
-      (obj.version = Math.round(message.version));
-    message.versionText !== undefined &&
-      (obj.versionText = message.versionText);
-    message.createTime !== undefined && (obj.createTime = message.createTime);
-    message.phaseId !== undefined &&
-      (obj.phaseId = Math.round(message.phaseId));
-    message.phaseTime !== undefined && (obj.phaseTime = message.phaseTime);
-    message.price !== undefined && (obj.price = message.price);
-    message.comments !== undefined && (obj.comments = message.comments);
-    message.modifyDate !== undefined && (obj.modifyDate = message.modifyDate);
-    message.suspendedInd !== undefined &&
-      (obj.suspendedInd = Math.round(message.suspendedInd));
+    if (message.compVersId !== 0) {
+      obj.compVersId = Math.round(message.compVersId);
+    }
+    if (message.componentId !== 0) {
+      obj.componentId = Math.round(message.componentId);
+    }
+    if (message.version !== 0) {
+      obj.version = Math.round(message.version);
+    }
+    if (message.versionText !== "") {
+      obj.versionText = message.versionText;
+    }
+    if (message.createTime !== "") {
+      obj.createTime = message.createTime;
+    }
+    if (message.phaseId !== 0) {
+      obj.phaseId = Math.round(message.phaseId);
+    }
+    if (message.phaseTime !== "") {
+      obj.phaseTime = message.phaseTime;
+    }
+    if (message.price !== 0) {
+      obj.price = message.price;
+    }
+    if (message.comments !== "") {
+      obj.comments = message.comments;
+    }
+    if (message.modifyDate !== "") {
+      obj.modifyDate = message.modifyDate;
+    }
+    if (message.suspendedInd !== 0) {
+      obj.suspendedInd = Math.round(message.suspendedInd);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<LegacyComponentVersion>, I>>(
     base?: I
   ): LegacyComponentVersion {
-    return LegacyComponentVersion.fromPartial(base ?? {});
+    return LegacyComponentVersion.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<LegacyComponentVersion>, I>>(
     object: I
   ): LegacyComponentVersion {
@@ -235,10 +250,10 @@ export const LegacyComponentVersion = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

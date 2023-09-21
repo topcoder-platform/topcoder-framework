@@ -34,7 +34,7 @@ export interface Challenge {
   updatedBy?: string | undefined;
   created: number;
   updated?: number | undefined;
-  overview?: Challenge_Overview;
+  overview?: Challenge_Overview | undefined;
 }
 
 export interface Challenge_Legacy {
@@ -144,8 +144,8 @@ export interface CreateChallengeInput {
   typeId: string;
   trackId: string;
   timelineTemplateId?: string | undefined;
-  legacy?: Challenge_Legacy;
-  billing?: Challenge_Billing;
+  legacy?: Challenge_Legacy | undefined;
+  billing?: Challenge_Billing | undefined;
   description?: string | undefined;
   privateDescription?: string | undefined;
   descriptionFormat?: string | undefined;
@@ -167,7 +167,7 @@ export interface CreateChallengeInput {
 
 export interface UpdateChallengeInput {
   filterCriteria: ScanCriteria[];
-  updateInput?: UpdateChallengeInput_UpdateInput;
+  updateInput?: UpdateChallengeInput_UpdateInput | undefined;
 }
 
 export interface UpdateChallengeInput_UpdateInput {
@@ -244,7 +244,7 @@ export interface UpdateChallengeInput_UpdateInput_GroupsUpdate {
 
 export interface UpdateChallengeInputForACL {
   filterCriteria: ScanCriteria[];
-  updateInputForAcl?: UpdateChallengeInputForACL_UpdateInputForACL;
+  updateInputForAcl?: UpdateChallengeInputForACL_UpdateInputForACL | undefined;
 }
 
 export interface UpdateChallengeInputForACL_UpdateInputForACL {
@@ -754,118 +754,109 @@ export const Challenge = {
 
   toJSON(message: Challenge): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = message.id);
-    message.legacyId !== undefined &&
-      (obj.legacyId = Math.round(message.legacyId));
-    message.name !== undefined && (obj.name = message.name);
-    message.typeId !== undefined && (obj.typeId = message.typeId);
-    message.trackId !== undefined && (obj.trackId = message.trackId);
-    message.legacy !== undefined &&
-      (obj.legacy = message.legacy
-        ? Challenge_Legacy.toJSON(message.legacy)
-        : undefined);
-    message.billing !== undefined &&
-      (obj.billing = message.billing
-        ? Challenge_Billing.toJSON(message.billing)
-        : undefined);
-    message.description !== undefined &&
-      (obj.description = message.description);
-    message.privateDescription !== undefined &&
-      (obj.privateDescription = message.privateDescription);
-    message.descriptionFormat !== undefined &&
-      (obj.descriptionFormat = message.descriptionFormat);
-    if (message.metadata) {
-      obj.metadata = message.metadata.map((e) =>
-        e ? Challenge_Metadata.toJSON(e) : undefined
-      );
-    } else {
-      obj.metadata = [];
+    if (message.id !== "") {
+      obj.id = message.id;
     }
-    message.task !== undefined &&
-      (obj.task = message.task
-        ? Challenge_Task.toJSON(message.task)
-        : undefined);
-    message.timelineTemplateId !== undefined &&
-      (obj.timelineTemplateId = message.timelineTemplateId);
-    if (message.phases) {
-      obj.phases = message.phases.map((e) =>
-        e ? Challenge_Phase.toJSON(e) : undefined
-      );
-    } else {
-      obj.phases = [];
+    if (message.legacyId !== undefined) {
+      obj.legacyId = Math.round(message.legacyId);
     }
-    if (message.events) {
-      obj.events = message.events.map((e) =>
-        e ? Challenge_Event.toJSON(e) : undefined
-      );
-    } else {
-      obj.events = [];
+    if (message.name !== "") {
+      obj.name = message.name;
     }
-    if (message.terms) {
-      obj.terms = message.terms.map((e) =>
-        e ? Challenge_Term.toJSON(e) : undefined
-      );
-    } else {
-      obj.terms = [];
+    if (message.typeId !== "") {
+      obj.typeId = message.typeId;
     }
-    if (message.prizeSets) {
+    if (message.trackId !== "") {
+      obj.trackId = message.trackId;
+    }
+    if (message.legacy !== undefined) {
+      obj.legacy = Challenge_Legacy.toJSON(message.legacy);
+    }
+    if (message.billing !== undefined) {
+      obj.billing = Challenge_Billing.toJSON(message.billing);
+    }
+    if (message.description !== "") {
+      obj.description = message.description;
+    }
+    if (message.privateDescription !== undefined) {
+      obj.privateDescription = message.privateDescription;
+    }
+    if (message.descriptionFormat !== undefined) {
+      obj.descriptionFormat = message.descriptionFormat;
+    }
+    if (message.metadata?.length) {
+      obj.metadata = message.metadata.map((e) => Challenge_Metadata.toJSON(e));
+    }
+    if (message.task !== undefined) {
+      obj.task = Challenge_Task.toJSON(message.task);
+    }
+    if (message.timelineTemplateId !== undefined) {
+      obj.timelineTemplateId = message.timelineTemplateId;
+    }
+    if (message.phases?.length) {
+      obj.phases = message.phases.map((e) => Challenge_Phase.toJSON(e));
+    }
+    if (message.events?.length) {
+      obj.events = message.events.map((e) => Challenge_Event.toJSON(e));
+    }
+    if (message.terms?.length) {
+      obj.terms = message.terms.map((e) => Challenge_Term.toJSON(e));
+    }
+    if (message.prizeSets?.length) {
       obj.prizeSets = message.prizeSets.map((e) =>
-        e ? Challenge_PrizeSet.toJSON(e) : undefined
+        Challenge_PrizeSet.toJSON(e)
       );
-    } else {
-      obj.prizeSets = [];
     }
-    if (message.tags) {
-      obj.tags = message.tags.map((e) => e);
-    } else {
-      obj.tags = [];
+    if (message.tags?.length) {
+      obj.tags = message.tags;
     }
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.startDate !== undefined && (obj.startDate = message.startDate);
-    message.endDate !== undefined && (obj.endDate = message.endDate);
-    message.status !== undefined && (obj.status = message.status);
-    if (message.attachments) {
-      obj.attachments = message.attachments.map((e) => e);
-    } else {
-      obj.attachments = [];
+    if (message.projectId !== undefined) {
+      obj.projectId = Math.round(message.projectId);
     }
-    if (message.groups) {
-      obj.groups = message.groups.map((e) => e);
-    } else {
-      obj.groups = [];
+    if (message.startDate !== undefined) {
+      obj.startDate = message.startDate;
     }
-    if (message.winners) {
-      obj.winners = message.winners.map((e) =>
-        e ? Challenge_Winner.toJSON(e) : undefined
-      );
-    } else {
-      obj.winners = [];
+    if (message.endDate !== undefined) {
+      obj.endDate = message.endDate;
     }
-    if (message.discussions) {
+    if (message.status !== "") {
+      obj.status = message.status;
+    }
+    if (message.attachments?.length) {
+      obj.attachments = message.attachments;
+    }
+    if (message.groups?.length) {
+      obj.groups = message.groups;
+    }
+    if (message.winners?.length) {
+      obj.winners = message.winners.map((e) => Challenge_Winner.toJSON(e));
+    }
+    if (message.discussions?.length) {
       obj.discussions = message.discussions.map((e) =>
-        e ? Challenge_Discussion.toJSON(e) : undefined
+        Challenge_Discussion.toJSON(e)
       );
-    } else {
-      obj.discussions = [];
     }
-    message.createdBy !== undefined && (obj.createdBy = message.createdBy);
-    message.updatedBy !== undefined && (obj.updatedBy = message.updatedBy);
-    message.created !== undefined &&
-      (obj.created = Math.round(message.created));
-    message.updated !== undefined &&
-      (obj.updated = Math.round(message.updated));
-    message.overview !== undefined &&
-      (obj.overview = message.overview
-        ? Challenge_Overview.toJSON(message.overview)
-        : undefined);
+    if (message.createdBy !== "") {
+      obj.createdBy = message.createdBy;
+    }
+    if (message.updatedBy !== undefined) {
+      obj.updatedBy = message.updatedBy;
+    }
+    if (message.created !== 0) {
+      obj.created = Math.round(message.created);
+    }
+    if (message.updated !== undefined) {
+      obj.updated = Math.round(message.updated);
+    }
+    if (message.overview !== undefined) {
+      obj.overview = Challenge_Overview.toJSON(message.overview);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Challenge>, I>>(base?: I): Challenge {
-    return Challenge.fromPartial(base ?? {});
+    return Challenge.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Challenge>, I>>(
     object: I
   ): Challenge {
@@ -1107,33 +1098,47 @@ export const Challenge_Legacy = {
 
   toJSON(message: Challenge_Legacy): unknown {
     const obj: any = {};
-    message.track !== undefined && (obj.track = message.track);
-    message.subTrack !== undefined && (obj.subTrack = message.subTrack);
-    message.forumId !== undefined &&
-      (obj.forumId = Math.round(message.forumId));
-    message.directProjectId !== undefined &&
-      (obj.directProjectId = Math.round(message.directProjectId));
-    message.reviewType !== undefined && (obj.reviewType = message.reviewType);
-    message.confidentialityType !== undefined &&
-      (obj.confidentialityType = message.confidentialityType);
-    message.reviewScorecardId !== undefined &&
-      (obj.reviewScorecardId = Math.round(message.reviewScorecardId));
-    message.screeningScorecardId !== undefined &&
-      (obj.screeningScorecardId = Math.round(message.screeningScorecardId));
-    message.pureV5Task !== undefined && (obj.pureV5Task = message.pureV5Task);
-    message.selfService !== undefined &&
-      (obj.selfService = message.selfService);
-    message.selfServiceCopilot !== undefined &&
-      (obj.selfServiceCopilot = message.selfServiceCopilot);
+    if (message.track !== undefined) {
+      obj.track = message.track;
+    }
+    if (message.subTrack !== undefined) {
+      obj.subTrack = message.subTrack;
+    }
+    if (message.forumId !== undefined) {
+      obj.forumId = Math.round(message.forumId);
+    }
+    if (message.directProjectId !== 0) {
+      obj.directProjectId = Math.round(message.directProjectId);
+    }
+    if (message.reviewType !== "") {
+      obj.reviewType = message.reviewType;
+    }
+    if (message.confidentialityType !== "") {
+      obj.confidentialityType = message.confidentialityType;
+    }
+    if (message.reviewScorecardId !== undefined) {
+      obj.reviewScorecardId = Math.round(message.reviewScorecardId);
+    }
+    if (message.screeningScorecardId !== undefined) {
+      obj.screeningScorecardId = Math.round(message.screeningScorecardId);
+    }
+    if (message.pureV5Task !== undefined) {
+      obj.pureV5Task = message.pureV5Task;
+    }
+    if (message.selfService !== undefined) {
+      obj.selfService = message.selfService;
+    }
+    if (message.selfServiceCopilot !== undefined) {
+      obj.selfServiceCopilot = message.selfServiceCopilot;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Challenge_Legacy>, I>>(
     base?: I
   ): Challenge_Legacy {
-    return Challenge_Legacy.fromPartial(base ?? {});
+    return Challenge_Legacy.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Challenge_Legacy>, I>>(
     object: I
   ): Challenge_Legacy {
@@ -1213,18 +1218,20 @@ export const Challenge_Billing = {
 
   toJSON(message: Challenge_Billing): unknown {
     const obj: any = {};
-    message.billingAccountId !== undefined &&
-      (obj.billingAccountId = Math.round(message.billingAccountId));
-    message.markup !== undefined && (obj.markup = message.markup);
+    if (message.billingAccountId !== 0) {
+      obj.billingAccountId = Math.round(message.billingAccountId);
+    }
+    if (message.markup !== 0) {
+      obj.markup = message.markup;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Challenge_Billing>, I>>(
     base?: I
   ): Challenge_Billing {
-    return Challenge_Billing.fromPartial(base ?? {});
+    return Challenge_Billing.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Challenge_Billing>, I>>(
     object: I
   ): Challenge_Billing {
@@ -1304,18 +1311,23 @@ export const Challenge_Event = {
 
   toJSON(message: Challenge_Event): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = Math.round(message.id));
-    message.name !== undefined && (obj.name = message.name);
-    message.key !== undefined && (obj.key = message.key);
+    if (message.id !== undefined) {
+      obj.id = Math.round(message.id);
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.key !== "") {
+      obj.key = message.key;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Challenge_Event>, I>>(
     base?: I
   ): Challenge_Event {
-    return Challenge_Event.fromPartial(base ?? {});
+    return Challenge_Event.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Challenge_Event>, I>>(
     object: I
   ): Challenge_Event {
@@ -1385,17 +1397,20 @@ export const Challenge_Term = {
 
   toJSON(message: Challenge_Term): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = message.id);
-    message.roleId !== undefined && (obj.roleId = message.roleId);
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.roleId !== "") {
+      obj.roleId = message.roleId;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Challenge_Term>, I>>(
     base?: I
   ): Challenge_Term {
-    return Challenge_Term.fromPartial(base ?? {});
+    return Challenge_Term.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Challenge_Term>, I>>(
     object: I
   ): Challenge_Term {
@@ -1464,17 +1479,20 @@ export const Challenge_Metadata = {
 
   toJSON(message: Challenge_Metadata): unknown {
     const obj: any = {};
-    message.name !== undefined && (obj.name = message.name);
-    message.value !== undefined && (obj.value = message.value);
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Challenge_Metadata>, I>>(
     base?: I
   ): Challenge_Metadata {
-    return Challenge_Metadata.fromPartial(base ?? {});
+    return Challenge_Metadata.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Challenge_Metadata>, I>>(
     object: I
   ): Challenge_Metadata {
@@ -1579,20 +1597,29 @@ export const Challenge_Discussion = {
 
   toJSON(message: Challenge_Discussion): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = message.id);
-    message.name !== undefined && (obj.name = message.name);
-    message.type !== undefined && (obj.type = message.type);
-    message.provider !== undefined && (obj.provider = message.provider);
-    message.url !== undefined && (obj.url = message.url);
+    if (message.id !== undefined) {
+      obj.id = message.id;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.type !== "") {
+      obj.type = message.type;
+    }
+    if (message.provider !== "") {
+      obj.provider = message.provider;
+    }
+    if (message.url !== undefined) {
+      obj.url = message.url;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Challenge_Discussion>, I>>(
     base?: I
   ): Challenge_Discussion {
-    return Challenge_Discussion.fromPartial(base ?? {});
+    return Challenge_Discussion.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Challenge_Discussion>, I>>(
     object: I
   ): Challenge_Discussion {
@@ -1825,40 +1852,52 @@ export const Challenge_Phase = {
 
   toJSON(message: Challenge_Phase): unknown {
     const obj: any = {};
-    message.duration !== undefined &&
-      (obj.duration = Math.round(message.duration));
-    message.scheduledStartDate !== undefined &&
-      (obj.scheduledStartDate = message.scheduledStartDate);
-    message.scheduledEndDate !== undefined &&
-      (obj.scheduledEndDate = message.scheduledEndDate);
-    message.actualStartDate !== undefined &&
-      (obj.actualStartDate = message.actualStartDate);
-    message.actualEndDate !== undefined &&
-      (obj.actualEndDate = message.actualEndDate);
-    message.name !== undefined && (obj.name = message.name);
-    message.phaseId !== undefined && (obj.phaseId = message.phaseId);
-    message.id !== undefined && (obj.id = message.id);
-    message.isOpen !== undefined && (obj.isOpen = message.isOpen);
-    if (message.constraints) {
-      obj.constraints = message.constraints.map((e) =>
-        e ? Challenge_Phase_Constraint.toJSON(e) : undefined
-      );
-    } else {
-      obj.constraints = [];
+    if (message.duration !== 0) {
+      obj.duration = Math.round(message.duration);
     }
-    message.description !== undefined &&
-      (obj.description = message.description);
-    message.predecessor !== undefined &&
-      (obj.predecessor = message.predecessor);
+    if (message.scheduledStartDate !== undefined) {
+      obj.scheduledStartDate = message.scheduledStartDate;
+    }
+    if (message.scheduledEndDate !== undefined) {
+      obj.scheduledEndDate = message.scheduledEndDate;
+    }
+    if (message.actualStartDate !== undefined) {
+      obj.actualStartDate = message.actualStartDate;
+    }
+    if (message.actualEndDate !== undefined) {
+      obj.actualEndDate = message.actualEndDate;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.phaseId !== "") {
+      obj.phaseId = message.phaseId;
+    }
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.isOpen === true) {
+      obj.isOpen = message.isOpen;
+    }
+    if (message.constraints?.length) {
+      obj.constraints = message.constraints.map((e) =>
+        Challenge_Phase_Constraint.toJSON(e)
+      );
+    }
+    if (message.description !== undefined) {
+      obj.description = message.description;
+    }
+    if (message.predecessor !== undefined) {
+      obj.predecessor = message.predecessor;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Challenge_Phase>, I>>(
     base?: I
   ): Challenge_Phase {
-    return Challenge_Phase.fromPartial(base ?? {});
+    return Challenge_Phase.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Challenge_Phase>, I>>(
     object: I
   ): Challenge_Phase {
@@ -1943,17 +1982,20 @@ export const Challenge_Phase_Constraint = {
 
   toJSON(message: Challenge_Phase_Constraint): unknown {
     const obj: any = {};
-    message.name !== undefined && (obj.name = message.name);
-    message.value !== undefined && (obj.value = Math.round(message.value));
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.value !== 0) {
+      obj.value = Math.round(message.value);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Challenge_Phase_Constraint>, I>>(
     base?: I
   ): Challenge_Phase_Constraint {
-    return Challenge_Phase_Constraint.fromPartial(base ?? {});
+    return Challenge_Phase_Constraint.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Challenge_Phase_Constraint>, I>>(
     object: I
   ): Challenge_Phase_Constraint {
@@ -2044,20 +2086,26 @@ export const Challenge_Winner = {
 
   toJSON(message: Challenge_Winner): unknown {
     const obj: any = {};
-    message.handle !== undefined && (obj.handle = message.handle);
-    message.placement !== undefined &&
-      (obj.placement = Math.round(message.placement));
-    message.userId !== undefined && (obj.userId = Math.round(message.userId));
-    message.type !== undefined && (obj.type = message.type);
+    if (message.handle !== "") {
+      obj.handle = message.handle;
+    }
+    if (message.placement !== 0) {
+      obj.placement = Math.round(message.placement);
+    }
+    if (message.userId !== 0) {
+      obj.userId = Math.round(message.userId);
+    }
+    if (message.type !== undefined) {
+      obj.type = message.type;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Challenge_Winner>, I>>(
     base?: I
   ): Challenge_Winner {
-    return Challenge_Winner.fromPartial(base ?? {});
+    return Challenge_Winner.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Challenge_Winner>, I>>(
     object: I
   ): Challenge_Winner {
@@ -2139,19 +2187,23 @@ export const Challenge_Task = {
 
   toJSON(message: Challenge_Task): unknown {
     const obj: any = {};
-    message.isTask !== undefined && (obj.isTask = message.isTask);
-    message.isAssigned !== undefined && (obj.isAssigned = message.isAssigned);
-    message.memberId !== undefined &&
-      (obj.memberId = Math.round(message.memberId));
+    if (message.isTask === true) {
+      obj.isTask = message.isTask;
+    }
+    if (message.isAssigned === true) {
+      obj.isAssigned = message.isAssigned;
+    }
+    if (message.memberId !== undefined) {
+      obj.memberId = Math.round(message.memberId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Challenge_Task>, I>>(
     base?: I
   ): Challenge_Task {
-    return Challenge_Task.fromPartial(base ?? {});
+    return Challenge_Task.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Challenge_Task>, I>>(
     object: I
   ): Challenge_Task {
@@ -2238,15 +2290,16 @@ export const Challenge_PrizeSet = {
 
   toJSON(message: Challenge_PrizeSet): unknown {
     const obj: any = {};
-    message.type !== undefined && (obj.type = message.type);
-    message.description !== undefined &&
-      (obj.description = message.description);
-    if (message.prizes) {
+    if (message.type !== "") {
+      obj.type = message.type;
+    }
+    if (message.description !== undefined) {
+      obj.description = message.description;
+    }
+    if (message.prizes?.length) {
       obj.prizes = message.prizes.map((e) =>
-        e ? Challenge_PrizeSet_Prize.toJSON(e) : undefined
+        Challenge_PrizeSet_Prize.toJSON(e)
       );
-    } else {
-      obj.prizes = [];
     }
     return obj;
   },
@@ -2254,9 +2307,8 @@ export const Challenge_PrizeSet = {
   create<I extends Exact<DeepPartial<Challenge_PrizeSet>, I>>(
     base?: I
   ): Challenge_PrizeSet {
-    return Challenge_PrizeSet.fromPartial(base ?? {});
+    return Challenge_PrizeSet.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Challenge_PrizeSet>, I>>(
     object: I
   ): Challenge_PrizeSet {
@@ -2343,19 +2395,23 @@ export const Challenge_PrizeSet_Prize = {
 
   toJSON(message: Challenge_PrizeSet_Prize): unknown {
     const obj: any = {};
-    message.amountInCents !== undefined &&
-      (obj.amountInCents = Math.round(message.amountInCents));
-    message.value !== undefined && (obj.value = message.value);
-    message.type !== undefined && (obj.type = message.type);
+    if (message.amountInCents !== undefined) {
+      obj.amountInCents = Math.round(message.amountInCents);
+    }
+    if (message.value !== undefined) {
+      obj.value = message.value;
+    }
+    if (message.type !== "") {
+      obj.type = message.type;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Challenge_PrizeSet_Prize>, I>>(
     base?: I
   ): Challenge_PrizeSet_Prize {
-    return Challenge_PrizeSet_Prize.fromPartial(base ?? {});
+    return Challenge_PrizeSet_Prize.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Challenge_PrizeSet_Prize>, I>>(
     object: I
   ): Challenge_PrizeSet_Prize {
@@ -2429,19 +2485,20 @@ export const Challenge_Overview = {
 
   toJSON(message: Challenge_Overview): unknown {
     const obj: any = {};
-    message.totalPrizesInCents !== undefined &&
-      (obj.totalPrizesInCents = Math.round(message.totalPrizesInCents));
-    message.totalPrizes !== undefined &&
-      (obj.totalPrizes = message.totalPrizes);
+    if (message.totalPrizesInCents !== undefined) {
+      obj.totalPrizesInCents = Math.round(message.totalPrizesInCents);
+    }
+    if (message.totalPrizes !== undefined) {
+      obj.totalPrizes = message.totalPrizes;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Challenge_Overview>, I>>(
     base?: I
   ): Challenge_Overview {
-    return Challenge_Overview.fromPartial(base ?? {});
+    return Challenge_Overview.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Challenge_Overview>, I>>(
     object: I
   ): Challenge_Overview {
@@ -2501,12 +2558,8 @@ export const ChallengeList = {
 
   toJSON(message: ChallengeList): unknown {
     const obj: any = {};
-    if (message.items) {
-      obj.items = message.items.map((e) =>
-        e ? Challenge.toJSON(e) : undefined
-      );
-    } else {
-      obj.items = [];
+    if (message.items?.length) {
+      obj.items = message.items.map((e) => Challenge.toJSON(e));
     }
     return obj;
   },
@@ -2514,9 +2567,8 @@ export const ChallengeList = {
   create<I extends Exact<DeepPartial<ChallengeList>, I>>(
     base?: I
   ): ChallengeList {
-    return ChallengeList.fromPartial(base ?? {});
+    return ChallengeList.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<ChallengeList>, I>>(
     object: I
   ): ChallengeList {
@@ -2886,90 +2938,78 @@ export const CreateChallengeInput = {
 
   toJSON(message: CreateChallengeInput): unknown {
     const obj: any = {};
-    message.name !== undefined && (obj.name = message.name);
-    message.typeId !== undefined && (obj.typeId = message.typeId);
-    message.trackId !== undefined && (obj.trackId = message.trackId);
-    message.timelineTemplateId !== undefined &&
-      (obj.timelineTemplateId = message.timelineTemplateId);
-    message.legacy !== undefined &&
-      (obj.legacy = message.legacy
-        ? Challenge_Legacy.toJSON(message.legacy)
-        : undefined);
-    message.billing !== undefined &&
-      (obj.billing = message.billing
-        ? Challenge_Billing.toJSON(message.billing)
-        : undefined);
-    message.description !== undefined &&
-      (obj.description = message.description);
-    message.privateDescription !== undefined &&
-      (obj.privateDescription = message.privateDescription);
-    message.descriptionFormat !== undefined &&
-      (obj.descriptionFormat = message.descriptionFormat);
-    if (message.metadata) {
-      obj.metadata = message.metadata.map((e) =>
-        e ? Challenge_Metadata.toJSON(e) : undefined
-      );
-    } else {
-      obj.metadata = [];
+    if (message.name !== "") {
+      obj.name = message.name;
     }
-    message.task !== undefined &&
-      (obj.task = message.task
-        ? Challenge_Task.toJSON(message.task)
-        : undefined);
-    if (message.phases) {
-      obj.phases = message.phases.map((e) =>
-        e ? Challenge_Phase.toJSON(e) : undefined
-      );
-    } else {
-      obj.phases = [];
+    if (message.typeId !== "") {
+      obj.typeId = message.typeId;
     }
-    if (message.events) {
-      obj.events = message.events.map((e) =>
-        e ? Challenge_Event.toJSON(e) : undefined
-      );
-    } else {
-      obj.events = [];
+    if (message.trackId !== "") {
+      obj.trackId = message.trackId;
     }
-    if (message.terms) {
-      obj.terms = message.terms.map((e) =>
-        e ? Challenge_Term.toJSON(e) : undefined
-      );
-    } else {
-      obj.terms = [];
+    if (message.timelineTemplateId !== undefined) {
+      obj.timelineTemplateId = message.timelineTemplateId;
     }
-    if (message.prizeSets) {
+    if (message.legacy !== undefined) {
+      obj.legacy = Challenge_Legacy.toJSON(message.legacy);
+    }
+    if (message.billing !== undefined) {
+      obj.billing = Challenge_Billing.toJSON(message.billing);
+    }
+    if (message.description !== undefined) {
+      obj.description = message.description;
+    }
+    if (message.privateDescription !== undefined) {
+      obj.privateDescription = message.privateDescription;
+    }
+    if (message.descriptionFormat !== undefined) {
+      obj.descriptionFormat = message.descriptionFormat;
+    }
+    if (message.metadata?.length) {
+      obj.metadata = message.metadata.map((e) => Challenge_Metadata.toJSON(e));
+    }
+    if (message.task !== undefined) {
+      obj.task = Challenge_Task.toJSON(message.task);
+    }
+    if (message.phases?.length) {
+      obj.phases = message.phases.map((e) => Challenge_Phase.toJSON(e));
+    }
+    if (message.events?.length) {
+      obj.events = message.events.map((e) => Challenge_Event.toJSON(e));
+    }
+    if (message.terms?.length) {
+      obj.terms = message.terms.map((e) => Challenge_Term.toJSON(e));
+    }
+    if (message.prizeSets?.length) {
       obj.prizeSets = message.prizeSets.map((e) =>
-        e ? Challenge_PrizeSet.toJSON(e) : undefined
+        Challenge_PrizeSet.toJSON(e)
       );
-    } else {
-      obj.prizeSets = [];
     }
-    if (message.tags) {
-      obj.tags = message.tags.map((e) => e);
-    } else {
-      obj.tags = [];
+    if (message.tags?.length) {
+      obj.tags = message.tags;
     }
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.startDate !== undefined && (obj.startDate = message.startDate);
-    message.endDate !== undefined && (obj.endDate = message.endDate);
-    message.status !== undefined && (obj.status = message.status);
-    if (message.attachments) {
-      obj.attachments = message.attachments.map((e) => e);
-    } else {
-      obj.attachments = [];
+    if (message.projectId !== undefined) {
+      obj.projectId = Math.round(message.projectId);
     }
-    if (message.groups) {
-      obj.groups = message.groups.map((e) => e);
-    } else {
-      obj.groups = [];
+    if (message.startDate !== undefined) {
+      obj.startDate = message.startDate;
     }
-    if (message.discussions) {
+    if (message.endDate !== undefined) {
+      obj.endDate = message.endDate;
+    }
+    if (message.status !== "") {
+      obj.status = message.status;
+    }
+    if (message.attachments?.length) {
+      obj.attachments = message.attachments;
+    }
+    if (message.groups?.length) {
+      obj.groups = message.groups;
+    }
+    if (message.discussions?.length) {
       obj.discussions = message.discussions.map((e) =>
-        e ? Challenge_Discussion.toJSON(e) : undefined
+        Challenge_Discussion.toJSON(e)
       );
-    } else {
-      obj.discussions = [];
     }
     return obj;
   },
@@ -2977,9 +3017,8 @@ export const CreateChallengeInput = {
   create<I extends Exact<DeepPartial<CreateChallengeInput>, I>>(
     base?: I
   ): CreateChallengeInput {
-    return CreateChallengeInput.fromPartial(base ?? {});
+    return CreateChallengeInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<CreateChallengeInput>, I>>(
     object: I
   ): CreateChallengeInput {
@@ -3099,26 +3138,24 @@ export const UpdateChallengeInput = {
 
   toJSON(message: UpdateChallengeInput): unknown {
     const obj: any = {};
-    if (message.filterCriteria) {
+    if (message.filterCriteria?.length) {
       obj.filterCriteria = message.filterCriteria.map((e) =>
-        e ? ScanCriteria.toJSON(e) : undefined
+        ScanCriteria.toJSON(e)
       );
-    } else {
-      obj.filterCriteria = [];
     }
-    message.updateInput !== undefined &&
-      (obj.updateInput = message.updateInput
-        ? UpdateChallengeInput_UpdateInput.toJSON(message.updateInput)
-        : undefined);
+    if (message.updateInput !== undefined) {
+      obj.updateInput = UpdateChallengeInput_UpdateInput.toJSON(
+        message.updateInput
+      );
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdateChallengeInput>, I>>(
     base?: I
   ): UpdateChallengeInput {
-    return UpdateChallengeInput.fromPartial(base ?? {});
+    return UpdateChallengeInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<UpdateChallengeInput>, I>>(
     object: I
   ): UpdateChallengeInput {
@@ -3606,103 +3643,113 @@ export const UpdateChallengeInput_UpdateInput = {
 
   toJSON(message: UpdateChallengeInput_UpdateInput): unknown {
     const obj: any = {};
-    message.name !== undefined && (obj.name = message.name);
-    message.typeId !== undefined && (obj.typeId = message.typeId);
-    message.trackId !== undefined && (obj.trackId = message.trackId);
-    message.timelineTemplateId !== undefined &&
-      (obj.timelineTemplateId = message.timelineTemplateId);
-    message.legacy !== undefined &&
-      (obj.legacy = message.legacy
-        ? Challenge_Legacy.toJSON(message.legacy)
-        : undefined);
-    message.billing !== undefined &&
-      (obj.billing = message.billing
-        ? Challenge_Billing.toJSON(message.billing)
-        : undefined);
-    message.description !== undefined &&
-      (obj.description = message.description);
-    message.privateDescription !== undefined &&
-      (obj.privateDescription = message.privateDescription);
-    message.descriptionFormat !== undefined &&
-      (obj.descriptionFormat = message.descriptionFormat);
-    message.task !== undefined &&
-      (obj.task = message.task
-        ? Challenge_Task.toJSON(message.task)
-        : undefined);
-    message.winnerUpdate !== undefined &&
-      (obj.winnerUpdate = message.winnerUpdate
-        ? UpdateChallengeInput_UpdateInput_WinnerUpdate.toJSON(
-            message.winnerUpdate
-          )
-        : undefined);
-    message.discussionUpdate !== undefined &&
-      (obj.discussionUpdate = message.discussionUpdate
-        ? UpdateChallengeInput_UpdateInput_DiscussionUpdate.toJSON(
-            message.discussionUpdate
-          )
-        : undefined);
-    message.metadataUpdate !== undefined &&
-      (obj.metadataUpdate = message.metadataUpdate
-        ? UpdateChallengeInput_UpdateInput_MetadataUpdate.toJSON(
-            message.metadataUpdate
-          )
-        : undefined);
-    message.phaseUpdate !== undefined &&
-      (obj.phaseUpdate = message.phaseUpdate
-        ? UpdateChallengeInput_UpdateInput_PhaseUpdate.toJSON(
-            message.phaseUpdate
-          )
-        : undefined);
-    message.eventUpdate !== undefined &&
-      (obj.eventUpdate = message.eventUpdate
-        ? UpdateChallengeInput_UpdateInput_EventUpdate.toJSON(
-            message.eventUpdate
-          )
-        : undefined);
-    message.termUpdate !== undefined &&
-      (obj.termUpdate = message.termUpdate
-        ? UpdateChallengeInput_UpdateInput_TermUpdate.toJSON(message.termUpdate)
-        : undefined);
-    message.prizeSetUpdate !== undefined &&
-      (obj.prizeSetUpdate = message.prizeSetUpdate
-        ? UpdateChallengeInput_UpdateInput_PrizeSetUpdate.toJSON(
-            message.prizeSetUpdate
-          )
-        : undefined);
-    message.tagUpdate !== undefined &&
-      (obj.tagUpdate = message.tagUpdate
-        ? UpdateChallengeInput_UpdateInput_TagsUpdate.toJSON(message.tagUpdate)
-        : undefined);
-    message.attachmentUpdate !== undefined &&
-      (obj.attachmentUpdate = message.attachmentUpdate
-        ? UpdateChallengeInput_UpdateInput_AttachmentsUpdate.toJSON(
-            message.attachmentUpdate
-          )
-        : undefined);
-    message.groupUpdate !== undefined &&
-      (obj.groupUpdate = message.groupUpdate
-        ? UpdateChallengeInput_UpdateInput_GroupsUpdate.toJSON(
-            message.groupUpdate
-          )
-        : undefined);
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.startDate !== undefined && (obj.startDate = message.startDate);
-    message.endDate !== undefined && (obj.endDate = message.endDate);
-    message.status !== undefined && (obj.status = message.status);
-    message.overview !== undefined &&
-      (obj.overview = message.overview
-        ? Challenge_Overview.toJSON(message.overview)
-        : undefined);
+    if (message.name !== undefined) {
+      obj.name = message.name;
+    }
+    if (message.typeId !== undefined) {
+      obj.typeId = message.typeId;
+    }
+    if (message.trackId !== undefined) {
+      obj.trackId = message.trackId;
+    }
+    if (message.timelineTemplateId !== undefined) {
+      obj.timelineTemplateId = message.timelineTemplateId;
+    }
+    if (message.legacy !== undefined) {
+      obj.legacy = Challenge_Legacy.toJSON(message.legacy);
+    }
+    if (message.billing !== undefined) {
+      obj.billing = Challenge_Billing.toJSON(message.billing);
+    }
+    if (message.description !== undefined) {
+      obj.description = message.description;
+    }
+    if (message.privateDescription !== undefined) {
+      obj.privateDescription = message.privateDescription;
+    }
+    if (message.descriptionFormat !== undefined) {
+      obj.descriptionFormat = message.descriptionFormat;
+    }
+    if (message.task !== undefined) {
+      obj.task = Challenge_Task.toJSON(message.task);
+    }
+    if (message.winnerUpdate !== undefined) {
+      obj.winnerUpdate = UpdateChallengeInput_UpdateInput_WinnerUpdate.toJSON(
+        message.winnerUpdate
+      );
+    }
+    if (message.discussionUpdate !== undefined) {
+      obj.discussionUpdate =
+        UpdateChallengeInput_UpdateInput_DiscussionUpdate.toJSON(
+          message.discussionUpdate
+        );
+    }
+    if (message.metadataUpdate !== undefined) {
+      obj.metadataUpdate =
+        UpdateChallengeInput_UpdateInput_MetadataUpdate.toJSON(
+          message.metadataUpdate
+        );
+    }
+    if (message.phaseUpdate !== undefined) {
+      obj.phaseUpdate = UpdateChallengeInput_UpdateInput_PhaseUpdate.toJSON(
+        message.phaseUpdate
+      );
+    }
+    if (message.eventUpdate !== undefined) {
+      obj.eventUpdate = UpdateChallengeInput_UpdateInput_EventUpdate.toJSON(
+        message.eventUpdate
+      );
+    }
+    if (message.termUpdate !== undefined) {
+      obj.termUpdate = UpdateChallengeInput_UpdateInput_TermUpdate.toJSON(
+        message.termUpdate
+      );
+    }
+    if (message.prizeSetUpdate !== undefined) {
+      obj.prizeSetUpdate =
+        UpdateChallengeInput_UpdateInput_PrizeSetUpdate.toJSON(
+          message.prizeSetUpdate
+        );
+    }
+    if (message.tagUpdate !== undefined) {
+      obj.tagUpdate = UpdateChallengeInput_UpdateInput_TagsUpdate.toJSON(
+        message.tagUpdate
+      );
+    }
+    if (message.attachmentUpdate !== undefined) {
+      obj.attachmentUpdate =
+        UpdateChallengeInput_UpdateInput_AttachmentsUpdate.toJSON(
+          message.attachmentUpdate
+        );
+    }
+    if (message.groupUpdate !== undefined) {
+      obj.groupUpdate = UpdateChallengeInput_UpdateInput_GroupsUpdate.toJSON(
+        message.groupUpdate
+      );
+    }
+    if (message.projectId !== undefined) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.startDate !== undefined) {
+      obj.startDate = message.startDate;
+    }
+    if (message.endDate !== undefined) {
+      obj.endDate = message.endDate;
+    }
+    if (message.status !== undefined) {
+      obj.status = message.status;
+    }
+    if (message.overview !== undefined) {
+      obj.overview = Challenge_Overview.toJSON(message.overview);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdateChallengeInput_UpdateInput>, I>>(
     base?: I
   ): UpdateChallengeInput_UpdateInput {
-    return UpdateChallengeInput_UpdateInput.fromPartial(base ?? {});
+    return UpdateChallengeInput_UpdateInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<
     I extends Exact<DeepPartial<UpdateChallengeInput_UpdateInput>, I>
   >(object: I): UpdateChallengeInput_UpdateInput {
@@ -3852,12 +3899,8 @@ export const UpdateChallengeInput_UpdateInput_WinnerUpdate = {
 
   toJSON(message: UpdateChallengeInput_UpdateInput_WinnerUpdate): unknown {
     const obj: any = {};
-    if (message.winners) {
-      obj.winners = message.winners.map((e) =>
-        e ? Challenge_Winner.toJSON(e) : undefined
-      );
-    } else {
-      obj.winners = [];
+    if (message.winners?.length) {
+      obj.winners = message.winners.map((e) => Challenge_Winner.toJSON(e));
     }
     return obj;
   },
@@ -3869,10 +3912,9 @@ export const UpdateChallengeInput_UpdateInput_WinnerUpdate = {
     >
   >(base?: I): UpdateChallengeInput_UpdateInput_WinnerUpdate {
     return UpdateChallengeInput_UpdateInput_WinnerUpdate.fromPartial(
-      base ?? {}
+      base ?? ({} as any)
     );
   },
-
   fromPartial<
     I extends Exact<
       DeepPartial<UpdateChallengeInput_UpdateInput_WinnerUpdate>,
@@ -3941,12 +3983,10 @@ export const UpdateChallengeInput_UpdateInput_DiscussionUpdate = {
 
   toJSON(message: UpdateChallengeInput_UpdateInput_DiscussionUpdate): unknown {
     const obj: any = {};
-    if (message.discussions) {
+    if (message.discussions?.length) {
       obj.discussions = message.discussions.map((e) =>
-        e ? Challenge_Discussion.toJSON(e) : undefined
+        Challenge_Discussion.toJSON(e)
       );
-    } else {
-      obj.discussions = [];
     }
     return obj;
   },
@@ -3958,10 +3998,9 @@ export const UpdateChallengeInput_UpdateInput_DiscussionUpdate = {
     >
   >(base?: I): UpdateChallengeInput_UpdateInput_DiscussionUpdate {
     return UpdateChallengeInput_UpdateInput_DiscussionUpdate.fromPartial(
-      base ?? {}
+      base ?? ({} as any)
     );
   },
-
   fromPartial<
     I extends Exact<
       DeepPartial<UpdateChallengeInput_UpdateInput_DiscussionUpdate>,
@@ -4030,12 +4069,8 @@ export const UpdateChallengeInput_UpdateInput_MetadataUpdate = {
 
   toJSON(message: UpdateChallengeInput_UpdateInput_MetadataUpdate): unknown {
     const obj: any = {};
-    if (message.metadata) {
-      obj.metadata = message.metadata.map((e) =>
-        e ? Challenge_Metadata.toJSON(e) : undefined
-      );
-    } else {
-      obj.metadata = [];
+    if (message.metadata?.length) {
+      obj.metadata = message.metadata.map((e) => Challenge_Metadata.toJSON(e));
     }
     return obj;
   },
@@ -4047,10 +4082,9 @@ export const UpdateChallengeInput_UpdateInput_MetadataUpdate = {
     >
   >(base?: I): UpdateChallengeInput_UpdateInput_MetadataUpdate {
     return UpdateChallengeInput_UpdateInput_MetadataUpdate.fromPartial(
-      base ?? {}
+      base ?? ({} as any)
     );
   },
-
   fromPartial<
     I extends Exact<
       DeepPartial<UpdateChallengeInput_UpdateInput_MetadataUpdate>,
@@ -4116,12 +4150,8 @@ export const UpdateChallengeInput_UpdateInput_PhaseUpdate = {
 
   toJSON(message: UpdateChallengeInput_UpdateInput_PhaseUpdate): unknown {
     const obj: any = {};
-    if (message.phases) {
-      obj.phases = message.phases.map((e) =>
-        e ? Challenge_Phase.toJSON(e) : undefined
-      );
-    } else {
-      obj.phases = [];
+    if (message.phases?.length) {
+      obj.phases = message.phases.map((e) => Challenge_Phase.toJSON(e));
     }
     return obj;
   },
@@ -4132,9 +4162,10 @@ export const UpdateChallengeInput_UpdateInput_PhaseUpdate = {
       I
     >
   >(base?: I): UpdateChallengeInput_UpdateInput_PhaseUpdate {
-    return UpdateChallengeInput_UpdateInput_PhaseUpdate.fromPartial(base ?? {});
+    return UpdateChallengeInput_UpdateInput_PhaseUpdate.fromPartial(
+      base ?? ({} as any)
+    );
   },
-
   fromPartial<
     I extends Exact<
       DeepPartial<UpdateChallengeInput_UpdateInput_PhaseUpdate>,
@@ -4200,12 +4231,8 @@ export const UpdateChallengeInput_UpdateInput_EventUpdate = {
 
   toJSON(message: UpdateChallengeInput_UpdateInput_EventUpdate): unknown {
     const obj: any = {};
-    if (message.events) {
-      obj.events = message.events.map((e) =>
-        e ? Challenge_Event.toJSON(e) : undefined
-      );
-    } else {
-      obj.events = [];
+    if (message.events?.length) {
+      obj.events = message.events.map((e) => Challenge_Event.toJSON(e));
     }
     return obj;
   },
@@ -4216,9 +4243,10 @@ export const UpdateChallengeInput_UpdateInput_EventUpdate = {
       I
     >
   >(base?: I): UpdateChallengeInput_UpdateInput_EventUpdate {
-    return UpdateChallengeInput_UpdateInput_EventUpdate.fromPartial(base ?? {});
+    return UpdateChallengeInput_UpdateInput_EventUpdate.fromPartial(
+      base ?? ({} as any)
+    );
   },
-
   fromPartial<
     I extends Exact<
       DeepPartial<UpdateChallengeInput_UpdateInput_EventUpdate>,
@@ -4284,12 +4312,8 @@ export const UpdateChallengeInput_UpdateInput_TermUpdate = {
 
   toJSON(message: UpdateChallengeInput_UpdateInput_TermUpdate): unknown {
     const obj: any = {};
-    if (message.terms) {
-      obj.terms = message.terms.map((e) =>
-        e ? Challenge_Term.toJSON(e) : undefined
-      );
-    } else {
-      obj.terms = [];
+    if (message.terms?.length) {
+      obj.terms = message.terms.map((e) => Challenge_Term.toJSON(e));
     }
     return obj;
   },
@@ -4297,9 +4321,10 @@ export const UpdateChallengeInput_UpdateInput_TermUpdate = {
   create<
     I extends Exact<DeepPartial<UpdateChallengeInput_UpdateInput_TermUpdate>, I>
   >(base?: I): UpdateChallengeInput_UpdateInput_TermUpdate {
-    return UpdateChallengeInput_UpdateInput_TermUpdate.fromPartial(base ?? {});
+    return UpdateChallengeInput_UpdateInput_TermUpdate.fromPartial(
+      base ?? ({} as any)
+    );
   },
-
   fromPartial<
     I extends Exact<DeepPartial<UpdateChallengeInput_UpdateInput_TermUpdate>, I>
   >(object: I): UpdateChallengeInput_UpdateInput_TermUpdate {
@@ -4364,12 +4389,10 @@ export const UpdateChallengeInput_UpdateInput_PrizeSetUpdate = {
 
   toJSON(message: UpdateChallengeInput_UpdateInput_PrizeSetUpdate): unknown {
     const obj: any = {};
-    if (message.prizeSets) {
+    if (message.prizeSets?.length) {
       obj.prizeSets = message.prizeSets.map((e) =>
-        e ? Challenge_PrizeSet.toJSON(e) : undefined
+        Challenge_PrizeSet.toJSON(e)
       );
-    } else {
-      obj.prizeSets = [];
     }
     return obj;
   },
@@ -4381,10 +4404,9 @@ export const UpdateChallengeInput_UpdateInput_PrizeSetUpdate = {
     >
   >(base?: I): UpdateChallengeInput_UpdateInput_PrizeSetUpdate {
     return UpdateChallengeInput_UpdateInput_PrizeSetUpdate.fromPartial(
-      base ?? {}
+      base ?? ({} as any)
     );
   },
-
   fromPartial<
     I extends Exact<
       DeepPartial<UpdateChallengeInput_UpdateInput_PrizeSetUpdate>,
@@ -4450,10 +4472,8 @@ export const UpdateChallengeInput_UpdateInput_TagsUpdate = {
 
   toJSON(message: UpdateChallengeInput_UpdateInput_TagsUpdate): unknown {
     const obj: any = {};
-    if (message.tags) {
-      obj.tags = message.tags.map((e) => e);
-    } else {
-      obj.tags = [];
+    if (message.tags?.length) {
+      obj.tags = message.tags;
     }
     return obj;
   },
@@ -4461,9 +4481,10 @@ export const UpdateChallengeInput_UpdateInput_TagsUpdate = {
   create<
     I extends Exact<DeepPartial<UpdateChallengeInput_UpdateInput_TagsUpdate>, I>
   >(base?: I): UpdateChallengeInput_UpdateInput_TagsUpdate {
-    return UpdateChallengeInput_UpdateInput_TagsUpdate.fromPartial(base ?? {});
+    return UpdateChallengeInput_UpdateInput_TagsUpdate.fromPartial(
+      base ?? ({} as any)
+    );
   },
-
   fromPartial<
     I extends Exact<DeepPartial<UpdateChallengeInput_UpdateInput_TagsUpdate>, I>
   >(object: I): UpdateChallengeInput_UpdateInput_TagsUpdate {
@@ -4526,10 +4547,8 @@ export const UpdateChallengeInput_UpdateInput_AttachmentsUpdate = {
 
   toJSON(message: UpdateChallengeInput_UpdateInput_AttachmentsUpdate): unknown {
     const obj: any = {};
-    if (message.attachments) {
-      obj.attachments = message.attachments.map((e) => e);
-    } else {
-      obj.attachments = [];
+    if (message.attachments?.length) {
+      obj.attachments = message.attachments;
     }
     return obj;
   },
@@ -4541,10 +4560,9 @@ export const UpdateChallengeInput_UpdateInput_AttachmentsUpdate = {
     >
   >(base?: I): UpdateChallengeInput_UpdateInput_AttachmentsUpdate {
     return UpdateChallengeInput_UpdateInput_AttachmentsUpdate.fromPartial(
-      base ?? {}
+      base ?? ({} as any)
     );
   },
-
   fromPartial<
     I extends Exact<
       DeepPartial<UpdateChallengeInput_UpdateInput_AttachmentsUpdate>,
@@ -4610,10 +4628,8 @@ export const UpdateChallengeInput_UpdateInput_GroupsUpdate = {
 
   toJSON(message: UpdateChallengeInput_UpdateInput_GroupsUpdate): unknown {
     const obj: any = {};
-    if (message.groups) {
-      obj.groups = message.groups.map((e) => e);
-    } else {
-      obj.groups = [];
+    if (message.groups?.length) {
+      obj.groups = message.groups;
     }
     return obj;
   },
@@ -4625,10 +4641,9 @@ export const UpdateChallengeInput_UpdateInput_GroupsUpdate = {
     >
   >(base?: I): UpdateChallengeInput_UpdateInput_GroupsUpdate {
     return UpdateChallengeInput_UpdateInput_GroupsUpdate.fromPartial(
-      base ?? {}
+      base ?? ({} as any)
     );
   },
-
   fromPartial<
     I extends Exact<
       DeepPartial<UpdateChallengeInput_UpdateInput_GroupsUpdate>,
@@ -4717,28 +4732,25 @@ export const UpdateChallengeInputForACL = {
 
   toJSON(message: UpdateChallengeInputForACL): unknown {
     const obj: any = {};
-    if (message.filterCriteria) {
+    if (message.filterCriteria?.length) {
       obj.filterCriteria = message.filterCriteria.map((e) =>
-        e ? ScanCriteria.toJSON(e) : undefined
+        ScanCriteria.toJSON(e)
       );
-    } else {
-      obj.filterCriteria = [];
     }
-    message.updateInputForAcl !== undefined &&
-      (obj.updateInputForAcl = message.updateInputForAcl
-        ? UpdateChallengeInputForACL_UpdateInputForACL.toJSON(
-            message.updateInputForAcl
-          )
-        : undefined);
+    if (message.updateInputForAcl !== undefined) {
+      obj.updateInputForAcl =
+        UpdateChallengeInputForACL_UpdateInputForACL.toJSON(
+          message.updateInputForAcl
+        );
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdateChallengeInputForACL>, I>>(
     base?: I
   ): UpdateChallengeInputForACL {
-    return UpdateChallengeInputForACL.fromPartial(base ?? {});
+    return UpdateChallengeInputForACL.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<UpdateChallengeInputForACL>, I>>(
     object: I
   ): UpdateChallengeInputForACL {
@@ -5072,49 +5084,58 @@ export const UpdateChallengeInputForACL_UpdateInputForACL = {
 
   toJSON(message: UpdateChallengeInputForACL_UpdateInputForACL): unknown {
     const obj: any = {};
-    message.status !== undefined && (obj.status = message.status);
-    message.phases !== undefined &&
-      (obj.phases = message.phases
-        ? UpdateChallengeInputForACL_PhasesACL.toJSON(message.phases)
-        : undefined);
-    message.currentPhase !== undefined &&
-      (obj.currentPhase = message.currentPhase
-        ? Challenge_Phase.toJSON(message.currentPhase)
-        : undefined);
-    message.currentPhaseNames !== undefined &&
-      (obj.currentPhaseNames = message.currentPhaseNames
-        ? UpdateChallengeInputForACL_CurrentPhaseNamesACL.toJSON(
-            message.currentPhaseNames
-          )
-        : undefined);
-    message.registrationStartDate !== undefined &&
-      (obj.registrationStartDate = message.registrationStartDate);
-    message.registrationEndDate !== undefined &&
-      (obj.registrationEndDate = message.registrationEndDate);
-    message.submissionStartDate !== undefined &&
-      (obj.submissionStartDate = message.submissionStartDate);
-    message.submissionEndDate !== undefined &&
-      (obj.submissionEndDate = message.submissionEndDate);
-    message.startDate !== undefined && (obj.startDate = message.startDate);
-    message.endDate !== undefined && (obj.endDate = message.endDate);
-    message.legacy !== undefined &&
-      (obj.legacy = message.legacy
-        ? UpdateChallengeInputForACL_LegacyACL.toJSON(message.legacy)
-        : undefined);
-    message.prizeSets !== undefined &&
-      (obj.prizeSets = message.prizeSets
-        ? UpdateChallengeInputForACL_PrizeSetsACL.toJSON(message.prizeSets)
-        : undefined);
-    message.overview !== undefined &&
-      (obj.overview = message.overview
-        ? Challenge_Overview.toJSON(message.overview)
-        : undefined);
-    message.winners !== undefined &&
-      (obj.winners = message.winners
-        ? UpdateChallengeInputForACL_WinnersACL.toJSON(message.winners)
-        : undefined);
-    message.phaseToClose !== undefined &&
-      (obj.phaseToClose = message.phaseToClose);
+    if (message.status !== undefined) {
+      obj.status = message.status;
+    }
+    if (message.phases !== undefined) {
+      obj.phases = UpdateChallengeInputForACL_PhasesACL.toJSON(message.phases);
+    }
+    if (message.currentPhase !== undefined) {
+      obj.currentPhase = Challenge_Phase.toJSON(message.currentPhase);
+    }
+    if (message.currentPhaseNames !== undefined) {
+      obj.currentPhaseNames =
+        UpdateChallengeInputForACL_CurrentPhaseNamesACL.toJSON(
+          message.currentPhaseNames
+        );
+    }
+    if (message.registrationStartDate !== undefined) {
+      obj.registrationStartDate = message.registrationStartDate;
+    }
+    if (message.registrationEndDate !== undefined) {
+      obj.registrationEndDate = message.registrationEndDate;
+    }
+    if (message.submissionStartDate !== undefined) {
+      obj.submissionStartDate = message.submissionStartDate;
+    }
+    if (message.submissionEndDate !== undefined) {
+      obj.submissionEndDate = message.submissionEndDate;
+    }
+    if (message.startDate !== undefined) {
+      obj.startDate = message.startDate;
+    }
+    if (message.endDate !== undefined) {
+      obj.endDate = message.endDate;
+    }
+    if (message.legacy !== undefined) {
+      obj.legacy = UpdateChallengeInputForACL_LegacyACL.toJSON(message.legacy);
+    }
+    if (message.prizeSets !== undefined) {
+      obj.prizeSets = UpdateChallengeInputForACL_PrizeSetsACL.toJSON(
+        message.prizeSets
+      );
+    }
+    if (message.overview !== undefined) {
+      obj.overview = Challenge_Overview.toJSON(message.overview);
+    }
+    if (message.winners !== undefined) {
+      obj.winners = UpdateChallengeInputForACL_WinnersACL.toJSON(
+        message.winners
+      );
+    }
+    if (message.phaseToClose !== undefined) {
+      obj.phaseToClose = message.phaseToClose;
+    }
     return obj;
   },
 
@@ -5124,9 +5145,10 @@ export const UpdateChallengeInputForACL_UpdateInputForACL = {
       I
     >
   >(base?: I): UpdateChallengeInputForACL_UpdateInputForACL {
-    return UpdateChallengeInputForACL_UpdateInputForACL.fromPartial(base ?? {});
+    return UpdateChallengeInputForACL_UpdateInputForACL.fromPartial(
+      base ?? ({} as any)
+    );
   },
-
   fromPartial<
     I extends Exact<
       DeepPartial<UpdateChallengeInputForACL_UpdateInputForACL>,
@@ -5229,12 +5251,8 @@ export const UpdateChallengeInputForACL_PhasesACL = {
 
   toJSON(message: UpdateChallengeInputForACL_PhasesACL): unknown {
     const obj: any = {};
-    if (message.phases) {
-      obj.phases = message.phases.map((e) =>
-        e ? Challenge_Phase.toJSON(e) : undefined
-      );
-    } else {
-      obj.phases = [];
+    if (message.phases?.length) {
+      obj.phases = message.phases.map((e) => Challenge_Phase.toJSON(e));
     }
     return obj;
   },
@@ -5242,9 +5260,10 @@ export const UpdateChallengeInputForACL_PhasesACL = {
   create<I extends Exact<DeepPartial<UpdateChallengeInputForACL_PhasesACL>, I>>(
     base?: I
   ): UpdateChallengeInputForACL_PhasesACL {
-    return UpdateChallengeInputForACL_PhasesACL.fromPartial(base ?? {});
+    return UpdateChallengeInputForACL_PhasesACL.fromPartial(
+      base ?? ({} as any)
+    );
   },
-
   fromPartial<
     I extends Exact<DeepPartial<UpdateChallengeInputForACL_PhasesACL>, I>
   >(object: I): UpdateChallengeInputForACL_PhasesACL {
@@ -5307,10 +5326,8 @@ export const UpdateChallengeInputForACL_CurrentPhaseNamesACL = {
 
   toJSON(message: UpdateChallengeInputForACL_CurrentPhaseNamesACL): unknown {
     const obj: any = {};
-    if (message.currentPhaseNames) {
-      obj.currentPhaseNames = message.currentPhaseNames.map((e) => e);
-    } else {
-      obj.currentPhaseNames = [];
+    if (message.currentPhaseNames?.length) {
+      obj.currentPhaseNames = message.currentPhaseNames;
     }
     return obj;
   },
@@ -5322,10 +5339,9 @@ export const UpdateChallengeInputForACL_CurrentPhaseNamesACL = {
     >
   >(base?: I): UpdateChallengeInputForACL_CurrentPhaseNamesACL {
     return UpdateChallengeInputForACL_CurrentPhaseNamesACL.fromPartial(
-      base ?? {}
+      base ?? ({} as any)
     );
   },
-
   fromPartial<
     I extends Exact<
       DeepPartial<UpdateChallengeInputForACL_CurrentPhaseNamesACL>,
@@ -5403,19 +5419,22 @@ export const UpdateChallengeInputForACL_LegacyACL = {
 
   toJSON(message: UpdateChallengeInputForACL_LegacyACL): unknown {
     const obj: any = {};
-    message.reviewScorecardId !== undefined &&
-      (obj.reviewScorecardId = Math.round(message.reviewScorecardId));
-    message.screeningScorecardId !== undefined &&
-      (obj.screeningScorecardId = Math.round(message.screeningScorecardId));
+    if (message.reviewScorecardId !== undefined) {
+      obj.reviewScorecardId = Math.round(message.reviewScorecardId);
+    }
+    if (message.screeningScorecardId !== undefined) {
+      obj.screeningScorecardId = Math.round(message.screeningScorecardId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdateChallengeInputForACL_LegacyACL>, I>>(
     base?: I
   ): UpdateChallengeInputForACL_LegacyACL {
-    return UpdateChallengeInputForACL_LegacyACL.fromPartial(base ?? {});
+    return UpdateChallengeInputForACL_LegacyACL.fromPartial(
+      base ?? ({} as any)
+    );
   },
-
   fromPartial<
     I extends Exact<DeepPartial<UpdateChallengeInputForACL_LegacyACL>, I>
   >(object: I): UpdateChallengeInputForACL_LegacyACL {
@@ -5480,12 +5499,10 @@ export const UpdateChallengeInputForACL_PrizeSetsACL = {
 
   toJSON(message: UpdateChallengeInputForACL_PrizeSetsACL): unknown {
     const obj: any = {};
-    if (message.prizeSets) {
+    if (message.prizeSets?.length) {
       obj.prizeSets = message.prizeSets.map((e) =>
-        e ? Challenge_PrizeSet.toJSON(e) : undefined
+        Challenge_PrizeSet.toJSON(e)
       );
-    } else {
-      obj.prizeSets = [];
     }
     return obj;
   },
@@ -5493,9 +5510,10 @@ export const UpdateChallengeInputForACL_PrizeSetsACL = {
   create<
     I extends Exact<DeepPartial<UpdateChallengeInputForACL_PrizeSetsACL>, I>
   >(base?: I): UpdateChallengeInputForACL_PrizeSetsACL {
-    return UpdateChallengeInputForACL_PrizeSetsACL.fromPartial(base ?? {});
+    return UpdateChallengeInputForACL_PrizeSetsACL.fromPartial(
+      base ?? ({} as any)
+    );
   },
-
   fromPartial<
     I extends Exact<DeepPartial<UpdateChallengeInputForACL_PrizeSetsACL>, I>
   >(object: I): UpdateChallengeInputForACL_PrizeSetsACL {
@@ -5565,12 +5583,10 @@ export const UpdateChallengeInputForACL_WinnersACL = {
 
   toJSON(message: UpdateChallengeInputForACL_WinnersACL): unknown {
     const obj: any = {};
-    if (message.winners) {
+    if (message.winners?.length) {
       obj.winners = message.winners.map((e) =>
-        e ? UpdateChallengeInputForACL_WinnerACL.toJSON(e) : undefined
+        UpdateChallengeInputForACL_WinnerACL.toJSON(e)
       );
-    } else {
-      obj.winners = [];
     }
     return obj;
   },
@@ -5578,9 +5594,10 @@ export const UpdateChallengeInputForACL_WinnersACL = {
   create<
     I extends Exact<DeepPartial<UpdateChallengeInputForACL_WinnersACL>, I>
   >(base?: I): UpdateChallengeInputForACL_WinnersACL {
-    return UpdateChallengeInputForACL_WinnersACL.fromPartial(base ?? {});
+    return UpdateChallengeInputForACL_WinnersACL.fromPartial(
+      base ?? ({} as any)
+    );
   },
-
   fromPartial<
     I extends Exact<DeepPartial<UpdateChallengeInputForACL_WinnersACL>, I>
   >(object: I): UpdateChallengeInputForACL_WinnersACL {
@@ -5665,19 +5682,25 @@ export const UpdateChallengeInputForACL_WinnerACL = {
 
   toJSON(message: UpdateChallengeInputForACL_WinnerACL): unknown {
     const obj: any = {};
-    message.handle !== undefined && (obj.handle = message.handle);
-    message.placement !== undefined &&
-      (obj.placement = Math.round(message.placement));
-    message.userId !== undefined && (obj.userId = Math.round(message.userId));
+    if (message.handle !== "") {
+      obj.handle = message.handle;
+    }
+    if (message.placement !== 0) {
+      obj.placement = Math.round(message.placement);
+    }
+    if (message.userId !== 0) {
+      obj.userId = Math.round(message.userId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdateChallengeInputForACL_WinnerACL>, I>>(
     base?: I
   ): UpdateChallengeInputForACL_WinnerACL {
-    return UpdateChallengeInputForACL_WinnerACL.fromPartial(base ?? {});
+    return UpdateChallengeInputForACL_WinnerACL.fromPartial(
+      base ?? ({} as any)
+    );
   },
-
   fromPartial<
     I extends Exact<DeepPartial<UpdateChallengeInputForACL_WinnerACL>, I>
   >(object: I): UpdateChallengeInputForACL_WinnerACL {
@@ -5689,10 +5712,10 @@ export const UpdateChallengeInputForACL_WinnerACL = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

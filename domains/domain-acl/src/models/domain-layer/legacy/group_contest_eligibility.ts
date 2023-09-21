@@ -108,21 +108,23 @@ export const ContestEligibility = {
 
   toJSON(message: ContestEligibility): unknown {
     const obj: any = {};
-    message.contestEligibilityId !== undefined &&
-      (obj.contestEligibilityId = Math.round(message.contestEligibilityId));
-    message.contestId !== undefined &&
-      (obj.contestId = Math.round(message.contestId));
-    message.isStudio !== undefined &&
-      (obj.isStudio = Math.round(message.isStudio));
+    if (message.contestEligibilityId !== 0) {
+      obj.contestEligibilityId = Math.round(message.contestEligibilityId);
+    }
+    if (message.contestId !== 0) {
+      obj.contestId = Math.round(message.contestId);
+    }
+    if (message.isStudio !== 0) {
+      obj.isStudio = Math.round(message.isStudio);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<ContestEligibility>, I>>(
     base?: I
   ): ContestEligibility {
-    return ContestEligibility.fromPartial(base ?? {});
+    return ContestEligibility.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<ContestEligibility>, I>>(
     object: I
   ): ContestEligibility {
@@ -184,17 +186,17 @@ export const GetContestEligibilityInput = {
 
   toJSON(message: GetContestEligibilityInput): unknown {
     const obj: any = {};
-    message.contestId !== undefined &&
-      (obj.contestId = Math.round(message.contestId));
+    if (message.contestId !== 0) {
+      obj.contestId = Math.round(message.contestId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<GetContestEligibilityInput>, I>>(
     base?: I
   ): GetContestEligibilityInput {
-    return GetContestEligibilityInput.fromPartial(base ?? {});
+    return GetContestEligibilityInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<GetContestEligibilityInput>, I>>(
     object: I
   ): GetContestEligibilityInput {
@@ -260,12 +262,10 @@ export const ContestEligibilityList = {
 
   toJSON(message: ContestEligibilityList): unknown {
     const obj: any = {};
-    if (message.contestEligibilities) {
+    if (message.contestEligibilities?.length) {
       obj.contestEligibilities = message.contestEligibilities.map((e) =>
-        e ? ContestEligibility.toJSON(e) : undefined
+        ContestEligibility.toJSON(e)
       );
-    } else {
-      obj.contestEligibilities = [];
     }
     return obj;
   },
@@ -273,9 +273,8 @@ export const ContestEligibilityList = {
   create<I extends Exact<DeepPartial<ContestEligibilityList>, I>>(
     base?: I
   ): ContestEligibilityList {
-    return ContestEligibilityList.fromPartial(base ?? {});
+    return ContestEligibilityList.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<ContestEligibilityList>, I>>(
     object: I
   ): ContestEligibilityList {
@@ -340,17 +339,17 @@ export const DeleteContestEligibilityInput = {
 
   toJSON(message: DeleteContestEligibilityInput): unknown {
     const obj: any = {};
-    message.contestEligibilityId !== undefined &&
-      (obj.contestEligibilityId = Math.round(message.contestEligibilityId));
+    if (message.contestEligibilityId !== 0) {
+      obj.contestEligibilityId = Math.round(message.contestEligibilityId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<DeleteContestEligibilityInput>, I>>(
     base?: I
   ): DeleteContestEligibilityInput {
-    return DeleteContestEligibilityInput.fromPartial(base ?? {});
+    return DeleteContestEligibilityInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DeleteContestEligibilityInput>, I>>(
     object: I
   ): DeleteContestEligibilityInput {
@@ -423,19 +422,20 @@ export const GroupContestEligibility = {
 
   toJSON(message: GroupContestEligibility): unknown {
     const obj: any = {};
-    message.contestEligibilityId !== undefined &&
-      (obj.contestEligibilityId = Math.round(message.contestEligibilityId));
-    message.groupId !== undefined &&
-      (obj.groupId = Math.round(message.groupId));
+    if (message.contestEligibilityId !== 0) {
+      obj.contestEligibilityId = Math.round(message.contestEligibilityId);
+    }
+    if (message.groupId !== 0) {
+      obj.groupId = Math.round(message.groupId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<GroupContestEligibility>, I>>(
     base?: I
   ): GroupContestEligibility {
-    return GroupContestEligibility.fromPartial(base ?? {});
+    return GroupContestEligibility.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<GroupContestEligibility>, I>>(
     object: I
   ): GroupContestEligibility {
@@ -498,17 +498,17 @@ export const GetGroupContestEligibilityInput = {
 
   toJSON(message: GetGroupContestEligibilityInput): unknown {
     const obj: any = {};
-    message.contestEligibilityId !== undefined &&
-      (obj.contestEligibilityId = Math.round(message.contestEligibilityId));
+    if (message.contestEligibilityId !== 0) {
+      obj.contestEligibilityId = Math.round(message.contestEligibilityId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<GetGroupContestEligibilityInput>, I>>(
     base?: I
   ): GetGroupContestEligibilityInput {
-    return GetGroupContestEligibilityInput.fromPartial(base ?? {});
+    return GetGroupContestEligibilityInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<GetGroupContestEligibilityInput>, I>>(
     object: I
   ): GetGroupContestEligibilityInput {
@@ -576,12 +576,10 @@ export const GroupContestEligibilityList = {
 
   toJSON(message: GroupContestEligibilityList): unknown {
     const obj: any = {};
-    if (message.groupContestEligibilities) {
+    if (message.groupContestEligibilities?.length) {
       obj.groupContestEligibilities = message.groupContestEligibilities.map(
-        (e) => (e ? GroupContestEligibility.toJSON(e) : undefined)
+        (e) => GroupContestEligibility.toJSON(e)
       );
-    } else {
-      obj.groupContestEligibilities = [];
     }
     return obj;
   },
@@ -589,9 +587,8 @@ export const GroupContestEligibilityList = {
   create<I extends Exact<DeepPartial<GroupContestEligibilityList>, I>>(
     base?: I
   ): GroupContestEligibilityList {
-    return GroupContestEligibilityList.fromPartial(base ?? {});
+    return GroupContestEligibilityList.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<GroupContestEligibilityList>, I>>(
     object: I
   ): GroupContestEligibilityList {
@@ -667,19 +664,20 @@ export const DeleteGroupContestEligibilityInput = {
 
   toJSON(message: DeleteGroupContestEligibilityInput): unknown {
     const obj: any = {};
-    message.contestEligibilityId !== undefined &&
-      (obj.contestEligibilityId = Math.round(message.contestEligibilityId));
-    message.groupId !== undefined &&
-      (obj.groupId = Math.round(message.groupId));
+    if (message.contestEligibilityId !== 0) {
+      obj.contestEligibilityId = Math.round(message.contestEligibilityId);
+    }
+    if (message.groupId !== 0) {
+      obj.groupId = Math.round(message.groupId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<DeleteGroupContestEligibilityInput>, I>>(
     base?: I
   ): DeleteGroupContestEligibilityInput {
-    return DeleteGroupContestEligibilityInput.fromPartial(base ?? {});
+    return DeleteGroupContestEligibilityInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<
     I extends Exact<DeepPartial<DeleteGroupContestEligibilityInput>, I>
   >(object: I): DeleteGroupContestEligibilityInput {

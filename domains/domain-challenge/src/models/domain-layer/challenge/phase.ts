@@ -24,7 +24,7 @@ export interface CreatePhaseInput {
 
 export interface UpdatePhaseInput {
   filterCriteria: ScanCriteria[];
-  updateInput?: UpdatePhaseInput_UpdateInput;
+  updateInput?: UpdatePhaseInput_UpdateInput | undefined;
 }
 
 export interface UpdatePhaseInput_UpdateInput {
@@ -130,20 +130,27 @@ export const Phase = {
 
   toJSON(message: Phase): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = message.id);
-    message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined &&
-      (obj.description = message.description);
-    message.isOpen !== undefined && (obj.isOpen = message.isOpen);
-    message.duration !== undefined &&
-      (obj.duration = Math.round(message.duration));
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.description !== undefined) {
+      obj.description = message.description;
+    }
+    if (message.isOpen === true) {
+      obj.isOpen = message.isOpen;
+    }
+    if (message.duration !== 0) {
+      obj.duration = Math.round(message.duration);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Phase>, I>>(base?: I): Phase {
-    return Phase.fromPartial(base ?? {});
+    return Phase.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Phase>, I>>(object: I): Phase {
     const message = createBasePhase();
     message.id = object.id ?? "";
@@ -204,18 +211,15 @@ export const PhaseList = {
 
   toJSON(message: PhaseList): unknown {
     const obj: any = {};
-    if (message.items) {
-      obj.items = message.items.map((e) => (e ? Phase.toJSON(e) : undefined));
-    } else {
-      obj.items = [];
+    if (message.items?.length) {
+      obj.items = message.items.map((e) => Phase.toJSON(e));
     }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<PhaseList>, I>>(base?: I): PhaseList {
-    return PhaseList.fromPartial(base ?? {});
+    return PhaseList.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<PhaseList>, I>>(
     object: I
   ): PhaseList {
@@ -307,21 +311,26 @@ export const CreatePhaseInput = {
 
   toJSON(message: CreatePhaseInput): unknown {
     const obj: any = {};
-    message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined &&
-      (obj.description = message.description);
-    message.isOpen !== undefined && (obj.isOpen = message.isOpen);
-    message.duration !== undefined &&
-      (obj.duration = Math.round(message.duration));
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.description !== undefined) {
+      obj.description = message.description;
+    }
+    if (message.isOpen === true) {
+      obj.isOpen = message.isOpen;
+    }
+    if (message.duration !== 0) {
+      obj.duration = Math.round(message.duration);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<CreatePhaseInput>, I>>(
     base?: I
   ): CreatePhaseInput {
-    return CreatePhaseInput.fromPartial(base ?? {});
+    return CreatePhaseInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<CreatePhaseInput>, I>>(
     object: I
   ): CreatePhaseInput {
@@ -404,26 +413,24 @@ export const UpdatePhaseInput = {
 
   toJSON(message: UpdatePhaseInput): unknown {
     const obj: any = {};
-    if (message.filterCriteria) {
+    if (message.filterCriteria?.length) {
       obj.filterCriteria = message.filterCriteria.map((e) =>
-        e ? ScanCriteria.toJSON(e) : undefined
+        ScanCriteria.toJSON(e)
       );
-    } else {
-      obj.filterCriteria = [];
     }
-    message.updateInput !== undefined &&
-      (obj.updateInput = message.updateInput
-        ? UpdatePhaseInput_UpdateInput.toJSON(message.updateInput)
-        : undefined);
+    if (message.updateInput !== undefined) {
+      obj.updateInput = UpdatePhaseInput_UpdateInput.toJSON(
+        message.updateInput
+      );
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdatePhaseInput>, I>>(
     base?: I
   ): UpdatePhaseInput {
-    return UpdatePhaseInput.fromPartial(base ?? {});
+    return UpdatePhaseInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<UpdatePhaseInput>, I>>(
     object: I
   ): UpdatePhaseInput {
@@ -523,21 +530,26 @@ export const UpdatePhaseInput_UpdateInput = {
 
   toJSON(message: UpdatePhaseInput_UpdateInput): unknown {
     const obj: any = {};
-    message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined &&
-      (obj.description = message.description);
-    message.isOpen !== undefined && (obj.isOpen = message.isOpen);
-    message.duration !== undefined &&
-      (obj.duration = Math.round(message.duration));
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.description !== undefined) {
+      obj.description = message.description;
+    }
+    if (message.isOpen === true) {
+      obj.isOpen = message.isOpen;
+    }
+    if (message.duration !== 0) {
+      obj.duration = Math.round(message.duration);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdatePhaseInput_UpdateInput>, I>>(
     base?: I
   ): UpdatePhaseInput_UpdateInput {
-    return UpdatePhaseInput_UpdateInput.fromPartial(base ?? {});
+    return UpdatePhaseInput_UpdateInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<UpdatePhaseInput_UpdateInput>, I>>(
     object: I
   ): UpdatePhaseInput_UpdateInput {
@@ -550,10 +562,10 @@ export const UpdatePhaseInput_UpdateInput = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

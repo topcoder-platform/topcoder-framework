@@ -219,30 +219,39 @@ export const Resource = {
 
   toJSON(message: Resource): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.resourceRoleId !== undefined &&
-      (obj.resourceRoleId = Math.round(message.resourceRoleId));
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.projectPhaseId !== undefined &&
-      (obj.projectPhaseId = Math.round(message.projectPhaseId));
-    message.userId !== undefined && (obj.userId = Math.round(message.userId));
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    if (message.resourceId !== 0) {
+      obj.resourceId = Math.round(message.resourceId);
+    }
+    if (message.resourceRoleId !== 0) {
+      obj.resourceRoleId = Math.round(message.resourceRoleId);
+    }
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.projectPhaseId !== 0) {
+      obj.projectPhaseId = Math.round(message.projectPhaseId);
+    }
+    if (message.userId !== 0) {
+      obj.userId = Math.round(message.userId);
+    }
+    if (message.createUser !== 0) {
+      obj.createUser = Math.round(message.createUser);
+    }
+    if (message.createDate !== 0) {
+      obj.createDate = Math.round(message.createDate);
+    }
+    if (message.modifyUser !== 0) {
+      obj.modifyUser = Math.round(message.modifyUser);
+    }
+    if (message.modifyDate !== 0) {
+      obj.modifyDate = Math.round(message.modifyDate);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Resource>, I>>(base?: I): Resource {
-    return Resource.fromPartial(base ?? {});
+    return Resource.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Resource>, I>>(object: I): Resource {
     const message = createBaseResource();
     message.resourceId = object.resourceId ?? 0;
@@ -347,22 +356,26 @@ export const CreateResourceInput = {
 
   toJSON(message: CreateResourceInput): unknown {
     const obj: any = {};
-    message.resourceRoleId !== undefined &&
-      (obj.resourceRoleId = Math.round(message.resourceRoleId));
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.projectPhaseId !== undefined &&
-      (obj.projectPhaseId = Math.round(message.projectPhaseId));
-    message.userId !== undefined && (obj.userId = Math.round(message.userId));
+    if (message.resourceRoleId !== 0) {
+      obj.resourceRoleId = Math.round(message.resourceRoleId);
+    }
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.projectPhaseId !== undefined) {
+      obj.projectPhaseId = Math.round(message.projectPhaseId);
+    }
+    if (message.userId !== 0) {
+      obj.userId = Math.round(message.userId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<CreateResourceInput>, I>>(
     base?: I
   ): CreateResourceInput {
-    return CreateResourceInput.fromPartial(base ?? {});
+    return CreateResourceInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<CreateResourceInput>, I>>(
     object: I
   ): CreateResourceInput {
@@ -435,19 +448,20 @@ export const GetResourcesInput = {
 
   toJSON(message: GetResourcesInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.resourceRoleId !== undefined &&
-      (obj.resourceRoleId = Math.round(message.resourceRoleId));
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.resourceRoleId !== undefined) {
+      obj.resourceRoleId = Math.round(message.resourceRoleId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<GetResourcesInput>, I>>(
     base?: I
   ): GetResourcesInput {
-    return GetResourcesInput.fromPartial(base ?? {});
+    return GetResourcesInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<GetResourcesInput>, I>>(
     object: I
   ): GetResourcesInput {
@@ -521,19 +535,20 @@ export const DeleteResourcesInput = {
 
   toJSON(message: DeleteResourcesInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.resourceRoleId !== undefined &&
-      (obj.resourceRoleId = Math.round(message.resourceRoleId));
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.resourceRoleId !== undefined) {
+      obj.resourceRoleId = Math.round(message.resourceRoleId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<DeleteResourcesInput>, I>>(
     base?: I
   ): DeleteResourcesInput {
-    return DeleteResourcesInput.fromPartial(base ?? {});
+    return DeleteResourcesInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DeleteResourcesInput>, I>>(
     object: I
   ): DeleteResourcesInput {
@@ -593,12 +608,8 @@ export const ResourceList = {
 
   toJSON(message: ResourceList): unknown {
     const obj: any = {};
-    if (message.resources) {
-      obj.resources = message.resources.map((e) =>
-        e ? Resource.toJSON(e) : undefined
-      );
-    } else {
-      obj.resources = [];
+    if (message.resources?.length) {
+      obj.resources = message.resources.map((e) => Resource.toJSON(e));
     }
     return obj;
   },
@@ -606,9 +617,8 @@ export const ResourceList = {
   create<I extends Exact<DeepPartial<ResourceList>, I>>(
     base?: I
   ): ResourceList {
-    return ResourceList.fromPartial(base ?? {});
+    return ResourceList.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<ResourceList>, I>>(
     object: I
   ): ResourceList {
@@ -742,28 +752,35 @@ export const ResourceInfo = {
 
   toJSON(message: ResourceInfo): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.resourceInfoTypeId !== undefined &&
-      (obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId));
-    message.value !== undefined && (obj.value = message.value);
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    if (message.resourceId !== 0) {
+      obj.resourceId = Math.round(message.resourceId);
+    }
+    if (message.resourceInfoTypeId !== 0) {
+      obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId);
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
+    if (message.createUser !== 0) {
+      obj.createUser = Math.round(message.createUser);
+    }
+    if (message.createDate !== 0) {
+      obj.createDate = Math.round(message.createDate);
+    }
+    if (message.modifyUser !== 0) {
+      obj.modifyUser = Math.round(message.modifyUser);
+    }
+    if (message.modifyDate !== 0) {
+      obj.modifyDate = Math.round(message.modifyDate);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<ResourceInfo>, I>>(
     base?: I
   ): ResourceInfo {
-    return ResourceInfo.fromPartial(base ?? {});
+    return ResourceInfo.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<ResourceInfo>, I>>(
     object: I
   ): ResourceInfo {
@@ -853,20 +870,23 @@ export const CreateResourceInfoInput = {
 
   toJSON(message: CreateResourceInfoInput): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.resourceInfoTypeId !== undefined &&
-      (obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId));
-    message.value !== undefined && (obj.value = message.value);
+    if (message.resourceId !== 0) {
+      obj.resourceId = Math.round(message.resourceId);
+    }
+    if (message.resourceInfoTypeId !== 0) {
+      obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId);
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<CreateResourceInfoInput>, I>>(
     base?: I
   ): CreateResourceInfoInput {
-    return CreateResourceInfoInput.fromPartial(base ?? {});
+    return CreateResourceInfoInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<CreateResourceInfoInput>, I>>(
     object: I
   ): CreateResourceInfoInput {
@@ -952,20 +972,23 @@ export const UpdateResourceInfoInput = {
 
   toJSON(message: UpdateResourceInfoInput): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.resourceInfoTypeId !== undefined &&
-      (obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId));
-    message.value !== undefined && (obj.value = message.value);
+    if (message.resourceId !== 0) {
+      obj.resourceId = Math.round(message.resourceId);
+    }
+    if (message.resourceInfoTypeId !== 0) {
+      obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId);
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdateResourceInfoInput>, I>>(
     base?: I
   ): UpdateResourceInfoInput {
-    return UpdateResourceInfoInput.fromPartial(base ?? {});
+    return UpdateResourceInfoInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<UpdateResourceInfoInput>, I>>(
     object: I
   ): UpdateResourceInfoInput {
@@ -1027,17 +1050,17 @@ export const DeleteResourceInfoInput = {
 
   toJSON(message: DeleteResourceInfoInput): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
+    if (message.resourceId !== 0) {
+      obj.resourceId = Math.round(message.resourceId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<DeleteResourceInfoInput>, I>>(
     base?: I
   ): DeleteResourceInfoInput {
-    return DeleteResourceInfoInput.fromPartial(base ?? {});
+    return DeleteResourceInfoInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DeleteResourceInfoInput>, I>>(
     object: I
   ): DeleteResourceInfoInput {
@@ -1110,19 +1133,20 @@ export const GetResourceInfosInput = {
 
   toJSON(message: GetResourceInfosInput): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.resourceInfoTypeId !== undefined &&
-      (obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId));
+    if (message.resourceId !== 0) {
+      obj.resourceId = Math.round(message.resourceId);
+    }
+    if (message.resourceInfoTypeId !== undefined) {
+      obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<GetResourceInfosInput>, I>>(
     base?: I
   ): GetResourceInfosInput {
-    return GetResourceInfosInput.fromPartial(base ?? {});
+    return GetResourceInfosInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<GetResourceInfosInput>, I>>(
     object: I
   ): GetResourceInfosInput {
@@ -1184,12 +1208,10 @@ export const ResourceInfoList = {
 
   toJSON(message: ResourceInfoList): unknown {
     const obj: any = {};
-    if (message.resourceInfos) {
+    if (message.resourceInfos?.length) {
       obj.resourceInfos = message.resourceInfos.map((e) =>
-        e ? ResourceInfo.toJSON(e) : undefined
+        ResourceInfo.toJSON(e)
       );
-    } else {
-      obj.resourceInfos = [];
     }
     return obj;
   },
@@ -1197,9 +1219,8 @@ export const ResourceInfoList = {
   create<I extends Exact<DeepPartial<ResourceInfoList>, I>>(
     base?: I
   ): ResourceInfoList {
-    return ResourceInfoList.fromPartial(base ?? {});
+    return ResourceInfoList.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<ResourceInfoList>, I>>(
     object: I
   ): ResourceInfoList {
@@ -1210,10 +1231,10 @@ export const ResourceInfoList = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

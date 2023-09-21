@@ -143,24 +143,36 @@ export const User = {
 
   toJSON(message: User): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = Math.round(message.userId));
-    message.firstName !== undefined && (obj.firstName = message.firstName);
-    message.lastName !== undefined && (obj.lastName = message.lastName);
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
-    message.handle !== undefined && (obj.handle = message.handle);
-    message.status !== undefined && (obj.status = message.status);
-    message.handleLower !== undefined &&
-      (obj.handleLower = message.handleLower);
+    if (message.userId !== 0) {
+      obj.userId = Math.round(message.userId);
+    }
+    if (message.firstName !== "") {
+      obj.firstName = message.firstName;
+    }
+    if (message.lastName !== "") {
+      obj.lastName = message.lastName;
+    }
+    if (message.createDate !== 0) {
+      obj.createDate = Math.round(message.createDate);
+    }
+    if (message.modifyDate !== 0) {
+      obj.modifyDate = Math.round(message.modifyDate);
+    }
+    if (message.handle !== "") {
+      obj.handle = message.handle;
+    }
+    if (message.status !== "") {
+      obj.status = message.status;
+    }
+    if (message.handleLower !== "") {
+      obj.handleLower = message.handleLower;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<User>, I>>(base?: I): User {
-    return User.fromPartial(base ?? {});
+    return User.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<User>, I>>(object: I): User {
     const message = createBaseUser();
     message.userId = object.userId ?? 0;
@@ -175,10 +187,10 @@ export const User = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

@@ -250,24 +250,33 @@ export const PhaseType = {
 
   toJSON(message: PhaseType): unknown {
     const obj: any = {};
-    message.phaseTypeId !== undefined &&
-      (obj.phaseTypeId = Math.round(message.phaseTypeId));
-    message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined &&
-      (obj.description = message.description);
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined && (obj.createDate = message.createDate);
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined && (obj.modifyDate = message.modifyDate);
+    if (message.phaseTypeId !== 0) {
+      obj.phaseTypeId = Math.round(message.phaseTypeId);
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.description !== undefined) {
+      obj.description = message.description;
+    }
+    if (message.createUser !== undefined) {
+      obj.createUser = Math.round(message.createUser);
+    }
+    if (message.createDate !== undefined) {
+      obj.createDate = message.createDate;
+    }
+    if (message.modifyUser !== undefined) {
+      obj.modifyUser = Math.round(message.modifyUser);
+    }
+    if (message.modifyDate !== undefined) {
+      obj.modifyDate = message.modifyDate;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<PhaseType>, I>>(base?: I): PhaseType {
-    return PhaseType.fromPartial(base ?? {});
+    return PhaseType.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<PhaseType>, I>>(
     object: I
   ): PhaseType {
@@ -332,12 +341,8 @@ export const PhaseTypeList = {
 
   toJSON(message: PhaseTypeList): unknown {
     const obj: any = {};
-    if (message.phaseTypes) {
-      obj.phaseTypes = message.phaseTypes.map((e) =>
-        e ? PhaseType.toJSON(e) : undefined
-      );
-    } else {
-      obj.phaseTypes = [];
+    if (message.phaseTypes?.length) {
+      obj.phaseTypes = message.phaseTypes.map((e) => PhaseType.toJSON(e));
     }
     return obj;
   },
@@ -345,9 +350,8 @@ export const PhaseTypeList = {
   create<I extends Exact<DeepPartial<PhaseTypeList>, I>>(
     base?: I
   ): PhaseTypeList {
-    return PhaseTypeList.fromPartial(base ?? {});
+    return PhaseTypeList.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<PhaseTypeList>, I>>(
     object: I
   ): PhaseTypeList {
@@ -511,33 +515,41 @@ export const PhaseDependency = {
 
   toJSON(message: PhaseDependency): unknown {
     const obj: any = {};
-    message.dependentPhaseId !== undefined &&
-      (obj.dependentPhaseId = Math.round(message.dependentPhaseId));
-    message.dependencyPhaseId !== undefined &&
-      (obj.dependencyPhaseId = Math.round(message.dependencyPhaseId));
-    message.dependencyStart !== undefined &&
-      (obj.dependencyStart = Math.round(message.dependencyStart));
-    message.dependentStart !== undefined &&
-      (obj.dependentStart = Math.round(message.dependentStart));
-    message.lagTime !== undefined &&
-      (obj.lagTime = Math.round(message.lagTime));
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    if (message.dependentPhaseId !== 0) {
+      obj.dependentPhaseId = Math.round(message.dependentPhaseId);
+    }
+    if (message.dependencyPhaseId !== 0) {
+      obj.dependencyPhaseId = Math.round(message.dependencyPhaseId);
+    }
+    if (message.dependencyStart !== 0) {
+      obj.dependencyStart = Math.round(message.dependencyStart);
+    }
+    if (message.dependentStart !== 0) {
+      obj.dependentStart = Math.round(message.dependentStart);
+    }
+    if (message.lagTime !== 0) {
+      obj.lagTime = Math.round(message.lagTime);
+    }
+    if (message.createUser !== 0) {
+      obj.createUser = Math.round(message.createUser);
+    }
+    if (message.createDate !== 0) {
+      obj.createDate = Math.round(message.createDate);
+    }
+    if (message.modifyUser !== 0) {
+      obj.modifyUser = Math.round(message.modifyUser);
+    }
+    if (message.modifyDate !== 0) {
+      obj.modifyDate = Math.round(message.modifyDate);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<PhaseDependency>, I>>(
     base?: I
   ): PhaseDependency {
-    return PhaseDependency.fromPartial(base ?? {});
+    return PhaseDependency.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<PhaseDependency>, I>>(
     object: I
   ): PhaseDependency {
@@ -649,23 +661,26 @@ export const CreatePhaseDependencyInput = {
 
   toJSON(message: CreatePhaseDependencyInput): unknown {
     const obj: any = {};
-    message.dependentPhaseId !== undefined &&
-      (obj.dependentPhaseId = Math.round(message.dependentPhaseId));
-    message.dependencyStart !== undefined &&
-      (obj.dependencyStart = Math.round(message.dependencyStart));
-    message.dependentStart !== undefined &&
-      (obj.dependentStart = Math.round(message.dependentStart));
-    message.lagTime !== undefined &&
-      (obj.lagTime = Math.round(message.lagTime));
+    if (message.dependentPhaseId !== 0) {
+      obj.dependentPhaseId = Math.round(message.dependentPhaseId);
+    }
+    if (message.dependencyStart !== 0) {
+      obj.dependencyStart = Math.round(message.dependencyStart);
+    }
+    if (message.dependentStart !== 0) {
+      obj.dependentStart = Math.round(message.dependentStart);
+    }
+    if (message.lagTime !== 0) {
+      obj.lagTime = Math.round(message.lagTime);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<CreatePhaseDependencyInput>, I>>(
     base?: I
   ): CreatePhaseDependencyInput {
-    return CreatePhaseDependencyInput.fromPartial(base ?? {});
+    return CreatePhaseDependencyInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<CreatePhaseDependencyInput>, I>>(
     object: I
   ): CreatePhaseDependencyInput {
@@ -803,28 +818,35 @@ export const PhaseCriteria = {
 
   toJSON(message: PhaseCriteria): unknown {
     const obj: any = {};
-    message.projectPhaseId !== undefined &&
-      (obj.projectPhaseId = Math.round(message.projectPhaseId));
-    message.phaseCriteriaTypeId !== undefined &&
-      (obj.phaseCriteriaTypeId = Math.round(message.phaseCriteriaTypeId));
-    message.parameter !== undefined && (obj.parameter = message.parameter);
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    if (message.projectPhaseId !== 0) {
+      obj.projectPhaseId = Math.round(message.projectPhaseId);
+    }
+    if (message.phaseCriteriaTypeId !== 0) {
+      obj.phaseCriteriaTypeId = Math.round(message.phaseCriteriaTypeId);
+    }
+    if (message.parameter !== "") {
+      obj.parameter = message.parameter;
+    }
+    if (message.createUser !== 0) {
+      obj.createUser = Math.round(message.createUser);
+    }
+    if (message.createDate !== 0) {
+      obj.createDate = Math.round(message.createDate);
+    }
+    if (message.modifyUser !== 0) {
+      obj.modifyUser = Math.round(message.modifyUser);
+    }
+    if (message.modifyDate !== 0) {
+      obj.modifyDate = Math.round(message.modifyDate);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<PhaseCriteria>, I>>(
     base?: I
   ): PhaseCriteria {
-    return PhaseCriteria.fromPartial(base ?? {});
+    return PhaseCriteria.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<PhaseCriteria>, I>>(
     object: I
   ): PhaseCriteria {
@@ -916,20 +938,23 @@ export const CreatePhaseCriteriaInput = {
 
   toJSON(message: CreatePhaseCriteriaInput): unknown {
     const obj: any = {};
-    message.projectPhaseId !== undefined &&
-      (obj.projectPhaseId = Math.round(message.projectPhaseId));
-    message.phaseCriteriaTypeId !== undefined &&
-      (obj.phaseCriteriaTypeId = Math.round(message.phaseCriteriaTypeId));
-    message.parameter !== undefined && (obj.parameter = message.parameter);
+    if (message.projectPhaseId !== 0) {
+      obj.projectPhaseId = Math.round(message.projectPhaseId);
+    }
+    if (message.phaseCriteriaTypeId !== 0) {
+      obj.phaseCriteriaTypeId = Math.round(message.phaseCriteriaTypeId);
+    }
+    if (message.parameter !== "") {
+      obj.parameter = message.parameter;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<CreatePhaseCriteriaInput>, I>>(
     base?: I
   ): CreatePhaseCriteriaInput {
-    return CreatePhaseCriteriaInput.fromPartial(base ?? {});
+    return CreatePhaseCriteriaInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<CreatePhaseCriteriaInput>, I>>(
     object: I
   ): CreatePhaseCriteriaInput {
@@ -1006,19 +1031,20 @@ export const DeletePhaseCriteriaInput = {
 
   toJSON(message: DeletePhaseCriteriaInput): unknown {
     const obj: any = {};
-    message.projectPhaseId !== undefined &&
-      (obj.projectPhaseId = Math.round(message.projectPhaseId));
-    message.phaseCriteriaTypeId !== undefined &&
-      (obj.phaseCriteriaTypeId = Math.round(message.phaseCriteriaTypeId));
+    if (message.projectPhaseId !== 0) {
+      obj.projectPhaseId = Math.round(message.projectPhaseId);
+    }
+    if (message.phaseCriteriaTypeId !== undefined) {
+      obj.phaseCriteriaTypeId = Math.round(message.phaseCriteriaTypeId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<DeletePhaseCriteriaInput>, I>>(
     base?: I
   ): DeletePhaseCriteriaInput {
-    return DeletePhaseCriteriaInput.fromPartial(base ?? {});
+    return DeletePhaseCriteriaInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DeletePhaseCriteriaInput>, I>>(
     object: I
   ): DeletePhaseCriteriaInput {
@@ -1080,12 +1106,10 @@ export const PhaseCriteriaList = {
 
   toJSON(message: PhaseCriteriaList): unknown {
     const obj: any = {};
-    if (message.phaseCriteriaList) {
+    if (message.phaseCriteriaList?.length) {
       obj.phaseCriteriaList = message.phaseCriteriaList.map((e) =>
-        e ? PhaseCriteria.toJSON(e) : undefined
+        PhaseCriteria.toJSON(e)
       );
-    } else {
-      obj.phaseCriteriaList = [];
     }
     return obj;
   },
@@ -1093,9 +1117,8 @@ export const PhaseCriteriaList = {
   create<I extends Exact<DeepPartial<PhaseCriteriaList>, I>>(
     base?: I
   ): PhaseCriteriaList {
-    return PhaseCriteriaList.fromPartial(base ?? {});
+    return PhaseCriteriaList.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<PhaseCriteriaList>, I>>(
     object: I
   ): PhaseCriteriaList {
@@ -1171,19 +1194,20 @@ export const GetPhaseCriteriaInput = {
 
   toJSON(message: GetPhaseCriteriaInput): unknown {
     const obj: any = {};
-    message.projectPhaseId !== undefined &&
-      (obj.projectPhaseId = Math.round(message.projectPhaseId));
-    message.phaseCriteriaTypeId !== undefined &&
-      (obj.phaseCriteriaTypeId = Math.round(message.phaseCriteriaTypeId));
+    if (message.projectPhaseId !== 0) {
+      obj.projectPhaseId = Math.round(message.projectPhaseId);
+    }
+    if (message.phaseCriteriaTypeId !== undefined) {
+      obj.phaseCriteriaTypeId = Math.round(message.phaseCriteriaTypeId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<GetPhaseCriteriaInput>, I>>(
     base?: I
   ): GetPhaseCriteriaInput {
-    return GetPhaseCriteriaInput.fromPartial(base ?? {});
+    return GetPhaseCriteriaInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<GetPhaseCriteriaInput>, I>>(
     object: I
   ): GetPhaseCriteriaInput {
@@ -1421,43 +1445,56 @@ export const ProjectPhase = {
 
   toJSON(message: ProjectPhase): unknown {
     const obj: any = {};
-    message.projectPhaseId !== undefined &&
-      (obj.projectPhaseId = Math.round(message.projectPhaseId));
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.phaseTypeId !== undefined &&
-      (obj.phaseTypeId = Math.round(message.phaseTypeId));
-    message.phaseStatusId !== undefined &&
-      (obj.phaseStatusId = Math.round(message.phaseStatusId));
-    message.fixedStartTime !== undefined &&
-      (obj.fixedStartTime = Math.round(message.fixedStartTime));
-    message.scheduledStartTime !== undefined &&
-      (obj.scheduledStartTime = Math.round(message.scheduledStartTime));
-    message.scheduledEndTime !== undefined &&
-      (obj.scheduledEndTime = Math.round(message.scheduledEndTime));
-    message.actualStartTime !== undefined &&
-      (obj.actualStartTime = Math.round(message.actualStartTime));
-    message.actualEndTime !== undefined &&
-      (obj.actualEndTime = Math.round(message.actualEndTime));
-    message.duration !== undefined &&
-      (obj.duration = Math.round(message.duration));
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    if (message.projectPhaseId !== 0) {
+      obj.projectPhaseId = Math.round(message.projectPhaseId);
+    }
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.phaseTypeId !== 0) {
+      obj.phaseTypeId = Math.round(message.phaseTypeId);
+    }
+    if (message.phaseStatusId !== 0) {
+      obj.phaseStatusId = Math.round(message.phaseStatusId);
+    }
+    if (message.fixedStartTime !== undefined) {
+      obj.fixedStartTime = Math.round(message.fixedStartTime);
+    }
+    if (message.scheduledStartTime !== undefined) {
+      obj.scheduledStartTime = Math.round(message.scheduledStartTime);
+    }
+    if (message.scheduledEndTime !== undefined) {
+      obj.scheduledEndTime = Math.round(message.scheduledEndTime);
+    }
+    if (message.actualStartTime !== undefined) {
+      obj.actualStartTime = Math.round(message.actualStartTime);
+    }
+    if (message.actualEndTime !== undefined) {
+      obj.actualEndTime = Math.round(message.actualEndTime);
+    }
+    if (message.duration !== 0) {
+      obj.duration = Math.round(message.duration);
+    }
+    if (message.createUser !== undefined) {
+      obj.createUser = Math.round(message.createUser);
+    }
+    if (message.createDate !== undefined) {
+      obj.createDate = Math.round(message.createDate);
+    }
+    if (message.modifyUser !== undefined) {
+      obj.modifyUser = Math.round(message.modifyUser);
+    }
+    if (message.modifyDate !== undefined) {
+      obj.modifyDate = Math.round(message.modifyDate);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<ProjectPhase>, I>>(
     base?: I
   ): ProjectPhase {
-    return ProjectPhase.fromPartial(base ?? {});
+    return ProjectPhase.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<ProjectPhase>, I>>(
     object: I
   ): ProjectPhase {
@@ -1543,19 +1580,20 @@ export const GetProjectPhasesInput = {
 
   toJSON(message: GetProjectPhasesInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.phaseTypeId !== undefined &&
-      (obj.phaseTypeId = Math.round(message.phaseTypeId));
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.phaseTypeId !== undefined) {
+      obj.phaseTypeId = Math.round(message.phaseTypeId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<GetProjectPhasesInput>, I>>(
     base?: I
   ): GetProjectPhasesInput {
-    return GetProjectPhasesInput.fromPartial(base ?? {});
+    return GetProjectPhasesInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<GetProjectPhasesInput>, I>>(
     object: I
   ): GetProjectPhasesInput {
@@ -1617,12 +1655,10 @@ export const ProjectPhaseList = {
 
   toJSON(message: ProjectPhaseList): unknown {
     const obj: any = {};
-    if (message.projectPhases) {
+    if (message.projectPhases?.length) {
       obj.projectPhases = message.projectPhases.map((e) =>
-        e ? ProjectPhase.toJSON(e) : undefined
+        ProjectPhase.toJSON(e)
       );
-    } else {
-      obj.projectPhases = [];
     }
     return obj;
   },
@@ -1630,9 +1666,8 @@ export const ProjectPhaseList = {
   create<I extends Exact<DeepPartial<ProjectPhaseList>, I>>(
     base?: I
   ): ProjectPhaseList {
-    return ProjectPhaseList.fromPartial(base ?? {});
+    return ProjectPhaseList.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<ProjectPhaseList>, I>>(
     object: I
   ): ProjectPhaseList {
@@ -1706,19 +1741,20 @@ export const DeleteProjectPhasesInput = {
 
   toJSON(message: DeleteProjectPhasesInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.projectPhaseId !== undefined &&
-      (obj.projectPhaseId = Math.round(message.projectPhaseId));
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.projectPhaseId !== 0) {
+      obj.projectPhaseId = Math.round(message.projectPhaseId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<DeleteProjectPhasesInput>, I>>(
     base?: I
   ): DeleteProjectPhasesInput {
-    return DeleteProjectPhasesInput.fromPartial(base ?? {});
+    return DeleteProjectPhasesInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DeleteProjectPhasesInput>, I>>(
     object: I
   ): DeleteProjectPhasesInput {
@@ -1889,33 +1925,41 @@ export const CreateProjectPhaseInput = {
 
   toJSON(message: CreateProjectPhaseInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.phaseTypeId !== undefined &&
-      (obj.phaseTypeId = Math.round(message.phaseTypeId));
-    message.phaseStatusId !== undefined &&
-      (obj.phaseStatusId = Math.round(message.phaseStatusId));
-    message.fixedStartTime !== undefined &&
-      (obj.fixedStartTime = message.fixedStartTime);
-    message.scheduledStartTime !== undefined &&
-      (obj.scheduledStartTime = message.scheduledStartTime);
-    message.scheduledEndTime !== undefined &&
-      (obj.scheduledEndTime = message.scheduledEndTime);
-    message.actualStartTime !== undefined &&
-      (obj.actualStartTime = message.actualStartTime);
-    message.actualEndTime !== undefined &&
-      (obj.actualEndTime = message.actualEndTime);
-    message.duration !== undefined &&
-      (obj.duration = Math.round(message.duration));
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.phaseTypeId !== 0) {
+      obj.phaseTypeId = Math.round(message.phaseTypeId);
+    }
+    if (message.phaseStatusId !== 0) {
+      obj.phaseStatusId = Math.round(message.phaseStatusId);
+    }
+    if (message.fixedStartTime !== undefined) {
+      obj.fixedStartTime = message.fixedStartTime;
+    }
+    if (message.scheduledStartTime !== undefined) {
+      obj.scheduledStartTime = message.scheduledStartTime;
+    }
+    if (message.scheduledEndTime !== undefined) {
+      obj.scheduledEndTime = message.scheduledEndTime;
+    }
+    if (message.actualStartTime !== undefined) {
+      obj.actualStartTime = message.actualStartTime;
+    }
+    if (message.actualEndTime !== undefined) {
+      obj.actualEndTime = message.actualEndTime;
+    }
+    if (message.duration !== 0) {
+      obj.duration = Math.round(message.duration);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<CreateProjectPhaseInput>, I>>(
     base?: I
   ): CreateProjectPhaseInput {
-    return CreateProjectPhaseInput.fromPartial(base ?? {});
+    return CreateProjectPhaseInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<CreateProjectPhaseInput>, I>>(
     object: I
   ): CreateProjectPhaseInput {
@@ -2083,31 +2127,38 @@ export const UpdateProjectPhaseInput = {
 
   toJSON(message: UpdateProjectPhaseInput): unknown {
     const obj: any = {};
-    message.projectPhaseId !== undefined &&
-      (obj.projectPhaseId = Math.round(message.projectPhaseId));
-    message.phaseStatusId !== undefined &&
-      (obj.phaseStatusId = Math.round(message.phaseStatusId));
-    message.fixedStartTime !== undefined &&
-      (obj.fixedStartTime = message.fixedStartTime);
-    message.scheduledStartTime !== undefined &&
-      (obj.scheduledStartTime = message.scheduledStartTime);
-    message.scheduledEndTime !== undefined &&
-      (obj.scheduledEndTime = message.scheduledEndTime);
-    message.duration !== undefined &&
-      (obj.duration = Math.round(message.duration));
-    message.actualStartTime !== undefined &&
-      (obj.actualStartTime = message.actualStartTime);
-    message.actualEndTime !== undefined &&
-      (obj.actualEndTime = message.actualEndTime);
+    if (message.projectPhaseId !== 0) {
+      obj.projectPhaseId = Math.round(message.projectPhaseId);
+    }
+    if (message.phaseStatusId !== 0) {
+      obj.phaseStatusId = Math.round(message.phaseStatusId);
+    }
+    if (message.fixedStartTime !== undefined) {
+      obj.fixedStartTime = message.fixedStartTime;
+    }
+    if (message.scheduledStartTime !== undefined) {
+      obj.scheduledStartTime = message.scheduledStartTime;
+    }
+    if (message.scheduledEndTime !== undefined) {
+      obj.scheduledEndTime = message.scheduledEndTime;
+    }
+    if (message.duration !== undefined) {
+      obj.duration = Math.round(message.duration);
+    }
+    if (message.actualStartTime !== undefined) {
+      obj.actualStartTime = message.actualStartTime;
+    }
+    if (message.actualEndTime !== undefined) {
+      obj.actualEndTime = message.actualEndTime;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdateProjectPhaseInput>, I>>(
     base?: I
   ): UpdateProjectPhaseInput {
-    return UpdateProjectPhaseInput.fromPartial(base ?? {});
+    return UpdateProjectPhaseInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<UpdateProjectPhaseInput>, I>>(
     object: I
   ): UpdateProjectPhaseInput {
@@ -2124,10 +2175,10 @@ export const UpdateProjectPhaseInput = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }
