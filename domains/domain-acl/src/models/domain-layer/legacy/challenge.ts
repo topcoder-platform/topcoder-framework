@@ -58,6 +58,7 @@ export interface CreateChallengeInput {
   projectInfo: { [key: number]: string };
   phases: Phase[];
   groups: number[];
+  id: string;
 }
 
 export interface CreateChallengeInput_ProjectInfoEntry {
@@ -852,6 +853,7 @@ function createBaseCreateChallengeInput(): CreateChallengeInput {
     projectInfo: {},
     phases: [],
     groups: [],
+    id: "",
   };
 }
 
@@ -901,6 +903,9 @@ export const CreateChallengeInput = {
       writer.int32(v);
     }
     writer.ldelim();
+    if (message.id !== "") {
+      writer.uint32(106).string(message.id);
+    }
     return writer;
   },
 
@@ -1015,6 +1020,13 @@ export const CreateChallengeInput = {
           }
 
           break;
+        case 13:
+          if (tag !== 106) {
+            break;
+          }
+
+          message.id = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1066,6 +1078,7 @@ export const CreateChallengeInput = {
       groups: Array.isArray(object?.groups)
         ? object.groups.map((e: any) => Number(e))
         : [],
+      id: isSet(object.id) ? String(object.id) : "",
     };
   },
 
@@ -1108,6 +1121,7 @@ export const CreateChallengeInput = {
     } else {
       obj.groups = [];
     }
+    message.id !== undefined && (obj.id = message.id);
     return obj;
   },
 
@@ -1141,6 +1155,7 @@ export const CreateChallengeInput = {
     }, {});
     message.phases = object.phases?.map((e) => Phase.fromPartial(e)) || [];
     message.groups = object.groups?.map((e) => e) || [];
+    message.id = object.id ?? "";
     return message;
   },
 };
