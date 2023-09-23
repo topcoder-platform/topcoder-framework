@@ -127,27 +127,32 @@ export const ResourceSubmission = {
 
   toJSON(message: ResourceSubmission): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.submissionId !== undefined &&
-      (obj.submissionId = Math.round(message.submissionId));
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    if (message.resourceId !== 0) {
+      obj.resourceId = Math.round(message.resourceId);
+    }
+    if (message.submissionId !== 0) {
+      obj.submissionId = Math.round(message.submissionId);
+    }
+    if (message.createUser !== 0) {
+      obj.createUser = Math.round(message.createUser);
+    }
+    if (message.createDate !== 0) {
+      obj.createDate = Math.round(message.createDate);
+    }
+    if (message.modifyUser !== 0) {
+      obj.modifyUser = Math.round(message.modifyUser);
+    }
+    if (message.modifyDate !== 0) {
+      obj.modifyDate = Math.round(message.modifyDate);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<ResourceSubmission>, I>>(
     base?: I
   ): ResourceSubmission {
-    return ResourceSubmission.fromPartial(base ?? {});
+    return ResourceSubmission.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<ResourceSubmission>, I>>(
     object: I
   ): ResourceSubmission {
@@ -225,19 +230,20 @@ export const CreateResourceSubmissionInput = {
 
   toJSON(message: CreateResourceSubmissionInput): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.submissionId !== undefined &&
-      (obj.submissionId = Math.round(message.submissionId));
+    if (message.resourceId !== 0) {
+      obj.resourceId = Math.round(message.resourceId);
+    }
+    if (message.submissionId !== 0) {
+      obj.submissionId = Math.round(message.submissionId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<CreateResourceSubmissionInput>, I>>(
     base?: I
   ): CreateResourceSubmissionInput {
-    return CreateResourceSubmissionInput.fromPartial(base ?? {});
+    return CreateResourceSubmissionInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<CreateResourceSubmissionInput>, I>>(
     object: I
   ): CreateResourceSubmissionInput {
@@ -248,10 +254,10 @@ export const CreateResourceSubmissionInput = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

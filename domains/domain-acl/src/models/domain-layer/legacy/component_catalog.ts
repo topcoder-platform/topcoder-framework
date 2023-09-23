@@ -196,34 +196,47 @@ export const LegacyComponentCatalog = {
 
   toJSON(message: LegacyComponentCatalog): unknown {
     const obj: any = {};
-    message.componentId !== undefined &&
-      (obj.componentId = Math.round(message.componentId));
-    message.currentVersion !== undefined &&
-      (obj.currentVersion = Math.round(message.currentVersion));
-    message.shortDesc !== undefined && (obj.shortDesc = message.shortDesc);
-    message.componentName !== undefined &&
-      (obj.componentName = message.componentName);
-    message.description !== undefined &&
-      (obj.description = message.description);
-    message.functionDesc !== undefined &&
-      (obj.functionDesc = message.functionDesc);
-    message.createTime !== undefined && (obj.createTime = message.createTime);
-    message.statusId !== undefined &&
-      (obj.statusId = Math.round(message.statusId));
-    message.rootCategoryId !== undefined &&
-      (obj.rootCategoryId = Math.round(message.rootCategoryId));
-    message.modifyDate !== undefined && (obj.modifyDate = message.modifyDate);
-    message.publicInd !== undefined &&
-      (obj.publicInd = Math.round(message.publicInd));
+    if (message.componentId !== 0) {
+      obj.componentId = Math.round(message.componentId);
+    }
+    if (message.currentVersion !== 0) {
+      obj.currentVersion = Math.round(message.currentVersion);
+    }
+    if (message.shortDesc !== "") {
+      obj.shortDesc = message.shortDesc;
+    }
+    if (message.componentName !== "") {
+      obj.componentName = message.componentName;
+    }
+    if (message.description !== "") {
+      obj.description = message.description;
+    }
+    if (message.functionDesc !== "") {
+      obj.functionDesc = message.functionDesc;
+    }
+    if (message.createTime !== "") {
+      obj.createTime = message.createTime;
+    }
+    if (message.statusId !== 0) {
+      obj.statusId = Math.round(message.statusId);
+    }
+    if (message.rootCategoryId !== 0) {
+      obj.rootCategoryId = Math.round(message.rootCategoryId);
+    }
+    if (message.modifyDate !== "") {
+      obj.modifyDate = message.modifyDate;
+    }
+    if (message.publicInd !== 0) {
+      obj.publicInd = Math.round(message.publicInd);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<LegacyComponentCatalog>, I>>(
     base?: I
   ): LegacyComponentCatalog {
-    return LegacyComponentCatalog.fromPartial(base ?? {});
+    return LegacyComponentCatalog.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<LegacyComponentCatalog>, I>>(
     object: I
   ): LegacyComponentCatalog {
@@ -243,10 +256,10 @@ export const LegacyComponentCatalog = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

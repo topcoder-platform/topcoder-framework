@@ -26,7 +26,7 @@ export interface CreateAttachmentInput {
 
 export interface UpdateAttachmentInput {
   filterCriteria: ScanCriteria[];
-  updateInput?: UpdateAttachmentInput_UpdateInput;
+  updateInput?: UpdateAttachmentInput_UpdateInput | undefined;
 }
 
 export interface UpdateAttachmentInput_UpdateInput {
@@ -148,22 +148,30 @@ export const Attachment = {
 
   toJSON(message: Attachment): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = message.id);
-    message.url !== undefined && (obj.url = message.url);
-    message.fileSize !== undefined &&
-      (obj.fileSize = Math.round(message.fileSize));
-    message.name !== undefined && (obj.name = message.name);
-    message.challengeId !== undefined &&
-      (obj.challengeId = message.challengeId);
-    message.description !== undefined &&
-      (obj.description = message.description);
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.url !== "") {
+      obj.url = message.url;
+    }
+    if (message.fileSize !== 0) {
+      obj.fileSize = Math.round(message.fileSize);
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.challengeId !== "") {
+      obj.challengeId = message.challengeId;
+    }
+    if (message.description !== undefined) {
+      obj.description = message.description;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Attachment>, I>>(base?: I): Attachment {
-    return Attachment.fromPartial(base ?? {});
+    return Attachment.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Attachment>, I>>(
     object: I
   ): Attachment {
@@ -227,12 +235,8 @@ export const AttachmentList = {
 
   toJSON(message: AttachmentList): unknown {
     const obj: any = {};
-    if (message.items) {
-      obj.items = message.items.map((e) =>
-        e ? Attachment.toJSON(e) : undefined
-      );
-    } else {
-      obj.items = [];
+    if (message.items?.length) {
+      obj.items = message.items.map((e) => Attachment.toJSON(e));
     }
     return obj;
   },
@@ -240,9 +244,8 @@ export const AttachmentList = {
   create<I extends Exact<DeepPartial<AttachmentList>, I>>(
     base?: I
   ): AttachmentList {
-    return AttachmentList.fromPartial(base ?? {});
+    return AttachmentList.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<AttachmentList>, I>>(
     object: I
   ): AttachmentList {
@@ -354,23 +357,29 @@ export const CreateAttachmentInput = {
 
   toJSON(message: CreateAttachmentInput): unknown {
     const obj: any = {};
-    message.url !== undefined && (obj.url = message.url);
-    message.fileSize !== undefined &&
-      (obj.fileSize = Math.round(message.fileSize));
-    message.name !== undefined && (obj.name = message.name);
-    message.challengeId !== undefined &&
-      (obj.challengeId = message.challengeId);
-    message.description !== undefined &&
-      (obj.description = message.description);
+    if (message.url !== "") {
+      obj.url = message.url;
+    }
+    if (message.fileSize !== 0) {
+      obj.fileSize = Math.round(message.fileSize);
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.challengeId !== "") {
+      obj.challengeId = message.challengeId;
+    }
+    if (message.description !== undefined) {
+      obj.description = message.description;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<CreateAttachmentInput>, I>>(
     base?: I
   ): CreateAttachmentInput {
-    return CreateAttachmentInput.fromPartial(base ?? {});
+    return CreateAttachmentInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<CreateAttachmentInput>, I>>(
     object: I
   ): CreateAttachmentInput {
@@ -457,26 +466,24 @@ export const UpdateAttachmentInput = {
 
   toJSON(message: UpdateAttachmentInput): unknown {
     const obj: any = {};
-    if (message.filterCriteria) {
+    if (message.filterCriteria?.length) {
       obj.filterCriteria = message.filterCriteria.map((e) =>
-        e ? ScanCriteria.toJSON(e) : undefined
+        ScanCriteria.toJSON(e)
       );
-    } else {
-      obj.filterCriteria = [];
     }
-    message.updateInput !== undefined &&
-      (obj.updateInput = message.updateInput
-        ? UpdateAttachmentInput_UpdateInput.toJSON(message.updateInput)
-        : undefined);
+    if (message.updateInput !== undefined) {
+      obj.updateInput = UpdateAttachmentInput_UpdateInput.toJSON(
+        message.updateInput
+      );
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdateAttachmentInput>, I>>(
     base?: I
   ): UpdateAttachmentInput {
-    return UpdateAttachmentInput.fromPartial(base ?? {});
+    return UpdateAttachmentInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<UpdateAttachmentInput>, I>>(
     object: I
   ): UpdateAttachmentInput {
@@ -593,23 +600,29 @@ export const UpdateAttachmentInput_UpdateInput = {
 
   toJSON(message: UpdateAttachmentInput_UpdateInput): unknown {
     const obj: any = {};
-    message.url !== undefined && (obj.url = message.url);
-    message.fileSize !== undefined &&
-      (obj.fileSize = Math.round(message.fileSize));
-    message.name !== undefined && (obj.name = message.name);
-    message.challengeId !== undefined &&
-      (obj.challengeId = message.challengeId);
-    message.description !== undefined &&
-      (obj.description = message.description);
+    if (message.url !== "") {
+      obj.url = message.url;
+    }
+    if (message.fileSize !== 0) {
+      obj.fileSize = Math.round(message.fileSize);
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.challengeId !== "") {
+      obj.challengeId = message.challengeId;
+    }
+    if (message.description !== undefined) {
+      obj.description = message.description;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdateAttachmentInput_UpdateInput>, I>>(
     base?: I
   ): UpdateAttachmentInput_UpdateInput {
-    return UpdateAttachmentInput_UpdateInput.fromPartial(base ?? {});
+    return UpdateAttachmentInput_UpdateInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<
     I extends Exact<DeepPartial<UpdateAttachmentInput_UpdateInput>, I>
   >(object: I): UpdateAttachmentInput_UpdateInput {
@@ -623,10 +636,10 @@ export const UpdateAttachmentInput_UpdateInput = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

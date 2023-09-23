@@ -247,29 +247,38 @@ export const LegacyChallenge = {
 
   toJSON(message: LegacyChallenge): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.projectStatusId !== undefined &&
-      (obj.projectStatusId = Math.round(message.projectStatusId));
-    message.projectCategoryId !== undefined &&
-      (obj.projectCategoryId = Math.round(message.projectCategoryId));
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined && (obj.createDate = message.createDate);
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined && (obj.modifyDate = message.modifyDate);
-    message.tcDirectProjectId !== undefined &&
-      (obj.tcDirectProjectId = Math.round(message.tcDirectProjectId));
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.projectStatusId !== 0) {
+      obj.projectStatusId = Math.round(message.projectStatusId);
+    }
+    if (message.projectCategoryId !== 0) {
+      obj.projectCategoryId = Math.round(message.projectCategoryId);
+    }
+    if (message.createUser !== 0) {
+      obj.createUser = Math.round(message.createUser);
+    }
+    if (message.createDate !== "") {
+      obj.createDate = message.createDate;
+    }
+    if (message.modifyUser !== 0) {
+      obj.modifyUser = Math.round(message.modifyUser);
+    }
+    if (message.modifyDate !== "") {
+      obj.modifyDate = message.modifyDate;
+    }
+    if (message.tcDirectProjectId !== 0) {
+      obj.tcDirectProjectId = Math.round(message.tcDirectProjectId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<LegacyChallenge>, I>>(
     base?: I
   ): LegacyChallenge {
-    return LegacyChallenge.fromPartial(base ?? {});
+    return LegacyChallenge.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<LegacyChallenge>, I>>(
     object: I
   ): LegacyChallenge {
@@ -335,17 +344,17 @@ export const LegacyChallengeId = {
 
   toJSON(message: LegacyChallengeId): unknown {
     const obj: any = {};
-    message.legacyChallengeId !== undefined &&
-      (obj.legacyChallengeId = Math.round(message.legacyChallengeId));
+    if (message.legacyChallengeId !== 0) {
+      obj.legacyChallengeId = Math.round(message.legacyChallengeId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<LegacyChallengeId>, I>>(
     base?: I
   ): LegacyChallengeId {
-    return LegacyChallengeId.fromPartial(base ?? {});
+    return LegacyChallengeId.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<LegacyChallengeId>, I>>(
     object: I
   ): LegacyChallengeId {
@@ -406,12 +415,10 @@ export const LegacyChallengeList = {
 
   toJSON(message: LegacyChallengeList): unknown {
     const obj: any = {};
-    if (message.legacyChallenges) {
+    if (message.legacyChallenges?.length) {
       obj.legacyChallenges = message.legacyChallenges.map((e) =>
-        e ? LegacyChallenge.toJSON(e) : undefined
+        LegacyChallenge.toJSON(e)
       );
-    } else {
-      obj.legacyChallenges = [];
     }
     return obj;
   },
@@ -419,9 +426,8 @@ export const LegacyChallengeList = {
   create<I extends Exact<DeepPartial<LegacyChallengeList>, I>>(
     base?: I
   ): LegacyChallengeList {
-    return LegacyChallengeList.fromPartial(base ?? {});
+    return LegacyChallengeList.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<LegacyChallengeList>, I>>(
     object: I
   ): LegacyChallengeList {
@@ -602,35 +608,45 @@ export const Phase = {
 
   toJSON(message: Phase): unknown {
     const obj: any = {};
-    message.phaseTypeId !== undefined &&
-      (obj.phaseTypeId = Math.round(message.phaseTypeId));
-    message.phaseStatusId !== undefined &&
-      (obj.phaseStatusId = Math.round(message.phaseStatusId));
-    message.fixedStartTime !== undefined &&
-      (obj.fixedStartTime = message.fixedStartTime);
-    message.scheduledStartTime !== undefined &&
-      (obj.scheduledStartTime = message.scheduledStartTime);
-    message.scheduledEndTime !== undefined &&
-      (obj.scheduledEndTime = message.scheduledEndTime);
-    message.actualStartTime !== undefined &&
-      (obj.actualStartTime = message.actualStartTime);
-    message.actualEndTime !== undefined &&
-      (obj.actualEndTime = message.actualEndTime);
-    message.duration !== undefined &&
-      (obj.duration = Math.round(message.duration));
-    obj.phaseCriteria = {};
+    if (message.phaseTypeId !== 0) {
+      obj.phaseTypeId = Math.round(message.phaseTypeId);
+    }
+    if (message.phaseStatusId !== 0) {
+      obj.phaseStatusId = Math.round(message.phaseStatusId);
+    }
+    if (message.fixedStartTime !== undefined) {
+      obj.fixedStartTime = message.fixedStartTime;
+    }
+    if (message.scheduledStartTime !== "") {
+      obj.scheduledStartTime = message.scheduledStartTime;
+    }
+    if (message.scheduledEndTime !== "") {
+      obj.scheduledEndTime = message.scheduledEndTime;
+    }
+    if (message.actualStartTime !== undefined) {
+      obj.actualStartTime = message.actualStartTime;
+    }
+    if (message.actualEndTime !== undefined) {
+      obj.actualEndTime = message.actualEndTime;
+    }
+    if (message.duration !== 0) {
+      obj.duration = Math.round(message.duration);
+    }
     if (message.phaseCriteria) {
-      Object.entries(message.phaseCriteria).forEach(([k, v]) => {
-        obj.phaseCriteria[k] = v;
-      });
+      const entries = Object.entries(message.phaseCriteria);
+      if (entries.length > 0) {
+        obj.phaseCriteria = {};
+        entries.forEach(([k, v]) => {
+          obj.phaseCriteria[k] = v;
+        });
+      }
     }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Phase>, I>>(base?: I): Phase {
-    return Phase.fromPartial(base ?? {});
+    return Phase.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Phase>, I>>(object: I): Phase {
     const message = createBasePhase();
     message.phaseTypeId = object.phaseTypeId ?? 0;
@@ -714,17 +730,20 @@ export const Phase_PhaseCriteriaEntry = {
 
   toJSON(message: Phase_PhaseCriteriaEntry): unknown {
     const obj: any = {};
-    message.key !== undefined && (obj.key = Math.round(message.key));
-    message.value !== undefined && (obj.value = message.value);
+    if (message.key !== 0) {
+      obj.key = Math.round(message.key);
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Phase_PhaseCriteriaEntry>, I>>(
     base?: I
   ): Phase_PhaseCriteriaEntry {
-    return Phase_PhaseCriteriaEntry.fromPartial(base ?? {});
+    return Phase_PhaseCriteriaEntry.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Phase_PhaseCriteriaEntry>, I>>(
     object: I
   ): Phase_PhaseCriteriaEntry {
@@ -816,19 +835,24 @@ export const Prize = {
 
   toJSON(message: Prize): unknown {
     const obj: any = {};
-    message.place !== undefined && (obj.place = Math.round(message.place));
-    message.amountInCents !== undefined &&
-      (obj.amountInCents = Math.round(message.amountInCents));
-    message.type !== undefined && (obj.type = message.type);
-    message.numSubmissions !== undefined &&
-      (obj.numSubmissions = Math.round(message.numSubmissions));
+    if (message.place !== 0) {
+      obj.place = Math.round(message.place);
+    }
+    if (message.amountInCents !== 0) {
+      obj.amountInCents = Math.round(message.amountInCents);
+    }
+    if (message.type !== undefined) {
+      obj.type = message.type;
+    }
+    if (message.numSubmissions !== 0) {
+      obj.numSubmissions = Math.round(message.numSubmissions);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Prize>, I>>(base?: I): Prize {
-    return Prize.fromPartial(base ?? {});
+    return Prize.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Prize>, I>>(object: I): Prize {
     const message = createBasePrize();
     message.place = object.place ?? 0;
@@ -1084,53 +1108,59 @@ export const CreateChallengeInput = {
 
   toJSON(message: CreateChallengeInput): unknown {
     const obj: any = {};
-    message.name !== undefined && (obj.name = message.name);
-    message.projectStatusId !== undefined &&
-      (obj.projectStatusId = Math.round(message.projectStatusId));
-    message.projectCategoryId !== undefined &&
-      (obj.projectCategoryId = Math.round(message.projectCategoryId));
-    message.projectStudioSpecId !== undefined &&
-      (obj.projectStudioSpecId = Math.round(message.projectStudioSpecId));
-    message.projectMmSpecId !== undefined &&
-      (obj.projectMmSpecId = Math.round(message.projectMmSpecId));
-    message.tcDirectProjectId !== undefined &&
-      (obj.tcDirectProjectId = Math.round(message.tcDirectProjectId));
-    if (message.winnerPrizes) {
-      obj.winnerPrizes = message.winnerPrizes.map((e) =>
-        e ? Prize.toJSON(e) : undefined
-      );
-    } else {
-      obj.winnerPrizes = [];
+    if (message.name !== "") {
+      obj.name = message.name;
     }
-    message.reviewType !== undefined && (obj.reviewType = message.reviewType);
-    message.confidentialityType !== undefined &&
-      (obj.confidentialityType = message.confidentialityType);
-    obj.projectInfo = {};
+    if (message.projectStatusId !== 0) {
+      obj.projectStatusId = Math.round(message.projectStatusId);
+    }
+    if (message.projectCategoryId !== 0) {
+      obj.projectCategoryId = Math.round(message.projectCategoryId);
+    }
+    if (message.projectStudioSpecId !== undefined) {
+      obj.projectStudioSpecId = Math.round(message.projectStudioSpecId);
+    }
+    if (message.projectMmSpecId !== undefined) {
+      obj.projectMmSpecId = Math.round(message.projectMmSpecId);
+    }
+    if (message.tcDirectProjectId !== 0) {
+      obj.tcDirectProjectId = Math.round(message.tcDirectProjectId);
+    }
+    if (message.winnerPrizes?.length) {
+      obj.winnerPrizes = message.winnerPrizes.map((e) => Prize.toJSON(e));
+    }
+    if (message.reviewType !== undefined) {
+      obj.reviewType = message.reviewType;
+    }
+    if (message.confidentialityType !== "") {
+      obj.confidentialityType = message.confidentialityType;
+    }
     if (message.projectInfo) {
-      Object.entries(message.projectInfo).forEach(([k, v]) => {
-        obj.projectInfo[k] = v;
-      });
+      const entries = Object.entries(message.projectInfo);
+      if (entries.length > 0) {
+        obj.projectInfo = {};
+        entries.forEach(([k, v]) => {
+          obj.projectInfo[k] = v;
+        });
+      }
     }
-    if (message.phases) {
-      obj.phases = message.phases.map((e) => (e ? Phase.toJSON(e) : undefined));
-    } else {
-      obj.phases = [];
+    if (message.phases?.length) {
+      obj.phases = message.phases.map((e) => Phase.toJSON(e));
     }
-    if (message.groups) {
+    if (message.groups?.length) {
       obj.groups = message.groups.map((e) => Math.round(e));
-    } else {
-      obj.groups = [];
     }
-    message.id !== undefined && (obj.id = message.id);
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<CreateChallengeInput>, I>>(
     base?: I
   ): CreateChallengeInput {
-    return CreateChallengeInput.fromPartial(base ?? {});
+    return CreateChallengeInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<CreateChallengeInput>, I>>(
     object: I
   ): CreateChallengeInput {
@@ -1221,17 +1251,22 @@ export const CreateChallengeInput_ProjectInfoEntry = {
 
   toJSON(message: CreateChallengeInput_ProjectInfoEntry): unknown {
     const obj: any = {};
-    message.key !== undefined && (obj.key = Math.round(message.key));
-    message.value !== undefined && (obj.value = message.value);
+    if (message.key !== 0) {
+      obj.key = Math.round(message.key);
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
     return obj;
   },
 
   create<
     I extends Exact<DeepPartial<CreateChallengeInput_ProjectInfoEntry>, I>
   >(base?: I): CreateChallengeInput_ProjectInfoEntry {
-    return CreateChallengeInput_ProjectInfoEntry.fromPartial(base ?? {});
+    return CreateChallengeInput_ProjectInfoEntry.fromPartial(
+      base ?? ({} as any)
+    );
   },
-
   fromPartial<
     I extends Exact<DeepPartial<CreateChallengeInput_ProjectInfoEntry>, I>
   >(object: I): CreateChallengeInput_ProjectInfoEntry {
@@ -1429,32 +1464,43 @@ export const UpdateChallengeInput = {
 
   toJSON(message: UpdateChallengeInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.projectStatusId !== undefined &&
-      (obj.projectStatusId = Math.round(message.projectStatusId));
-    message.name !== undefined && (obj.name = message.name);
-    message.prizeUpdate !== undefined &&
-      (obj.prizeUpdate = message.prizeUpdate
-        ? UpdateChallengeInput_PrizeUpdate.toJSON(message.prizeUpdate)
-        : undefined);
-    message.phaseUpdate !== undefined &&
-      (obj.phaseUpdate = message.phaseUpdate
-        ? UpdateChallengeInput_PhaseUpdate.toJSON(message.phaseUpdate)
-        : undefined);
-    message.groupUpdate !== undefined &&
-      (obj.groupUpdate = message.groupUpdate
-        ? UpdateChallengeInput_GroupUpdate.toJSON(message.groupUpdate)
-        : undefined);
-    message.termUpdate !== undefined &&
-      (obj.termUpdate = message.termUpdate
-        ? UpdateChallengeInput_TermUpdate.toJSON(message.termUpdate)
-        : undefined);
-    obj.projectInfo = {};
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.projectStatusId !== undefined) {
+      obj.projectStatusId = Math.round(message.projectStatusId);
+    }
+    if (message.name !== undefined) {
+      obj.name = message.name;
+    }
+    if (message.prizeUpdate !== undefined) {
+      obj.prizeUpdate = UpdateChallengeInput_PrizeUpdate.toJSON(
+        message.prizeUpdate
+      );
+    }
+    if (message.phaseUpdate !== undefined) {
+      obj.phaseUpdate = UpdateChallengeInput_PhaseUpdate.toJSON(
+        message.phaseUpdate
+      );
+    }
+    if (message.groupUpdate !== undefined) {
+      obj.groupUpdate = UpdateChallengeInput_GroupUpdate.toJSON(
+        message.groupUpdate
+      );
+    }
+    if (message.termUpdate !== undefined) {
+      obj.termUpdate = UpdateChallengeInput_TermUpdate.toJSON(
+        message.termUpdate
+      );
+    }
     if (message.projectInfo) {
-      Object.entries(message.projectInfo).forEach(([k, v]) => {
-        obj.projectInfo[k] = v;
-      });
+      const entries = Object.entries(message.projectInfo);
+      if (entries.length > 0) {
+        obj.projectInfo = {};
+        entries.forEach(([k, v]) => {
+          obj.projectInfo[k] = v;
+        });
+      }
     }
     return obj;
   },
@@ -1462,9 +1508,8 @@ export const UpdateChallengeInput = {
   create<I extends Exact<DeepPartial<UpdateChallengeInput>, I>>(
     base?: I
   ): UpdateChallengeInput {
-    return UpdateChallengeInput.fromPartial(base ?? {});
+    return UpdateChallengeInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<UpdateChallengeInput>, I>>(
     object: I
   ): UpdateChallengeInput {
@@ -1561,17 +1606,22 @@ export const UpdateChallengeInput_ProjectInfoEntry = {
 
   toJSON(message: UpdateChallengeInput_ProjectInfoEntry): unknown {
     const obj: any = {};
-    message.key !== undefined && (obj.key = Math.round(message.key));
-    message.value !== undefined && (obj.value = message.value);
+    if (message.key !== 0) {
+      obj.key = Math.round(message.key);
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
     return obj;
   },
 
   create<
     I extends Exact<DeepPartial<UpdateChallengeInput_ProjectInfoEntry>, I>
   >(base?: I): UpdateChallengeInput_ProjectInfoEntry {
-    return UpdateChallengeInput_ProjectInfoEntry.fromPartial(base ?? {});
+    return UpdateChallengeInput_ProjectInfoEntry.fromPartial(
+      base ?? ({} as any)
+    );
   },
-
   fromPartial<
     I extends Exact<DeepPartial<UpdateChallengeInput_ProjectInfoEntry>, I>
   >(object: I): UpdateChallengeInput_ProjectInfoEntry {
@@ -1634,12 +1684,8 @@ export const UpdateChallengeInput_PrizeUpdate = {
 
   toJSON(message: UpdateChallengeInput_PrizeUpdate): unknown {
     const obj: any = {};
-    if (message.winnerPrizes) {
-      obj.winnerPrizes = message.winnerPrizes.map((e) =>
-        e ? Prize.toJSON(e) : undefined
-      );
-    } else {
-      obj.winnerPrizes = [];
+    if (message.winnerPrizes?.length) {
+      obj.winnerPrizes = message.winnerPrizes.map((e) => Prize.toJSON(e));
     }
     return obj;
   },
@@ -1647,9 +1693,8 @@ export const UpdateChallengeInput_PrizeUpdate = {
   create<I extends Exact<DeepPartial<UpdateChallengeInput_PrizeUpdate>, I>>(
     base?: I
   ): UpdateChallengeInput_PrizeUpdate {
-    return UpdateChallengeInput_PrizeUpdate.fromPartial(base ?? {});
+    return UpdateChallengeInput_PrizeUpdate.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<
     I extends Exact<DeepPartial<UpdateChallengeInput_PrizeUpdate>, I>
   >(object: I): UpdateChallengeInput_PrizeUpdate {
@@ -1712,10 +1757,8 @@ export const UpdateChallengeInput_PhaseUpdate = {
 
   toJSON(message: UpdateChallengeInput_PhaseUpdate): unknown {
     const obj: any = {};
-    if (message.phases) {
-      obj.phases = message.phases.map((e) => (e ? Phase.toJSON(e) : undefined));
-    } else {
-      obj.phases = [];
+    if (message.phases?.length) {
+      obj.phases = message.phases.map((e) => Phase.toJSON(e));
     }
     return obj;
   },
@@ -1723,9 +1766,8 @@ export const UpdateChallengeInput_PhaseUpdate = {
   create<I extends Exact<DeepPartial<UpdateChallengeInput_PhaseUpdate>, I>>(
     base?: I
   ): UpdateChallengeInput_PhaseUpdate {
-    return UpdateChallengeInput_PhaseUpdate.fromPartial(base ?? {});
+    return UpdateChallengeInput_PhaseUpdate.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<
     I extends Exact<DeepPartial<UpdateChallengeInput_PhaseUpdate>, I>
   >(object: I): UpdateChallengeInput_PhaseUpdate {
@@ -1799,10 +1841,8 @@ export const UpdateChallengeInput_GroupUpdate = {
 
   toJSON(message: UpdateChallengeInput_GroupUpdate): unknown {
     const obj: any = {};
-    if (message.groups) {
+    if (message.groups?.length) {
       obj.groups = message.groups.map((e) => Math.round(e));
-    } else {
-      obj.groups = [];
     }
     return obj;
   },
@@ -1810,9 +1850,8 @@ export const UpdateChallengeInput_GroupUpdate = {
   create<I extends Exact<DeepPartial<UpdateChallengeInput_GroupUpdate>, I>>(
     base?: I
   ): UpdateChallengeInput_GroupUpdate {
-    return UpdateChallengeInput_GroupUpdate.fromPartial(base ?? {});
+    return UpdateChallengeInput_GroupUpdate.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<
     I extends Exact<DeepPartial<UpdateChallengeInput_GroupUpdate>, I>
   >(object: I): UpdateChallengeInput_GroupUpdate {
@@ -1883,17 +1922,20 @@ export const UpdateChallengeInput_Term = {
 
   toJSON(message: UpdateChallengeInput_Term): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = message.id);
-    message.roleId !== undefined && (obj.roleId = message.roleId);
+    if (message.id !== undefined) {
+      obj.id = message.id;
+    }
+    if (message.roleId !== undefined) {
+      obj.roleId = message.roleId;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdateChallengeInput_Term>, I>>(
     base?: I
   ): UpdateChallengeInput_Term {
-    return UpdateChallengeInput_Term.fromPartial(base ?? {});
+    return UpdateChallengeInput_Term.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<UpdateChallengeInput_Term>, I>>(
     object: I
   ): UpdateChallengeInput_Term {
@@ -1958,12 +2000,8 @@ export const UpdateChallengeInput_TermUpdate = {
 
   toJSON(message: UpdateChallengeInput_TermUpdate): unknown {
     const obj: any = {};
-    if (message.terms) {
-      obj.terms = message.terms.map((e) =>
-        e ? UpdateChallengeInput_Term.toJSON(e) : undefined
-      );
-    } else {
-      obj.terms = [];
+    if (message.terms?.length) {
+      obj.terms = message.terms.map((e) => UpdateChallengeInput_Term.toJSON(e));
     }
     return obj;
   },
@@ -1971,9 +2009,8 @@ export const UpdateChallengeInput_TermUpdate = {
   create<I extends Exact<DeepPartial<UpdateChallengeInput_TermUpdate>, I>>(
     base?: I
   ): UpdateChallengeInput_TermUpdate {
-    return UpdateChallengeInput_TermUpdate.fromPartial(base ?? {});
+    return UpdateChallengeInput_TermUpdate.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<UpdateChallengeInput_TermUpdate>, I>>(
     object: I
   ): UpdateChallengeInput_TermUpdate {
@@ -2042,19 +2079,20 @@ export const CloseChallengeInput = {
 
   toJSON(message: CloseChallengeInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.winnerId !== undefined &&
-      (obj.winnerId = Math.round(message.winnerId));
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.winnerId !== 0) {
+      obj.winnerId = Math.round(message.winnerId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<CloseChallengeInput>, I>>(
     base?: I
   ): CloseChallengeInput {
-    return CloseChallengeInput.fromPartial(base ?? {});
+    return CloseChallengeInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<CloseChallengeInput>, I>>(
     object: I
   ): CloseChallengeInput {
@@ -2065,10 +2103,10 @@ export const CloseChallengeInput = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

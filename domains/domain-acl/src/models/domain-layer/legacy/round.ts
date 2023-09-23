@@ -294,42 +294,69 @@ export const Round = {
 
   toJSON(message: Round): unknown {
     const obj: any = {};
-    message.roundId !== undefined &&
-      (obj.roundId = Math.round(message.roundId));
-    message.contestId !== undefined &&
-      (obj.contestId = Math.round(message.contestId));
-    message.name !== undefined && (obj.name = message.name);
-    message.status !== undefined && (obj.status = message.status);
-    message.ranRatings !== undefined && (obj.ranRatings = message.ranRatings);
-    message.paidMoney !== undefined && (obj.paidMoney = message.paidMoney);
-    message.registrationLimit !== undefined &&
-      (obj.registrationLimit = Math.round(message.registrationLimit));
-    message.notes !== undefined && (obj.notes = message.notes);
-    message.invitational !== undefined &&
-      (obj.invitational = Math.round(message.invitational));
-    message.roundTypeId !== undefined &&
-      (obj.roundTypeId = Math.round(message.roundTypeId));
-    message.link !== undefined && (obj.link = message.link);
-    message.shortName !== undefined && (obj.shortName = message.shortName);
-    message.forumId !== undefined &&
-      (obj.forumId = Math.round(message.forumId));
-    message.ratedInd !== undefined && (obj.ratedInd = message.ratedInd);
-    message.regionId !== undefined &&
-      (obj.regionId = Math.round(message.regionId));
-    message.tcDirectProjectId !== undefined &&
-      (obj.tcDirectProjectId = Math.round(message.tcDirectProjectId));
-    message.autoEnd !== undefined && (obj.autoEnd = message.autoEnd);
-    message.editorialLink !== undefined &&
-      (obj.editorialLink = message.editorialLink);
-    message.creatorId !== undefined &&
-      (obj.creatorId = Math.round(message.creatorId));
+    if (message.roundId !== 0) {
+      obj.roundId = Math.round(message.roundId);
+    }
+    if (message.contestId !== 0) {
+      obj.contestId = Math.round(message.contestId);
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.status !== "") {
+      obj.status = message.status;
+    }
+    if (message.ranRatings === true) {
+      obj.ranRatings = message.ranRatings;
+    }
+    if (message.paidMoney === true) {
+      obj.paidMoney = message.paidMoney;
+    }
+    if (message.registrationLimit !== 0) {
+      obj.registrationLimit = Math.round(message.registrationLimit);
+    }
+    if (message.notes !== "") {
+      obj.notes = message.notes;
+    }
+    if (message.invitational !== 0) {
+      obj.invitational = Math.round(message.invitational);
+    }
+    if (message.roundTypeId !== 0) {
+      obj.roundTypeId = Math.round(message.roundTypeId);
+    }
+    if (message.link !== "") {
+      obj.link = message.link;
+    }
+    if (message.shortName !== "") {
+      obj.shortName = message.shortName;
+    }
+    if (message.forumId !== 0) {
+      obj.forumId = Math.round(message.forumId);
+    }
+    if (message.ratedInd === true) {
+      obj.ratedInd = message.ratedInd;
+    }
+    if (message.regionId !== 0) {
+      obj.regionId = Math.round(message.regionId);
+    }
+    if (message.tcDirectProjectId !== 0) {
+      obj.tcDirectProjectId = Math.round(message.tcDirectProjectId);
+    }
+    if (message.autoEnd === true) {
+      obj.autoEnd = message.autoEnd;
+    }
+    if (message.editorialLink !== "") {
+      obj.editorialLink = message.editorialLink;
+    }
+    if (message.creatorId !== 0) {
+      obj.creatorId = Math.round(message.creatorId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Round>, I>>(base?: I): Round {
-    return Round.fromPartial(base ?? {});
+    return Round.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Round>, I>>(object: I): Round {
     const message = createBaseRound();
     message.roundId = object.roundId ?? 0;
@@ -355,10 +382,10 @@ export const Round = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

@@ -30,7 +30,7 @@ export interface CreateTimelineTemplateInput {
 
 export interface UpdateTimelineTemplateInput {
   filterCriteria: ScanCriteria[];
-  updateInput?: UpdateTimelineTemplateInput_UpdateInput;
+  updateInput?: UpdateTimelineTemplateInput_UpdateInput | undefined;
 }
 
 export interface UpdateTimelineTemplateInput_UpdateInput {
@@ -116,20 +116,23 @@ export const TimelineTemplatePhase = {
 
   toJSON(message: TimelineTemplatePhase): unknown {
     const obj: any = {};
-    message.phaseId !== undefined && (obj.phaseId = message.phaseId);
-    message.defaultDuration !== undefined &&
-      (obj.defaultDuration = Math.round(message.defaultDuration));
-    message.predecessor !== undefined &&
-      (obj.predecessor = message.predecessor);
+    if (message.phaseId !== "") {
+      obj.phaseId = message.phaseId;
+    }
+    if (message.defaultDuration !== 0) {
+      obj.defaultDuration = Math.round(message.defaultDuration);
+    }
+    if (message.predecessor !== undefined) {
+      obj.predecessor = message.predecessor;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<TimelineTemplatePhase>, I>>(
     base?: I
   ): TimelineTemplatePhase {
-    return TimelineTemplatePhase.fromPartial(base ?? {});
+    return TimelineTemplatePhase.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<TimelineTemplatePhase>, I>>(
     object: I
   ): TimelineTemplatePhase {
@@ -244,17 +247,20 @@ export const TimelineTemplate = {
 
   toJSON(message: TimelineTemplate): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = message.id);
-    message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined &&
-      (obj.description = message.description);
-    message.isActive !== undefined && (obj.isActive = message.isActive);
-    if (message.phases) {
-      obj.phases = message.phases.map((e) =>
-        e ? TimelineTemplatePhase.toJSON(e) : undefined
-      );
-    } else {
-      obj.phases = [];
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.description !== undefined) {
+      obj.description = message.description;
+    }
+    if (message.isActive === true) {
+      obj.isActive = message.isActive;
+    }
+    if (message.phases?.length) {
+      obj.phases = message.phases.map((e) => TimelineTemplatePhase.toJSON(e));
     }
     return obj;
   },
@@ -262,9 +268,8 @@ export const TimelineTemplate = {
   create<I extends Exact<DeepPartial<TimelineTemplate>, I>>(
     base?: I
   ): TimelineTemplate {
-    return TimelineTemplate.fromPartial(base ?? {});
+    return TimelineTemplate.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<TimelineTemplate>, I>>(
     object: I
   ): TimelineTemplate {
@@ -331,12 +336,8 @@ export const TimelineTemplateList = {
 
   toJSON(message: TimelineTemplateList): unknown {
     const obj: any = {};
-    if (message.items) {
-      obj.items = message.items.map((e) =>
-        e ? TimelineTemplate.toJSON(e) : undefined
-      );
-    } else {
-      obj.items = [];
+    if (message.items?.length) {
+      obj.items = message.items.map((e) => TimelineTemplate.toJSON(e));
     }
     return obj;
   },
@@ -344,9 +345,8 @@ export const TimelineTemplateList = {
   create<I extends Exact<DeepPartial<TimelineTemplateList>, I>>(
     base?: I
   ): TimelineTemplateList {
-    return TimelineTemplateList.fromPartial(base ?? {});
+    return TimelineTemplateList.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<TimelineTemplateList>, I>>(
     object: I
   ): TimelineTemplateList {
@@ -446,16 +446,17 @@ export const CreateTimelineTemplateInput = {
 
   toJSON(message: CreateTimelineTemplateInput): unknown {
     const obj: any = {};
-    message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined &&
-      (obj.description = message.description);
-    message.isActive !== undefined && (obj.isActive = message.isActive);
-    if (message.phases) {
-      obj.phases = message.phases.map((e) =>
-        e ? TimelineTemplatePhase.toJSON(e) : undefined
-      );
-    } else {
-      obj.phases = [];
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.description !== undefined) {
+      obj.description = message.description;
+    }
+    if (message.isActive === true) {
+      obj.isActive = message.isActive;
+    }
+    if (message.phases?.length) {
+      obj.phases = message.phases.map((e) => TimelineTemplatePhase.toJSON(e));
     }
     return obj;
   },
@@ -463,9 +464,8 @@ export const CreateTimelineTemplateInput = {
   create<I extends Exact<DeepPartial<CreateTimelineTemplateInput>, I>>(
     base?: I
   ): CreateTimelineTemplateInput {
-    return CreateTimelineTemplateInput.fromPartial(base ?? {});
+    return CreateTimelineTemplateInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<CreateTimelineTemplateInput>, I>>(
     object: I
   ): CreateTimelineTemplateInput {
@@ -552,26 +552,24 @@ export const UpdateTimelineTemplateInput = {
 
   toJSON(message: UpdateTimelineTemplateInput): unknown {
     const obj: any = {};
-    if (message.filterCriteria) {
+    if (message.filterCriteria?.length) {
       obj.filterCriteria = message.filterCriteria.map((e) =>
-        e ? ScanCriteria.toJSON(e) : undefined
+        ScanCriteria.toJSON(e)
       );
-    } else {
-      obj.filterCriteria = [];
     }
-    message.updateInput !== undefined &&
-      (obj.updateInput = message.updateInput
-        ? UpdateTimelineTemplateInput_UpdateInput.toJSON(message.updateInput)
-        : undefined);
+    if (message.updateInput !== undefined) {
+      obj.updateInput = UpdateTimelineTemplateInput_UpdateInput.toJSON(
+        message.updateInput
+      );
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdateTimelineTemplateInput>, I>>(
     base?: I
   ): UpdateTimelineTemplateInput {
-    return UpdateTimelineTemplateInput.fromPartial(base ?? {});
+    return UpdateTimelineTemplateInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<UpdateTimelineTemplateInput>, I>>(
     object: I
   ): UpdateTimelineTemplateInput {
@@ -677,16 +675,17 @@ export const UpdateTimelineTemplateInput_UpdateInput = {
 
   toJSON(message: UpdateTimelineTemplateInput_UpdateInput): unknown {
     const obj: any = {};
-    message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined &&
-      (obj.description = message.description);
-    message.isActive !== undefined && (obj.isActive = message.isActive);
-    if (message.phases) {
-      obj.phases = message.phases.map((e) =>
-        e ? TimelineTemplatePhase.toJSON(e) : undefined
-      );
-    } else {
-      obj.phases = [];
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.description !== undefined) {
+      obj.description = message.description;
+    }
+    if (message.isActive === true) {
+      obj.isActive = message.isActive;
+    }
+    if (message.phases?.length) {
+      obj.phases = message.phases.map((e) => TimelineTemplatePhase.toJSON(e));
     }
     return obj;
   },
@@ -694,9 +693,10 @@ export const UpdateTimelineTemplateInput_UpdateInput = {
   create<
     I extends Exact<DeepPartial<UpdateTimelineTemplateInput_UpdateInput>, I>
   >(base?: I): UpdateTimelineTemplateInput_UpdateInput {
-    return UpdateTimelineTemplateInput_UpdateInput.fromPartial(base ?? {});
+    return UpdateTimelineTemplateInput_UpdateInput.fromPartial(
+      base ?? ({} as any)
+    );
   },
-
   fromPartial<
     I extends Exact<DeepPartial<UpdateTimelineTemplateInput_UpdateInput>, I>
   >(object: I): UpdateTimelineTemplateInput_UpdateInput {
@@ -710,10 +710,10 @@ export const UpdateTimelineTemplateInput_UpdateInput = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }
