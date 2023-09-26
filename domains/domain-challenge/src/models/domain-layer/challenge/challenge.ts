@@ -35,6 +35,7 @@ export interface Challenge {
   created: number;
   updated?: number | undefined;
   overview?: Challenge_Overview;
+  constraints?: Challenge_Constraint | undefined;
 }
 
 export interface Challenge_Legacy {
@@ -135,6 +136,10 @@ export interface Challenge_Overview {
   totalPrizes?: number | undefined;
 }
 
+export interface Challenge_Constraint {
+  allowedRegistrants: string[];
+}
+
 export interface ChallengeList {
   items: Challenge[];
 }
@@ -163,6 +168,7 @@ export interface CreateChallengeInput {
   attachments: string[];
   groups: string[];
   discussions: Challenge_Discussion[];
+  constraints?: Challenge_Constraint | undefined;
 }
 
 export interface UpdateChallengeInput {
@@ -200,6 +206,7 @@ export interface UpdateChallengeInput_UpdateInput {
   endDate?: string | undefined;
   status?: string | undefined;
   overview?: Challenge_Overview | undefined;
+  constraints?: Challenge_Constraint | undefined;
 }
 
 export interface UpdateChallengeInput_UpdateInput_WinnerUpdate {
@@ -327,6 +334,7 @@ function createBaseChallenge(): Challenge {
     created: 0,
     updated: undefined,
     overview: undefined,
+    constraints: undefined,
   };
 }
 
@@ -435,6 +443,12 @@ export const Challenge = {
       Challenge_Overview.encode(
         message.overview,
         writer.uint32(250).fork()
+      ).ldelim();
+    }
+    if (message.constraints !== undefined) {
+      Challenge_Constraint.encode(
+        message.constraints,
+        writer.uint32(258).fork()
       ).ldelim();
     }
     return writer;
@@ -673,6 +687,16 @@ export const Challenge = {
 
           message.overview = Challenge_Overview.decode(reader, reader.uint32());
           continue;
+        case 32:
+          if (tag !== 258) {
+            break;
+          }
+
+          message.constraints = Challenge_Constraint.decode(
+            reader,
+            reader.uint32()
+          );
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -748,6 +772,9 @@ export const Challenge = {
       updated: isSet(object.updated) ? Number(object.updated) : undefined,
       overview: isSet(object.overview)
         ? Challenge_Overview.fromJSON(object.overview)
+        : undefined,
+      constraints: isSet(object.constraints)
+        ? Challenge_Constraint.fromJSON(object.constraints)
         : undefined,
     };
   },
@@ -859,6 +886,10 @@ export const Challenge = {
       (obj.overview = message.overview
         ? Challenge_Overview.toJSON(message.overview)
         : undefined);
+    message.constraints !== undefined &&
+      (obj.constraints = message.constraints
+        ? Challenge_Constraint.toJSON(message.constraints)
+        : undefined);
     return obj;
   },
 
@@ -919,6 +950,10 @@ export const Challenge = {
     message.overview =
       object.overview !== undefined && object.overview !== null
         ? Challenge_Overview.fromPartial(object.overview)
+        : undefined;
+    message.constraints =
+      object.constraints !== undefined && object.constraints !== null
+        ? Challenge_Constraint.fromPartial(object.constraints)
         : undefined;
     return message;
   },
@@ -2452,6 +2487,81 @@ export const Challenge_Overview = {
   },
 };
 
+function createBaseChallenge_Constraint(): Challenge_Constraint {
+  return { allowedRegistrants: [] };
+}
+
+export const Challenge_Constraint = {
+  encode(
+    message: Challenge_Constraint,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    for (const v of message.allowedRegistrants) {
+      writer.uint32(10).string(v!);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): Challenge_Constraint {
+    const reader =
+      input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseChallenge_Constraint();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.allowedRegistrants.push(reader.string());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Challenge_Constraint {
+    return {
+      allowedRegistrants: Array.isArray(object?.allowedRegistrants)
+        ? object.allowedRegistrants.map((e: any) => String(e))
+        : [],
+    };
+  },
+
+  toJSON(message: Challenge_Constraint): unknown {
+    const obj: any = {};
+    if (message.allowedRegistrants) {
+      obj.allowedRegistrants = message.allowedRegistrants.map((e) => e);
+    } else {
+      obj.allowedRegistrants = [];
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Challenge_Constraint>, I>>(
+    base?: I
+  ): Challenge_Constraint {
+    return Challenge_Constraint.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<Challenge_Constraint>, I>>(
+    object: I
+  ): Challenge_Constraint {
+    const message = createBaseChallenge_Constraint();
+    message.allowedRegistrants = object.allowedRegistrants?.map((e) => e) || [];
+    return message;
+  },
+};
+
 function createBaseChallengeList(): ChallengeList {
   return { items: [] };
 }
@@ -2551,6 +2661,7 @@ function createBaseCreateChallengeInput(): CreateChallengeInput {
     attachments: [],
     groups: [],
     discussions: [],
+    constraints: undefined,
   };
 }
 
@@ -2633,6 +2744,12 @@ export const CreateChallengeInput = {
     }
     for (const v of message.discussions) {
       Challenge_Discussion.encode(v!, writer.uint32(186).fork()).ldelim();
+    }
+    if (message.constraints !== undefined) {
+      Challenge_Constraint.encode(
+        message.constraints,
+        writer.uint32(194).fork()
+      ).ldelim();
     }
     return writer;
   },
@@ -2815,6 +2932,16 @@ export const CreateChallengeInput = {
             Challenge_Discussion.decode(reader, reader.uint32())
           );
           continue;
+        case 24:
+          if (tag !== 194) {
+            break;
+          }
+
+          message.constraints = Challenge_Constraint.decode(
+            reader,
+            reader.uint32()
+          );
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2881,6 +3008,9 @@ export const CreateChallengeInput = {
       discussions: Array.isArray(object?.discussions)
         ? object.discussions.map((e: any) => Challenge_Discussion.fromJSON(e))
         : [],
+      constraints: isSet(object.constraints)
+        ? Challenge_Constraint.fromJSON(object.constraints)
+        : undefined,
     };
   },
 
@@ -2971,6 +3101,10 @@ export const CreateChallengeInput = {
     } else {
       obj.discussions = [];
     }
+    message.constraints !== undefined &&
+      (obj.constraints = message.constraints
+        ? Challenge_Constraint.toJSON(message.constraints)
+        : undefined);
     return obj;
   },
 
@@ -3022,6 +3156,10 @@ export const CreateChallengeInput = {
     message.groups = object.groups?.map((e) => e) || [];
     message.discussions =
       object.discussions?.map((e) => Challenge_Discussion.fromPartial(e)) || [];
+    message.constraints =
+      object.constraints !== undefined && object.constraints !== null
+        ? Challenge_Constraint.fromPartial(object.constraints)
+        : undefined;
     return message;
   },
 };
@@ -3160,6 +3298,7 @@ function createBaseUpdateChallengeInput_UpdateInput(): UpdateChallengeInput_Upda
     endDate: undefined,
     status: undefined,
     overview: undefined,
+    constraints: undefined,
   };
 }
 
@@ -3280,6 +3419,12 @@ export const UpdateChallengeInput_UpdateInput = {
       Challenge_Overview.encode(
         message.overview,
         writer.uint32(202).fork()
+      ).ldelim();
+    }
+    if (message.constraints !== undefined) {
+      Challenge_Constraint.encode(
+        message.constraints,
+        writer.uint32(210).fork()
       ).ldelim();
     }
     return writer;
@@ -3511,6 +3656,16 @@ export const UpdateChallengeInput_UpdateInput = {
 
           message.overview = Challenge_Overview.decode(reader, reader.uint32());
           continue;
+        case 26:
+          if (tag !== 210) {
+            break;
+          }
+
+          message.constraints = Challenge_Constraint.decode(
+            reader,
+            reader.uint32()
+          );
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3600,6 +3755,9 @@ export const UpdateChallengeInput_UpdateInput = {
       status: isSet(object.status) ? String(object.status) : undefined,
       overview: isSet(object.overview)
         ? Challenge_Overview.fromJSON(object.overview)
+        : undefined,
+      constraints: isSet(object.constraints)
+        ? Challenge_Constraint.fromJSON(object.constraints)
         : undefined,
     };
   },
@@ -3693,6 +3851,10 @@ export const UpdateChallengeInput_UpdateInput = {
     message.overview !== undefined &&
       (obj.overview = message.overview
         ? Challenge_Overview.toJSON(message.overview)
+        : undefined);
+    message.constraints !== undefined &&
+      (obj.constraints = message.constraints
+        ? Challenge_Constraint.toJSON(message.constraints)
         : undefined);
     return obj;
   },
@@ -3793,6 +3955,10 @@ export const UpdateChallengeInput_UpdateInput = {
     message.overview =
       object.overview !== undefined && object.overview !== null
         ? Challenge_Overview.fromPartial(object.overview)
+        : undefined;
+    message.constraints =
+      object.constraints !== undefined && object.constraints !== null
+        ? Challenge_Constraint.fromPartial(object.constraints)
         : undefined;
     return message;
   },

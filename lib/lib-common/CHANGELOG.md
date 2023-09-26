@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.20.0...v0.22.0) (2023-09-22)
+
+### Features
+
+- add id to create challenge input ([#37](https://github.com/topcoder-platform/topcoder-framework/issues/37)) ([c8252ae](https://github.com/topcoder-platform/topcoder-framework/commit/c8252ae6c37f869c05c6bc059fd2480c54274011))
+- update interface version ([dea1243](https://github.com/topcoder-platform/topcoder-framework/commit/dea1243e228750e350104857be2b12a5628738f3))
+
 # [0.21.0](https://github.com/topcoder-platform/topcoder-framework/compare/v0.20.0...v0.21.0) (2023-09-21)
 
 ### Features
