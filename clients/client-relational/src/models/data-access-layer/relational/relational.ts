@@ -1219,19 +1219,19 @@ export const SelectQuery = {
     return {
       schema: isSet(object.schema) ? String(object.schema) : undefined,
       table: isSet(object.table) ? String(object.table) : "",
-      column: Array.isArray(object?.column)
+      column: globalThis.Array.isArray(object?.column)
         ? object.column.map((e: any) => Column.fromJSON(e))
         : [],
-      where: Array.isArray(object?.where)
+      where: globalThis.Array.isArray(object?.where)
         ? object.where.map((e: any) => WhereCriteria.fromJSON(e))
         : [],
-      groupBy: Array.isArray(object?.groupBy)
+      groupBy: globalThis.Array.isArray(object?.groupBy)
         ? object.groupBy.map((e: any) => String(e))
         : [],
-      orderBy: Array.isArray(object?.orderBy)
+      orderBy: globalThis.Array.isArray(object?.orderBy)
         ? object.orderBy.map((e: any) => String(e))
         : [],
-      join: Array.isArray(object?.join)
+      join: globalThis.Array.isArray(object?.join)
         ? object.join.map((e: any) => Join.fromJSON(e))
         : [],
       limit: isSet(object.limit) ? Number(object.limit) : 0,
@@ -1475,7 +1475,7 @@ export const InsertQuery = {
     return {
       schema: isSet(object.schema) ? String(object.schema) : undefined,
       table: isSet(object.table) ? String(object.table) : "",
-      columnValue: Array.isArray(object?.columnValue)
+      columnValue: globalThis.Array.isArray(object?.columnValue)
         ? object.columnValue.map((e: any) => ColumnValue.fromJSON(e))
         : [],
       idColumn: isSet(object.idColumn) ? String(object.idColumn) : undefined,
@@ -1568,7 +1568,7 @@ export const BulkInsertQuery = {
 
   fromJSON(object: any): BulkInsertQuery {
     return {
-      inserts: Array.isArray(object?.inserts)
+      inserts: globalThis.Array.isArray(object?.inserts)
         ? object.inserts.map((e: any) => InsertQuery.fromJSON(e))
         : [],
     };
@@ -1670,10 +1670,10 @@ export const UpdateQuery = {
     return {
       schema: isSet(object.schema) ? String(object.schema) : undefined,
       table: isSet(object.table) ? String(object.table) : "",
-      columnValue: Array.isArray(object?.columnValue)
+      columnValue: globalThis.Array.isArray(object?.columnValue)
         ? object.columnValue.map((e: any) => ColumnValue.fromJSON(e))
         : [],
-      where: Array.isArray(object?.where)
+      where: globalThis.Array.isArray(object?.where)
         ? object.where.map((e: any) => WhereCriteria.fromJSON(e))
         : [],
     };
@@ -1776,7 +1776,7 @@ export const DeleteQuery = {
     return {
       schema: isSet(object.schema) ? String(object.schema) : undefined,
       table: isSet(object.table) ? String(object.table) : "",
-      where: Array.isArray(object?.where)
+      where: globalThis.Array.isArray(object?.where)
         ? object.where.map((e: any) => WhereCriteria.fromJSON(e))
         : [],
     };
@@ -2294,7 +2294,7 @@ export const SelectQueryResult = {
 
   fromJSON(object: any): SelectQueryResult {
     return {
-      rows: Array.isArray(object?.rows)
+      rows: globalThis.Array.isArray(object?.rows)
         ? object.rows.map((e: any) => Row.fromJSON(e))
         : [],
     };
@@ -2363,7 +2363,7 @@ export const RawQueryResult = {
 
   fromJSON(object: any): RawQueryResult {
     return {
-      rows: Array.isArray(object?.rows)
+      rows: globalThis.Array.isArray(object?.rows)
         ? object.rows.map((e: any) => Row.fromJSON(e))
         : [],
     };
@@ -2892,30 +2892,11 @@ export const QueryServiceClient = makeGenericClientConstructor(
   service: typeof QueryServiceService;
 };
 
-declare const self: any | undefined;
-declare const window: any | undefined;
-declare const global: any | undefined;
-const tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 function bytesFromBase64(b64: string): Uint8Array {
-  if (tsProtoGlobalThis.Buffer) {
-    return Uint8Array.from(tsProtoGlobalThis.Buffer.from(b64, "base64"));
+  if (globalThis.Buffer) {
+    return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
   } else {
-    const bin = tsProtoGlobalThis.atob(b64);
+    const bin = globalThis.atob(b64);
     const arr = new Uint8Array(bin.length);
     for (let i = 0; i < bin.length; ++i) {
       arr[i] = bin.charCodeAt(i);
@@ -2925,14 +2906,14 @@ function bytesFromBase64(b64: string): Uint8Array {
 }
 
 function base64FromBytes(arr: Uint8Array): string {
-  if (tsProtoGlobalThis.Buffer) {
-    return tsProtoGlobalThis.Buffer.from(arr).toString("base64");
+  if (globalThis.Buffer) {
+    return globalThis.Buffer.from(arr).toString("base64");
   } else {
     const bin: string[] = [];
     arr.forEach((byte) => {
-      bin.push(String.fromCharCode(byte));
+      bin.push(globalThis.String.fromCharCode(byte));
     });
-    return tsProtoGlobalThis.btoa(bin.join(""));
+    return globalThis.btoa(bin.join(""));
   }
 }
 
@@ -2967,10 +2948,8 @@ type Exact<P, I extends P> = P extends Builtin
     };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

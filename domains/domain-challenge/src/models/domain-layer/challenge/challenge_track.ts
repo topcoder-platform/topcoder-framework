@@ -211,7 +211,7 @@ export const ChallengeTrackList = {
 
   fromJSON(object: any): ChallengeTrackList {
     return {
-      items: Array.isArray(object?.items)
+      items: globalThis.Array.isArray(object?.items)
         ? object.items.map((e: any) => ChallengeTrack.fromJSON(e))
         : [],
     };
@@ -426,7 +426,7 @@ export const UpdateChallengeTrackInput = {
 
   fromJSON(object: any): UpdateChallengeTrackInput {
     return {
-      filterCriteria: Array.isArray(object?.filterCriteria)
+      filterCriteria: globalThis.Array.isArray(object?.filterCriteria)
         ? object.filterCriteria.map((e: any) => ScanCriteria.fromJSON(e))
         : [],
       updateInput: isSet(object.updateInput)

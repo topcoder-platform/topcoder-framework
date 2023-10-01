@@ -165,7 +165,7 @@ export const NotificationList = {
 
   fromJSON(object: any): NotificationList {
     return {
-      notifications: Array.isArray(object?.notifications)
+      notifications: globalThis.Array.isArray(object?.notifications)
         ? object.notifications.map((e: any) => Notification.fromJSON(e))
         : [],
     };

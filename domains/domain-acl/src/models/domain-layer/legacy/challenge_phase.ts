@@ -570,7 +570,7 @@ export const LegacyChallengePhaseList = {
 
   fromJSON(object: any): LegacyChallengePhaseList {
     return {
-      phases: Array.isArray(object?.phases)
+      phases: globalThis.Array.isArray(object?.phases)
         ? object.phases.map((e: any) => LegacyChallengePhase.fromJSON(e))
         : [],
     };
@@ -640,7 +640,7 @@ export const PhaseTypeList = {
 
   fromJSON(object: any): PhaseTypeList {
     return {
-      items: Array.isArray(object?.items)
+      items: globalThis.Array.isArray(object?.items)
         ? object.items.map((e: any) => PhaseType.fromJSON(e))
         : [],
     };
@@ -877,25 +877,6 @@ export const CreatePhaseInput = {
   },
 };
 
-declare const self: any | undefined;
-declare const window: any | undefined;
-declare const global: any | undefined;
-const tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 type Builtin =
   | Date
   | Function
@@ -927,10 +908,8 @@ type Exact<P, I extends P> = P extends Builtin
     };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

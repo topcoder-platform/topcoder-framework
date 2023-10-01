@@ -267,7 +267,7 @@ export const ProjectInfoList = {
 
   fromJSON(object: any): ProjectInfoList {
     return {
-      projectInfos: Array.isArray(object?.projectInfos)
+      projectInfos: globalThis.Array.isArray(object?.projectInfos)
         ? object.projectInfos.map((e: any) => ProjectInfo.fromJSON(e))
         : [],
     };
@@ -889,7 +889,7 @@ export const ProjectInfoTypeList = {
 
   fromJSON(object: any): ProjectInfoTypeList {
     return {
-      projectInfoTypes: Array.isArray(object?.projectInfoTypes)
+      projectInfoTypes: globalThis.Array.isArray(object?.projectInfoTypes)
         ? object.projectInfoTypes.map((e: any) => ProjectInfoType.fromJSON(e))
         : [],
     };

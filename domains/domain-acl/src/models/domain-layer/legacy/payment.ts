@@ -351,7 +351,7 @@ export const ProjectPaymentList = {
 
   fromJSON(object: any): ProjectPaymentList {
     return {
-      projectPayments: Array.isArray(object?.projectPayments)
+      projectPayments: globalThis.Array.isArray(object?.projectPayments)
         ? object.projectPayments.map((e: any) => ProjectPayment.fromJSON(e))
         : [],
     };
@@ -1067,7 +1067,7 @@ export const PrizeList = {
 
   fromJSON(object: any): PrizeList {
     return {
-      prizes: Array.isArray(object?.prizes)
+      prizes: globalThis.Array.isArray(object?.prizes)
         ? object.prizes.map((e: any) => Prize.fromJSON(e))
         : [],
     };
@@ -1522,25 +1522,6 @@ export const DeletePrizeInput = {
   },
 };
 
-declare const self: any | undefined;
-declare const window: any | undefined;
-declare const global: any | undefined;
-const tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 type Builtin =
   | Date
   | Function
@@ -1572,10 +1553,8 @@ type Exact<P, I extends P> = P extends Builtin
     };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

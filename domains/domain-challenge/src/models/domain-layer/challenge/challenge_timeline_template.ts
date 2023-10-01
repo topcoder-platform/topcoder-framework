@@ -217,7 +217,7 @@ export const ChallengeTimelineTemplateList = {
 
   fromJSON(object: any): ChallengeTimelineTemplateList {
     return {
-      items: Array.isArray(object?.items)
+      items: globalThis.Array.isArray(object?.items)
         ? object.items.map((e: any) => ChallengeTimelineTemplate.fromJSON(e))
         : [],
     };
@@ -428,7 +428,7 @@ export const UpdateChallengeTimelineTemplateInput = {
 
   fromJSON(object: any): UpdateChallengeTimelineTemplateInput {
     return {
-      filterCriteria: Array.isArray(object?.filterCriteria)
+      filterCriteria: globalThis.Array.isArray(object?.filterCriteria)
         ? object.filterCriteria.map((e: any) => ScanCriteria.fromJSON(e))
         : [],
       updateInput: isSet(object.updateInput)

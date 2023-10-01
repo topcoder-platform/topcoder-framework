@@ -333,7 +333,7 @@ export const PhaseTypeList = {
 
   fromJSON(object: any): PhaseTypeList {
     return {
-      phaseTypes: Array.isArray(object?.phaseTypes)
+      phaseTypes: globalThis.Array.isArray(object?.phaseTypes)
         ? object.phaseTypes.map((e: any) => PhaseType.fromJSON(e))
         : [],
     };
@@ -1098,7 +1098,7 @@ export const PhaseCriteriaList = {
 
   fromJSON(object: any): PhaseCriteriaList {
     return {
-      phaseCriteriaList: Array.isArray(object?.phaseCriteriaList)
+      phaseCriteriaList: globalThis.Array.isArray(object?.phaseCriteriaList)
         ? object.phaseCriteriaList.map((e: any) => PhaseCriteria.fromJSON(e))
         : [],
     };
@@ -1647,7 +1647,7 @@ export const ProjectPhaseList = {
 
   fromJSON(object: any): ProjectPhaseList {
     return {
-      projectPhases: Array.isArray(object?.projectPhases)
+      projectPhases: globalThis.Array.isArray(object?.projectPhases)
         ? object.projectPhases.map((e: any) => ProjectPhase.fromJSON(e))
         : [],
     };
@@ -2175,25 +2175,6 @@ export const UpdateProjectPhaseInput = {
   },
 };
 
-declare const self: any | undefined;
-declare const window: any | undefined;
-declare const global: any | undefined;
-const tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 type Builtin =
   | Date
   | Function
@@ -2225,10 +2206,8 @@ type Exact<P, I extends P> = P extends Builtin
     };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

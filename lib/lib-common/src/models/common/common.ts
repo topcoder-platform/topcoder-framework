@@ -500,7 +500,7 @@ export const ScanRequest = {
 
   fromJSON(object: any): ScanRequest {
     return {
-      criteria: Array.isArray(object?.criteria)
+      criteria: globalThis.Array.isArray(object?.criteria)
         ? object.criteria.map((e: any) => ScanCriteria.fromJSON(e))
         : [],
       nextToken: isSet(object.nextToken) ? String(object.nextToken) : undefined,
@@ -586,7 +586,7 @@ export const ScanResult = {
   fromJSON(object: any): ScanResult {
     return {
       nextToken: isSet(object.nextToken) ? String(object.nextToken) : undefined,
-      items: Array.isArray(object?.items) ? [...object.items] : [],
+      items: globalThis.Array.isArray(object?.items) ? [...object.items] : [],
     };
   },
 
@@ -1009,7 +1009,9 @@ export const GoogleProtobufTypesPlaceholder = {
 
   fromJSON(object: any): GoogleProtobufTypesPlaceholder {
     return {
-      timestamp: isSet(object.timestamp) ? String(object.timestamp) : undefined,
+      timestamp: isSet(object.timestamp)
+        ? globalThis.String(object.timestamp)
+        : undefined,
       empty: isSet(object.empty) ? Empty.fromJSON(object.empty) : undefined,
     };
   },
@@ -1107,7 +1109,7 @@ export const PhaseFactRequest = {
   fromJSON(object: any): PhaseFactRequest {
     return {
       legacyId: isSet(object.legacyId) ? Number(object.legacyId) : 0,
-      facts: Array.isArray(object?.facts)
+      facts: globalThis.Array.isArray(object?.facts)
         ? object.facts.map((e: any) => phaseFactFromJSON(e))
         : [],
     };
@@ -1185,7 +1187,7 @@ export const PhaseFactResponse = {
 
   fromJSON(object: any): PhaseFactResponse {
     return {
-      factResponses: Array.isArray(object?.factResponses)
+      factResponses: globalThis.Array.isArray(object?.factResponses)
         ? object.factResponses.map((e: any) =>
             PhaseFactResponse_FactResponse.fromJSON(e)
           )
@@ -1310,25 +1312,6 @@ export const PhaseFactResponse_FactResponse = {
   },
 };
 
-declare const self: any | undefined;
-declare const window: any | undefined;
-declare const global: any | undefined;
-const tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 type Builtin =
   | Date
   | Function
@@ -1360,7 +1343,7 @@ type Exact<P, I extends P> = P extends Builtin
     };
 
 function toTimestamp(dateStr: string): Timestamp {
-  const date = new Date(dateStr);
+  const date = new globalThis.Date(dateStr);
   const seconds = date.getTime() / 1_000;
   const nanos = (date.getTime() % 1_000) * 1_000_000;
   return { seconds, nanos };
@@ -1369,14 +1352,12 @@ function toTimestamp(dateStr: string): Timestamp {
 function fromTimestamp(t: Timestamp): string {
   let millis = (t.seconds || 0) * 1_000;
   millis += (t.nanos || 0) / 1_000_000;
-  return new Date(millis).toISOString();
+  return new globalThis.Date(millis).toISOString();
 }
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

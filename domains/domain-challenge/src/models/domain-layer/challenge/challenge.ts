@@ -29,12 +29,14 @@ export interface Challenge {
   attachments: string[];
   groups: string[];
   winners: Challenge_Winner[];
+  payments: Challenge_Payment[];
   discussions: Challenge_Discussion[];
   createdBy: string;
   updatedBy?: string | undefined;
   created: number;
   updated?: number | undefined;
   overview?: Challenge_Overview | undefined;
+  constraints?: Challenge_Constraint | undefined;
 }
 
 export interface Challenge_Legacy {
@@ -104,6 +106,13 @@ export interface Challenge_Phase_Constraint {
   value: number;
 }
 
+export interface Challenge_Payment {
+  handle: string;
+  amount: number;
+  userId: number;
+  type: string;
+}
+
 export interface Challenge_Winner {
   handle: string;
   placement: number;
@@ -135,6 +144,10 @@ export interface Challenge_Overview {
   totalPrizes?: number | undefined;
 }
 
+export interface Challenge_Constraint {
+  allowedRegistrants: string[];
+}
+
 export interface ChallengeList {
   items: Challenge[];
 }
@@ -163,6 +176,7 @@ export interface CreateChallengeInput {
   attachments: string[];
   groups: string[];
   discussions: Challenge_Discussion[];
+  constraints?: Challenge_Constraint | undefined;
 }
 
 export interface UpdateChallengeInput {
@@ -200,6 +214,7 @@ export interface UpdateChallengeInput_UpdateInput {
   endDate?: string | undefined;
   status?: string | undefined;
   overview?: Challenge_Overview | undefined;
+  constraints?: Challenge_Constraint | undefined;
 }
 
 export interface UpdateChallengeInput_UpdateInput_WinnerUpdate {
@@ -321,12 +336,14 @@ function createBaseChallenge(): Challenge {
     attachments: [],
     groups: [],
     winners: [],
+    payments: [],
     discussions: [],
     createdBy: "",
     updatedBy: undefined,
     created: 0,
     updated: undefined,
     overview: undefined,
+    constraints: undefined,
   };
 }
 
@@ -416,25 +433,34 @@ export const Challenge = {
     for (const v of message.winners) {
       Challenge_Winner.encode(v!, writer.uint32(202).fork()).ldelim();
     }
+    for (const v of message.payments) {
+      Challenge_Payment.encode(v!, writer.uint32(210).fork()).ldelim();
+    }
     for (const v of message.discussions) {
-      Challenge_Discussion.encode(v!, writer.uint32(210).fork()).ldelim();
+      Challenge_Discussion.encode(v!, writer.uint32(218).fork()).ldelim();
     }
     if (message.createdBy !== "") {
-      writer.uint32(218).string(message.createdBy);
+      writer.uint32(226).string(message.createdBy);
     }
     if (message.updatedBy !== undefined) {
-      writer.uint32(226).string(message.updatedBy);
+      writer.uint32(234).string(message.updatedBy);
     }
     if (message.created !== 0) {
-      writer.uint32(232).int64(message.created);
+      writer.uint32(240).int64(message.created);
     }
     if (message.updated !== undefined) {
-      writer.uint32(240).int64(message.updated);
+      writer.uint32(248).int64(message.updated);
     }
     if (message.overview !== undefined) {
       Challenge_Overview.encode(
         message.overview,
-        writer.uint32(250).fork()
+        writer.uint32(258).fork()
+      ).ldelim();
+    }
+    if (message.constraints !== undefined) {
+      Challenge_Constraint.encode(
+        message.constraints,
+        writer.uint32(266).fork()
       ).ldelim();
     }
     return writer;
@@ -634,8 +660,8 @@ export const Challenge = {
             break;
           }
 
-          message.discussions.push(
-            Challenge_Discussion.decode(reader, reader.uint32())
+          message.payments.push(
+            Challenge_Payment.decode(reader, reader.uint32())
           );
           continue;
         case 27:
@@ -643,35 +669,54 @@ export const Challenge = {
             break;
           }
 
-          message.createdBy = reader.string();
+          message.discussions.push(
+            Challenge_Discussion.decode(reader, reader.uint32())
+          );
           continue;
         case 28:
           if (tag !== 226) {
             break;
           }
 
-          message.updatedBy = reader.string();
+          message.createdBy = reader.string();
           continue;
         case 29:
-          if (tag !== 232) {
+          if (tag !== 234) {
             break;
           }
 
-          message.created = longToNumber(reader.int64() as Long);
+          message.updatedBy = reader.string();
           continue;
         case 30:
           if (tag !== 240) {
             break;
           }
 
-          message.updated = longToNumber(reader.int64() as Long);
+          message.created = longToNumber(reader.int64() as Long);
           continue;
         case 31:
-          if (tag !== 250) {
+          if (tag !== 248) {
+            break;
+          }
+
+          message.updated = longToNumber(reader.int64() as Long);
+          continue;
+        case 32:
+          if (tag !== 258) {
             break;
           }
 
           message.overview = Challenge_Overview.decode(reader, reader.uint32());
+          continue;
+        case 33:
+          if (tag !== 266) {
+            break;
+          }
+
+          message.constraints = Challenge_Constraint.decode(
+            reader,
+            reader.uint32()
+          );
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -702,7 +747,7 @@ export const Challenge = {
       descriptionFormat: isSet(object.descriptionFormat)
         ? String(object.descriptionFormat)
         : undefined,
-      metadata: Array.isArray(object?.metadata)
+      metadata: globalThis.Array.isArray(object?.metadata)
         ? object.metadata.map((e: any) => Challenge_Metadata.fromJSON(e))
         : [],
       task: isSet(object.task)
@@ -711,35 +756,38 @@ export const Challenge = {
       timelineTemplateId: isSet(object.timelineTemplateId)
         ? String(object.timelineTemplateId)
         : undefined,
-      phases: Array.isArray(object?.phases)
+      phases: globalThis.Array.isArray(object?.phases)
         ? object.phases.map((e: any) => Challenge_Phase.fromJSON(e))
         : [],
-      events: Array.isArray(object?.events)
+      events: globalThis.Array.isArray(object?.events)
         ? object.events.map((e: any) => Challenge_Event.fromJSON(e))
         : [],
-      terms: Array.isArray(object?.terms)
+      terms: globalThis.Array.isArray(object?.terms)
         ? object.terms.map((e: any) => Challenge_Term.fromJSON(e))
         : [],
-      prizeSets: Array.isArray(object?.prizeSets)
+      prizeSets: globalThis.Array.isArray(object?.prizeSets)
         ? object.prizeSets.map((e: any) => Challenge_PrizeSet.fromJSON(e))
         : [],
-      tags: Array.isArray(object?.tags)
+      tags: globalThis.Array.isArray(object?.tags)
         ? object.tags.map((e: any) => String(e))
         : [],
       projectId: isSet(object.projectId) ? Number(object.projectId) : undefined,
       startDate: isSet(object.startDate) ? String(object.startDate) : undefined,
       endDate: isSet(object.endDate) ? String(object.endDate) : undefined,
       status: isSet(object.status) ? String(object.status) : "",
-      attachments: Array.isArray(object?.attachments)
+      attachments: globalThis.Array.isArray(object?.attachments)
         ? object.attachments.map((e: any) => String(e))
         : [],
-      groups: Array.isArray(object?.groups)
+      groups: globalThis.Array.isArray(object?.groups)
         ? object.groups.map((e: any) => String(e))
         : [],
-      winners: Array.isArray(object?.winners)
+      winners: globalThis.Array.isArray(object?.winners)
         ? object.winners.map((e: any) => Challenge_Winner.fromJSON(e))
         : [],
-      discussions: Array.isArray(object?.discussions)
+      payments: globalThis.Array.isArray(object?.payments)
+        ? object.payments.map((e: any) => Challenge_Payment.fromJSON(e))
+        : [],
+      discussions: globalThis.Array.isArray(object?.discussions)
         ? object.discussions.map((e: any) => Challenge_Discussion.fromJSON(e))
         : [],
       createdBy: isSet(object.createdBy) ? String(object.createdBy) : "",
@@ -748,6 +796,9 @@ export const Challenge = {
       updated: isSet(object.updated) ? Number(object.updated) : undefined,
       overview: isSet(object.overview)
         ? Challenge_Overview.fromJSON(object.overview)
+        : undefined,
+      constraints: isSet(object.constraints)
+        ? Challenge_Constraint.fromJSON(object.constraints)
         : undefined,
     };
   },
@@ -831,6 +882,9 @@ export const Challenge = {
     if (message.winners?.length) {
       obj.winners = message.winners.map((e) => Challenge_Winner.toJSON(e));
     }
+    if (message.payments?.length) {
+      obj.payments = message.payments.map((e) => Challenge_Payment.toJSON(e));
+    }
     if (message.discussions?.length) {
       obj.discussions = message.discussions.map((e) =>
         Challenge_Discussion.toJSON(e)
@@ -850,6 +904,9 @@ export const Challenge = {
     }
     if (message.overview !== undefined) {
       obj.overview = Challenge_Overview.toJSON(message.overview);
+    }
+    if (message.constraints !== undefined) {
+      obj.constraints = Challenge_Constraint.toJSON(message.constraints);
     }
     return obj;
   },
@@ -901,6 +958,8 @@ export const Challenge = {
     message.groups = object.groups?.map((e) => e) || [];
     message.winners =
       object.winners?.map((e) => Challenge_Winner.fromPartial(e)) || [];
+    message.payments =
+      object.payments?.map((e) => Challenge_Payment.fromPartial(e)) || [];
     message.discussions =
       object.discussions?.map((e) => Challenge_Discussion.fromPartial(e)) || [];
     message.createdBy = object.createdBy ?? "";
@@ -910,6 +969,10 @@ export const Challenge = {
     message.overview =
       object.overview !== undefined && object.overview !== null
         ? Challenge_Overview.fromPartial(object.overview)
+        : undefined;
+    message.constraints =
+      object.constraints !== undefined && object.constraints !== null
+        ? Challenge_Constraint.fromPartial(object.constraints)
         : undefined;
     return message;
   },
@@ -1821,22 +1884,22 @@ export const Challenge_Phase = {
     return {
       duration: isSet(object.duration) ? Number(object.duration) : 0,
       scheduledStartDate: isSet(object.scheduledStartDate)
-        ? String(object.scheduledStartDate)
+        ? globalThis.String(object.scheduledStartDate)
         : undefined,
       scheduledEndDate: isSet(object.scheduledEndDate)
-        ? String(object.scheduledEndDate)
+        ? globalThis.String(object.scheduledEndDate)
         : undefined,
       actualStartDate: isSet(object.actualStartDate)
-        ? String(object.actualStartDate)
+        ? globalThis.String(object.actualStartDate)
         : undefined,
       actualEndDate: isSet(object.actualEndDate)
-        ? String(object.actualEndDate)
+        ? globalThis.String(object.actualEndDate)
         : undefined,
       name: isSet(object.name) ? String(object.name) : "",
       phaseId: isSet(object.phaseId) ? String(object.phaseId) : "",
       id: isSet(object.id) ? String(object.id) : "",
       isOpen: isSet(object.isOpen) ? Boolean(object.isOpen) : false,
-      constraints: Array.isArray(object?.constraints)
+      constraints: globalThis.Array.isArray(object?.constraints)
         ? object.constraints.map((e: any) =>
             Challenge_Phase_Constraint.fromJSON(e)
           )
@@ -2002,6 +2065,118 @@ export const Challenge_Phase_Constraint = {
     const message = createBaseChallenge_Phase_Constraint();
     message.name = object.name ?? "";
     message.value = object.value ?? 0;
+    return message;
+  },
+};
+
+function createBaseChallenge_Payment(): Challenge_Payment {
+  return { handle: "", amount: 0, userId: 0, type: "" };
+}
+
+export const Challenge_Payment = {
+  encode(
+    message: Challenge_Payment,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.handle !== "") {
+      writer.uint32(10).string(message.handle);
+    }
+    if (message.amount !== 0) {
+      writer.uint32(17).double(message.amount);
+    }
+    if (message.userId !== 0) {
+      writer.uint32(24).int32(message.userId);
+    }
+    if (message.type !== "") {
+      writer.uint32(34).string(message.type);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Challenge_Payment {
+    const reader =
+      input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseChallenge_Payment();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.handle = reader.string();
+          continue;
+        case 2:
+          if (tag !== 17) {
+            break;
+          }
+
+          message.amount = reader.double();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.userId = reader.int32();
+          continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.type = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Challenge_Payment {
+    return {
+      handle: isSet(object.handle) ? String(object.handle) : "",
+      amount: isSet(object.amount) ? Number(object.amount) : 0,
+      userId: isSet(object.userId) ? Number(object.userId) : 0,
+      type: isSet(object.type) ? String(object.type) : "",
+    };
+  },
+
+  toJSON(message: Challenge_Payment): unknown {
+    const obj: any = {};
+    if (message.handle !== "") {
+      obj.handle = message.handle;
+    }
+    if (message.amount !== 0) {
+      obj.amount = message.amount;
+    }
+    if (message.userId !== 0) {
+      obj.userId = Math.round(message.userId);
+    }
+    if (message.type !== "") {
+      obj.type = message.type;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Challenge_Payment>, I>>(
+    base?: I
+  ): Challenge_Payment {
+    return Challenge_Payment.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Challenge_Payment>, I>>(
+    object: I
+  ): Challenge_Payment {
+    const message = createBaseChallenge_Payment();
+    message.handle = object.handle ?? "";
+    message.amount = object.amount ?? 0;
+    message.userId = object.userId ?? 0;
+    message.type = object.type ?? "";
     return message;
   },
 };
@@ -2282,7 +2457,7 @@ export const Challenge_PrizeSet = {
       description: isSet(object.description)
         ? String(object.description)
         : undefined,
-      prizes: Array.isArray(object?.prizes)
+      prizes: globalThis.Array.isArray(object?.prizes)
         ? object.prizes.map((e: any) => Challenge_PrizeSet_Prize.fromJSON(e))
         : [],
     };
@@ -2509,6 +2684,78 @@ export const Challenge_Overview = {
   },
 };
 
+function createBaseChallenge_Constraint(): Challenge_Constraint {
+  return { allowedRegistrants: [] };
+}
+
+export const Challenge_Constraint = {
+  encode(
+    message: Challenge_Constraint,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    for (const v of message.allowedRegistrants) {
+      writer.uint32(10).string(v!);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): Challenge_Constraint {
+    const reader =
+      input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseChallenge_Constraint();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.allowedRegistrants.push(reader.string());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Challenge_Constraint {
+    return {
+      allowedRegistrants: globalThis.Array.isArray(object?.allowedRegistrants)
+        ? object.allowedRegistrants.map((e: any) => String(e))
+        : [],
+    };
+  },
+
+  toJSON(message: Challenge_Constraint): unknown {
+    const obj: any = {};
+    if (message.allowedRegistrants?.length) {
+      obj.allowedRegistrants = message.allowedRegistrants;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Challenge_Constraint>, I>>(
+    base?: I
+  ): Challenge_Constraint {
+    return Challenge_Constraint.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Challenge_Constraint>, I>>(
+    object: I
+  ): Challenge_Constraint {
+    const message = createBaseChallenge_Constraint();
+    message.allowedRegistrants = object.allowedRegistrants?.map((e) => e) || [];
+    return message;
+  },
+};
+
 function createBaseChallengeList(): ChallengeList {
   return { items: [] };
 }
@@ -2550,7 +2797,7 @@ export const ChallengeList = {
 
   fromJSON(object: any): ChallengeList {
     return {
-      items: Array.isArray(object?.items)
+      items: globalThis.Array.isArray(object?.items)
         ? object.items.map((e: any) => Challenge.fromJSON(e))
         : [],
     };
@@ -2603,6 +2850,7 @@ function createBaseCreateChallengeInput(): CreateChallengeInput {
     attachments: [],
     groups: [],
     discussions: [],
+    constraints: undefined,
   };
 }
 
@@ -2685,6 +2933,12 @@ export const CreateChallengeInput = {
     }
     for (const v of message.discussions) {
       Challenge_Discussion.encode(v!, writer.uint32(186).fork()).ldelim();
+    }
+    if (message.constraints !== undefined) {
+      Challenge_Constraint.encode(
+        message.constraints,
+        writer.uint32(194).fork()
+      ).ldelim();
     }
     return writer;
   },
@@ -2867,6 +3121,16 @@ export const CreateChallengeInput = {
             Challenge_Discussion.decode(reader, reader.uint32())
           );
           continue;
+        case 24:
+          if (tag !== 194) {
+            break;
+          }
+
+          message.constraints = Challenge_Constraint.decode(
+            reader,
+            reader.uint32()
+          );
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2899,40 +3163,43 @@ export const CreateChallengeInput = {
       descriptionFormat: isSet(object.descriptionFormat)
         ? String(object.descriptionFormat)
         : undefined,
-      metadata: Array.isArray(object?.metadata)
+      metadata: globalThis.Array.isArray(object?.metadata)
         ? object.metadata.map((e: any) => Challenge_Metadata.fromJSON(e))
         : [],
       task: isSet(object.task)
         ? Challenge_Task.fromJSON(object.task)
         : undefined,
-      phases: Array.isArray(object?.phases)
+      phases: globalThis.Array.isArray(object?.phases)
         ? object.phases.map((e: any) => Challenge_Phase.fromJSON(e))
         : [],
-      events: Array.isArray(object?.events)
+      events: globalThis.Array.isArray(object?.events)
         ? object.events.map((e: any) => Challenge_Event.fromJSON(e))
         : [],
-      terms: Array.isArray(object?.terms)
+      terms: globalThis.Array.isArray(object?.terms)
         ? object.terms.map((e: any) => Challenge_Term.fromJSON(e))
         : [],
-      prizeSets: Array.isArray(object?.prizeSets)
+      prizeSets: globalThis.Array.isArray(object?.prizeSets)
         ? object.prizeSets.map((e: any) => Challenge_PrizeSet.fromJSON(e))
         : [],
-      tags: Array.isArray(object?.tags)
+      tags: globalThis.Array.isArray(object?.tags)
         ? object.tags.map((e: any) => String(e))
         : [],
       projectId: isSet(object.projectId) ? Number(object.projectId) : undefined,
       startDate: isSet(object.startDate) ? String(object.startDate) : undefined,
       endDate: isSet(object.endDate) ? String(object.endDate) : undefined,
       status: isSet(object.status) ? String(object.status) : "",
-      attachments: Array.isArray(object?.attachments)
+      attachments: globalThis.Array.isArray(object?.attachments)
         ? object.attachments.map((e: any) => String(e))
         : [],
-      groups: Array.isArray(object?.groups)
+      groups: globalThis.Array.isArray(object?.groups)
         ? object.groups.map((e: any) => String(e))
         : [],
-      discussions: Array.isArray(object?.discussions)
+      discussions: globalThis.Array.isArray(object?.discussions)
         ? object.discussions.map((e: any) => Challenge_Discussion.fromJSON(e))
         : [],
+      constraints: isSet(object.constraints)
+        ? Challenge_Constraint.fromJSON(object.constraints)
+        : undefined,
     };
   },
 
@@ -3011,6 +3278,9 @@ export const CreateChallengeInput = {
         Challenge_Discussion.toJSON(e)
       );
     }
+    if (message.constraints !== undefined) {
+      obj.constraints = Challenge_Constraint.toJSON(message.constraints);
+    }
     return obj;
   },
 
@@ -3061,6 +3331,10 @@ export const CreateChallengeInput = {
     message.groups = object.groups?.map((e) => e) || [];
     message.discussions =
       object.discussions?.map((e) => Challenge_Discussion.fromPartial(e)) || [];
+    message.constraints =
+      object.constraints !== undefined && object.constraints !== null
+        ? Challenge_Constraint.fromPartial(object.constraints)
+        : undefined;
     return message;
   },
 };
@@ -3127,7 +3401,7 @@ export const UpdateChallengeInput = {
 
   fromJSON(object: any): UpdateChallengeInput {
     return {
-      filterCriteria: Array.isArray(object?.filterCriteria)
+      filterCriteria: globalThis.Array.isArray(object?.filterCriteria)
         ? object.filterCriteria.map((e: any) => ScanCriteria.fromJSON(e))
         : [],
       updateInput: isSet(object.updateInput)
@@ -3197,6 +3471,7 @@ function createBaseUpdateChallengeInput_UpdateInput(): UpdateChallengeInput_Upda
     endDate: undefined,
     status: undefined,
     overview: undefined,
+    constraints: undefined,
   };
 }
 
@@ -3317,6 +3592,12 @@ export const UpdateChallengeInput_UpdateInput = {
       Challenge_Overview.encode(
         message.overview,
         writer.uint32(202).fork()
+      ).ldelim();
+    }
+    if (message.constraints !== undefined) {
+      Challenge_Constraint.encode(
+        message.constraints,
+        writer.uint32(210).fork()
       ).ldelim();
     }
     return writer;
@@ -3548,6 +3829,16 @@ export const UpdateChallengeInput_UpdateInput = {
 
           message.overview = Challenge_Overview.decode(reader, reader.uint32());
           continue;
+        case 26:
+          if (tag !== 210) {
+            break;
+          }
+
+          message.constraints = Challenge_Constraint.decode(
+            reader,
+            reader.uint32()
+          );
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3637,6 +3928,9 @@ export const UpdateChallengeInput_UpdateInput = {
       status: isSet(object.status) ? String(object.status) : undefined,
       overview: isSet(object.overview)
         ? Challenge_Overview.fromJSON(object.overview)
+        : undefined,
+      constraints: isSet(object.constraints)
+        ? Challenge_Constraint.fromJSON(object.constraints)
         : undefined,
     };
   },
@@ -3742,6 +4036,9 @@ export const UpdateChallengeInput_UpdateInput = {
     if (message.overview !== undefined) {
       obj.overview = Challenge_Overview.toJSON(message.overview);
     }
+    if (message.constraints !== undefined) {
+      obj.constraints = Challenge_Constraint.toJSON(message.constraints);
+    }
     return obj;
   },
 
@@ -3841,6 +4138,10 @@ export const UpdateChallengeInput_UpdateInput = {
       object.overview !== undefined && object.overview !== null
         ? Challenge_Overview.fromPartial(object.overview)
         : undefined;
+    message.constraints =
+      object.constraints !== undefined && object.constraints !== null
+        ? Challenge_Constraint.fromPartial(object.constraints)
+        : undefined;
     return message;
   },
 };
@@ -3891,7 +4192,7 @@ export const UpdateChallengeInput_UpdateInput_WinnerUpdate = {
 
   fromJSON(object: any): UpdateChallengeInput_UpdateInput_WinnerUpdate {
     return {
-      winners: Array.isArray(object?.winners)
+      winners: globalThis.Array.isArray(object?.winners)
         ? object.winners.map((e: any) => Challenge_Winner.fromJSON(e))
         : [],
     };
@@ -3975,7 +4276,7 @@ export const UpdateChallengeInput_UpdateInput_DiscussionUpdate = {
 
   fromJSON(object: any): UpdateChallengeInput_UpdateInput_DiscussionUpdate {
     return {
-      discussions: Array.isArray(object?.discussions)
+      discussions: globalThis.Array.isArray(object?.discussions)
         ? object.discussions.map((e: any) => Challenge_Discussion.fromJSON(e))
         : [],
     };
@@ -4061,7 +4362,7 @@ export const UpdateChallengeInput_UpdateInput_MetadataUpdate = {
 
   fromJSON(object: any): UpdateChallengeInput_UpdateInput_MetadataUpdate {
     return {
-      metadata: Array.isArray(object?.metadata)
+      metadata: globalThis.Array.isArray(object?.metadata)
         ? object.metadata.map((e: any) => Challenge_Metadata.fromJSON(e))
         : [],
     };
@@ -4142,7 +4443,7 @@ export const UpdateChallengeInput_UpdateInput_PhaseUpdate = {
 
   fromJSON(object: any): UpdateChallengeInput_UpdateInput_PhaseUpdate {
     return {
-      phases: Array.isArray(object?.phases)
+      phases: globalThis.Array.isArray(object?.phases)
         ? object.phases.map((e: any) => Challenge_Phase.fromJSON(e))
         : [],
     };
@@ -4223,7 +4524,7 @@ export const UpdateChallengeInput_UpdateInput_EventUpdate = {
 
   fromJSON(object: any): UpdateChallengeInput_UpdateInput_EventUpdate {
     return {
-      events: Array.isArray(object?.events)
+      events: globalThis.Array.isArray(object?.events)
         ? object.events.map((e: any) => Challenge_Event.fromJSON(e))
         : [],
     };
@@ -4304,7 +4605,7 @@ export const UpdateChallengeInput_UpdateInput_TermUpdate = {
 
   fromJSON(object: any): UpdateChallengeInput_UpdateInput_TermUpdate {
     return {
-      terms: Array.isArray(object?.terms)
+      terms: globalThis.Array.isArray(object?.terms)
         ? object.terms.map((e: any) => Challenge_Term.fromJSON(e))
         : [],
     };
@@ -4381,7 +4682,7 @@ export const UpdateChallengeInput_UpdateInput_PrizeSetUpdate = {
 
   fromJSON(object: any): UpdateChallengeInput_UpdateInput_PrizeSetUpdate {
     return {
-      prizeSets: Array.isArray(object?.prizeSets)
+      prizeSets: globalThis.Array.isArray(object?.prizeSets)
         ? object.prizeSets.map((e: any) => Challenge_PrizeSet.fromJSON(e))
         : [],
     };
@@ -4464,7 +4765,7 @@ export const UpdateChallengeInput_UpdateInput_TagsUpdate = {
 
   fromJSON(object: any): UpdateChallengeInput_UpdateInput_TagsUpdate {
     return {
-      tags: Array.isArray(object?.tags)
+      tags: globalThis.Array.isArray(object?.tags)
         ? object.tags.map((e: any) => String(e))
         : [],
     };
@@ -4539,7 +4840,7 @@ export const UpdateChallengeInput_UpdateInput_AttachmentsUpdate = {
 
   fromJSON(object: any): UpdateChallengeInput_UpdateInput_AttachmentsUpdate {
     return {
-      attachments: Array.isArray(object?.attachments)
+      attachments: globalThis.Array.isArray(object?.attachments)
         ? object.attachments.map((e: any) => String(e))
         : [],
     };
@@ -4620,7 +4921,7 @@ export const UpdateChallengeInput_UpdateInput_GroupsUpdate = {
 
   fromJSON(object: any): UpdateChallengeInput_UpdateInput_GroupsUpdate {
     return {
-      groups: Array.isArray(object?.groups)
+      groups: globalThis.Array.isArray(object?.groups)
         ? object.groups.map((e: any) => String(e))
         : [],
     };
@@ -4719,7 +5020,7 @@ export const UpdateChallengeInputForACL = {
 
   fromJSON(object: any): UpdateChallengeInputForACL {
     return {
-      filterCriteria: Array.isArray(object?.filterCriteria)
+      filterCriteria: globalThis.Array.isArray(object?.filterCriteria)
         ? object.filterCriteria.map((e: any) => ScanCriteria.fromJSON(e))
         : [],
       updateInputForAcl: isSet(object.updateInputForAcl)
@@ -5051,19 +5352,23 @@ export const UpdateChallengeInputForACL_UpdateInputForACL = {
           )
         : undefined,
       registrationStartDate: isSet(object.registrationStartDate)
-        ? String(object.registrationStartDate)
+        ? globalThis.String(object.registrationStartDate)
         : undefined,
       registrationEndDate: isSet(object.registrationEndDate)
-        ? String(object.registrationEndDate)
+        ? globalThis.String(object.registrationEndDate)
         : undefined,
       submissionStartDate: isSet(object.submissionStartDate)
-        ? String(object.submissionStartDate)
+        ? globalThis.String(object.submissionStartDate)
         : undefined,
       submissionEndDate: isSet(object.submissionEndDate)
-        ? String(object.submissionEndDate)
+        ? globalThis.String(object.submissionEndDate)
         : undefined,
-      startDate: isSet(object.startDate) ? String(object.startDate) : undefined,
-      endDate: isSet(object.endDate) ? String(object.endDate) : undefined,
+      startDate: isSet(object.startDate)
+        ? globalThis.String(object.startDate)
+        : undefined,
+      endDate: isSet(object.endDate)
+        ? globalThis.String(object.endDate)
+        : undefined,
       legacy: isSet(object.legacy)
         ? UpdateChallengeInputForACL_LegacyACL.fromJSON(object.legacy)
         : undefined,
@@ -5243,7 +5548,7 @@ export const UpdateChallengeInputForACL_PhasesACL = {
 
   fromJSON(object: any): UpdateChallengeInputForACL_PhasesACL {
     return {
-      phases: Array.isArray(object?.phases)
+      phases: globalThis.Array.isArray(object?.phases)
         ? object.phases.map((e: any) => Challenge_Phase.fromJSON(e))
         : [],
     };
@@ -5318,7 +5623,7 @@ export const UpdateChallengeInputForACL_CurrentPhaseNamesACL = {
 
   fromJSON(object: any): UpdateChallengeInputForACL_CurrentPhaseNamesACL {
     return {
-      currentPhaseNames: Array.isArray(object?.currentPhaseNames)
+      currentPhaseNames: globalThis.Array.isArray(object?.currentPhaseNames)
         ? object.currentPhaseNames.map((e: any) => String(e))
         : [],
     };
@@ -5491,7 +5796,7 @@ export const UpdateChallengeInputForACL_PrizeSetsACL = {
 
   fromJSON(object: any): UpdateChallengeInputForACL_PrizeSetsACL {
     return {
-      prizeSets: Array.isArray(object?.prizeSets)
+      prizeSets: globalThis.Array.isArray(object?.prizeSets)
         ? object.prizeSets.map((e: any) => Challenge_PrizeSet.fromJSON(e))
         : [],
     };
@@ -5573,7 +5878,7 @@ export const UpdateChallengeInputForACL_WinnersACL = {
 
   fromJSON(object: any): UpdateChallengeInputForACL_WinnersACL {
     return {
-      winners: Array.isArray(object?.winners)
+      winners: globalThis.Array.isArray(object?.winners)
         ? object.winners.map((e: any) =>
             UpdateChallengeInputForACL_WinnerACL.fromJSON(e)
           )
@@ -5712,25 +6017,6 @@ export const UpdateChallengeInputForACL_WinnerACL = {
   },
 };
 
-declare const self: any | undefined;
-declare const window: any | undefined;
-declare const global: any | undefined;
-const tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 type Builtin =
   | Date
   | Function
@@ -5762,7 +6048,7 @@ type Exact<P, I extends P> = P extends Builtin
     };
 
 function toTimestamp(dateStr: string): Timestamp {
-  const date = new Date(dateStr);
+  const date = new globalThis.Date(dateStr);
   const seconds = date.getTime() / 1_000;
   const nanos = (date.getTime() % 1_000) * 1_000_000;
   return { seconds, nanos };
@@ -5771,14 +6057,12 @@ function toTimestamp(dateStr: string): Timestamp {
 function fromTimestamp(t: Timestamp): string {
   let millis = (t.seconds || 0) * 1_000;
   millis += (t.nanos || 0) / 1_000_000;
-  return new Date(millis).toISOString();
+  return new globalThis.Date(millis).toISOString();
 }
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

@@ -252,7 +252,9 @@ export const ContestEligibilityList = {
 
   fromJSON(object: any): ContestEligibilityList {
     return {
-      contestEligibilities: Array.isArray(object?.contestEligibilities)
+      contestEligibilities: globalThis.Array.isArray(
+        object?.contestEligibilities
+      )
         ? object.contestEligibilities.map((e: any) =>
             ContestEligibility.fromJSON(e)
           )
@@ -564,7 +566,7 @@ export const GroupContestEligibilityList = {
 
   fromJSON(object: any): GroupContestEligibilityList {
     return {
-      groupContestEligibilities: Array.isArray(
+      groupContestEligibilities: globalThis.Array.isArray(
         object?.groupContestEligibilities
       )
         ? object.groupContestEligibilities.map((e: any) =>

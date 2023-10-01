@@ -122,7 +122,7 @@ export const QueryOutput = {
 
   fromJSON(object: any): QueryOutput {
     return {
-      rows: Array.isArray(object?.rows)
+      rows: globalThis.Array.isArray(object?.rows)
         ? object.rows.map((e: any) => Row.fromJSON(e))
         : [],
     };
@@ -186,7 +186,7 @@ export const Row = {
 
   fromJSON(object: any): Row {
     return {
-      fields: Array.isArray(object?.fields)
+      fields: globalThis.Array.isArray(object?.fields)
         ? object.fields.map((e: any) => Field.fromJSON(e))
         : [],
     };

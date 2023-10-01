@@ -64,7 +64,7 @@ export const SyncInput = {
   fromJSON(object: any): SyncInput {
     return {
       projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      updatedTables: Array.isArray(object?.updatedTables)
+      updatedTables: globalThis.Array.isArray(object?.updatedTables)
         ? object.updatedTables.map((e: any) => Table.fromJSON(e))
         : [],
     };
@@ -155,7 +155,7 @@ export const Table = {
     return {
       table: isSet(object.table) ? String(object.table) : "",
       primaryKey: isSet(object.primaryKey) ? String(object.primaryKey) : "",
-      value: Array.isArray(object?.value)
+      value: globalThis.Array.isArray(object?.value)
         ? object.value.map((e: any) => String(e))
         : [],
     };

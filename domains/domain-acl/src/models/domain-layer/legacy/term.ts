@@ -322,7 +322,7 @@ export const ProjectRoleTermsOfUseXrefList = {
 
   fromJSON(object: any): ProjectRoleTermsOfUseXrefList {
     return {
-      terms: Array.isArray(object?.terms)
+      terms: globalThis.Array.isArray(object?.terms)
         ? object.terms.map((e: any) => ProjectRoleTermsOfUseXref.fromJSON(e))
         : [],
     };
@@ -599,25 +599,6 @@ export const DeleteProjectRoleTermsOfUseXrefInput = {
   },
 };
 
-declare const self: any | undefined;
-declare const window: any | undefined;
-declare const global: any | undefined;
-const tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 type Builtin =
   | Date
   | Function
@@ -649,10 +630,8 @@ type Exact<P, I extends P> = P extends Builtin
     };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

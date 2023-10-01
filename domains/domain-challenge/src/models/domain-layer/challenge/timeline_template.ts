@@ -239,7 +239,7 @@ export const TimelineTemplate = {
         ? String(object.description)
         : undefined,
       isActive: isSet(object.isActive) ? Boolean(object.isActive) : false,
-      phases: Array.isArray(object?.phases)
+      phases: globalThis.Array.isArray(object?.phases)
         ? object.phases.map((e: any) => TimelineTemplatePhase.fromJSON(e))
         : [],
     };
@@ -328,7 +328,7 @@ export const TimelineTemplateList = {
 
   fromJSON(object: any): TimelineTemplateList {
     return {
-      items: Array.isArray(object?.items)
+      items: globalThis.Array.isArray(object?.items)
         ? object.items.map((e: any) => TimelineTemplate.fromJSON(e))
         : [],
     };
@@ -438,7 +438,7 @@ export const CreateTimelineTemplateInput = {
         ? String(object.description)
         : undefined,
       isActive: isSet(object.isActive) ? Boolean(object.isActive) : false,
-      phases: Array.isArray(object?.phases)
+      phases: globalThis.Array.isArray(object?.phases)
         ? object.phases.map((e: any) => TimelineTemplatePhase.fromJSON(e))
         : [],
     };
@@ -541,7 +541,7 @@ export const UpdateTimelineTemplateInput = {
 
   fromJSON(object: any): UpdateTimelineTemplateInput {
     return {
-      filterCriteria: Array.isArray(object?.filterCriteria)
+      filterCriteria: globalThis.Array.isArray(object?.filterCriteria)
         ? object.filterCriteria.map((e: any) => ScanCriteria.fromJSON(e))
         : [],
       updateInput: isSet(object.updateInput)
@@ -667,7 +667,7 @@ export const UpdateTimelineTemplateInput_UpdateInput = {
         ? String(object.description)
         : undefined,
       isActive: isSet(object.isActive) ? Boolean(object.isActive) : false,
-      phases: Array.isArray(object?.phases)
+      phases: globalThis.Array.isArray(object?.phases)
         ? object.phases.map((e: any) => TimelineTemplatePhase.fromJSON(e))
         : [],
     };
@@ -710,25 +710,6 @@ export const UpdateTimelineTemplateInput_UpdateInput = {
   },
 };
 
-declare const self: any | undefined;
-declare const window: any | undefined;
-declare const global: any | undefined;
-const tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 type Builtin =
   | Date
   | Function
@@ -760,10 +741,8 @@ type Exact<P, I extends P> = P extends Builtin
     };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

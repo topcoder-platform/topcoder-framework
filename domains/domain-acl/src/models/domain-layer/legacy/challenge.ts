@@ -407,7 +407,7 @@ export const LegacyChallengeList = {
 
   fromJSON(object: any): LegacyChallengeList {
     return {
-      legacyChallenges: Array.isArray(object?.legacyChallenges)
+      legacyChallenges: globalThis.Array.isArray(object?.legacyChallenges)
         ? object.legacyChallenges.map((e: any) => LegacyChallenge.fromJSON(e))
         : [],
     };
@@ -599,7 +599,7 @@ export const Phase = {
         ? Object.entries(object.phaseCriteria).reduce<{
             [key: number]: string;
           }>((acc, [key, value]) => {
-            acc[Number(key)] = String(value);
+            acc[globalThis.Number(key)] = String(value);
             return acc;
           }, {})
         : {},
@@ -661,7 +661,7 @@ export const Phase = {
       [key: number]: string;
     }>((acc, [key, value]) => {
       if (value !== undefined) {
-        acc[Number(key)] = String(value);
+        acc[globalThis.Number(key)] = String(value);
       }
       return acc;
     }, {});
@@ -1078,7 +1078,7 @@ export const CreateChallengeInput = {
       tcDirectProjectId: isSet(object.tcDirectProjectId)
         ? Number(object.tcDirectProjectId)
         : 0,
-      winnerPrizes: Array.isArray(object?.winnerPrizes)
+      winnerPrizes: globalThis.Array.isArray(object?.winnerPrizes)
         ? object.winnerPrizes.map((e: any) => Prize.fromJSON(e))
         : [],
       reviewType: isSet(object.reviewType)
@@ -1090,16 +1090,16 @@ export const CreateChallengeInput = {
       projectInfo: isObject(object.projectInfo)
         ? Object.entries(object.projectInfo).reduce<{ [key: number]: string }>(
             (acc, [key, value]) => {
-              acc[Number(key)] = String(value);
+              acc[globalThis.Number(key)] = String(value);
               return acc;
             },
             {}
           )
         : {},
-      phases: Array.isArray(object?.phases)
+      phases: globalThis.Array.isArray(object?.phases)
         ? object.phases.map((e: any) => Phase.fromJSON(e))
         : [],
-      groups: Array.isArray(object?.groups)
+      groups: globalThis.Array.isArray(object?.groups)
         ? object.groups.map((e: any) => Number(e))
         : [],
       id: isSet(object.id) ? String(object.id) : "",
@@ -1179,7 +1179,7 @@ export const CreateChallengeInput = {
       [key: number]: string;
     }>((acc, [key, value]) => {
       if (value !== undefined) {
-        acc[Number(key)] = String(value);
+        acc[globalThis.Number(key)] = String(value);
       }
       return acc;
     }, {});
@@ -1453,7 +1453,7 @@ export const UpdateChallengeInput = {
       projectInfo: isObject(object.projectInfo)
         ? Object.entries(object.projectInfo).reduce<{ [key: number]: string }>(
             (acc, [key, value]) => {
-              acc[Number(key)] = String(value);
+              acc[globalThis.Number(key)] = String(value);
               return acc;
             },
             {}
@@ -1537,7 +1537,7 @@ export const UpdateChallengeInput = {
       [key: number]: string;
     }>((acc, [key, value]) => {
       if (value !== undefined) {
-        acc[Number(key)] = String(value);
+        acc[globalThis.Number(key)] = String(value);
       }
       return acc;
     }, {});
@@ -1676,7 +1676,7 @@ export const UpdateChallengeInput_PrizeUpdate = {
 
   fromJSON(object: any): UpdateChallengeInput_PrizeUpdate {
     return {
-      winnerPrizes: Array.isArray(object?.winnerPrizes)
+      winnerPrizes: globalThis.Array.isArray(object?.winnerPrizes)
         ? object.winnerPrizes.map((e: any) => Prize.fromJSON(e))
         : [],
     };
@@ -1749,7 +1749,7 @@ export const UpdateChallengeInput_PhaseUpdate = {
 
   fromJSON(object: any): UpdateChallengeInput_PhaseUpdate {
     return {
-      phases: Array.isArray(object?.phases)
+      phases: globalThis.Array.isArray(object?.phases)
         ? object.phases.map((e: any) => Phase.fromJSON(e))
         : [],
     };
@@ -1833,7 +1833,7 @@ export const UpdateChallengeInput_GroupUpdate = {
 
   fromJSON(object: any): UpdateChallengeInput_GroupUpdate {
     return {
-      groups: Array.isArray(object?.groups)
+      groups: globalThis.Array.isArray(object?.groups)
         ? object.groups.map((e: any) => Number(e))
         : [],
     };
@@ -1992,7 +1992,7 @@ export const UpdateChallengeInput_TermUpdate = {
 
   fromJSON(object: any): UpdateChallengeInput_TermUpdate {
     return {
-      terms: Array.isArray(object?.terms)
+      terms: globalThis.Array.isArray(object?.terms)
         ? object.terms.map((e: any) => UpdateChallengeInput_Term.fromJSON(e))
         : [],
     };
@@ -2103,25 +2103,6 @@ export const CloseChallengeInput = {
   },
 };
 
-declare const self: any | undefined;
-declare const window: any | undefined;
-declare const global: any | undefined;
-const tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 type Builtin =
   | Date
   | Function
@@ -2153,10 +2134,8 @@ type Exact<P, I extends P> = P extends Builtin
     };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }
