@@ -26,7 +26,7 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.8.0",
     "@topcoder-framework/lib-common": "^0.22.1-PLAT-3491.0",
-    "topcoder-interface": "0.1.0-PLAT-3491.2",
+    "topcoder-interface": "0.1.0-PLAT-3491.3",
     "tslib": "^2.4.1"
   },
   "devDependencies": {

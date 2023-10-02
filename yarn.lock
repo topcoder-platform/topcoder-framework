@@ -5907,10 +5907,10 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-topcoder-interface@0.1.0-PLAT-3491.2:
-  version "0.1.0-PLAT-3491.2"
-  resolved "https://registry.yarnpkg.com/topcoder-interface/-/topcoder-interface-0.1.0-PLAT-3491.2.tgz#399094cc8c0900f39e31adb33568476793f4b6a0"
-  integrity sha512-4jpv5bJ+eAPRZ41vJ4lIzGws5wu50xNJIjaZoZyIUfjLX9QZYlHkGiKPNLCf07c85hoUM0BgD2973a3mIR1GDg==
+topcoder-interface@0.1.0-PLAT-3491.3:
+  version "0.1.0-PLAT-3491.3"
+  resolved "https://registry.yarnpkg.com/topcoder-interface/-/topcoder-interface-0.1.0-PLAT-3491.3.tgz#f73a5d4a69756397df4cde5bbb4cf42b1fa107cc"
+  integrity sha512-FlvpVdFf433VvX4TcEJxlhsaswcWFa8bXov2Zbly5cRs2r8yheDjquWxaFnqi0C9WCJkYiaF8EZKOcOKyt4iLQ==
 
 tr46@~0.0.3:
   version "0.0.3"
