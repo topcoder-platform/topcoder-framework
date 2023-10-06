@@ -61,9 +61,28 @@ export class ChallengeDomain {
     param: UpdateChallengeInput,
     metadata: Metadata = new Metadata()
   ) {
+    console.log("Client: Sending Update", param);
+    console.log("Client: Using Metadata", metadata);
+
+    const connectivityState = this.client
+      .getChannel()
+      .getConnectivityState(true);
+    console.log(
+      "Client: Connectivity state before sending:",
+      connectivityState
+    );
+
     return promisify<UpdateChallengeInput, Metadata, UpdateResult>(
       this.client.update.bind(this.client)
-    )(param, metadata);
+    )(param, metadata)
+      .then((response) => {
+        console.log("Client: Received response from server:", response);
+        return response;
+      })
+      .catch((err) => {
+        console.error("Client: Error from server:", err);
+        throw err;
+      });
   }
 
   public async getPhaseFacts(
