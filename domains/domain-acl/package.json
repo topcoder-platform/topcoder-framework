@@ -1,6 +1,6 @@
 {
   "name": "@topcoder-framework/domain-acl",
-  "version": "0.22.1-PLAT-3491.3",
+  "version": "0.22.1-PLAT-3491.4",
   "description": "Topcoder Anti-Corruption Layer",
   "main": "./dist-cjs/index.js",
   "types": "./dist-es/index.d.ts",
