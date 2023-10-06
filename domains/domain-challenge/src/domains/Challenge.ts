@@ -1,5 +1,5 @@
 import { promisify } from "util";
-import { Metadata } from "@grpc/grpc-js";
+import { ChannelOptions, Metadata } from "@grpc/grpc-js";
 
 import { ChallengeClient } from "../models/domain-layer/challenge/services/challenge";
 import {
@@ -23,7 +23,8 @@ import {
 export class ChallengeDomain {
   constructor(
     protected grpcServerHost: string,
-    protected grpcServerPort: string
+    protected grpcServerPort: string,
+    protected channelOptions?: ChannelOptions
   ) {}
 
   protected readonly client: ChallengeClient = new ChallengeClient(
@@ -31,7 +32,7 @@ export class ChallengeDomain {
     this.grpcServerHost.indexOf("topcoder") == -1
       ? GrpcClient.credentials
       : GrpcClient.secureCredentials,
-    GrpcClient.clientOptions
+    { ...GrpcClient.clientOptions, ...this.channelOptions }
   );
 
   public async create(
