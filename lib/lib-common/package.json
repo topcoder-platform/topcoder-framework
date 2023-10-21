@@ -1,6 +1,6 @@
 {
   "name": "@topcoder-framework/lib-common",
-  "version": "0.22.1-PLAT-3491.2",
+  "version": "0.22.1-PLAT-3491.5",
   "description": "",
   "main": "./dist-cjs/index.js",
   "types": "./dist-es/index.d.ts",
