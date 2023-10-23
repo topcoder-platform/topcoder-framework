@@ -134,15 +134,17 @@ export const ChallengeType = {
 
   fromJSON(object: any): ChallengeType {
     return {
-      id: isSet(object.id) ? String(object.id) : "",
-      name: isSet(object.name) ? String(object.name) : "",
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
       description: isSet(object.description)
-        ? String(object.description)
+        ? globalThis.String(object.description)
         : undefined,
-      isActive: isSet(object.isActive) ? Boolean(object.isActive) : false,
-      isTask: isSet(object.isTask) ? Boolean(object.isTask) : false,
+      isActive: isSet(object.isActive)
+        ? globalThis.Boolean(object.isActive)
+        : false,
+      isTask: isSet(object.isTask) ? globalThis.Boolean(object.isTask) : false,
       abbreviation: isSet(object.abbreviation)
-        ? String(object.abbreviation)
+        ? globalThis.String(object.abbreviation)
         : "",
     };
   },
@@ -349,14 +351,16 @@ export const CreateChallengeTypeInput = {
 
   fromJSON(object: any): CreateChallengeTypeInput {
     return {
-      name: isSet(object.name) ? String(object.name) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
       description: isSet(object.description)
-        ? String(object.description)
+        ? globalThis.String(object.description)
         : undefined,
-      isActive: isSet(object.isActive) ? Boolean(object.isActive) : false,
-      isTask: isSet(object.isTask) ? Boolean(object.isTask) : false,
+      isActive: isSet(object.isActive)
+        ? globalThis.Boolean(object.isActive)
+        : false,
+      isTask: isSet(object.isTask) ? globalThis.Boolean(object.isTask) : false,
       abbreviation: isSet(object.abbreviation)
-        ? String(object.abbreviation)
+        ? globalThis.String(object.abbreviation)
         : "",
     };
   },
@@ -594,14 +598,16 @@ export const UpdateChallengeTypeInput_UpdateInput = {
 
   fromJSON(object: any): UpdateChallengeTypeInput_UpdateInput {
     return {
-      name: isSet(object.name) ? String(object.name) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
       description: isSet(object.description)
-        ? String(object.description)
+        ? globalThis.String(object.description)
         : undefined,
-      isActive: isSet(object.isActive) ? Boolean(object.isActive) : false,
-      isTask: isSet(object.isTask) ? Boolean(object.isTask) : false,
+      isActive: isSet(object.isActive)
+        ? globalThis.Boolean(object.isActive)
+        : false,
+      isTask: isSet(object.isTask) ? globalThis.Boolean(object.isTask) : false,
       abbreviation: isSet(object.abbreviation)
-        ? String(object.abbreviation)
+        ? globalThis.String(object.abbreviation)
         : "",
     };
   },
@@ -657,8 +663,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }

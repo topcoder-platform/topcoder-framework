@@ -37,6 +37,7 @@ export interface Challenge {
   updated?: number | undefined;
   overview?: Challenge_Overview | undefined;
   constraints?: Challenge_Constraint | undefined;
+  skills: Challenge_Skill[];
 }
 
 export interface Challenge_Legacy {
@@ -148,6 +149,17 @@ export interface Challenge_Constraint {
   allowedRegistrants: string[];
 }
 
+export interface Challenge_Skill {
+  name: string;
+  id: string;
+  category?: Challenge_Skill_SkillCategory | undefined;
+}
+
+export interface Challenge_Skill_SkillCategory {
+  name: string;
+  id: string;
+}
+
 export interface ChallengeList {
   items: Challenge[];
 }
@@ -169,6 +181,7 @@ export interface CreateChallengeInput {
   terms: Challenge_Term[];
   prizeSets: Challenge_PrizeSet[];
   tags: string[];
+  skills: Challenge_Skill[];
   projectId?: number | undefined;
   startDate?: string | undefined;
   endDate?: string | undefined;
@@ -216,6 +229,7 @@ export interface UpdateChallengeInput_UpdateInput {
   overview?: Challenge_Overview | undefined;
   constraints?: Challenge_Constraint | undefined;
   paymentUpdate?: UpdateChallengeInput_UpdateInput_PaymentUpdate | undefined;
+  skillUpdate?: UpdateChallengeInput_UpdateInput_SkillUpdate | undefined;
 }
 
 export interface UpdateChallengeInput_UpdateInput_WinnerUpdate {
@@ -260,6 +274,10 @@ export interface UpdateChallengeInput_UpdateInput_AttachmentsUpdate {
 
 export interface UpdateChallengeInput_UpdateInput_GroupsUpdate {
   groups: string[];
+}
+
+export interface UpdateChallengeInput_UpdateInput_SkillUpdate {
+  skills: Challenge_Skill[];
 }
 
 export interface UpdateChallengeInputForACL {
@@ -361,6 +379,7 @@ function createBaseChallenge(): Challenge {
     updated: undefined,
     overview: undefined,
     constraints: undefined,
+    skills: [],
   };
 }
 
@@ -479,6 +498,9 @@ export const Challenge = {
         message.constraints,
         writer.uint32(266).fork()
       ).ldelim();
+    }
+    for (const v of message.skills) {
+      Challenge_Skill.encode(v!, writer.uint32(274).fork()).ldelim();
     }
     return writer;
   },
@@ -735,6 +757,13 @@ export const Challenge = {
             reader.uint32()
           );
           continue;
+        case 34:
+          if (tag !== 274) {
+            break;
+          }
+
+          message.skills.push(Challenge_Skill.decode(reader, reader.uint32()));
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -746,23 +775,27 @@ export const Challenge = {
 
   fromJSON(object: any): Challenge {
     return {
-      id: isSet(object.id) ? String(object.id) : "",
-      legacyId: isSet(object.legacyId) ? Number(object.legacyId) : undefined,
-      name: isSet(object.name) ? String(object.name) : "",
-      typeId: isSet(object.typeId) ? String(object.typeId) : "",
-      trackId: isSet(object.trackId) ? String(object.trackId) : "",
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      legacyId: isSet(object.legacyId)
+        ? globalThis.Number(object.legacyId)
+        : undefined,
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      typeId: isSet(object.typeId) ? globalThis.String(object.typeId) : "",
+      trackId: isSet(object.trackId) ? globalThis.String(object.trackId) : "",
       legacy: isSet(object.legacy)
         ? Challenge_Legacy.fromJSON(object.legacy)
         : undefined,
       billing: isSet(object.billing)
         ? Challenge_Billing.fromJSON(object.billing)
         : undefined,
-      description: isSet(object.description) ? String(object.description) : "",
+      description: isSet(object.description)
+        ? globalThis.String(object.description)
+        : "",
       privateDescription: isSet(object.privateDescription)
-        ? String(object.privateDescription)
+        ? globalThis.String(object.privateDescription)
         : undefined,
       descriptionFormat: isSet(object.descriptionFormat)
-        ? String(object.descriptionFormat)
+        ? globalThis.String(object.descriptionFormat)
         : undefined,
       metadata: globalThis.Array.isArray(object?.metadata)
         ? object.metadata.map((e: any) => Challenge_Metadata.fromJSON(e))
@@ -771,7 +804,7 @@ export const Challenge = {
         ? Challenge_Task.fromJSON(object.task)
         : undefined,
       timelineTemplateId: isSet(object.timelineTemplateId)
-        ? String(object.timelineTemplateId)
+        ? globalThis.String(object.timelineTemplateId)
         : undefined,
       phases: globalThis.Array.isArray(object?.phases)
         ? object.phases.map((e: any) => Challenge_Phase.fromJSON(e))
@@ -786,17 +819,23 @@ export const Challenge = {
         ? object.prizeSets.map((e: any) => Challenge_PrizeSet.fromJSON(e))
         : [],
       tags: globalThis.Array.isArray(object?.tags)
-        ? object.tags.map((e: any) => String(e))
+        ? object.tags.map((e: any) => globalThis.String(e))
         : [],
-      projectId: isSet(object.projectId) ? Number(object.projectId) : undefined,
-      startDate: isSet(object.startDate) ? String(object.startDate) : undefined,
-      endDate: isSet(object.endDate) ? String(object.endDate) : undefined,
-      status: isSet(object.status) ? String(object.status) : "",
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
+        : undefined,
+      startDate: isSet(object.startDate)
+        ? globalThis.String(object.startDate)
+        : undefined,
+      endDate: isSet(object.endDate)
+        ? globalThis.String(object.endDate)
+        : undefined,
+      status: isSet(object.status) ? globalThis.String(object.status) : "",
       attachments: globalThis.Array.isArray(object?.attachments)
-        ? object.attachments.map((e: any) => String(e))
+        ? object.attachments.map((e: any) => globalThis.String(e))
         : [],
       groups: globalThis.Array.isArray(object?.groups)
-        ? object.groups.map((e: any) => String(e))
+        ? object.groups.map((e: any) => globalThis.String(e))
         : [],
       winners: globalThis.Array.isArray(object?.winners)
         ? object.winners.map((e: any) => Challenge_Winner.fromJSON(e))
@@ -807,16 +846,25 @@ export const Challenge = {
       discussions: globalThis.Array.isArray(object?.discussions)
         ? object.discussions.map((e: any) => Challenge_Discussion.fromJSON(e))
         : [],
-      createdBy: isSet(object.createdBy) ? String(object.createdBy) : "",
-      updatedBy: isSet(object.updatedBy) ? String(object.updatedBy) : undefined,
-      created: isSet(object.created) ? Number(object.created) : 0,
-      updated: isSet(object.updated) ? Number(object.updated) : undefined,
+      createdBy: isSet(object.createdBy)
+        ? globalThis.String(object.createdBy)
+        : "",
+      updatedBy: isSet(object.updatedBy)
+        ? globalThis.String(object.updatedBy)
+        : undefined,
+      created: isSet(object.created) ? globalThis.Number(object.created) : 0,
+      updated: isSet(object.updated)
+        ? globalThis.Number(object.updated)
+        : undefined,
       overview: isSet(object.overview)
         ? Challenge_Overview.fromJSON(object.overview)
         : undefined,
       constraints: isSet(object.constraints)
         ? Challenge_Constraint.fromJSON(object.constraints)
         : undefined,
+      skills: globalThis.Array.isArray(object?.skills)
+        ? object.skills.map((e: any) => Challenge_Skill.fromJSON(e))
+        : [],
     };
   },
 
@@ -925,6 +973,9 @@ export const Challenge = {
     if (message.constraints !== undefined) {
       obj.constraints = Challenge_Constraint.toJSON(message.constraints);
     }
+    if (message.skills?.length) {
+      obj.skills = message.skills.map((e) => Challenge_Skill.toJSON(e));
+    }
     return obj;
   },
 
@@ -991,6 +1042,8 @@ export const Challenge = {
       object.constraints !== undefined && object.constraints !== null
         ? Challenge_Constraint.fromPartial(object.constraints)
         : undefined;
+    message.skills =
+      object.skills?.map((e) => Challenge_Skill.fromPartial(e)) || [];
     return message;
   },
 };
@@ -1148,30 +1201,36 @@ export const Challenge_Legacy = {
 
   fromJSON(object: any): Challenge_Legacy {
     return {
-      track: isSet(object.track) ? String(object.track) : undefined,
-      subTrack: isSet(object.subTrack) ? String(object.subTrack) : undefined,
-      forumId: isSet(object.forumId) ? Number(object.forumId) : undefined,
+      track: isSet(object.track) ? globalThis.String(object.track) : undefined,
+      subTrack: isSet(object.subTrack)
+        ? globalThis.String(object.subTrack)
+        : undefined,
+      forumId: isSet(object.forumId)
+        ? globalThis.Number(object.forumId)
+        : undefined,
       directProjectId: isSet(object.directProjectId)
-        ? Number(object.directProjectId)
+        ? globalThis.Number(object.directProjectId)
         : 0,
-      reviewType: isSet(object.reviewType) ? String(object.reviewType) : "",
+      reviewType: isSet(object.reviewType)
+        ? globalThis.String(object.reviewType)
+        : "",
       confidentialityType: isSet(object.confidentialityType)
-        ? String(object.confidentialityType)
+        ? globalThis.String(object.confidentialityType)
         : "",
       reviewScorecardId: isSet(object.reviewScorecardId)
-        ? Number(object.reviewScorecardId)
+        ? globalThis.Number(object.reviewScorecardId)
         : undefined,
       screeningScorecardId: isSet(object.screeningScorecardId)
-        ? Number(object.screeningScorecardId)
+        ? globalThis.Number(object.screeningScorecardId)
         : undefined,
       pureV5Task: isSet(object.pureV5Task)
-        ? Boolean(object.pureV5Task)
+        ? globalThis.Boolean(object.pureV5Task)
         : undefined,
       selfService: isSet(object.selfService)
-        ? Boolean(object.selfService)
+        ? globalThis.Boolean(object.selfService)
         : undefined,
       selfServiceCopilot: isSet(object.selfServiceCopilot)
-        ? String(object.selfServiceCopilot)
+        ? globalThis.String(object.selfServiceCopilot)
         : undefined,
     };
   },
@@ -1290,9 +1349,9 @@ export const Challenge_Billing = {
   fromJSON(object: any): Challenge_Billing {
     return {
       billingAccountId: isSet(object.billingAccountId)
-        ? Number(object.billingAccountId)
+        ? globalThis.Number(object.billingAccountId)
         : 0,
-      markup: isSet(object.markup) ? Number(object.markup) : 0,
+      markup: isSet(object.markup) ? globalThis.Number(object.markup) : 0,
     };
   },
 
@@ -1383,9 +1442,9 @@ export const Challenge_Event = {
 
   fromJSON(object: any): Challenge_Event {
     return {
-      id: isSet(object.id) ? Number(object.id) : undefined,
-      name: isSet(object.name) ? String(object.name) : "",
-      key: isSet(object.key) ? String(object.key) : "",
+      id: isSet(object.id) ? globalThis.Number(object.id) : undefined,
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
     };
   },
 
@@ -1470,8 +1529,8 @@ export const Challenge_Term = {
 
   fromJSON(object: any): Challenge_Term {
     return {
-      id: isSet(object.id) ? String(object.id) : "",
-      roleId: isSet(object.roleId) ? String(object.roleId) : "",
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      roleId: isSet(object.roleId) ? globalThis.String(object.roleId) : "",
     };
   },
 
@@ -1552,8 +1611,8 @@ export const Challenge_Metadata = {
 
   fromJSON(object: any): Challenge_Metadata {
     return {
-      name: isSet(object.name) ? String(object.name) : "",
-      value: isSet(object.value) ? String(object.value) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      value: isSet(object.value) ? globalThis.String(object.value) : "",
     };
   },
 
@@ -1667,11 +1726,13 @@ export const Challenge_Discussion = {
 
   fromJSON(object: any): Challenge_Discussion {
     return {
-      id: isSet(object.id) ? String(object.id) : undefined,
-      name: isSet(object.name) ? String(object.name) : "",
-      type: isSet(object.type) ? String(object.type) : "",
-      provider: isSet(object.provider) ? String(object.provider) : "",
-      url: isSet(object.url) ? String(object.url) : undefined,
+      id: isSet(object.id) ? globalThis.String(object.id) : undefined,
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      type: isSet(object.type) ? globalThis.String(object.type) : "",
+      provider: isSet(object.provider)
+        ? globalThis.String(object.provider)
+        : "",
+      url: isSet(object.url) ? globalThis.String(object.url) : undefined,
     };
   },
 
@@ -1899,7 +1960,7 @@ export const Challenge_Phase = {
 
   fromJSON(object: any): Challenge_Phase {
     return {
-      duration: isSet(object.duration) ? Number(object.duration) : 0,
+      duration: isSet(object.duration) ? globalThis.Number(object.duration) : 0,
       scheduledStartDate: isSet(object.scheduledStartDate)
         ? globalThis.String(object.scheduledStartDate)
         : undefined,
@@ -1912,20 +1973,20 @@ export const Challenge_Phase = {
       actualEndDate: isSet(object.actualEndDate)
         ? globalThis.String(object.actualEndDate)
         : undefined,
-      name: isSet(object.name) ? String(object.name) : "",
-      phaseId: isSet(object.phaseId) ? String(object.phaseId) : "",
-      id: isSet(object.id) ? String(object.id) : "",
-      isOpen: isSet(object.isOpen) ? Boolean(object.isOpen) : false,
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      phaseId: isSet(object.phaseId) ? globalThis.String(object.phaseId) : "",
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      isOpen: isSet(object.isOpen) ? globalThis.Boolean(object.isOpen) : false,
       constraints: globalThis.Array.isArray(object?.constraints)
         ? object.constraints.map((e: any) =>
             Challenge_Phase_Constraint.fromJSON(e)
           )
         : [],
       description: isSet(object.description)
-        ? String(object.description)
+        ? globalThis.String(object.description)
         : undefined,
       predecessor: isSet(object.predecessor)
-        ? String(object.predecessor)
+        ? globalThis.String(object.predecessor)
         : undefined,
     };
   },
@@ -2055,8 +2116,8 @@ export const Challenge_Phase_Constraint = {
 
   fromJSON(object: any): Challenge_Phase_Constraint {
     return {
-      name: isSet(object.name) ? String(object.name) : "",
-      value: isSet(object.value) ? Number(object.value) : 0,
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      value: isSet(object.value) ? globalThis.Number(object.value) : 0,
     };
   },
 
@@ -2157,10 +2218,10 @@ export const Challenge_Payment = {
 
   fromJSON(object: any): Challenge_Payment {
     return {
-      handle: isSet(object.handle) ? String(object.handle) : "",
-      amount: isSet(object.amount) ? Number(object.amount) : 0,
-      userId: isSet(object.userId) ? Number(object.userId) : 0,
-      type: isSet(object.type) ? String(object.type) : "",
+      handle: isSet(object.handle) ? globalThis.String(object.handle) : "",
+      amount: isSet(object.amount) ? globalThis.Number(object.amount) : 0,
+      userId: isSet(object.userId) ? globalThis.Number(object.userId) : 0,
+      type: isSet(object.type) ? globalThis.String(object.type) : "",
     };
   },
 
@@ -2269,10 +2330,12 @@ export const Challenge_Winner = {
 
   fromJSON(object: any): Challenge_Winner {
     return {
-      handle: isSet(object.handle) ? String(object.handle) : "",
-      placement: isSet(object.placement) ? Number(object.placement) : 0,
-      userId: isSet(object.userId) ? Number(object.userId) : 0,
-      type: isSet(object.type) ? String(object.type) : undefined,
+      handle: isSet(object.handle) ? globalThis.String(object.handle) : "",
+      placement: isSet(object.placement)
+        ? globalThis.Number(object.placement)
+        : 0,
+      userId: isSet(object.userId) ? globalThis.Number(object.userId) : 0,
+      type: isSet(object.type) ? globalThis.String(object.type) : undefined,
     };
   },
 
@@ -2371,9 +2434,13 @@ export const Challenge_Task = {
 
   fromJSON(object: any): Challenge_Task {
     return {
-      isTask: isSet(object.isTask) ? Boolean(object.isTask) : false,
-      isAssigned: isSet(object.isAssigned) ? Boolean(object.isAssigned) : false,
-      memberId: isSet(object.memberId) ? Number(object.memberId) : undefined,
+      isTask: isSet(object.isTask) ? globalThis.Boolean(object.isTask) : false,
+      isAssigned: isSet(object.isAssigned)
+        ? globalThis.Boolean(object.isAssigned)
+        : false,
+      memberId: isSet(object.memberId)
+        ? globalThis.Number(object.memberId)
+        : undefined,
     };
   },
 
@@ -2470,9 +2537,9 @@ export const Challenge_PrizeSet = {
 
   fromJSON(object: any): Challenge_PrizeSet {
     return {
-      type: isSet(object.type) ? String(object.type) : "",
+      type: isSet(object.type) ? globalThis.String(object.type) : "",
       description: isSet(object.description)
-        ? String(object.description)
+        ? globalThis.String(object.description)
         : undefined,
       prizes: globalThis.Array.isArray(object?.prizes)
         ? object.prizes.map((e: any) => Challenge_PrizeSet_Prize.fromJSON(e))
@@ -2578,10 +2645,10 @@ export const Challenge_PrizeSet_Prize = {
   fromJSON(object: any): Challenge_PrizeSet_Prize {
     return {
       amountInCents: isSet(object.amountInCents)
-        ? Number(object.amountInCents)
+        ? globalThis.Number(object.amountInCents)
         : undefined,
-      value: isSet(object.value) ? Number(object.value) : undefined,
-      type: isSet(object.type) ? String(object.type) : "",
+      value: isSet(object.value) ? globalThis.Number(object.value) : undefined,
+      type: isSet(object.type) ? globalThis.String(object.type) : "",
     };
   },
 
@@ -2667,10 +2734,10 @@ export const Challenge_Overview = {
   fromJSON(object: any): Challenge_Overview {
     return {
       totalPrizesInCents: isSet(object.totalPrizesInCents)
-        ? Number(object.totalPrizesInCents)
+        ? globalThis.Number(object.totalPrizesInCents)
         : undefined,
       totalPrizes: isSet(object.totalPrizes)
-        ? Number(object.totalPrizes)
+        ? globalThis.Number(object.totalPrizes)
         : undefined,
     };
   },
@@ -2746,7 +2813,7 @@ export const Challenge_Constraint = {
   fromJSON(object: any): Challenge_Constraint {
     return {
       allowedRegistrants: globalThis.Array.isArray(object?.allowedRegistrants)
-        ? object.allowedRegistrants.map((e: any) => String(e))
+        ? object.allowedRegistrants.map((e: any) => globalThis.String(e))
         : [],
     };
   },
@@ -2769,6 +2836,199 @@ export const Challenge_Constraint = {
   ): Challenge_Constraint {
     const message = createBaseChallenge_Constraint();
     message.allowedRegistrants = object.allowedRegistrants?.map((e) => e) || [];
+    return message;
+  },
+};
+
+function createBaseChallenge_Skill(): Challenge_Skill {
+  return { name: "", id: "", category: undefined };
+}
+
+export const Challenge_Skill = {
+  encode(
+    message: Challenge_Skill,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.name !== "") {
+      writer.uint32(10).string(message.name);
+    }
+    if (message.id !== "") {
+      writer.uint32(18).string(message.id);
+    }
+    if (message.category !== undefined) {
+      Challenge_Skill_SkillCategory.encode(
+        message.category,
+        writer.uint32(26).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Challenge_Skill {
+    const reader =
+      input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseChallenge_Skill();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.name = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.id = reader.string();
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.category = Challenge_Skill_SkillCategory.decode(
+            reader,
+            reader.uint32()
+          );
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Challenge_Skill {
+    return {
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      category: isSet(object.category)
+        ? Challenge_Skill_SkillCategory.fromJSON(object.category)
+        : undefined,
+    };
+  },
+
+  toJSON(message: Challenge_Skill): unknown {
+    const obj: any = {};
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.category !== undefined) {
+      obj.category = Challenge_Skill_SkillCategory.toJSON(message.category);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Challenge_Skill>, I>>(
+    base?: I
+  ): Challenge_Skill {
+    return Challenge_Skill.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Challenge_Skill>, I>>(
+    object: I
+  ): Challenge_Skill {
+    const message = createBaseChallenge_Skill();
+    message.name = object.name ?? "";
+    message.id = object.id ?? "";
+    message.category =
+      object.category !== undefined && object.category !== null
+        ? Challenge_Skill_SkillCategory.fromPartial(object.category)
+        : undefined;
+    return message;
+  },
+};
+
+function createBaseChallenge_Skill_SkillCategory(): Challenge_Skill_SkillCategory {
+  return { name: "", id: "" };
+}
+
+export const Challenge_Skill_SkillCategory = {
+  encode(
+    message: Challenge_Skill_SkillCategory,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.name !== "") {
+      writer.uint32(10).string(message.name);
+    }
+    if (message.id !== "") {
+      writer.uint32(18).string(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): Challenge_Skill_SkillCategory {
+    const reader =
+      input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseChallenge_Skill_SkillCategory();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.name = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.id = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Challenge_Skill_SkillCategory {
+    return {
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+    };
+  },
+
+  toJSON(message: Challenge_Skill_SkillCategory): unknown {
+    const obj: any = {};
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Challenge_Skill_SkillCategory>, I>>(
+    base?: I
+  ): Challenge_Skill_SkillCategory {
+    return Challenge_Skill_SkillCategory.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Challenge_Skill_SkillCategory>, I>>(
+    object: I
+  ): Challenge_Skill_SkillCategory {
+    const message = createBaseChallenge_Skill_SkillCategory();
+    message.name = object.name ?? "";
+    message.id = object.id ?? "";
     return message;
   },
 };
@@ -2860,6 +3120,7 @@ function createBaseCreateChallengeInput(): CreateChallengeInput {
     terms: [],
     prizeSets: [],
     tags: [],
+    skills: [],
     projectId: undefined,
     startDate: undefined,
     endDate: undefined,
@@ -2930,31 +3191,34 @@ export const CreateChallengeInput = {
     for (const v of message.tags) {
       writer.uint32(130).string(v!);
     }
+    for (const v of message.skills) {
+      Challenge_Skill.encode(v!, writer.uint32(138).fork()).ldelim();
+    }
     if (message.projectId !== undefined) {
-      writer.uint32(136).int32(message.projectId);
+      writer.uint32(144).int32(message.projectId);
     }
     if (message.startDate !== undefined) {
-      writer.uint32(146).string(message.startDate);
+      writer.uint32(154).string(message.startDate);
     }
     if (message.endDate !== undefined) {
-      writer.uint32(154).string(message.endDate);
+      writer.uint32(162).string(message.endDate);
     }
     if (message.status !== "") {
-      writer.uint32(162).string(message.status);
+      writer.uint32(170).string(message.status);
     }
     for (const v of message.attachments) {
-      writer.uint32(170).string(v!);
-    }
-    for (const v of message.groups) {
       writer.uint32(178).string(v!);
     }
+    for (const v of message.groups) {
+      writer.uint32(186).string(v!);
+    }
     for (const v of message.discussions) {
-      Challenge_Discussion.encode(v!, writer.uint32(186).fork()).ldelim();
+      Challenge_Discussion.encode(v!, writer.uint32(194).fork()).ldelim();
     }
     if (message.constraints !== undefined) {
       Challenge_Constraint.encode(
         message.constraints,
-        writer.uint32(194).fork()
+        writer.uint32(202).fork()
       ).ldelim();
     }
     return writer;
@@ -3088,49 +3352,56 @@ export const CreateChallengeInput = {
           message.tags.push(reader.string());
           continue;
         case 17:
-          if (tag !== 136) {
+          if (tag !== 138) {
+            break;
+          }
+
+          message.skills.push(Challenge_Skill.decode(reader, reader.uint32()));
+          continue;
+        case 18:
+          if (tag !== 144) {
             break;
           }
 
           message.projectId = reader.int32();
-          continue;
-        case 18:
-          if (tag !== 146) {
-            break;
-          }
-
-          message.startDate = reader.string();
           continue;
         case 19:
           if (tag !== 154) {
             break;
           }
 
-          message.endDate = reader.string();
+          message.startDate = reader.string();
           continue;
         case 20:
           if (tag !== 162) {
             break;
           }
 
-          message.status = reader.string();
+          message.endDate = reader.string();
           continue;
         case 21:
           if (tag !== 170) {
             break;
           }
 
-          message.attachments.push(reader.string());
+          message.status = reader.string();
           continue;
         case 22:
           if (tag !== 178) {
             break;
           }
 
-          message.groups.push(reader.string());
+          message.attachments.push(reader.string());
           continue;
         case 23:
           if (tag !== 186) {
+            break;
+          }
+
+          message.groups.push(reader.string());
+          continue;
+        case 24:
+          if (tag !== 194) {
             break;
           }
 
@@ -3138,8 +3409,8 @@ export const CreateChallengeInput = {
             Challenge_Discussion.decode(reader, reader.uint32())
           );
           continue;
-        case 24:
-          if (tag !== 194) {
+        case 25:
+          if (tag !== 202) {
             break;
           }
 
@@ -3159,11 +3430,11 @@ export const CreateChallengeInput = {
 
   fromJSON(object: any): CreateChallengeInput {
     return {
-      name: isSet(object.name) ? String(object.name) : "",
-      typeId: isSet(object.typeId) ? String(object.typeId) : "",
-      trackId: isSet(object.trackId) ? String(object.trackId) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      typeId: isSet(object.typeId) ? globalThis.String(object.typeId) : "",
+      trackId: isSet(object.trackId) ? globalThis.String(object.trackId) : "",
       timelineTemplateId: isSet(object.timelineTemplateId)
-        ? String(object.timelineTemplateId)
+        ? globalThis.String(object.timelineTemplateId)
         : undefined,
       legacy: isSet(object.legacy)
         ? Challenge_Legacy.fromJSON(object.legacy)
@@ -3172,13 +3443,13 @@ export const CreateChallengeInput = {
         ? Challenge_Billing.fromJSON(object.billing)
         : undefined,
       description: isSet(object.description)
-        ? String(object.description)
+        ? globalThis.String(object.description)
         : undefined,
       privateDescription: isSet(object.privateDescription)
-        ? String(object.privateDescription)
+        ? globalThis.String(object.privateDescription)
         : undefined,
       descriptionFormat: isSet(object.descriptionFormat)
-        ? String(object.descriptionFormat)
+        ? globalThis.String(object.descriptionFormat)
         : undefined,
       metadata: globalThis.Array.isArray(object?.metadata)
         ? object.metadata.map((e: any) => Challenge_Metadata.fromJSON(e))
@@ -3199,17 +3470,26 @@ export const CreateChallengeInput = {
         ? object.prizeSets.map((e: any) => Challenge_PrizeSet.fromJSON(e))
         : [],
       tags: globalThis.Array.isArray(object?.tags)
-        ? object.tags.map((e: any) => String(e))
+        ? object.tags.map((e: any) => globalThis.String(e))
         : [],
-      projectId: isSet(object.projectId) ? Number(object.projectId) : undefined,
-      startDate: isSet(object.startDate) ? String(object.startDate) : undefined,
-      endDate: isSet(object.endDate) ? String(object.endDate) : undefined,
-      status: isSet(object.status) ? String(object.status) : "",
+      skills: globalThis.Array.isArray(object?.skills)
+        ? object.skills.map((e: any) => Challenge_Skill.fromJSON(e))
+        : [],
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
+        : undefined,
+      startDate: isSet(object.startDate)
+        ? globalThis.String(object.startDate)
+        : undefined,
+      endDate: isSet(object.endDate)
+        ? globalThis.String(object.endDate)
+        : undefined,
+      status: isSet(object.status) ? globalThis.String(object.status) : "",
       attachments: globalThis.Array.isArray(object?.attachments)
-        ? object.attachments.map((e: any) => String(e))
+        ? object.attachments.map((e: any) => globalThis.String(e))
         : [],
       groups: globalThis.Array.isArray(object?.groups)
-        ? object.groups.map((e: any) => String(e))
+        ? object.groups.map((e: any) => globalThis.String(e))
         : [],
       discussions: globalThis.Array.isArray(object?.discussions)
         ? object.discussions.map((e: any) => Challenge_Discussion.fromJSON(e))
@@ -3271,6 +3551,9 @@ export const CreateChallengeInput = {
     }
     if (message.tags?.length) {
       obj.tags = message.tags;
+    }
+    if (message.skills?.length) {
+      obj.skills = message.skills.map((e) => Challenge_Skill.toJSON(e));
     }
     if (message.projectId !== undefined) {
       obj.projectId = Math.round(message.projectId);
@@ -3340,6 +3623,8 @@ export const CreateChallengeInput = {
     message.prizeSets =
       object.prizeSets?.map((e) => Challenge_PrizeSet.fromPartial(e)) || [];
     message.tags = object.tags?.map((e) => e) || [];
+    message.skills =
+      object.skills?.map((e) => Challenge_Skill.fromPartial(e)) || [];
     message.projectId = object.projectId ?? undefined;
     message.startDate = object.startDate ?? undefined;
     message.endDate = object.endDate ?? undefined;
@@ -3490,6 +3775,7 @@ function createBaseUpdateChallengeInput_UpdateInput(): UpdateChallengeInput_Upda
     overview: undefined,
     constraints: undefined,
     paymentUpdate: undefined,
+    skillUpdate: undefined,
   };
 }
 
@@ -3622,6 +3908,12 @@ export const UpdateChallengeInput_UpdateInput = {
       UpdateChallengeInput_UpdateInput_PaymentUpdate.encode(
         message.paymentUpdate,
         writer.uint32(218).fork()
+      ).ldelim();
+    }
+    if (message.skillUpdate !== undefined) {
+      UpdateChallengeInput_UpdateInput_SkillUpdate.encode(
+        message.skillUpdate,
+        writer.uint32(226).fork()
       ).ldelim();
     }
     return writer;
@@ -3874,6 +4166,17 @@ export const UpdateChallengeInput_UpdateInput = {
               reader.uint32()
             );
           continue;
+        case 28:
+          if (tag !== 226) {
+            break;
+          }
+
+          message.skillUpdate =
+            UpdateChallengeInput_UpdateInput_SkillUpdate.decode(
+              reader,
+              reader.uint32()
+            );
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3885,11 +4188,15 @@ export const UpdateChallengeInput_UpdateInput = {
 
   fromJSON(object: any): UpdateChallengeInput_UpdateInput {
     return {
-      name: isSet(object.name) ? String(object.name) : undefined,
-      typeId: isSet(object.typeId) ? String(object.typeId) : undefined,
-      trackId: isSet(object.trackId) ? String(object.trackId) : undefined,
+      name: isSet(object.name) ? globalThis.String(object.name) : undefined,
+      typeId: isSet(object.typeId)
+        ? globalThis.String(object.typeId)
+        : undefined,
+      trackId: isSet(object.trackId)
+        ? globalThis.String(object.trackId)
+        : undefined,
       timelineTemplateId: isSet(object.timelineTemplateId)
-        ? String(object.timelineTemplateId)
+        ? globalThis.String(object.timelineTemplateId)
         : undefined,
       legacy: isSet(object.legacy)
         ? Challenge_Legacy.fromJSON(object.legacy)
@@ -3898,13 +4205,13 @@ export const UpdateChallengeInput_UpdateInput = {
         ? Challenge_Billing.fromJSON(object.billing)
         : undefined,
       description: isSet(object.description)
-        ? String(object.description)
+        ? globalThis.String(object.description)
         : undefined,
       privateDescription: isSet(object.privateDescription)
-        ? String(object.privateDescription)
+        ? globalThis.String(object.privateDescription)
         : undefined,
       descriptionFormat: isSet(object.descriptionFormat)
-        ? String(object.descriptionFormat)
+        ? globalThis.String(object.descriptionFormat)
         : undefined,
       task: isSet(object.task)
         ? Challenge_Task.fromJSON(object.task)
@@ -3957,10 +4264,18 @@ export const UpdateChallengeInput_UpdateInput = {
             object.groupUpdate
           )
         : undefined,
-      projectId: isSet(object.projectId) ? Number(object.projectId) : undefined,
-      startDate: isSet(object.startDate) ? String(object.startDate) : undefined,
-      endDate: isSet(object.endDate) ? String(object.endDate) : undefined,
-      status: isSet(object.status) ? String(object.status) : undefined,
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
+        : undefined,
+      startDate: isSet(object.startDate)
+        ? globalThis.String(object.startDate)
+        : undefined,
+      endDate: isSet(object.endDate)
+        ? globalThis.String(object.endDate)
+        : undefined,
+      status: isSet(object.status)
+        ? globalThis.String(object.status)
+        : undefined,
       overview: isSet(object.overview)
         ? Challenge_Overview.fromJSON(object.overview)
         : undefined,
@@ -3970,6 +4285,11 @@ export const UpdateChallengeInput_UpdateInput = {
       paymentUpdate: isSet(object.paymentUpdate)
         ? UpdateChallengeInput_UpdateInput_PaymentUpdate.fromJSON(
             object.paymentUpdate
+          )
+        : undefined,
+      skillUpdate: isSet(object.skillUpdate)
+        ? UpdateChallengeInput_UpdateInput_SkillUpdate.fromJSON(
+            object.skillUpdate
           )
         : undefined,
     };
@@ -4084,6 +4404,11 @@ export const UpdateChallengeInput_UpdateInput = {
         message.paymentUpdate
       );
     }
+    if (message.skillUpdate !== undefined) {
+      obj.skillUpdate = UpdateChallengeInput_UpdateInput_SkillUpdate.toJSON(
+        message.skillUpdate
+      );
+    }
     return obj;
   },
 
@@ -4191,6 +4516,12 @@ export const UpdateChallengeInput_UpdateInput = {
       object.paymentUpdate !== undefined && object.paymentUpdate !== null
         ? UpdateChallengeInput_UpdateInput_PaymentUpdate.fromPartial(
             object.paymentUpdate
+          )
+        : undefined;
+    message.skillUpdate =
+      object.skillUpdate !== undefined && object.skillUpdate !== null
+        ? UpdateChallengeInput_UpdateInput_SkillUpdate.fromPartial(
+            object.skillUpdate
           )
         : undefined;
     return message;
@@ -4900,7 +5231,7 @@ export const UpdateChallengeInput_UpdateInput_TagsUpdate = {
   fromJSON(object: any): UpdateChallengeInput_UpdateInput_TagsUpdate {
     return {
       tags: globalThis.Array.isArray(object?.tags)
-        ? object.tags.map((e: any) => String(e))
+        ? object.tags.map((e: any) => globalThis.String(e))
         : [],
     };
   },
@@ -4975,7 +5306,7 @@ export const UpdateChallengeInput_UpdateInput_AttachmentsUpdate = {
   fromJSON(object: any): UpdateChallengeInput_UpdateInput_AttachmentsUpdate {
     return {
       attachments: globalThis.Array.isArray(object?.attachments)
-        ? object.attachments.map((e: any) => String(e))
+        ? object.attachments.map((e: any) => globalThis.String(e))
         : [],
     };
   },
@@ -5056,7 +5387,7 @@ export const UpdateChallengeInput_UpdateInput_GroupsUpdate = {
   fromJSON(object: any): UpdateChallengeInput_UpdateInput_GroupsUpdate {
     return {
       groups: globalThis.Array.isArray(object?.groups)
-        ? object.groups.map((e: any) => String(e))
+        ? object.groups.map((e: any) => globalThis.String(e))
         : [],
     };
   },
@@ -5087,6 +5418,87 @@ export const UpdateChallengeInput_UpdateInput_GroupsUpdate = {
   >(object: I): UpdateChallengeInput_UpdateInput_GroupsUpdate {
     const message = createBaseUpdateChallengeInput_UpdateInput_GroupsUpdate();
     message.groups = object.groups?.map((e) => e) || [];
+    return message;
+  },
+};
+
+function createBaseUpdateChallengeInput_UpdateInput_SkillUpdate(): UpdateChallengeInput_UpdateInput_SkillUpdate {
+  return { skills: [] };
+}
+
+export const UpdateChallengeInput_UpdateInput_SkillUpdate = {
+  encode(
+    message: UpdateChallengeInput_UpdateInput_SkillUpdate,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    for (const v of message.skills) {
+      Challenge_Skill.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): UpdateChallengeInput_UpdateInput_SkillUpdate {
+    const reader =
+      input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUpdateChallengeInput_UpdateInput_SkillUpdate();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.skills.push(Challenge_Skill.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UpdateChallengeInput_UpdateInput_SkillUpdate {
+    return {
+      skills: globalThis.Array.isArray(object?.skills)
+        ? object.skills.map((e: any) => Challenge_Skill.fromJSON(e))
+        : [],
+    };
+  },
+
+  toJSON(message: UpdateChallengeInput_UpdateInput_SkillUpdate): unknown {
+    const obj: any = {};
+    if (message.skills?.length) {
+      obj.skills = message.skills.map((e) => Challenge_Skill.toJSON(e));
+    }
+    return obj;
+  },
+
+  create<
+    I extends Exact<
+      DeepPartial<UpdateChallengeInput_UpdateInput_SkillUpdate>,
+      I
+    >
+  >(base?: I): UpdateChallengeInput_UpdateInput_SkillUpdate {
+    return UpdateChallengeInput_UpdateInput_SkillUpdate.fromPartial(
+      base ?? ({} as any)
+    );
+  },
+  fromPartial<
+    I extends Exact<
+      DeepPartial<UpdateChallengeInput_UpdateInput_SkillUpdate>,
+      I
+    >
+  >(object: I): UpdateChallengeInput_UpdateInput_SkillUpdate {
+    const message = createBaseUpdateChallengeInput_UpdateInput_SkillUpdate();
+    message.skills =
+      object.skills?.map((e) => Challenge_Skill.fromPartial(e)) || [];
     return message;
   },
 };
@@ -5490,7 +5902,9 @@ export const UpdateChallengeInputForACL_UpdateInputForACL = {
 
   fromJSON(object: any): UpdateChallengeInputForACL_UpdateInputForACL {
     return {
-      status: isSet(object.status) ? String(object.status) : undefined,
+      status: isSet(object.status)
+        ? globalThis.String(object.status)
+        : undefined,
       phases: isSet(object.phases)
         ? UpdateChallengeInputForACL_PhasesACL.fromJSON(object.phases)
         : undefined,
@@ -5533,7 +5947,7 @@ export const UpdateChallengeInputForACL_UpdateInputForACL = {
         ? UpdateChallengeInputForACL_WinnersACL.fromJSON(object.winners)
         : undefined,
       phaseToClose: isSet(object.phaseToClose)
-        ? String(object.phaseToClose)
+        ? globalThis.String(object.phaseToClose)
         : undefined,
       payments: isSet(object.payments)
         ? UpdateChallengeInputForACL_PaymentsACL.fromJSON(object.payments)
@@ -5787,7 +6201,7 @@ export const UpdateChallengeInputForACL_CurrentPhaseNamesACL = {
   fromJSON(object: any): UpdateChallengeInputForACL_CurrentPhaseNamesACL {
     return {
       currentPhaseNames: globalThis.Array.isArray(object?.currentPhaseNames)
-        ? object.currentPhaseNames.map((e: any) => String(e))
+        ? object.currentPhaseNames.map((e: any) => globalThis.String(e))
         : [],
     };
   },
@@ -5877,10 +6291,10 @@ export const UpdateChallengeInputForACL_LegacyACL = {
   fromJSON(object: any): UpdateChallengeInputForACL_LegacyACL {
     return {
       reviewScorecardId: isSet(object.reviewScorecardId)
-        ? Number(object.reviewScorecardId)
+        ? globalThis.Number(object.reviewScorecardId)
         : undefined,
       screeningScorecardId: isSet(object.screeningScorecardId)
-        ? Number(object.screeningScorecardId)
+        ? globalThis.Number(object.screeningScorecardId)
         : undefined,
     };
   },
@@ -6142,9 +6556,11 @@ export const UpdateChallengeInputForACL_WinnerACL = {
 
   fromJSON(object: any): UpdateChallengeInputForACL_WinnerACL {
     return {
-      handle: isSet(object.handle) ? String(object.handle) : "",
-      placement: isSet(object.placement) ? Number(object.placement) : 0,
-      userId: isSet(object.userId) ? Number(object.userId) : 0,
+      handle: isSet(object.handle) ? globalThis.String(object.handle) : "",
+      placement: isSet(object.placement)
+        ? globalThis.Number(object.placement)
+        : 0,
+      userId: isSet(object.userId) ? globalThis.Number(object.userId) : 0,
     };
   },
 
@@ -6343,10 +6759,10 @@ export const UpdateChallengeInputForACL_PaymentACL = {
 
   fromJSON(object: any): UpdateChallengeInputForACL_PaymentACL {
     return {
-      handle: isSet(object.handle) ? String(object.handle) : "",
-      amount: isSet(object.amount) ? Number(object.amount) : 0,
-      userId: isSet(object.userId) ? Number(object.userId) : 0,
-      type: isSet(object.type) ? String(object.type) : "",
+      handle: isSet(object.handle) ? globalThis.String(object.handle) : "",
+      amount: isSet(object.amount) ? globalThis.Number(object.amount) : 0,
+      userId: isSet(object.userId) ? globalThis.Number(object.userId) : 0,
+      type: isSet(object.type) ? globalThis.String(object.type) : "",
     };
   },
 
@@ -6397,8 +6813,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }

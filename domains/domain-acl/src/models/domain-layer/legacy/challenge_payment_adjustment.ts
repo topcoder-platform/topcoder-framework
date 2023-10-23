@@ -136,16 +136,30 @@ export const LegacyChallengePaymentAdjustment = {
 
   fromJSON(object: any): LegacyChallengePaymentAdjustment {
     return {
-      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      resourceRoleId: isSet(object.resourceRoleId)
-        ? Number(object.resourceRoleId)
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
         : 0,
-      multiplier: isSet(object.multiplier) ? Number(object.multiplier) : 0,
-      fixedAmount: isSet(object.fixedAmount) ? Number(object.fixedAmount) : 0,
-      createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
-      createDate: isSet(object.createDate) ? Number(object.createDate) : 0,
-      modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : 0,
-      modifyDate: isSet(object.modifyDate) ? Number(object.modifyDate) : 0,
+      resourceRoleId: isSet(object.resourceRoleId)
+        ? globalThis.Number(object.resourceRoleId)
+        : 0,
+      multiplier: isSet(object.multiplier)
+        ? globalThis.Number(object.multiplier)
+        : 0,
+      fixedAmount: isSet(object.fixedAmount)
+        ? globalThis.Number(object.fixedAmount)
+        : 0,
+      createUser: isSet(object.createUser)
+        ? globalThis.Number(object.createUser)
+        : 0,
+      createDate: isSet(object.createDate)
+        ? globalThis.Number(object.createDate)
+        : 0,
+      modifyUser: isSet(object.modifyUser)
+        ? globalThis.Number(object.modifyUser)
+        : 0,
+      modifyDate: isSet(object.modifyDate)
+        ? globalThis.Number(object.modifyDate)
+        : 0,
     };
   },
 
@@ -210,8 +224,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }

@@ -63,7 +63,9 @@ export const SyncInput = {
 
   fromJSON(object: any): SyncInput {
     return {
-      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
+        : 0,
       updatedTables: globalThis.Array.isArray(object?.updatedTables)
         ? object.updatedTables.map((e: any) => Table.fromJSON(e))
         : [],
@@ -153,10 +155,12 @@ export const Table = {
 
   fromJSON(object: any): Table {
     return {
-      table: isSet(object.table) ? String(object.table) : "",
-      primaryKey: isSet(object.primaryKey) ? String(object.primaryKey) : "",
+      table: isSet(object.table) ? globalThis.String(object.table) : "",
+      primaryKey: isSet(object.primaryKey)
+        ? globalThis.String(object.primaryKey)
+        : "",
       value: globalThis.Array.isArray(object?.value)
-        ? object.value.map((e: any) => String(e))
+        ? object.value.map((e: any) => globalThis.String(e))
         : [],
     };
   },
@@ -198,8 +202,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }

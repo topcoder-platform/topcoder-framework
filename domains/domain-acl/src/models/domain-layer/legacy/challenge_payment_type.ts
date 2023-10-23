@@ -99,12 +99,18 @@ export const LegacyChallengePaymentType = {
 
   fromJSON(object: any): LegacyChallengePaymentType {
     return {
-      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      name: isSet(object.name) ? String(object.name) : "",
-      multiplier: isSet(object.multiplier) ? Number(object.multiplier) : 0,
-      mergeable: isSet(object.mergeable) ? Boolean(object.mergeable) : false,
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
+        : 0,
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      multiplier: isSet(object.multiplier)
+        ? globalThis.Number(object.multiplier)
+        : 0,
+      mergeable: isSet(object.mergeable)
+        ? globalThis.Boolean(object.mergeable)
+        : false,
       pactsPaymentTypeId: isSet(object.pactsPaymentTypeId)
-        ? Number(object.pactsPaymentTypeId)
+        ? globalThis.Number(object.pactsPaymentTypeId)
         : 0,
     };
   },
@@ -158,8 +164,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }

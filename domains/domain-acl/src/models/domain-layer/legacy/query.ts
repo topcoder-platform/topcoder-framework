@@ -58,7 +58,7 @@ export const QueryInput = {
   },
 
   fromJSON(object: any): QueryInput {
-    return { sql: isSet(object.sql) ? String(object.sql) : "" };
+    return { sql: isSet(object.sql) ? globalThis.String(object.sql) : "" };
   },
 
   toJSON(message: QueryInput): unknown {
@@ -258,8 +258,8 @@ export const Field = {
 
   fromJSON(object: any): Field {
     return {
-      key: isSet(object.key) ? String(object.key) : "",
-      value: isSet(object.value) ? String(object.value) : "",
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
+      value: isSet(object.value) ? globalThis.String(object.value) : "",
     };
   },
 
@@ -296,8 +296,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }

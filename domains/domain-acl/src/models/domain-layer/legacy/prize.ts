@@ -198,18 +198,32 @@ export const Prize = {
 
   fromJSON(object: any): Prize {
     return {
-      prizeId: isSet(object.prizeId) ? Number(object.prizeId) : 0,
-      place: isSet(object.place) ? Number(object.place) : 0,
-      prizeAmount: isSet(object.prizeAmount) ? Number(object.prizeAmount) : 0,
-      prizeTypeId: isSet(object.prizeTypeId) ? Number(object.prizeTypeId) : 0,
-      numberOfSubmissions: isSet(object.numberOfSubmissions)
-        ? Number(object.numberOfSubmissions)
+      prizeId: isSet(object.prizeId) ? globalThis.Number(object.prizeId) : 0,
+      place: isSet(object.place) ? globalThis.Number(object.place) : 0,
+      prizeAmount: isSet(object.prizeAmount)
+        ? globalThis.Number(object.prizeAmount)
         : 0,
-      createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
-      createDate: isSet(object.createDate) ? Number(object.createDate) : 0,
-      modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : 0,
-      modifyDate: isSet(object.modifyDate) ? Number(object.modifyDate) : 0,
-      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
+      prizeTypeId: isSet(object.prizeTypeId)
+        ? globalThis.Number(object.prizeTypeId)
+        : 0,
+      numberOfSubmissions: isSet(object.numberOfSubmissions)
+        ? globalThis.Number(object.numberOfSubmissions)
+        : 0,
+      createUser: isSet(object.createUser)
+        ? globalThis.Number(object.createUser)
+        : 0,
+      createDate: isSet(object.createDate)
+        ? globalThis.Number(object.createDate)
+        : 0,
+      modifyUser: isSet(object.modifyUser)
+        ? globalThis.Number(object.modifyUser)
+        : 0,
+      modifyDate: isSet(object.modifyDate)
+        ? globalThis.Number(object.modifyDate)
+        : 0,
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
+        : 0,
     };
   },
 
@@ -318,9 +332,11 @@ export const PrizeType = {
 
   fromJSON(object: any): PrizeType {
     return {
-      prizeTypeId: isSet(object.prizeTypeId) ? Number(object.prizeTypeId) : 0,
+      prizeTypeId: isSet(object.prizeTypeId)
+        ? globalThis.Number(object.prizeTypeId)
+        : 0,
       prizeTypeDesc: isSet(object.prizeTypeDesc)
-        ? String(object.prizeTypeDesc)
+        ? globalThis.String(object.prizeTypeDesc)
         : "",
     };
   },
@@ -573,13 +589,19 @@ export const CreatePrizeInput = {
 
   fromJSON(object: any): CreatePrizeInput {
     return {
-      place: isSet(object.place) ? Number(object.place) : 0,
-      prizeAmount: isSet(object.prizeAmount) ? Number(object.prizeAmount) : 0,
-      prizeTypeId: isSet(object.prizeTypeId) ? Number(object.prizeTypeId) : 0,
+      place: isSet(object.place) ? globalThis.Number(object.place) : 0,
+      prizeAmount: isSet(object.prizeAmount)
+        ? globalThis.Number(object.prizeAmount)
+        : 0,
+      prizeTypeId: isSet(object.prizeTypeId)
+        ? globalThis.Number(object.prizeTypeId)
+        : 0,
       numberOfSubmissions: isSet(object.numberOfSubmissions)
-        ? Number(object.numberOfSubmissions)
+        ? globalThis.Number(object.numberOfSubmissions)
         : undefined,
-      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
+        : 0,
     };
   },
 
@@ -808,15 +830,15 @@ export const UpdatePrizeInput_UpdateInput = {
 
   fromJSON(object: any): UpdatePrizeInput_UpdateInput {
     return {
-      place: isSet(object.place) ? Number(object.place) : undefined,
+      place: isSet(object.place) ? globalThis.Number(object.place) : undefined,
       prizeAmount: isSet(object.prizeAmount)
-        ? Number(object.prizeAmount)
+        ? globalThis.Number(object.prizeAmount)
         : undefined,
       prizeTypeId: isSet(object.prizeTypeId)
-        ? Number(object.prizeTypeId)
+        ? globalThis.Number(object.prizeTypeId)
         : undefined,
       numberOfSubmissions: isSet(object.numberOfSubmissions)
-        ? Number(object.numberOfSubmissions)
+        ? globalThis.Number(object.numberOfSubmissions)
         : undefined,
     };
   },
@@ -919,9 +941,13 @@ export const UpdatePrizeInput_UpdateCriteria = {
 
   fromJSON(object: any): UpdatePrizeInput_UpdateCriteria {
     return {
-      projectId: isSet(object.projectId) ? Number(object.projectId) : undefined,
-      place: isSet(object.place) ? Number(object.place) : undefined,
-      prizeId: isSet(object.prizeId) ? Number(object.prizeId) : undefined,
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
+        : undefined,
+      place: isSet(object.place) ? globalThis.Number(object.place) : undefined,
+      prizeId: isSet(object.prizeId)
+        ? globalThis.Number(object.prizeId)
+        : undefined,
     };
   },
 
@@ -1006,8 +1032,10 @@ export const DeletePrizeInput = {
 
   fromJSON(object: any): DeletePrizeInput {
     return {
-      prizeId: isSet(object.prizeId) ? Number(object.prizeId) : 0,
-      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
+      prizeId: isSet(object.prizeId) ? globalThis.Number(object.prizeId) : 0,
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
+        : 0,
     };
   },
 
@@ -1048,8 +1076,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }

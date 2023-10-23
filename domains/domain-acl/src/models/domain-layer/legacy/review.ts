@@ -343,24 +343,38 @@ export const Review = {
 
   fromJSON(object: any): Review {
     return {
-      reviewId: isSet(object.reviewId) ? Number(object.reviewId) : 0,
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
+      reviewId: isSet(object.reviewId) ? globalThis.Number(object.reviewId) : 0,
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
+        : 0,
       submissionId: isSet(object.submissionId)
-        ? Number(object.submissionId)
+        ? globalThis.Number(object.submissionId)
         : 0,
       projectPhaseId: isSet(object.projectPhaseId)
-        ? Number(object.projectPhaseId)
+        ? globalThis.Number(object.projectPhaseId)
         : 0,
-      scorecardId: isSet(object.scorecardId) ? Number(object.scorecardId) : 0,
-      committed: isSet(object.committed) ? Number(object.committed) : 0,
-      score: isSet(object.score) ? Number(object.score) : 0,
+      scorecardId: isSet(object.scorecardId)
+        ? globalThis.Number(object.scorecardId)
+        : 0,
+      committed: isSet(object.committed)
+        ? globalThis.Number(object.committed)
+        : 0,
+      score: isSet(object.score) ? globalThis.Number(object.score) : 0,
       initialScore: isSet(object.initialScore)
-        ? Number(object.initialScore)
+        ? globalThis.Number(object.initialScore)
         : 0,
-      createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
-      createDate: isSet(object.createDate) ? Number(object.createDate) : 0,
-      modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : 0,
-      modifyDate: isSet(object.modifyDate) ? Number(object.modifyDate) : 0,
+      createUser: isSet(object.createUser)
+        ? globalThis.Number(object.createUser)
+        : 0,
+      createDate: isSet(object.createDate)
+        ? globalThis.Number(object.createDate)
+        : 0,
+      modifyUser: isSet(object.modifyUser)
+        ? globalThis.Number(object.modifyUser)
+        : 0,
+      modifyDate: isSet(object.modifyDate)
+        ? globalThis.Number(object.modifyDate)
+        : 0,
     };
   },
 
@@ -602,18 +616,24 @@ export const CreateReviewInput = {
 
   fromJSON(object: any): CreateReviewInput {
     return {
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
+        : 0,
       submissionId: isSet(object.submissionId)
-        ? Number(object.submissionId)
+        ? globalThis.Number(object.submissionId)
         : 0,
       projectPhaseId: isSet(object.projectPhaseId)
-        ? Number(object.projectPhaseId)
+        ? globalThis.Number(object.projectPhaseId)
         : 0,
-      scorecardId: isSet(object.scorecardId) ? Number(object.scorecardId) : 0,
-      committed: isSet(object.committed) ? Number(object.committed) : 0,
-      score: isSet(object.score) ? Number(object.score) : 0,
+      scorecardId: isSet(object.scorecardId)
+        ? globalThis.Number(object.scorecardId)
+        : 0,
+      committed: isSet(object.committed)
+        ? globalThis.Number(object.committed)
+        : 0,
+      score: isSet(object.score) ? globalThis.Number(object.score) : 0,
       initialScore: isSet(object.initialScore)
-        ? Number(object.initialScore)
+        ? globalThis.Number(object.initialScore)
         : 0,
     };
   },
@@ -807,26 +827,28 @@ export const ReviewItem = {
   fromJSON(object: any): ReviewItem {
     return {
       reviewItemId: isSet(object.reviewItemId)
-        ? Number(object.reviewItemId)
+        ? globalThis.Number(object.reviewItemId)
         : 0,
-      reviewId: isSet(object.reviewId) ? Number(object.reviewId) : 0,
+      reviewId: isSet(object.reviewId) ? globalThis.Number(object.reviewId) : 0,
       scorecardQuestionId: isSet(object.scorecardQuestionId)
-        ? Number(object.scorecardQuestionId)
+        ? globalThis.Number(object.scorecardQuestionId)
         : 0,
-      uploadId: isSet(object.uploadId) ? Number(object.uploadId) : undefined,
-      answer: isSet(object.answer) ? String(object.answer) : "",
-      sort: isSet(object.sort) ? Number(object.sort) : 0,
+      uploadId: isSet(object.uploadId)
+        ? globalThis.Number(object.uploadId)
+        : undefined,
+      answer: isSet(object.answer) ? globalThis.String(object.answer) : "",
+      sort: isSet(object.sort) ? globalThis.Number(object.sort) : 0,
       createUser: isSet(object.createUser)
-        ? Number(object.createUser)
+        ? globalThis.Number(object.createUser)
         : undefined,
       createDate: isSet(object.createDate)
-        ? Number(object.createDate)
+        ? globalThis.Number(object.createDate)
         : undefined,
       modifyUser: isSet(object.modifyUser)
-        ? Number(object.modifyUser)
+        ? globalThis.Number(object.modifyUser)
         : undefined,
       modifyDate: isSet(object.modifyDate)
-        ? Number(object.modifyDate)
+        ? globalThis.Number(object.modifyDate)
         : undefined,
     };
   },
@@ -977,13 +999,15 @@ export const CreateReviewItemInput = {
 
   fromJSON(object: any): CreateReviewItemInput {
     return {
-      reviewId: isSet(object.reviewId) ? Number(object.reviewId) : 0,
+      reviewId: isSet(object.reviewId) ? globalThis.Number(object.reviewId) : 0,
       scorecardQuestionId: isSet(object.scorecardQuestionId)
-        ? Number(object.scorecardQuestionId)
+        ? globalThis.Number(object.scorecardQuestionId)
         : 0,
-      uploadId: isSet(object.uploadId) ? Number(object.uploadId) : undefined,
-      answer: isSet(object.answer) ? String(object.answer) : "",
-      sort: isSet(object.sort) ? Number(object.sort) : 0,
+      uploadId: isSet(object.uploadId)
+        ? globalThis.Number(object.uploadId)
+        : undefined,
+      answer: isSet(object.answer) ? globalThis.String(object.answer) : "",
+      sort: isSet(object.sort) ? globalThis.Number(object.sort) : 0,
     };
   },
 
@@ -1146,22 +1170,26 @@ export const Submission = {
   fromJSON(object: any): Submission {
     return {
       submissionId: isSet(object.submissionId)
-        ? Number(object.submissionId)
+        ? globalThis.Number(object.submissionId)
         : 0,
-      uploadId: isSet(object.uploadId) ? Number(object.uploadId) : 0,
+      uploadId: isSet(object.uploadId) ? globalThis.Number(object.uploadId) : 0,
       initialScore: isSet(object.initialScore)
-        ? Number(object.initialScore)
+        ? globalThis.Number(object.initialScore)
         : undefined,
       finalScore: isSet(object.finalScore)
-        ? Number(object.finalScore)
+        ? globalThis.Number(object.finalScore)
         : undefined,
-      placement: isSet(object.placement) ? Number(object.placement) : undefined,
-      prizeId: isSet(object.prizeId) ? Number(object.prizeId) : undefined,
+      placement: isSet(object.placement)
+        ? globalThis.Number(object.placement)
+        : undefined,
+      prizeId: isSet(object.prizeId)
+        ? globalThis.Number(object.prizeId)
+        : undefined,
       submissionStatusId: isSet(object.submissionStatusId)
-        ? Number(object.submissionStatusId)
+        ? globalThis.Number(object.submissionStatusId)
         : 0,
       submissionTypeId: isSet(object.submissionTypeId)
-        ? Number(object.submissionTypeId)
+        ? globalThis.Number(object.submissionTypeId)
         : 0,
     };
   },
@@ -1290,14 +1318,18 @@ export const GetSubmissionInput = {
 
   fromJSON(object: any): GetSubmissionInput {
     return {
-      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
+        : 0,
       submissionStatusId: isSet(object.submissionStatusId)
-        ? Number(object.submissionStatusId)
+        ? globalThis.Number(object.submissionStatusId)
         : undefined,
       uploadStatusId: isSet(object.uploadStatusId)
-        ? Number(object.uploadStatusId)
+        ? globalThis.Number(object.uploadStatusId)
         : undefined,
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
+        : 0,
     };
   },
 
@@ -1447,20 +1479,24 @@ export const CreateSubmissionInput = {
 
   fromJSON(object: any): CreateSubmissionInput {
     return {
-      uploadId: isSet(object.uploadId) ? Number(object.uploadId) : 0,
+      uploadId: isSet(object.uploadId) ? globalThis.Number(object.uploadId) : 0,
       initialScore: isSet(object.initialScore)
-        ? Number(object.initialScore)
+        ? globalThis.Number(object.initialScore)
         : undefined,
       finalScore: isSet(object.finalScore)
-        ? Number(object.finalScore)
+        ? globalThis.Number(object.finalScore)
         : undefined,
-      placement: isSet(object.placement) ? Number(object.placement) : undefined,
-      prizeId: isSet(object.prizeId) ? Number(object.prizeId) : undefined,
+      placement: isSet(object.placement)
+        ? globalThis.Number(object.placement)
+        : undefined,
+      prizeId: isSet(object.prizeId)
+        ? globalThis.Number(object.prizeId)
+        : undefined,
       submissionStatusId: isSet(object.submissionStatusId)
-        ? Number(object.submissionStatusId)
+        ? globalThis.Number(object.submissionStatusId)
         : 0,
       submissionTypeId: isSet(object.submissionTypeId)
-        ? Number(object.submissionTypeId)
+        ? globalThis.Number(object.submissionTypeId)
         : 0,
     };
   },
@@ -1602,16 +1638,20 @@ export const UpdateSubmissionInput = {
   fromJSON(object: any): UpdateSubmissionInput {
     return {
       submissionId: isSet(object.submissionId)
-        ? Number(object.submissionId)
+        ? globalThis.Number(object.submissionId)
         : 0,
       initialScore: isSet(object.initialScore)
-        ? Number(object.initialScore)
+        ? globalThis.Number(object.initialScore)
         : undefined,
       finalScore: isSet(object.finalScore)
-        ? Number(object.finalScore)
+        ? globalThis.Number(object.finalScore)
         : undefined,
-      placement: isSet(object.placement) ? Number(object.placement) : undefined,
-      prizeId: isSet(object.prizeId) ? Number(object.prizeId) : undefined,
+      placement: isSet(object.placement)
+        ? globalThis.Number(object.placement)
+        : undefined,
+      prizeId: isSet(object.prizeId)
+        ? globalThis.Number(object.prizeId)
+        : undefined,
     };
   },
 
@@ -1740,15 +1780,19 @@ export const Upload = {
 
   fromJSON(object: any): Upload {
     return {
-      uploadId: isSet(object.uploadId) ? Number(object.uploadId) : 0,
-      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
+      uploadId: isSet(object.uploadId) ? globalThis.Number(object.uploadId) : 0,
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
+        : 0,
       uploadStatusId: isSet(object.uploadStatusId)
-        ? Number(object.uploadStatusId)
+        ? globalThis.Number(object.uploadStatusId)
         : 0,
       resourceRoleId: isSet(object.resourceRoleId)
-        ? Number(object.resourceRoleId)
+        ? globalThis.Number(object.resourceRoleId)
         : 0,
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
+        : 0,
     };
   },
 
@@ -1884,18 +1928,24 @@ export const CreateUploadInput = {
 
   fromJSON(object: any): CreateUploadInput {
     return {
-      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      uploadStatusId: isSet(object.uploadStatusId)
-        ? Number(object.uploadStatusId)
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
         : 0,
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
+      uploadStatusId: isSet(object.uploadStatusId)
+        ? globalThis.Number(object.uploadStatusId)
+        : 0,
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
+        : 0,
       projectPhaseId: isSet(object.projectPhaseId)
-        ? Number(object.projectPhaseId)
+        ? globalThis.Number(object.projectPhaseId)
         : 0,
       uploadTypeId: isSet(object.uploadTypeId)
-        ? Number(object.uploadTypeId)
+        ? globalThis.Number(object.uploadTypeId)
         : 0,
-      parameter: isSet(object.parameter) ? String(object.parameter) : "",
+      parameter: isSet(object.parameter)
+        ? globalThis.String(object.parameter)
+        : "",
     };
   },
 
@@ -2029,14 +2079,16 @@ export const ReviewComment = {
   fromJSON(object: any): ReviewComment {
     return {
       reviewCommentId: isSet(object.reviewCommentId)
-        ? Number(object.reviewCommentId)
+        ? globalThis.Number(object.reviewCommentId)
         : 0,
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
-      reviewId: isSet(object.reviewId) ? Number(object.reviewId) : 0,
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
+        : 0,
+      reviewId: isSet(object.reviewId) ? globalThis.Number(object.reviewId) : 0,
       commentTypeId: isSet(object.commentTypeId)
-        ? Number(object.commentTypeId)
+        ? globalThis.Number(object.commentTypeId)
         : 0,
-      content: isSet(object.content) ? String(object.content) : "",
+      content: isSet(object.content) ? globalThis.String(object.content) : "",
     };
   },
 
@@ -2149,12 +2201,14 @@ export const CreateReviewComment = {
 
   fromJSON(object: any): CreateReviewComment {
     return {
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
-      reviewId: isSet(object.reviewId) ? Number(object.reviewId) : 0,
-      commentTypeId: isSet(object.commentTypeId)
-        ? Number(object.commentTypeId)
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
         : 0,
-      content: isSet(object.content) ? String(object.content) : "",
+      reviewId: isSet(object.reviewId) ? globalThis.Number(object.reviewId) : 0,
+      commentTypeId: isSet(object.commentTypeId)
+        ? globalThis.Number(object.commentTypeId)
+        : 0,
+      content: isSet(object.content) ? globalThis.String(object.content) : "",
     };
   },
 
@@ -2291,17 +2345,19 @@ export const ReviewItemComment = {
   fromJSON(object: any): ReviewItemComment {
     return {
       reviewItemCommentId: isSet(object.reviewItemCommentId)
-        ? Number(object.reviewItemCommentId)
+        ? globalThis.Number(object.reviewItemCommentId)
         : 0,
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
+        : 0,
       reviewItemId: isSet(object.reviewItemId)
-        ? Number(object.reviewItemId)
+        ? globalThis.Number(object.reviewItemId)
         : 0,
       commentTypeId: isSet(object.commentTypeId)
-        ? Number(object.commentTypeId)
+        ? globalThis.Number(object.commentTypeId)
         : 0,
-      content: isSet(object.content) ? String(object.content) : "",
-      sort: isSet(object.sort) ? Number(object.sort) : 0,
+      content: isSet(object.content) ? globalThis.String(object.content) : "",
+      sort: isSet(object.sort) ? globalThis.Number(object.sort) : 0,
     };
   },
 
@@ -2437,15 +2493,17 @@ export const CreateReviewItemCommentInput = {
 
   fromJSON(object: any): CreateReviewItemCommentInput {
     return {
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
+        : 0,
       reviewItemId: isSet(object.reviewItemId)
-        ? Number(object.reviewItemId)
+        ? globalThis.Number(object.reviewItemId)
         : 0,
       commentTypeId: isSet(object.commentTypeId)
-        ? Number(object.commentTypeId)
+        ? globalThis.Number(object.commentTypeId)
         : 0,
-      content: isSet(object.content) ? String(object.content) : "",
-      sort: isSet(object.sort) ? Number(object.sort) : 0,
+      content: isSet(object.content) ? globalThis.String(object.content) : "",
+      sort: isSet(object.sort) ? globalThis.Number(object.sort) : 0,
     };
   },
 
@@ -2630,24 +2688,26 @@ export const ScorecardGroup = {
   fromJSON(object: any): ScorecardGroup {
     return {
       scorecardGroupId: isSet(object.scorecardGroupId)
-        ? Number(object.scorecardGroupId)
+        ? globalThis.Number(object.scorecardGroupId)
         : 0,
-      scorecardId: isSet(object.scorecardId) ? Number(object.scorecardId) : 0,
-      name: isSet(object.name) ? String(object.name) : "",
-      weight: isSet(object.weight) ? Number(object.weight) : 0,
-      sort: isSet(object.sort) ? Number(object.sort) : 0,
-      version: isSet(object.version) ? Number(object.version) : 0,
+      scorecardId: isSet(object.scorecardId)
+        ? globalThis.Number(object.scorecardId)
+        : 0,
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      weight: isSet(object.weight) ? globalThis.Number(object.weight) : 0,
+      sort: isSet(object.sort) ? globalThis.Number(object.sort) : 0,
+      version: isSet(object.version) ? globalThis.Number(object.version) : 0,
       createUser: isSet(object.createUser)
-        ? Number(object.createUser)
+        ? globalThis.Number(object.createUser)
         : undefined,
       createDate: isSet(object.createDate)
-        ? Number(object.createDate)
+        ? globalThis.Number(object.createDate)
         : undefined,
       modifyUser: isSet(object.modifyUser)
-        ? Number(object.modifyUser)
+        ? globalThis.Number(object.modifyUser)
         : undefined,
       modifyDate: isSet(object.modifyDate)
-        ? Number(object.modifyDate)
+        ? globalThis.Number(object.modifyDate)
         : undefined,
     };
   },
@@ -2824,7 +2884,9 @@ export const GetScorecardGroupsInput = {
 
   fromJSON(object: any): GetScorecardGroupsInput {
     return {
-      scorecardId: isSet(object.scorecardId) ? Number(object.scorecardId) : 0,
+      scorecardId: isSet(object.scorecardId)
+        ? globalThis.Number(object.scorecardId)
+        : 0,
     };
   },
 
@@ -2993,26 +3055,26 @@ export const ScorecardSection = {
   fromJSON(object: any): ScorecardSection {
     return {
       scorecardSectionId: isSet(object.scorecardSectionId)
-        ? Number(object.scorecardSectionId)
+        ? globalThis.Number(object.scorecardSectionId)
         : 0,
       scorecardGroupId: isSet(object.scorecardGroupId)
-        ? Number(object.scorecardGroupId)
+        ? globalThis.Number(object.scorecardGroupId)
         : 0,
-      name: isSet(object.name) ? String(object.name) : "",
-      weight: isSet(object.weight) ? Number(object.weight) : 0,
-      sort: isSet(object.sort) ? Number(object.sort) : 0,
-      version: isSet(object.version) ? Number(object.version) : 0,
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      weight: isSet(object.weight) ? globalThis.Number(object.weight) : 0,
+      sort: isSet(object.sort) ? globalThis.Number(object.sort) : 0,
+      version: isSet(object.version) ? globalThis.Number(object.version) : 0,
       createUser: isSet(object.createUser)
-        ? Number(object.createUser)
+        ? globalThis.Number(object.createUser)
         : undefined,
       createDate: isSet(object.createDate)
-        ? Number(object.createDate)
+        ? globalThis.Number(object.createDate)
         : undefined,
       modifyUser: isSet(object.modifyUser)
-        ? Number(object.modifyUser)
+        ? globalThis.Number(object.modifyUser)
         : undefined,
       modifyDate: isSet(object.modifyDate)
-        ? Number(object.modifyDate)
+        ? globalThis.Number(object.modifyDate)
         : undefined,
     };
   },
@@ -3193,7 +3255,7 @@ export const GetScorecardSectionsInput = {
   fromJSON(object: any): GetScorecardSectionsInput {
     return {
       scorecardGroupId: isSet(object.scorecardGroupId)
-        ? Number(object.scorecardGroupId)
+        ? globalThis.Number(object.scorecardGroupId)
         : 0,
     };
   },
@@ -3231,8 +3293,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }

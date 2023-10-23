@@ -6,7 +6,7 @@ const { execSync } = require("child_process");
 
 const PROTO_DIR = path.join(
   __dirname,
-  "../../../node_modules/topcoder-interface"
+  "../../../node_modules/topcoder-proto-registry"
 );
 
 const MODEL_DIR = path.join(__dirname, "../src/models/");

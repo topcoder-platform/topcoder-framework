@@ -239,40 +239,44 @@ export const LegacyChallengePhase = {
   fromJSON(object: any): LegacyChallengePhase {
     return {
       projectPhaseId: isSet(object.projectPhaseId)
-        ? Number(object.projectPhaseId)
+        ? globalThis.Number(object.projectPhaseId)
         : 0,
-      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      phaseTypeId: isSet(object.phaseTypeId) ? Number(object.phaseTypeId) : 0,
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
+        : 0,
+      phaseTypeId: isSet(object.phaseTypeId)
+        ? globalThis.Number(object.phaseTypeId)
+        : 0,
       phaseStatusId: isSet(object.phaseStatusId)
-        ? Number(object.phaseStatusId)
+        ? globalThis.Number(object.phaseStatusId)
         : 0,
       fixedStartTime: isSet(object.fixedStartTime)
-        ? String(object.fixedStartTime)
+        ? globalThis.String(object.fixedStartTime)
         : undefined,
       scheduledStartTime: isSet(object.scheduledStartTime)
-        ? String(object.scheduledStartTime)
+        ? globalThis.String(object.scheduledStartTime)
         : undefined,
       scheduledEndTime: isSet(object.scheduledEndTime)
-        ? String(object.scheduledEndTime)
+        ? globalThis.String(object.scheduledEndTime)
         : undefined,
       actualStartTime: isSet(object.actualStartTime)
-        ? String(object.actualStartTime)
+        ? globalThis.String(object.actualStartTime)
         : undefined,
       actualEndTime: isSet(object.actualEndTime)
-        ? String(object.actualEndTime)
+        ? globalThis.String(object.actualEndTime)
         : undefined,
-      duration: isSet(object.duration) ? Number(object.duration) : 0,
+      duration: isSet(object.duration) ? globalThis.Number(object.duration) : 0,
       createUser: isSet(object.createUser)
-        ? Number(object.createUser)
+        ? globalThis.Number(object.createUser)
         : undefined,
       createDate: isSet(object.createDate)
-        ? String(object.createDate)
+        ? globalThis.String(object.createDate)
         : undefined,
       modifyUser: isSet(object.modifyUser)
-        ? Number(object.modifyUser)
+        ? globalThis.Number(object.modifyUser)
         : undefined,
       modifyDate: isSet(object.modifyDate)
-        ? String(object.modifyDate)
+        ? globalThis.String(object.modifyDate)
         : undefined,
     };
   },
@@ -460,22 +464,24 @@ export const PhaseType = {
 
   fromJSON(object: any): PhaseType {
     return {
-      phaseTypeId: isSet(object.phaseTypeId) ? Number(object.phaseTypeId) : 0,
-      name: isSet(object.name) ? String(object.name) : "",
+      phaseTypeId: isSet(object.phaseTypeId)
+        ? globalThis.Number(object.phaseTypeId)
+        : 0,
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
       description: isSet(object.description)
-        ? String(object.description)
+        ? globalThis.String(object.description)
         : undefined,
       createUser: isSet(object.createUser)
-        ? Number(object.createUser)
+        ? globalThis.Number(object.createUser)
         : undefined,
       createDate: isSet(object.createDate)
-        ? String(object.createDate)
+        ? globalThis.String(object.createDate)
         : undefined,
       modifyUser: isSet(object.modifyUser)
-        ? Number(object.modifyUser)
+        ? globalThis.Number(object.modifyUser)
         : undefined,
       modifyDate: isSet(object.modifyDate)
-        ? String(object.modifyDate)
+        ? globalThis.String(object.modifyDate)
         : undefined,
     };
   },
@@ -799,27 +805,31 @@ export const CreatePhaseInput = {
 
   fromJSON(object: any): CreatePhaseInput {
     return {
-      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      phaseTypeId: isSet(object.phaseTypeId) ? Number(object.phaseTypeId) : 0,
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
+        : 0,
+      phaseTypeId: isSet(object.phaseTypeId)
+        ? globalThis.Number(object.phaseTypeId)
+        : 0,
       phaseStatusId: isSet(object.phaseStatusId)
-        ? Number(object.phaseStatusId)
+        ? globalThis.Number(object.phaseStatusId)
         : 0,
       fixedStartTime: isSet(object.fixedStartTime)
-        ? String(object.fixedStartTime)
+        ? globalThis.String(object.fixedStartTime)
         : undefined,
       scheduledStartTime: isSet(object.scheduledStartTime)
-        ? String(object.scheduledStartTime)
+        ? globalThis.String(object.scheduledStartTime)
         : undefined,
       scheduledEndTime: isSet(object.scheduledEndTime)
-        ? String(object.scheduledEndTime)
+        ? globalThis.String(object.scheduledEndTime)
         : undefined,
       actualStartTime: isSet(object.actualStartTime)
-        ? String(object.actualStartTime)
+        ? globalThis.String(object.actualStartTime)
         : undefined,
       actualEndTime: isSet(object.actualEndTime)
-        ? String(object.actualEndTime)
+        ? globalThis.String(object.actualEndTime)
         : undefined,
-      duration: isSet(object.duration) ? Number(object.duration) : 0,
+      duration: isSet(object.duration) ? globalThis.Number(object.duration) : 0,
     };
   },
 
@@ -888,8 +898,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }

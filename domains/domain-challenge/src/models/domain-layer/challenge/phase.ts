@@ -118,13 +118,13 @@ export const Phase = {
 
   fromJSON(object: any): Phase {
     return {
-      id: isSet(object.id) ? String(object.id) : "",
-      name: isSet(object.name) ? String(object.name) : "",
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
       description: isSet(object.description)
-        ? String(object.description)
+        ? globalThis.String(object.description)
         : undefined,
-      isOpen: isSet(object.isOpen) ? Boolean(object.isOpen) : false,
-      duration: isSet(object.duration) ? Number(object.duration) : 0,
+      isOpen: isSet(object.isOpen) ? globalThis.Boolean(object.isOpen) : false,
+      duration: isSet(object.duration) ? globalThis.Number(object.duration) : 0,
     };
   },
 
@@ -300,12 +300,12 @@ export const CreatePhaseInput = {
 
   fromJSON(object: any): CreatePhaseInput {
     return {
-      name: isSet(object.name) ? String(object.name) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
       description: isSet(object.description)
-        ? String(object.description)
+        ? globalThis.String(object.description)
         : undefined,
-      isOpen: isSet(object.isOpen) ? Boolean(object.isOpen) : false,
-      duration: isSet(object.duration) ? Number(object.duration) : 0,
+      isOpen: isSet(object.isOpen) ? globalThis.Boolean(object.isOpen) : false,
+      duration: isSet(object.duration) ? globalThis.Number(object.duration) : 0,
     };
   },
 
@@ -519,12 +519,12 @@ export const UpdatePhaseInput_UpdateInput = {
 
   fromJSON(object: any): UpdatePhaseInput_UpdateInput {
     return {
-      name: isSet(object.name) ? String(object.name) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
       description: isSet(object.description)
-        ? String(object.description)
+        ? globalThis.String(object.description)
         : undefined,
-      isOpen: isSet(object.isOpen) ? Boolean(object.isOpen) : false,
-      duration: isSet(object.duration) ? Number(object.duration) : 0,
+      isOpen: isSet(object.isOpen) ? globalThis.Boolean(object.isOpen) : false,
+      duration: isSet(object.duration) ? globalThis.Number(object.duration) : 0,
     };
   },
 
@@ -573,8 +573,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }

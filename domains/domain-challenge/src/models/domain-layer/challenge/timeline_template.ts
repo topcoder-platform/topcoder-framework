@@ -104,12 +104,12 @@ export const TimelineTemplatePhase = {
 
   fromJSON(object: any): TimelineTemplatePhase {
     return {
-      phaseId: isSet(object.phaseId) ? String(object.phaseId) : "",
+      phaseId: isSet(object.phaseId) ? globalThis.String(object.phaseId) : "",
       defaultDuration: isSet(object.defaultDuration)
-        ? Number(object.defaultDuration)
+        ? globalThis.Number(object.defaultDuration)
         : 0,
       predecessor: isSet(object.predecessor)
-        ? String(object.predecessor)
+        ? globalThis.String(object.predecessor)
         : undefined,
     };
   },
@@ -233,12 +233,14 @@ export const TimelineTemplate = {
 
   fromJSON(object: any): TimelineTemplate {
     return {
-      id: isSet(object.id) ? String(object.id) : "",
-      name: isSet(object.name) ? String(object.name) : "",
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
       description: isSet(object.description)
-        ? String(object.description)
+        ? globalThis.String(object.description)
         : undefined,
-      isActive: isSet(object.isActive) ? Boolean(object.isActive) : false,
+      isActive: isSet(object.isActive)
+        ? globalThis.Boolean(object.isActive)
+        : false,
       phases: globalThis.Array.isArray(object?.phases)
         ? object.phases.map((e: any) => TimelineTemplatePhase.fromJSON(e))
         : [],
@@ -433,11 +435,13 @@ export const CreateTimelineTemplateInput = {
 
   fromJSON(object: any): CreateTimelineTemplateInput {
     return {
-      name: isSet(object.name) ? String(object.name) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
       description: isSet(object.description)
-        ? String(object.description)
+        ? globalThis.String(object.description)
         : undefined,
-      isActive: isSet(object.isActive) ? Boolean(object.isActive) : false,
+      isActive: isSet(object.isActive)
+        ? globalThis.Boolean(object.isActive)
+        : false,
       phases: globalThis.Array.isArray(object?.phases)
         ? object.phases.map((e: any) => TimelineTemplatePhase.fromJSON(e))
         : [],
@@ -662,11 +666,13 @@ export const UpdateTimelineTemplateInput_UpdateInput = {
 
   fromJSON(object: any): UpdateTimelineTemplateInput_UpdateInput {
     return {
-      name: isSet(object.name) ? String(object.name) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
       description: isSet(object.description)
-        ? String(object.description)
+        ? globalThis.String(object.description)
         : undefined,
-      isActive: isSet(object.isActive) ? Boolean(object.isActive) : false,
+      isActive: isSet(object.isActive)
+        ? globalThis.Boolean(object.isActive)
+        : false,
       phases: globalThis.Array.isArray(object?.phases)
         ? object.phases.map((e: any) => TimelineTemplatePhase.fromJSON(e))
         : [],
@@ -721,8 +727,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }

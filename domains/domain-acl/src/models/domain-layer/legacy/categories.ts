@@ -121,19 +121,23 @@ export const LegacyCategory = {
 
   fromJSON(object: any): LegacyCategory {
     return {
-      categoryId: isSet(object.categoryId) ? Number(object.categoryId) : 0,
+      categoryId: isSet(object.categoryId)
+        ? globalThis.Number(object.categoryId)
+        : 0,
       parentCategoryId: isSet(object.parentCategoryId)
-        ? Number(object.parentCategoryId)
+        ? globalThis.Number(object.parentCategoryId)
         : 0,
       categoryName: isSet(object.categoryName)
-        ? String(object.categoryName)
+        ? globalThis.String(object.categoryName)
         : "",
       categoryDescription: isSet(object.categoryDescription)
-        ? String(object.categoryDescription)
+        ? globalThis.String(object.categoryDescription)
         : "",
-      statusId: isSet(object.statusId) ? Number(object.statusId) : 0,
-      viewable: isSet(object.viewable) ? Number(object.viewable) : 0,
-      isCustom: isSet(object.isCustom) ? Boolean(object.isCustom) : false,
+      statusId: isSet(object.statusId) ? globalThis.Number(object.statusId) : 0,
+      viewable: isSet(object.viewable) ? globalThis.Number(object.viewable) : 0,
+      isCustom: isSet(object.isCustom)
+        ? globalThis.Boolean(object.isCustom)
+        : false,
     };
   },
 
@@ -194,8 +198,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }

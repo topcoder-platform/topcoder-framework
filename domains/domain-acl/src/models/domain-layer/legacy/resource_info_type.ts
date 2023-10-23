@@ -122,14 +122,24 @@ export const ResourceInfoType = {
   fromJSON(object: any): ResourceInfoType {
     return {
       resourceInfoTypeId: isSet(object.resourceInfoTypeId)
-        ? Number(object.resourceInfoTypeId)
+        ? globalThis.Number(object.resourceInfoTypeId)
         : 0,
-      name: isSet(object.name) ? String(object.name) : "",
-      description: isSet(object.description) ? String(object.description) : "",
-      createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
-      createDate: isSet(object.createDate) ? Number(object.createDate) : 0,
-      modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : 0,
-      modifyDate: isSet(object.modifyDate) ? Number(object.modifyDate) : 0,
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      description: isSet(object.description)
+        ? globalThis.String(object.description)
+        : "",
+      createUser: isSet(object.createUser)
+        ? globalThis.Number(object.createUser)
+        : 0,
+      createDate: isSet(object.createDate)
+        ? globalThis.Number(object.createDate)
+        : 0,
+      modifyUser: isSet(object.modifyUser)
+        ? globalThis.Number(object.modifyUser)
+        : 0,
+      modifyDate: isSet(object.modifyDate)
+        ? globalThis.Number(object.modifyDate)
+        : 0,
     };
   },
 
@@ -190,8 +200,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }

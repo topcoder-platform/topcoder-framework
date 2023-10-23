@@ -411,7 +411,7 @@ export const ScanCriteria = {
 
   fromJSON(object: any): ScanCriteria {
     return {
-      key: isSet(object.key) ? String(object.key) : "",
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
       operator: isSet(object.operator)
         ? operatorFromJSON(object.operator)
         : undefined,
@@ -503,7 +503,9 @@ export const ScanRequest = {
       criteria: globalThis.Array.isArray(object?.criteria)
         ? object.criteria.map((e: any) => ScanCriteria.fromJSON(e))
         : [],
-      nextToken: isSet(object.nextToken) ? String(object.nextToken) : undefined,
+      nextToken: isSet(object.nextToken)
+        ? globalThis.String(object.nextToken)
+        : undefined,
     };
   },
 
@@ -585,7 +587,9 @@ export const ScanResult = {
 
   fromJSON(object: any): ScanResult {
     return {
-      nextToken: isSet(object.nextToken) ? String(object.nextToken) : undefined,
+      nextToken: isSet(object.nextToken)
+        ? globalThis.String(object.nextToken)
+        : undefined,
       items: globalThis.Array.isArray(object?.items) ? [...object.items] : [],
     };
   },
@@ -671,9 +675,9 @@ export const CreateResult = {
   fromJSON(object: any): CreateResult {
     return {
       kind: isSet(object.integerId)
-        ? { $case: "integerId", integerId: Number(object.integerId) }
+        ? { $case: "integerId", integerId: globalThis.Number(object.integerId) }
         : isSet(object.stringId)
-        ? { $case: "stringId", stringId: String(object.stringId) }
+        ? { $case: "stringId", stringId: globalThis.String(object.stringId) }
         : undefined,
     };
   },
@@ -768,9 +772,11 @@ export const UpdateResult = {
   fromJSON(object: any): UpdateResult {
     return {
       updatedCount: isSet(object.updatedCount)
-        ? Number(object.updatedCount)
+        ? globalThis.Number(object.updatedCount)
         : 0,
-      message: isSet(object.message) ? String(object.message) : undefined,
+      message: isSet(object.message)
+        ? globalThis.String(object.message)
+        : undefined,
     };
   },
 
@@ -840,7 +846,9 @@ export const CheckExistsResult = {
   },
 
   fromJSON(object: any): CheckExistsResult {
-    return { exists: isSet(object.exists) ? Boolean(object.exists) : false };
+    return {
+      exists: isSet(object.exists) ? globalThis.Boolean(object.exists) : false,
+    };
   },
 
   toJSON(message: CheckExistsResult): unknown {
@@ -919,7 +927,7 @@ export const LookupCriteria = {
 
   fromJSON(object: any): LookupCriteria {
     return {
-      key: isSet(object.key) ? String(object.key) : "",
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
       value: isSet(object?.value) ? object.value : undefined,
     };
   },
@@ -1108,7 +1116,7 @@ export const PhaseFactRequest = {
 
   fromJSON(object: any): PhaseFactRequest {
     return {
-      legacyId: isSet(object.legacyId) ? Number(object.legacyId) : 0,
+      legacyId: isSet(object.legacyId) ? globalThis.Number(object.legacyId) : 0,
       facts: globalThis.Array.isArray(object?.facts)
         ? object.facts.map((e: any) => phaseFactFromJSON(e))
         : [],
@@ -1323,8 +1331,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }

@@ -524,23 +524,35 @@ export const Value = {
   fromJSON(object: any): Value {
     return {
       value: isSet(object.stringValue)
-        ? { $case: "stringValue", stringValue: String(object.stringValue) }
+        ? {
+            $case: "stringValue",
+            stringValue: globalThis.String(object.stringValue),
+          }
         : isSet(object.intValue)
-        ? { $case: "intValue", intValue: Number(object.intValue) }
+        ? { $case: "intValue", intValue: globalThis.Number(object.intValue) }
         : isSet(object.longValue)
-        ? { $case: "longValue", longValue: Number(object.longValue) }
+        ? { $case: "longValue", longValue: globalThis.Number(object.longValue) }
         : isSet(object.floatValue)
-        ? { $case: "floatValue", floatValue: Number(object.floatValue) }
+        ? {
+            $case: "floatValue",
+            floatValue: globalThis.Number(object.floatValue),
+          }
         : isSet(object.doubleValue)
-        ? { $case: "doubleValue", doubleValue: Number(object.doubleValue) }
+        ? {
+            $case: "doubleValue",
+            doubleValue: globalThis.Number(object.doubleValue),
+          }
         : isSet(object.booleanValue)
-        ? { $case: "booleanValue", booleanValue: Boolean(object.booleanValue) }
+        ? {
+            $case: "booleanValue",
+            booleanValue: globalThis.Boolean(object.booleanValue),
+          }
         : isSet(object.dateValue)
-        ? { $case: "dateValue", dateValue: String(object.dateValue) }
+        ? { $case: "dateValue", dateValue: globalThis.String(object.dateValue) }
         : isSet(object.datetimeValue)
         ? {
             $case: "datetimeValue",
-            datetimeValue: String(object.datetimeValue),
+            datetimeValue: globalThis.String(object.datetimeValue),
           }
         : isSet(object.blobValue)
         ? {
@@ -731,8 +743,10 @@ export const Column = {
 
   fromJSON(object: any): Column {
     return {
-      tableName: isSet(object.tableName) ? String(object.tableName) : undefined,
-      name: isSet(object.name) ? String(object.name) : "",
+      tableName: isSet(object.tableName)
+        ? globalThis.String(object.tableName)
+        : undefined,
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
       type: isSet(object.type) ? columnTypeFromJSON(object.type) : undefined,
     };
   },
@@ -825,7 +839,7 @@ export const WhereCriteria = {
   fromJSON(object: any): WhereCriteria {
     return {
       operator: isSet(object.operator) ? operatorFromJSON(object.operator) : 0,
-      key: isSet(object.key) ? String(object.key) : "",
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
       value: isSet(object.value) ? Value.fromJSON(object.value) : undefined,
     };
   },
@@ -903,7 +917,9 @@ export const RawQuery = {
   },
 
   fromJSON(object: any): RawQuery {
-    return { query: isSet(object.query) ? String(object.query) : "" };
+    return {
+      query: isSet(object.query) ? globalThis.String(object.query) : "",
+    };
   },
 
   toJSON(message: RawQuery): unknown {
@@ -1032,15 +1048,23 @@ export const Join = {
     return {
       type: isSet(object.type) ? joinTypeFromJSON(object.type) : 0,
       fromTableSchema: isSet(object.fromTableSchema)
-        ? String(object.fromTableSchema)
+        ? globalThis.String(object.fromTableSchema)
         : undefined,
       joinTableSchema: isSet(object.joinTableSchema)
-        ? String(object.joinTableSchema)
+        ? globalThis.String(object.joinTableSchema)
         : undefined,
-      fromTable: isSet(object.fromTable) ? String(object.fromTable) : "",
-      joinTable: isSet(object.joinTable) ? String(object.joinTable) : "",
-      fromColumn: isSet(object.fromColumn) ? String(object.fromColumn) : "",
-      joinColumn: isSet(object.joinColumn) ? String(object.joinColumn) : "",
+      fromTable: isSet(object.fromTable)
+        ? globalThis.String(object.fromTable)
+        : "",
+      joinTable: isSet(object.joinTable)
+        ? globalThis.String(object.joinTable)
+        : "",
+      fromColumn: isSet(object.fromColumn)
+        ? globalThis.String(object.fromColumn)
+        : "",
+      joinColumn: isSet(object.joinColumn)
+        ? globalThis.String(object.joinColumn)
+        : "",
     };
   },
 
@@ -1217,8 +1241,10 @@ export const SelectQuery = {
 
   fromJSON(object: any): SelectQuery {
     return {
-      schema: isSet(object.schema) ? String(object.schema) : undefined,
-      table: isSet(object.table) ? String(object.table) : "",
+      schema: isSet(object.schema)
+        ? globalThis.String(object.schema)
+        : undefined,
+      table: isSet(object.table) ? globalThis.String(object.table) : "",
       column: globalThis.Array.isArray(object?.column)
         ? object.column.map((e: any) => Column.fromJSON(e))
         : [],
@@ -1226,16 +1252,16 @@ export const SelectQuery = {
         ? object.where.map((e: any) => WhereCriteria.fromJSON(e))
         : [],
       groupBy: globalThis.Array.isArray(object?.groupBy)
-        ? object.groupBy.map((e: any) => String(e))
+        ? object.groupBy.map((e: any) => globalThis.String(e))
         : [],
       orderBy: globalThis.Array.isArray(object?.orderBy)
-        ? object.orderBy.map((e: any) => String(e))
+        ? object.orderBy.map((e: any) => globalThis.String(e))
         : [],
       join: globalThis.Array.isArray(object?.join)
         ? object.join.map((e: any) => Join.fromJSON(e))
         : [],
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
-      offset: isSet(object.offset) ? Number(object.offset) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
     };
   },
 
@@ -1343,7 +1369,7 @@ export const ColumnValue = {
 
   fromJSON(object: any): ColumnValue {
     return {
-      column: isSet(object.column) ? String(object.column) : "",
+      column: isSet(object.column) ? globalThis.String(object.column) : "",
       value: isSet(object.value) ? Value.fromJSON(object.value) : undefined,
     };
   },
@@ -1473,16 +1499,22 @@ export const InsertQuery = {
 
   fromJSON(object: any): InsertQuery {
     return {
-      schema: isSet(object.schema) ? String(object.schema) : undefined,
-      table: isSet(object.table) ? String(object.table) : "",
+      schema: isSet(object.schema)
+        ? globalThis.String(object.schema)
+        : undefined,
+      table: isSet(object.table) ? globalThis.String(object.table) : "",
       columnValue: globalThis.Array.isArray(object?.columnValue)
         ? object.columnValue.map((e: any) => ColumnValue.fromJSON(e))
         : [],
-      idColumn: isSet(object.idColumn) ? String(object.idColumn) : undefined,
-      idSequence: isSet(object.idSequence)
-        ? String(object.idSequence)
+      idColumn: isSet(object.idColumn)
+        ? globalThis.String(object.idColumn)
         : undefined,
-      idTable: isSet(object.idTable) ? String(object.idTable) : undefined,
+      idSequence: isSet(object.idSequence)
+        ? globalThis.String(object.idSequence)
+        : undefined,
+      idTable: isSet(object.idTable)
+        ? globalThis.String(object.idTable)
+        : undefined,
     };
   },
 
@@ -1668,8 +1700,10 @@ export const UpdateQuery = {
 
   fromJSON(object: any): UpdateQuery {
     return {
-      schema: isSet(object.schema) ? String(object.schema) : undefined,
-      table: isSet(object.table) ? String(object.table) : "",
+      schema: isSet(object.schema)
+        ? globalThis.String(object.schema)
+        : undefined,
+      table: isSet(object.table) ? globalThis.String(object.table) : "",
       columnValue: globalThis.Array.isArray(object?.columnValue)
         ? object.columnValue.map((e: any) => ColumnValue.fromJSON(e))
         : [],
@@ -1774,8 +1808,10 @@ export const DeleteQuery = {
 
   fromJSON(object: any): DeleteQuery {
     return {
-      schema: isSet(object.schema) ? String(object.schema) : undefined,
-      table: isSet(object.table) ? String(object.table) : "",
+      schema: isSet(object.schema)
+        ? globalThis.String(object.schema)
+        : undefined,
+      table: isSet(object.table) ? globalThis.String(object.table) : "",
       where: globalThis.Array.isArray(object?.where)
         ? object.where.map((e: any) => WhereCriteria.fromJSON(e))
         : [],
@@ -2149,7 +2185,7 @@ export const Row_ValuesEntry = {
 
   fromJSON(object: any): Row_ValuesEntry {
     return {
-      key: isSet(object.key) ? String(object.key) : "",
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
       value: isSet(object.value) ? Value.fromJSON(object.value) : undefined,
     };
   },
@@ -2433,7 +2469,7 @@ export const InsertQueryResult = {
   fromJSON(object: any): InsertQueryResult {
     return {
       lastInsertId: isSet(object.lastInsertId)
-        ? Number(object.lastInsertId)
+        ? globalThis.Number(object.lastInsertId)
         : 0,
     };
   },
@@ -2502,7 +2538,7 @@ export const UpdateQueryResult = {
   fromJSON(object: any): UpdateQueryResult {
     return {
       affectedRows: isSet(object.affectedRows)
-        ? Number(object.affectedRows)
+        ? globalThis.Number(object.affectedRows)
         : 0,
     };
   },
@@ -2571,7 +2607,7 @@ export const DeleteQueryResult = {
   fromJSON(object: any): DeleteQueryResult {
     return {
       affectedRows: isSet(object.affectedRows)
-        ? Number(object.affectedRows)
+        ? globalThis.Number(object.affectedRows)
         : 0,
     };
   },
@@ -2928,8 +2964,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }

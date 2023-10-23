@@ -135,13 +135,15 @@ export const Attachment = {
 
   fromJSON(object: any): Attachment {
     return {
-      id: isSet(object.id) ? String(object.id) : "",
-      url: isSet(object.url) ? String(object.url) : "",
-      fileSize: isSet(object.fileSize) ? Number(object.fileSize) : 0,
-      name: isSet(object.name) ? String(object.name) : "",
-      challengeId: isSet(object.challengeId) ? String(object.challengeId) : "",
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      url: isSet(object.url) ? globalThis.String(object.url) : "",
+      fileSize: isSet(object.fileSize) ? globalThis.Number(object.fileSize) : 0,
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      challengeId: isSet(object.challengeId)
+        ? globalThis.String(object.challengeId)
+        : "",
       description: isSet(object.description)
-        ? String(object.description)
+        ? globalThis.String(object.description)
         : undefined,
     };
   },
@@ -345,12 +347,14 @@ export const CreateAttachmentInput = {
 
   fromJSON(object: any): CreateAttachmentInput {
     return {
-      url: isSet(object.url) ? String(object.url) : "",
-      fileSize: isSet(object.fileSize) ? Number(object.fileSize) : 0,
-      name: isSet(object.name) ? String(object.name) : "",
-      challengeId: isSet(object.challengeId) ? String(object.challengeId) : "",
+      url: isSet(object.url) ? globalThis.String(object.url) : "",
+      fileSize: isSet(object.fileSize) ? globalThis.Number(object.fileSize) : 0,
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      challengeId: isSet(object.challengeId)
+        ? globalThis.String(object.challengeId)
+        : "",
       description: isSet(object.description)
-        ? String(object.description)
+        ? globalThis.String(object.description)
         : undefined,
     };
   },
@@ -588,12 +592,14 @@ export const UpdateAttachmentInput_UpdateInput = {
 
   fromJSON(object: any): UpdateAttachmentInput_UpdateInput {
     return {
-      url: isSet(object.url) ? String(object.url) : "",
-      fileSize: isSet(object.fileSize) ? Number(object.fileSize) : 0,
-      name: isSet(object.name) ? String(object.name) : "",
-      challengeId: isSet(object.challengeId) ? String(object.challengeId) : "",
+      url: isSet(object.url) ? globalThis.String(object.url) : "",
+      fileSize: isSet(object.fileSize) ? globalThis.Number(object.fileSize) : 0,
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      challengeId: isSet(object.challengeId)
+        ? globalThis.String(object.challengeId)
+        : "",
       description: isSet(object.description)
-        ? String(object.description)
+        ? globalThis.String(object.description)
         : undefined,
     };
   },
@@ -647,8 +653,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }

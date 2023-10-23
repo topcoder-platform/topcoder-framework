@@ -99,10 +99,12 @@ export const ContestEligibility = {
   fromJSON(object: any): ContestEligibility {
     return {
       contestEligibilityId: isSet(object.contestEligibilityId)
-        ? Number(object.contestEligibilityId)
+        ? globalThis.Number(object.contestEligibilityId)
         : 0,
-      contestId: isSet(object.contestId) ? Number(object.contestId) : 0,
-      isStudio: isSet(object.isStudio) ? Number(object.isStudio) : 0,
+      contestId: isSet(object.contestId)
+        ? globalThis.Number(object.contestId)
+        : 0,
+      isStudio: isSet(object.isStudio) ? globalThis.Number(object.isStudio) : 0,
     };
   },
 
@@ -180,7 +182,9 @@ export const GetContestEligibilityInput = {
 
   fromJSON(object: any): GetContestEligibilityInput {
     return {
-      contestId: isSet(object.contestId) ? Number(object.contestId) : 0,
+      contestId: isSet(object.contestId)
+        ? globalThis.Number(object.contestId)
+        : 0,
     };
   },
 
@@ -334,7 +338,7 @@ export const DeleteContestEligibilityInput = {
   fromJSON(object: any): DeleteContestEligibilityInput {
     return {
       contestEligibilityId: isSet(object.contestEligibilityId)
-        ? Number(object.contestEligibilityId)
+        ? globalThis.Number(object.contestEligibilityId)
         : 0,
     };
   },
@@ -416,9 +420,9 @@ export const GroupContestEligibility = {
   fromJSON(object: any): GroupContestEligibility {
     return {
       contestEligibilityId: isSet(object.contestEligibilityId)
-        ? Number(object.contestEligibilityId)
+        ? globalThis.Number(object.contestEligibilityId)
         : 0,
-      groupId: isSet(object.groupId) ? Number(object.groupId) : 0,
+      groupId: isSet(object.groupId) ? globalThis.Number(object.groupId) : 0,
     };
   },
 
@@ -493,7 +497,7 @@ export const GetGroupContestEligibilityInput = {
   fromJSON(object: any): GetGroupContestEligibilityInput {
     return {
       contestEligibilityId: isSet(object.contestEligibilityId)
-        ? Number(object.contestEligibilityId)
+        ? globalThis.Number(object.contestEligibilityId)
         : 0,
     };
   },
@@ -658,9 +662,9 @@ export const DeleteGroupContestEligibilityInput = {
   fromJSON(object: any): DeleteGroupContestEligibilityInput {
     return {
       contestEligibilityId: isSet(object.contestEligibilityId)
-        ? Number(object.contestEligibilityId)
+        ? globalThis.Number(object.contestEligibilityId)
         : 0,
-      groupId: isSet(object.groupId) ? Number(object.groupId) : 0,
+      groupId: isSet(object.groupId) ? globalThis.Number(object.groupId) : 0,
     };
   },
 
@@ -701,8 +705,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }
