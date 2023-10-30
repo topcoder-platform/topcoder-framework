@@ -5917,10 +5917,10 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-topcoder-proto-registry@0.1.0-PLAT-3491.6:
-  version "0.1.0-PLAT-3491.6"
-  resolved "https://registry.yarnpkg.com/topcoder-proto-registry/-/topcoder-proto-registry-0.1.0-PLAT-3491.6.tgz#d021428fc804185b72f5735e7bd90643e63dc5b5"
-  integrity sha512-3R64M25t1saRfHFFsBQvEBr+wH7MMyRhd0LgHu4+Ba0A7atL5WNFuEBnM74c6mSe6a+Q30rl+EqeehIumVb8jw==
+topcoder-proto-registry@0.1.0-PLAT-3491.7:
+  version "0.1.0-PLAT-3491.7"
+  resolved "https://registry.yarnpkg.com/topcoder-proto-registry/-/topcoder-proto-registry-0.1.0-PLAT-3491.7.tgz#6f2743ff54348f64f1455eb7eb3022656ae94e87"
+  integrity sha512-BbxAoGEbdDrCIBeI+bIHe+ov3bWSI8wfjyW+SPHbXFi4YyCbb+24vypYK787x+pqAN74l8/G5n/xSf5ZPwB8AQ==
 
 tr46@~0.0.3:
   version "0.0.3"

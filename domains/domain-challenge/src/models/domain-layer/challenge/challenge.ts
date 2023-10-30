@@ -60,7 +60,7 @@ export interface Challenge_Legacy {
 export interface Challenge_Billing {
   billingAccountId: number;
   markup: number;
-  clientBilingRate?: number | undefined;
+  clientBillingRate?: number | undefined;
 }
 
 export interface Challenge_Event {
@@ -1299,7 +1299,7 @@ export const Challenge_Legacy = {
 };
 
 function createBaseChallenge_Billing(): Challenge_Billing {
-  return { billingAccountId: 0, markup: 0, clientBilingRate: undefined };
+  return { billingAccountId: 0, markup: 0, clientBillingRate: undefined };
 }
 
 export const Challenge_Billing = {
@@ -1313,8 +1313,8 @@ export const Challenge_Billing = {
     if (message.markup !== 0) {
       writer.uint32(17).double(message.markup);
     }
-    if (message.clientBilingRate !== undefined) {
-      writer.uint32(25).double(message.clientBilingRate);
+    if (message.clientBillingRate !== undefined) {
+      writer.uint32(25).double(message.clientBillingRate);
     }
     return writer;
   },
@@ -1346,7 +1346,7 @@ export const Challenge_Billing = {
             break;
           }
 
-          message.clientBilingRate = reader.double();
+          message.clientBillingRate = reader.double();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -1363,8 +1363,8 @@ export const Challenge_Billing = {
         ? globalThis.Number(object.billingAccountId)
         : 0,
       markup: isSet(object.markup) ? globalThis.Number(object.markup) : 0,
-      clientBilingRate: isSet(object.clientBilingRate)
-        ? globalThis.Number(object.clientBilingRate)
+      clientBillingRate: isSet(object.clientBillingRate)
+        ? globalThis.Number(object.clientBillingRate)
         : undefined,
     };
   },
@@ -1377,8 +1377,8 @@ export const Challenge_Billing = {
     if (message.markup !== 0) {
       obj.markup = message.markup;
     }
-    if (message.clientBilingRate !== undefined) {
-      obj.clientBilingRate = message.clientBilingRate;
+    if (message.clientBillingRate !== undefined) {
+      obj.clientBillingRate = message.clientBillingRate;
     }
     return obj;
   },
@@ -1394,7 +1394,7 @@ export const Challenge_Billing = {
     const message = createBaseChallenge_Billing();
     message.billingAccountId = object.billingAccountId ?? 0;
     message.markup = object.markup ?? 0;
-    message.clientBilingRate = object.clientBilingRate ?? undefined;
+    message.clientBillingRate = object.clientBillingRate ?? undefined;
     return message;
   },
 };

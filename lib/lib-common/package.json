@@ -26,7 +26,7 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.8.0",
     "rimraf": "^3.0.2",
-    "topcoder-proto-registry": "0.1.0-PLAT-3491.6",
+    "topcoder-proto-registry": "0.1.0-PLAT-3491.7",
     "tslib": "^2.4.1"
   },
   "devDependencies": {
