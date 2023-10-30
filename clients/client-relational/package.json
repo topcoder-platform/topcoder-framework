@@ -1,6 +1,6 @@
 {
   "name": "@topcoder-framework/client-relational",
-  "version": "0.22.1-PLAT-3491.6",
+  "version": "0.22.1-PLAT-3491.7",
   "description": "Topcoder gRPC client stub for relational gRPC service",
   "main": "./dist-cjs/index.js",
   "types": "./dist-es/index.d.ts",
@@ -25,7 +25,7 @@
   "license": "ISC",
   "dependencies": {
     "@grpc/grpc-js": "^1.8.0",
-    "@topcoder-framework/lib-common": "^0.22.1-PLAT-3491.6",
+    "@topcoder-framework/lib-common": "^0.22.1-PLAT-3491.7",
     "topcoder-proto-registry": "0.1.0-PLAT-3491.6",
     "tslib": "^2.4.1"
   },
