@@ -230,56 +230,76 @@ export const ProjectPayment = {
   fromJSON(object: any): ProjectPayment {
     return {
       projectPaymentId: isSet(object.projectPaymentId)
-        ? Number(object.projectPaymentId)
+        ? globalThis.Number(object.projectPaymentId)
         : 0,
       projectPaymentTypeId: isSet(object.projectPaymentTypeId)
-        ? Number(object.projectPaymentTypeId)
+        ? globalThis.Number(object.projectPaymentTypeId)
         : 0,
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
+        : 0,
       submissionId: isSet(object.submissionId)
-        ? Number(object.submissionId)
+        ? globalThis.Number(object.submissionId)
         : 0,
-      amount: isSet(object.amount) ? Number(object.amount) : 0,
+      amount: isSet(object.amount) ? globalThis.Number(object.amount) : 0,
       pactsPaymentId: isSet(object.pactsPaymentId)
-        ? Number(object.pactsPaymentId)
+        ? globalThis.Number(object.pactsPaymentId)
         : 0,
-      createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
-      createDate: isSet(object.createDate) ? Number(object.createDate) : 0,
-      modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : 0,
-      modifyDate: isSet(object.modifyDate) ? Number(object.modifyDate) : 0,
+      createUser: isSet(object.createUser)
+        ? globalThis.Number(object.createUser)
+        : 0,
+      createDate: isSet(object.createDate)
+        ? globalThis.Number(object.createDate)
+        : 0,
+      modifyUser: isSet(object.modifyUser)
+        ? globalThis.Number(object.modifyUser)
+        : 0,
+      modifyDate: isSet(object.modifyDate)
+        ? globalThis.Number(object.modifyDate)
+        : 0,
     };
   },
 
   toJSON(message: ProjectPayment): unknown {
     const obj: any = {};
-    message.projectPaymentId !== undefined &&
-      (obj.projectPaymentId = Math.round(message.projectPaymentId));
-    message.projectPaymentTypeId !== undefined &&
-      (obj.projectPaymentTypeId = Math.round(message.projectPaymentTypeId));
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.submissionId !== undefined &&
-      (obj.submissionId = Math.round(message.submissionId));
-    message.amount !== undefined && (obj.amount = message.amount);
-    message.pactsPaymentId !== undefined &&
-      (obj.pactsPaymentId = Math.round(message.pactsPaymentId));
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    if (message.projectPaymentId !== 0) {
+      obj.projectPaymentId = Math.round(message.projectPaymentId);
+    }
+    if (message.projectPaymentTypeId !== 0) {
+      obj.projectPaymentTypeId = Math.round(message.projectPaymentTypeId);
+    }
+    if (message.resourceId !== 0) {
+      obj.resourceId = Math.round(message.resourceId);
+    }
+    if (message.submissionId !== 0) {
+      obj.submissionId = Math.round(message.submissionId);
+    }
+    if (message.amount !== 0) {
+      obj.amount = message.amount;
+    }
+    if (message.pactsPaymentId !== 0) {
+      obj.pactsPaymentId = Math.round(message.pactsPaymentId);
+    }
+    if (message.createUser !== 0) {
+      obj.createUser = Math.round(message.createUser);
+    }
+    if (message.createDate !== 0) {
+      obj.createDate = Math.round(message.createDate);
+    }
+    if (message.modifyUser !== 0) {
+      obj.modifyUser = Math.round(message.modifyUser);
+    }
+    if (message.modifyDate !== 0) {
+      obj.modifyDate = Math.round(message.modifyDate);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<ProjectPayment>, I>>(
     base?: I
   ): ProjectPayment {
-    return ProjectPayment.fromPartial(base ?? {});
+    return ProjectPayment.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<ProjectPayment>, I>>(
     object: I
   ): ProjectPayment {
@@ -341,7 +361,7 @@ export const ProjectPaymentList = {
 
   fromJSON(object: any): ProjectPaymentList {
     return {
-      projectPayments: Array.isArray(object?.projectPayments)
+      projectPayments: globalThis.Array.isArray(object?.projectPayments)
         ? object.projectPayments.map((e: any) => ProjectPayment.fromJSON(e))
         : [],
     };
@@ -349,12 +369,10 @@ export const ProjectPaymentList = {
 
   toJSON(message: ProjectPaymentList): unknown {
     const obj: any = {};
-    if (message.projectPayments) {
+    if (message.projectPayments?.length) {
       obj.projectPayments = message.projectPayments.map((e) =>
-        e ? ProjectPayment.toJSON(e) : undefined
+        ProjectPayment.toJSON(e)
       );
-    } else {
-      obj.projectPayments = [];
     }
     return obj;
   },
@@ -362,9 +380,8 @@ export const ProjectPaymentList = {
   create<I extends Exact<DeepPartial<ProjectPaymentList>, I>>(
     base?: I
   ): ProjectPaymentList {
-    return ProjectPaymentList.fromPartial(base ?? {});
+    return ProjectPaymentList.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<ProjectPaymentList>, I>>(
     object: I
   ): ProjectPaymentList {
@@ -429,28 +446,31 @@ export const GetProjectPaymentsInput = {
 
   fromJSON(object: any): GetProjectPaymentsInput {
     return {
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
+        : 0,
       projectPaymentTypeId: isSet(object.projectPaymentTypeId)
-        ? Number(object.projectPaymentTypeId)
+        ? globalThis.Number(object.projectPaymentTypeId)
         : 0,
     };
   },
 
   toJSON(message: GetProjectPaymentsInput): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.projectPaymentTypeId !== undefined &&
-      (obj.projectPaymentTypeId = Math.round(message.projectPaymentTypeId));
+    if (message.resourceId !== 0) {
+      obj.resourceId = Math.round(message.resourceId);
+    }
+    if (message.projectPaymentTypeId !== 0) {
+      obj.projectPaymentTypeId = Math.round(message.projectPaymentTypeId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<GetProjectPaymentsInput>, I>>(
     base?: I
   ): GetProjectPaymentsInput {
-    return GetProjectPaymentsInput.fromPartial(base ?? {});
+    return GetProjectPaymentsInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<GetProjectPaymentsInput>, I>>(
     object: I
   ): GetProjectPaymentsInput {
@@ -563,44 +583,52 @@ export const CreateProjectPaymentsInput = {
   fromJSON(object: any): CreateProjectPaymentsInput {
     return {
       projectPaymentId: isSet(object.projectPaymentId)
-        ? Number(object.projectPaymentId)
+        ? globalThis.Number(object.projectPaymentId)
         : 0,
       projectPaymentTypeId: isSet(object.projectPaymentTypeId)
-        ? Number(object.projectPaymentTypeId)
+        ? globalThis.Number(object.projectPaymentTypeId)
         : 0,
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
+        : 0,
       submissionId: isSet(object.submissionId)
-        ? Number(object.submissionId)
+        ? globalThis.Number(object.submissionId)
         : 0,
-      amount: isSet(object.amount) ? Number(object.amount) : 0,
+      amount: isSet(object.amount) ? globalThis.Number(object.amount) : 0,
       pactsPaymentId: isSet(object.pactsPaymentId)
-        ? Number(object.pactsPaymentId)
+        ? globalThis.Number(object.pactsPaymentId)
         : 0,
     };
   },
 
   toJSON(message: CreateProjectPaymentsInput): unknown {
     const obj: any = {};
-    message.projectPaymentId !== undefined &&
-      (obj.projectPaymentId = Math.round(message.projectPaymentId));
-    message.projectPaymentTypeId !== undefined &&
-      (obj.projectPaymentTypeId = Math.round(message.projectPaymentTypeId));
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.submissionId !== undefined &&
-      (obj.submissionId = Math.round(message.submissionId));
-    message.amount !== undefined && (obj.amount = message.amount);
-    message.pactsPaymentId !== undefined &&
-      (obj.pactsPaymentId = Math.round(message.pactsPaymentId));
+    if (message.projectPaymentId !== 0) {
+      obj.projectPaymentId = Math.round(message.projectPaymentId);
+    }
+    if (message.projectPaymentTypeId !== 0) {
+      obj.projectPaymentTypeId = Math.round(message.projectPaymentTypeId);
+    }
+    if (message.resourceId !== 0) {
+      obj.resourceId = Math.round(message.resourceId);
+    }
+    if (message.submissionId !== 0) {
+      obj.submissionId = Math.round(message.submissionId);
+    }
+    if (message.amount !== 0) {
+      obj.amount = message.amount;
+    }
+    if (message.pactsPaymentId !== 0) {
+      obj.pactsPaymentId = Math.round(message.pactsPaymentId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<CreateProjectPaymentsInput>, I>>(
     base?: I
   ): CreateProjectPaymentsInput {
-    return CreateProjectPaymentsInput.fromPartial(base ?? {});
+    return CreateProjectPaymentsInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<CreateProjectPaymentsInput>, I>>(
     object: I
   ): CreateProjectPaymentsInput {
@@ -679,30 +707,35 @@ export const UpdateProjectPaymentsInput = {
 
   fromJSON(object: any): UpdateProjectPaymentsInput {
     return {
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
-      projectPaymentTypeId: isSet(object.projectPaymentTypeId)
-        ? Number(object.projectPaymentTypeId)
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
         : 0,
-      amount: isSet(object.amount) ? Number(object.amount) : 0,
+      projectPaymentTypeId: isSet(object.projectPaymentTypeId)
+        ? globalThis.Number(object.projectPaymentTypeId)
+        : 0,
+      amount: isSet(object.amount) ? globalThis.Number(object.amount) : 0,
     };
   },
 
   toJSON(message: UpdateProjectPaymentsInput): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.projectPaymentTypeId !== undefined &&
-      (obj.projectPaymentTypeId = Math.round(message.projectPaymentTypeId));
-    message.amount !== undefined && (obj.amount = message.amount);
+    if (message.resourceId !== 0) {
+      obj.resourceId = Math.round(message.resourceId);
+    }
+    if (message.projectPaymentTypeId !== 0) {
+      obj.projectPaymentTypeId = Math.round(message.projectPaymentTypeId);
+    }
+    if (message.amount !== 0) {
+      obj.amount = message.amount;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdateProjectPaymentsInput>, I>>(
     base?: I
   ): UpdateProjectPaymentsInput {
-    return UpdateProjectPaymentsInput.fromPartial(base ?? {});
+    return UpdateProjectPaymentsInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<UpdateProjectPaymentsInput>, I>>(
     object: I
   ): UpdateProjectPaymentsInput {
@@ -768,28 +801,31 @@ export const DeleteProjectPaymentsInput = {
 
   fromJSON(object: any): DeleteProjectPaymentsInput {
     return {
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
+        : 0,
       projectPaymentTypeId: isSet(object.projectPaymentTypeId)
-        ? Number(object.projectPaymentTypeId)
+        ? globalThis.Number(object.projectPaymentTypeId)
         : 0,
     };
   },
 
   toJSON(message: DeleteProjectPaymentsInput): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.projectPaymentTypeId !== undefined &&
-      (obj.projectPaymentTypeId = Math.round(message.projectPaymentTypeId));
+    if (message.resourceId !== 0) {
+      obj.resourceId = Math.round(message.resourceId);
+    }
+    if (message.projectPaymentTypeId !== 0) {
+      obj.projectPaymentTypeId = Math.round(message.projectPaymentTypeId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<DeleteProjectPaymentsInput>, I>>(
     base?: I
   ): DeleteProjectPaymentsInput {
-    return DeleteProjectPaymentsInput.fromPartial(base ?? {});
+    return DeleteProjectPaymentsInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DeleteProjectPaymentsInput>, I>>(
     object: I
   ): DeleteProjectPaymentsInput {
@@ -939,49 +975,73 @@ export const Prize = {
 
   fromJSON(object: any): Prize {
     return {
-      prizeId: isSet(object.prizeId) ? Number(object.prizeId) : 0,
-      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      place: isSet(object.place) ? Number(object.place) : 0,
-      prizeAmount: isSet(object.prizeAmount) ? Number(object.prizeAmount) : 0,
-      prizeTypeId: isSet(object.prizeTypeId) ? Number(object.prizeTypeId) : 0,
-      numberOfSubmissions: isSet(object.numberOfSubmissions)
-        ? Number(object.numberOfSubmissions)
+      prizeId: isSet(object.prizeId) ? globalThis.Number(object.prizeId) : 0,
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
         : 0,
-      createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
-      createDate: isSet(object.createDate) ? Number(object.createDate) : 0,
-      modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : 0,
-      modifyDate: isSet(object.modifyDate) ? Number(object.modifyDate) : 0,
+      place: isSet(object.place) ? globalThis.Number(object.place) : 0,
+      prizeAmount: isSet(object.prizeAmount)
+        ? globalThis.Number(object.prizeAmount)
+        : 0,
+      prizeTypeId: isSet(object.prizeTypeId)
+        ? globalThis.Number(object.prizeTypeId)
+        : 0,
+      numberOfSubmissions: isSet(object.numberOfSubmissions)
+        ? globalThis.Number(object.numberOfSubmissions)
+        : 0,
+      createUser: isSet(object.createUser)
+        ? globalThis.Number(object.createUser)
+        : 0,
+      createDate: isSet(object.createDate)
+        ? globalThis.Number(object.createDate)
+        : 0,
+      modifyUser: isSet(object.modifyUser)
+        ? globalThis.Number(object.modifyUser)
+        : 0,
+      modifyDate: isSet(object.modifyDate)
+        ? globalThis.Number(object.modifyDate)
+        : 0,
     };
   },
 
   toJSON(message: Prize): unknown {
     const obj: any = {};
-    message.prizeId !== undefined &&
-      (obj.prizeId = Math.round(message.prizeId));
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.place !== undefined && (obj.place = Math.round(message.place));
-    message.prizeAmount !== undefined &&
-      (obj.prizeAmount = message.prizeAmount);
-    message.prizeTypeId !== undefined &&
-      (obj.prizeTypeId = Math.round(message.prizeTypeId));
-    message.numberOfSubmissions !== undefined &&
-      (obj.numberOfSubmissions = Math.round(message.numberOfSubmissions));
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    if (message.prizeId !== 0) {
+      obj.prizeId = Math.round(message.prizeId);
+    }
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.place !== 0) {
+      obj.place = Math.round(message.place);
+    }
+    if (message.prizeAmount !== 0) {
+      obj.prizeAmount = message.prizeAmount;
+    }
+    if (message.prizeTypeId !== 0) {
+      obj.prizeTypeId = Math.round(message.prizeTypeId);
+    }
+    if (message.numberOfSubmissions !== 0) {
+      obj.numberOfSubmissions = Math.round(message.numberOfSubmissions);
+    }
+    if (message.createUser !== 0) {
+      obj.createUser = Math.round(message.createUser);
+    }
+    if (message.createDate !== 0) {
+      obj.createDate = Math.round(message.createDate);
+    }
+    if (message.modifyUser !== 0) {
+      obj.modifyUser = Math.round(message.modifyUser);
+    }
+    if (message.modifyDate !== 0) {
+      obj.modifyDate = Math.round(message.modifyDate);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Prize>, I>>(base?: I): Prize {
-    return Prize.fromPartial(base ?? {});
+    return Prize.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Prize>, I>>(object: I): Prize {
     const message = createBasePrize();
     message.prizeId = object.prizeId ?? 0;
@@ -1039,7 +1099,7 @@ export const PrizeList = {
 
   fromJSON(object: any): PrizeList {
     return {
-      prizes: Array.isArray(object?.prizes)
+      prizes: globalThis.Array.isArray(object?.prizes)
         ? object.prizes.map((e: any) => Prize.fromJSON(e))
         : [],
     };
@@ -1047,18 +1107,15 @@ export const PrizeList = {
 
   toJSON(message: PrizeList): unknown {
     const obj: any = {};
-    if (message.prizes) {
-      obj.prizes = message.prizes.map((e) => (e ? Prize.toJSON(e) : undefined));
-    } else {
-      obj.prizes = [];
+    if (message.prizes?.length) {
+      obj.prizes = message.prizes.map((e) => Prize.toJSON(e));
     }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<PrizeList>, I>>(base?: I): PrizeList {
-    return PrizeList.fromPartial(base ?? {});
+    return PrizeList.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<PrizeList>, I>>(
     object: I
   ): PrizeList {
@@ -1119,26 +1176,31 @@ export const GetPrizesInput = {
 
   fromJSON(object: any): GetPrizesInput {
     return {
-      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      prizeTypeId: isSet(object.prizeTypeId) ? Number(object.prizeTypeId) : 0,
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
+        : 0,
+      prizeTypeId: isSet(object.prizeTypeId)
+        ? globalThis.Number(object.prizeTypeId)
+        : 0,
     };
   },
 
   toJSON(message: GetPrizesInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.prizeTypeId !== undefined &&
-      (obj.prizeTypeId = Math.round(message.prizeTypeId));
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.prizeTypeId !== 0) {
+      obj.prizeTypeId = Math.round(message.prizeTypeId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<GetPrizesInput>, I>>(
     base?: I
   ): GetPrizesInput {
-    return GetPrizesInput.fromPartial(base ?? {});
+    return GetPrizesInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<GetPrizesInput>, I>>(
     object: I
   ): GetPrizesInput {
@@ -1247,39 +1309,51 @@ export const CreatePrizeInput = {
 
   fromJSON(object: any): CreatePrizeInput {
     return {
-      prizeId: isSet(object.prizeId) ? Number(object.prizeId) : 0,
-      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      place: isSet(object.place) ? Number(object.place) : 0,
-      prizeAmount: isSet(object.prizeAmount) ? Number(object.prizeAmount) : 0,
-      prizeTypeId: isSet(object.prizeTypeId) ? Number(object.prizeTypeId) : 0,
+      prizeId: isSet(object.prizeId) ? globalThis.Number(object.prizeId) : 0,
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
+        : 0,
+      place: isSet(object.place) ? globalThis.Number(object.place) : 0,
+      prizeAmount: isSet(object.prizeAmount)
+        ? globalThis.Number(object.prizeAmount)
+        : 0,
+      prizeTypeId: isSet(object.prizeTypeId)
+        ? globalThis.Number(object.prizeTypeId)
+        : 0,
       numberOfSubmissions: isSet(object.numberOfSubmissions)
-        ? Number(object.numberOfSubmissions)
+        ? globalThis.Number(object.numberOfSubmissions)
         : 0,
     };
   },
 
   toJSON(message: CreatePrizeInput): unknown {
     const obj: any = {};
-    message.prizeId !== undefined &&
-      (obj.prizeId = Math.round(message.prizeId));
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.place !== undefined && (obj.place = Math.round(message.place));
-    message.prizeAmount !== undefined &&
-      (obj.prizeAmount = message.prizeAmount);
-    message.prizeTypeId !== undefined &&
-      (obj.prizeTypeId = Math.round(message.prizeTypeId));
-    message.numberOfSubmissions !== undefined &&
-      (obj.numberOfSubmissions = Math.round(message.numberOfSubmissions));
+    if (message.prizeId !== 0) {
+      obj.prizeId = Math.round(message.prizeId);
+    }
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.place !== 0) {
+      obj.place = Math.round(message.place);
+    }
+    if (message.prizeAmount !== 0) {
+      obj.prizeAmount = message.prizeAmount;
+    }
+    if (message.prizeTypeId !== 0) {
+      obj.prizeTypeId = Math.round(message.prizeTypeId);
+    }
+    if (message.numberOfSubmissions !== 0) {
+      obj.numberOfSubmissions = Math.round(message.numberOfSubmissions);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<CreatePrizeInput>, I>>(
     base?: I
   ): CreatePrizeInput {
-    return CreatePrizeInput.fromPartial(base ?? {});
+    return CreatePrizeInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<CreatePrizeInput>, I>>(
     object: I
   ): CreatePrizeInput {
@@ -1365,34 +1439,41 @@ export const UpdatePrizeInput = {
 
   fromJSON(object: any): UpdatePrizeInput {
     return {
-      prizeId: isSet(object.prizeId) ? Number(object.prizeId) : 0,
-      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
-      numberOfSubmissions: isSet(object.numberOfSubmissions)
-        ? Number(object.numberOfSubmissions)
+      prizeId: isSet(object.prizeId) ? globalThis.Number(object.prizeId) : 0,
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
         : 0,
-      prizeAmount: isSet(object.prizeAmount) ? Number(object.prizeAmount) : 0,
+      numberOfSubmissions: isSet(object.numberOfSubmissions)
+        ? globalThis.Number(object.numberOfSubmissions)
+        : 0,
+      prizeAmount: isSet(object.prizeAmount)
+        ? globalThis.Number(object.prizeAmount)
+        : 0,
     };
   },
 
   toJSON(message: UpdatePrizeInput): unknown {
     const obj: any = {};
-    message.prizeId !== undefined &&
-      (obj.prizeId = Math.round(message.prizeId));
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.numberOfSubmissions !== undefined &&
-      (obj.numberOfSubmissions = Math.round(message.numberOfSubmissions));
-    message.prizeAmount !== undefined &&
-      (obj.prizeAmount = message.prizeAmount);
+    if (message.prizeId !== 0) {
+      obj.prizeId = Math.round(message.prizeId);
+    }
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.numberOfSubmissions !== 0) {
+      obj.numberOfSubmissions = Math.round(message.numberOfSubmissions);
+    }
+    if (message.prizeAmount !== 0) {
+      obj.prizeAmount = message.prizeAmount;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdatePrizeInput>, I>>(
     base?: I
   ): UpdatePrizeInput {
-    return UpdatePrizeInput.fromPartial(base ?? {});
+    return UpdatePrizeInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<UpdatePrizeInput>, I>>(
     object: I
   ): UpdatePrizeInput {
@@ -1456,26 +1537,29 @@ export const DeletePrizeInput = {
 
   fromJSON(object: any): DeletePrizeInput {
     return {
-      prizeId: isSet(object.prizeId) ? Number(object.prizeId) : 0,
-      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
+      prizeId: isSet(object.prizeId) ? globalThis.Number(object.prizeId) : 0,
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
+        : 0,
     };
   },
 
   toJSON(message: DeletePrizeInput): unknown {
     const obj: any = {};
-    message.prizeId !== undefined &&
-      (obj.prizeId = Math.round(message.prizeId));
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
+    if (message.prizeId !== 0) {
+      obj.prizeId = Math.round(message.prizeId);
+    }
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<DeletePrizeInput>, I>>(
     base?: I
   ): DeletePrizeInput {
-    return DeletePrizeInput.fromPartial(base ?? {});
+    return DeletePrizeInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DeletePrizeInput>, I>>(
     object: I
   ): DeletePrizeInput {
@@ -1485,25 +1569,6 @@ export const DeletePrizeInput = {
     return message;
   },
 };
-
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
 
 type Builtin =
   | Date
@@ -1516,8 +1581,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }
@@ -1536,10 +1601,8 @@ type Exact<P, I extends P> = P extends Builtin
     };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

@@ -58,19 +58,20 @@ export const QueryInput = {
   },
 
   fromJSON(object: any): QueryInput {
-    return { sql: isSet(object.sql) ? String(object.sql) : "" };
+    return { sql: isSet(object.sql) ? globalThis.String(object.sql) : "" };
   },
 
   toJSON(message: QueryInput): unknown {
     const obj: any = {};
-    message.sql !== undefined && (obj.sql = message.sql);
+    if (message.sql !== "") {
+      obj.sql = message.sql;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<QueryInput>, I>>(base?: I): QueryInput {
-    return QueryInput.fromPartial(base ?? {});
+    return QueryInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<QueryInput>, I>>(
     object: I
   ): QueryInput {
@@ -121,7 +122,7 @@ export const QueryOutput = {
 
   fromJSON(object: any): QueryOutput {
     return {
-      rows: Array.isArray(object?.rows)
+      rows: globalThis.Array.isArray(object?.rows)
         ? object.rows.map((e: any) => Row.fromJSON(e))
         : [],
     };
@@ -129,18 +130,15 @@ export const QueryOutput = {
 
   toJSON(message: QueryOutput): unknown {
     const obj: any = {};
-    if (message.rows) {
-      obj.rows = message.rows.map((e) => (e ? Row.toJSON(e) : undefined));
-    } else {
-      obj.rows = [];
+    if (message.rows?.length) {
+      obj.rows = message.rows.map((e) => Row.toJSON(e));
     }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<QueryOutput>, I>>(base?: I): QueryOutput {
-    return QueryOutput.fromPartial(base ?? {});
+    return QueryOutput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<QueryOutput>, I>>(
     object: I
   ): QueryOutput {
@@ -188,7 +186,7 @@ export const Row = {
 
   fromJSON(object: any): Row {
     return {
-      fields: Array.isArray(object?.fields)
+      fields: globalThis.Array.isArray(object?.fields)
         ? object.fields.map((e: any) => Field.fromJSON(e))
         : [],
     };
@@ -196,18 +194,15 @@ export const Row = {
 
   toJSON(message: Row): unknown {
     const obj: any = {};
-    if (message.fields) {
-      obj.fields = message.fields.map((e) => (e ? Field.toJSON(e) : undefined));
-    } else {
-      obj.fields = [];
+    if (message.fields?.length) {
+      obj.fields = message.fields.map((e) => Field.toJSON(e));
     }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Row>, I>>(base?: I): Row {
-    return Row.fromPartial(base ?? {});
+    return Row.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Row>, I>>(object: I): Row {
     const message = createBaseRow();
     message.fields = object.fields?.map((e) => Field.fromPartial(e)) || [];
@@ -263,22 +258,25 @@ export const Field = {
 
   fromJSON(object: any): Field {
     return {
-      key: isSet(object.key) ? String(object.key) : "",
-      value: isSet(object.value) ? String(object.value) : "",
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
+      value: isSet(object.value) ? globalThis.String(object.value) : "",
     };
   },
 
   toJSON(message: Field): unknown {
     const obj: any = {};
-    message.key !== undefined && (obj.key = message.key);
-    message.value !== undefined && (obj.value = message.value);
+    if (message.key !== "") {
+      obj.key = message.key;
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Field>, I>>(base?: I): Field {
-    return Field.fromPartial(base ?? {});
+    return Field.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Field>, I>>(object: I): Field {
     const message = createBaseField();
     message.key = object.key ?? "";
@@ -298,8 +296,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }

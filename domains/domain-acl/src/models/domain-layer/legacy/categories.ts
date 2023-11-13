@@ -121,46 +121,57 @@ export const LegacyCategory = {
 
   fromJSON(object: any): LegacyCategory {
     return {
-      categoryId: isSet(object.categoryId) ? Number(object.categoryId) : 0,
+      categoryId: isSet(object.categoryId)
+        ? globalThis.Number(object.categoryId)
+        : 0,
       parentCategoryId: isSet(object.parentCategoryId)
-        ? Number(object.parentCategoryId)
+        ? globalThis.Number(object.parentCategoryId)
         : 0,
       categoryName: isSet(object.categoryName)
-        ? String(object.categoryName)
+        ? globalThis.String(object.categoryName)
         : "",
       categoryDescription: isSet(object.categoryDescription)
-        ? String(object.categoryDescription)
+        ? globalThis.String(object.categoryDescription)
         : "",
-      statusId: isSet(object.statusId) ? Number(object.statusId) : 0,
-      viewable: isSet(object.viewable) ? Number(object.viewable) : 0,
-      isCustom: isSet(object.isCustom) ? Boolean(object.isCustom) : false,
+      statusId: isSet(object.statusId) ? globalThis.Number(object.statusId) : 0,
+      viewable: isSet(object.viewable) ? globalThis.Number(object.viewable) : 0,
+      isCustom: isSet(object.isCustom)
+        ? globalThis.Boolean(object.isCustom)
+        : false,
     };
   },
 
   toJSON(message: LegacyCategory): unknown {
     const obj: any = {};
-    message.categoryId !== undefined &&
-      (obj.categoryId = Math.round(message.categoryId));
-    message.parentCategoryId !== undefined &&
-      (obj.parentCategoryId = Math.round(message.parentCategoryId));
-    message.categoryName !== undefined &&
-      (obj.categoryName = message.categoryName);
-    message.categoryDescription !== undefined &&
-      (obj.categoryDescription = message.categoryDescription);
-    message.statusId !== undefined &&
-      (obj.statusId = Math.round(message.statusId));
-    message.viewable !== undefined &&
-      (obj.viewable = Math.round(message.viewable));
-    message.isCustom !== undefined && (obj.isCustom = message.isCustom);
+    if (message.categoryId !== 0) {
+      obj.categoryId = Math.round(message.categoryId);
+    }
+    if (message.parentCategoryId !== 0) {
+      obj.parentCategoryId = Math.round(message.parentCategoryId);
+    }
+    if (message.categoryName !== "") {
+      obj.categoryName = message.categoryName;
+    }
+    if (message.categoryDescription !== "") {
+      obj.categoryDescription = message.categoryDescription;
+    }
+    if (message.statusId !== 0) {
+      obj.statusId = Math.round(message.statusId);
+    }
+    if (message.viewable !== 0) {
+      obj.viewable = Math.round(message.viewable);
+    }
+    if (message.isCustom === true) {
+      obj.isCustom = message.isCustom;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<LegacyCategory>, I>>(
     base?: I
   ): LegacyCategory {
-    return LegacyCategory.fromPartial(base ?? {});
+    return LegacyCategory.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<LegacyCategory>, I>>(
     object: I
   ): LegacyCategory {
@@ -176,25 +187,6 @@ export const LegacyCategory = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 type Builtin =
   | Date
   | Function
@@ -206,8 +198,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }
@@ -226,10 +218,8 @@ type Exact<P, I extends P> = P extends Builtin
     };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

@@ -121,42 +121,59 @@ export const ResourceInfo = {
 
   fromJSON(object: any): ResourceInfo {
     return {
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
-      resourceInfoTypeId: isSet(object.resourceInfoTypeId)
-        ? Number(object.resourceInfoTypeId)
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
         : 0,
-      value: isSet(object.value) ? String(object.value) : "",
-      createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
-      createDate: isSet(object.createDate) ? Number(object.createDate) : 0,
-      modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : 0,
-      modifyDate: isSet(object.modifyDate) ? Number(object.modifyDate) : 0,
+      resourceInfoTypeId: isSet(object.resourceInfoTypeId)
+        ? globalThis.Number(object.resourceInfoTypeId)
+        : 0,
+      value: isSet(object.value) ? globalThis.String(object.value) : "",
+      createUser: isSet(object.createUser)
+        ? globalThis.Number(object.createUser)
+        : 0,
+      createDate: isSet(object.createDate)
+        ? globalThis.Number(object.createDate)
+        : 0,
+      modifyUser: isSet(object.modifyUser)
+        ? globalThis.Number(object.modifyUser)
+        : 0,
+      modifyDate: isSet(object.modifyDate)
+        ? globalThis.Number(object.modifyDate)
+        : 0,
     };
   },
 
   toJSON(message: ResourceInfo): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.resourceInfoTypeId !== undefined &&
-      (obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId));
-    message.value !== undefined && (obj.value = message.value);
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    if (message.resourceId !== 0) {
+      obj.resourceId = Math.round(message.resourceId);
+    }
+    if (message.resourceInfoTypeId !== 0) {
+      obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId);
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
+    if (message.createUser !== 0) {
+      obj.createUser = Math.round(message.createUser);
+    }
+    if (message.createDate !== 0) {
+      obj.createDate = Math.round(message.createDate);
+    }
+    if (message.modifyUser !== 0) {
+      obj.modifyUser = Math.round(message.modifyUser);
+    }
+    if (message.modifyDate !== 0) {
+      obj.modifyDate = Math.round(message.modifyDate);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<ResourceInfo>, I>>(
     base?: I
   ): ResourceInfo {
-    return ResourceInfo.fromPartial(base ?? {});
+    return ResourceInfo.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<ResourceInfo>, I>>(
     object: I
   ): ResourceInfo {
@@ -172,25 +189,6 @@ export const ResourceInfo = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 type Builtin =
   | Date
   | Function
@@ -202,8 +200,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }
@@ -222,10 +220,8 @@ type Exact<P, I extends P> = P extends Builtin
     };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

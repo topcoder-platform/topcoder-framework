@@ -26,7 +26,7 @@ export interface CreateAttachmentInput {
 
 export interface UpdateAttachmentInput {
   filterCriteria: ScanCriteria[];
-  updateInput?: UpdateAttachmentInput_UpdateInput;
+  updateInput?: UpdateAttachmentInput_UpdateInput | undefined;
 }
 
 export interface UpdateAttachmentInput_UpdateInput {
@@ -135,35 +135,45 @@ export const Attachment = {
 
   fromJSON(object: any): Attachment {
     return {
-      id: isSet(object.id) ? String(object.id) : "",
-      url: isSet(object.url) ? String(object.url) : "",
-      fileSize: isSet(object.fileSize) ? Number(object.fileSize) : 0,
-      name: isSet(object.name) ? String(object.name) : "",
-      challengeId: isSet(object.challengeId) ? String(object.challengeId) : "",
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      url: isSet(object.url) ? globalThis.String(object.url) : "",
+      fileSize: isSet(object.fileSize) ? globalThis.Number(object.fileSize) : 0,
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      challengeId: isSet(object.challengeId)
+        ? globalThis.String(object.challengeId)
+        : "",
       description: isSet(object.description)
-        ? String(object.description)
+        ? globalThis.String(object.description)
         : undefined,
     };
   },
 
   toJSON(message: Attachment): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = message.id);
-    message.url !== undefined && (obj.url = message.url);
-    message.fileSize !== undefined &&
-      (obj.fileSize = Math.round(message.fileSize));
-    message.name !== undefined && (obj.name = message.name);
-    message.challengeId !== undefined &&
-      (obj.challengeId = message.challengeId);
-    message.description !== undefined &&
-      (obj.description = message.description);
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.url !== "") {
+      obj.url = message.url;
+    }
+    if (message.fileSize !== 0) {
+      obj.fileSize = Math.round(message.fileSize);
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.challengeId !== "") {
+      obj.challengeId = message.challengeId;
+    }
+    if (message.description !== undefined) {
+      obj.description = message.description;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Attachment>, I>>(base?: I): Attachment {
-    return Attachment.fromPartial(base ?? {});
+    return Attachment.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Attachment>, I>>(
     object: I
   ): Attachment {
@@ -219,7 +229,7 @@ export const AttachmentList = {
 
   fromJSON(object: any): AttachmentList {
     return {
-      items: Array.isArray(object?.items)
+      items: globalThis.Array.isArray(object?.items)
         ? object.items.map((e: any) => Attachment.fromJSON(e))
         : [],
     };
@@ -227,12 +237,8 @@ export const AttachmentList = {
 
   toJSON(message: AttachmentList): unknown {
     const obj: any = {};
-    if (message.items) {
-      obj.items = message.items.map((e) =>
-        e ? Attachment.toJSON(e) : undefined
-      );
-    } else {
-      obj.items = [];
+    if (message.items?.length) {
+      obj.items = message.items.map((e) => Attachment.toJSON(e));
     }
     return obj;
   },
@@ -240,9 +246,8 @@ export const AttachmentList = {
   create<I extends Exact<DeepPartial<AttachmentList>, I>>(
     base?: I
   ): AttachmentList {
-    return AttachmentList.fromPartial(base ?? {});
+    return AttachmentList.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<AttachmentList>, I>>(
     object: I
   ): AttachmentList {
@@ -342,35 +347,43 @@ export const CreateAttachmentInput = {
 
   fromJSON(object: any): CreateAttachmentInput {
     return {
-      url: isSet(object.url) ? String(object.url) : "",
-      fileSize: isSet(object.fileSize) ? Number(object.fileSize) : 0,
-      name: isSet(object.name) ? String(object.name) : "",
-      challengeId: isSet(object.challengeId) ? String(object.challengeId) : "",
+      url: isSet(object.url) ? globalThis.String(object.url) : "",
+      fileSize: isSet(object.fileSize) ? globalThis.Number(object.fileSize) : 0,
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      challengeId: isSet(object.challengeId)
+        ? globalThis.String(object.challengeId)
+        : "",
       description: isSet(object.description)
-        ? String(object.description)
+        ? globalThis.String(object.description)
         : undefined,
     };
   },
 
   toJSON(message: CreateAttachmentInput): unknown {
     const obj: any = {};
-    message.url !== undefined && (obj.url = message.url);
-    message.fileSize !== undefined &&
-      (obj.fileSize = Math.round(message.fileSize));
-    message.name !== undefined && (obj.name = message.name);
-    message.challengeId !== undefined &&
-      (obj.challengeId = message.challengeId);
-    message.description !== undefined &&
-      (obj.description = message.description);
+    if (message.url !== "") {
+      obj.url = message.url;
+    }
+    if (message.fileSize !== 0) {
+      obj.fileSize = Math.round(message.fileSize);
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.challengeId !== "") {
+      obj.challengeId = message.challengeId;
+    }
+    if (message.description !== undefined) {
+      obj.description = message.description;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<CreateAttachmentInput>, I>>(
     base?: I
   ): CreateAttachmentInput {
-    return CreateAttachmentInput.fromPartial(base ?? {});
+    return CreateAttachmentInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<CreateAttachmentInput>, I>>(
     object: I
   ): CreateAttachmentInput {
@@ -446,7 +459,7 @@ export const UpdateAttachmentInput = {
 
   fromJSON(object: any): UpdateAttachmentInput {
     return {
-      filterCriteria: Array.isArray(object?.filterCriteria)
+      filterCriteria: globalThis.Array.isArray(object?.filterCriteria)
         ? object.filterCriteria.map((e: any) => ScanCriteria.fromJSON(e))
         : [],
       updateInput: isSet(object.updateInput)
@@ -457,26 +470,24 @@ export const UpdateAttachmentInput = {
 
   toJSON(message: UpdateAttachmentInput): unknown {
     const obj: any = {};
-    if (message.filterCriteria) {
+    if (message.filterCriteria?.length) {
       obj.filterCriteria = message.filterCriteria.map((e) =>
-        e ? ScanCriteria.toJSON(e) : undefined
+        ScanCriteria.toJSON(e)
       );
-    } else {
-      obj.filterCriteria = [];
     }
-    message.updateInput !== undefined &&
-      (obj.updateInput = message.updateInput
-        ? UpdateAttachmentInput_UpdateInput.toJSON(message.updateInput)
-        : undefined);
+    if (message.updateInput !== undefined) {
+      obj.updateInput = UpdateAttachmentInput_UpdateInput.toJSON(
+        message.updateInput
+      );
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdateAttachmentInput>, I>>(
     base?: I
   ): UpdateAttachmentInput {
-    return UpdateAttachmentInput.fromPartial(base ?? {});
+    return UpdateAttachmentInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<UpdateAttachmentInput>, I>>(
     object: I
   ): UpdateAttachmentInput {
@@ -581,35 +592,43 @@ export const UpdateAttachmentInput_UpdateInput = {
 
   fromJSON(object: any): UpdateAttachmentInput_UpdateInput {
     return {
-      url: isSet(object.url) ? String(object.url) : "",
-      fileSize: isSet(object.fileSize) ? Number(object.fileSize) : 0,
-      name: isSet(object.name) ? String(object.name) : "",
-      challengeId: isSet(object.challengeId) ? String(object.challengeId) : "",
+      url: isSet(object.url) ? globalThis.String(object.url) : "",
+      fileSize: isSet(object.fileSize) ? globalThis.Number(object.fileSize) : 0,
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      challengeId: isSet(object.challengeId)
+        ? globalThis.String(object.challengeId)
+        : "",
       description: isSet(object.description)
-        ? String(object.description)
+        ? globalThis.String(object.description)
         : undefined,
     };
   },
 
   toJSON(message: UpdateAttachmentInput_UpdateInput): unknown {
     const obj: any = {};
-    message.url !== undefined && (obj.url = message.url);
-    message.fileSize !== undefined &&
-      (obj.fileSize = Math.round(message.fileSize));
-    message.name !== undefined && (obj.name = message.name);
-    message.challengeId !== undefined &&
-      (obj.challengeId = message.challengeId);
-    message.description !== undefined &&
-      (obj.description = message.description);
+    if (message.url !== "") {
+      obj.url = message.url;
+    }
+    if (message.fileSize !== 0) {
+      obj.fileSize = Math.round(message.fileSize);
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.challengeId !== "") {
+      obj.challengeId = message.challengeId;
+    }
+    if (message.description !== undefined) {
+      obj.description = message.description;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdateAttachmentInput_UpdateInput>, I>>(
     base?: I
   ): UpdateAttachmentInput_UpdateInput {
-    return UpdateAttachmentInput_UpdateInput.fromPartial(base ?? {});
+    return UpdateAttachmentInput_UpdateInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<
     I extends Exact<DeepPartial<UpdateAttachmentInput_UpdateInput>, I>
   >(object: I): UpdateAttachmentInput_UpdateInput {
@@ -623,25 +642,6 @@ export const UpdateAttachmentInput_UpdateInput = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 type Builtin =
   | Date
   | Function
@@ -653,8 +653,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }
@@ -673,10 +673,8 @@ type Exact<P, I extends P> = P extends Builtin
     };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

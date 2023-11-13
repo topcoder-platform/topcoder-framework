@@ -1,13 +1,15 @@
 /* eslint-disable */
 import {
-  CallOptions,
   ChannelCredentials,
   Client,
+  makeGenericClientConstructor,
+  Metadata,
+} from "@grpc/grpc-js";
+import type {
+  CallOptions,
   ClientOptions,
   ClientUnaryCall,
   handleUnaryCall,
-  makeGenericClientConstructor,
-  Metadata,
   ServiceError,
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";

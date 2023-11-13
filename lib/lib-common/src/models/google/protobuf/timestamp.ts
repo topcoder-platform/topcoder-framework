@@ -160,23 +160,25 @@ export const Timestamp = {
 
   fromJSON(object: any): Timestamp {
     return {
-      seconds: isSet(object.seconds) ? Number(object.seconds) : 0,
-      nanos: isSet(object.nanos) ? Number(object.nanos) : 0,
+      seconds: isSet(object.seconds) ? globalThis.Number(object.seconds) : 0,
+      nanos: isSet(object.nanos) ? globalThis.Number(object.nanos) : 0,
     };
   },
 
   toJSON(message: Timestamp): unknown {
     const obj: any = {};
-    message.seconds !== undefined &&
-      (obj.seconds = Math.round(message.seconds));
-    message.nanos !== undefined && (obj.nanos = Math.round(message.nanos));
+    if (message.seconds !== 0) {
+      obj.seconds = Math.round(message.seconds);
+    }
+    if (message.nanos !== 0) {
+      obj.nanos = Math.round(message.nanos);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Timestamp>, I>>(base?: I): Timestamp {
-    return Timestamp.fromPartial(base ?? {});
+    return Timestamp.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Timestamp>, I>>(
     object: I
   ): Timestamp {
@@ -186,25 +188,6 @@ export const Timestamp = {
     return message;
   },
 };
-
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
 
 type Builtin =
   | Date
@@ -217,8 +200,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }
@@ -237,10 +220,8 @@ type Exact<P, I extends P> = P extends Builtin
     };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

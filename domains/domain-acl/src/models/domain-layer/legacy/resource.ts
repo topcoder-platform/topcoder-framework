@@ -201,48 +201,69 @@ export const Resource = {
 
   fromJSON(object: any): Resource {
     return {
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
+        : 0,
       resourceRoleId: isSet(object.resourceRoleId)
-        ? Number(object.resourceRoleId)
+        ? globalThis.Number(object.resourceRoleId)
         : 0,
-      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
+        : 0,
       projectPhaseId: isSet(object.projectPhaseId)
-        ? Number(object.projectPhaseId)
+        ? globalThis.Number(object.projectPhaseId)
         : 0,
-      userId: isSet(object.userId) ? Number(object.userId) : 0,
-      createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
-      createDate: isSet(object.createDate) ? Number(object.createDate) : 0,
-      modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : 0,
-      modifyDate: isSet(object.modifyDate) ? Number(object.modifyDate) : 0,
+      userId: isSet(object.userId) ? globalThis.Number(object.userId) : 0,
+      createUser: isSet(object.createUser)
+        ? globalThis.Number(object.createUser)
+        : 0,
+      createDate: isSet(object.createDate)
+        ? globalThis.Number(object.createDate)
+        : 0,
+      modifyUser: isSet(object.modifyUser)
+        ? globalThis.Number(object.modifyUser)
+        : 0,
+      modifyDate: isSet(object.modifyDate)
+        ? globalThis.Number(object.modifyDate)
+        : 0,
     };
   },
 
   toJSON(message: Resource): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.resourceRoleId !== undefined &&
-      (obj.resourceRoleId = Math.round(message.resourceRoleId));
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.projectPhaseId !== undefined &&
-      (obj.projectPhaseId = Math.round(message.projectPhaseId));
-    message.userId !== undefined && (obj.userId = Math.round(message.userId));
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    if (message.resourceId !== 0) {
+      obj.resourceId = Math.round(message.resourceId);
+    }
+    if (message.resourceRoleId !== 0) {
+      obj.resourceRoleId = Math.round(message.resourceRoleId);
+    }
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.projectPhaseId !== 0) {
+      obj.projectPhaseId = Math.round(message.projectPhaseId);
+    }
+    if (message.userId !== 0) {
+      obj.userId = Math.round(message.userId);
+    }
+    if (message.createUser !== 0) {
+      obj.createUser = Math.round(message.createUser);
+    }
+    if (message.createDate !== 0) {
+      obj.createDate = Math.round(message.createDate);
+    }
+    if (message.modifyUser !== 0) {
+      obj.modifyUser = Math.round(message.modifyUser);
+    }
+    if (message.modifyDate !== 0) {
+      obj.modifyDate = Math.round(message.modifyDate);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Resource>, I>>(base?: I): Resource {
-    return Resource.fromPartial(base ?? {});
+    return Resource.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Resource>, I>>(object: I): Resource {
     const message = createBaseResource();
     message.resourceId = object.resourceId ?? 0;
@@ -335,34 +356,40 @@ export const CreateResourceInput = {
   fromJSON(object: any): CreateResourceInput {
     return {
       resourceRoleId: isSet(object.resourceRoleId)
-        ? Number(object.resourceRoleId)
+        ? globalThis.Number(object.resourceRoleId)
         : 0,
-      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
+        : 0,
       projectPhaseId: isSet(object.projectPhaseId)
-        ? Number(object.projectPhaseId)
+        ? globalThis.Number(object.projectPhaseId)
         : undefined,
-      userId: isSet(object.userId) ? Number(object.userId) : 0,
+      userId: isSet(object.userId) ? globalThis.Number(object.userId) : 0,
     };
   },
 
   toJSON(message: CreateResourceInput): unknown {
     const obj: any = {};
-    message.resourceRoleId !== undefined &&
-      (obj.resourceRoleId = Math.round(message.resourceRoleId));
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.projectPhaseId !== undefined &&
-      (obj.projectPhaseId = Math.round(message.projectPhaseId));
-    message.userId !== undefined && (obj.userId = Math.round(message.userId));
+    if (message.resourceRoleId !== 0) {
+      obj.resourceRoleId = Math.round(message.resourceRoleId);
+    }
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.projectPhaseId !== undefined) {
+      obj.projectPhaseId = Math.round(message.projectPhaseId);
+    }
+    if (message.userId !== 0) {
+      obj.userId = Math.round(message.userId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<CreateResourceInput>, I>>(
     base?: I
   ): CreateResourceInput {
-    return CreateResourceInput.fromPartial(base ?? {});
+    return CreateResourceInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<CreateResourceInput>, I>>(
     object: I
   ): CreateResourceInput {
@@ -426,28 +453,31 @@ export const GetResourcesInput = {
 
   fromJSON(object: any): GetResourcesInput {
     return {
-      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
+        : 0,
       resourceRoleId: isSet(object.resourceRoleId)
-        ? Number(object.resourceRoleId)
+        ? globalThis.Number(object.resourceRoleId)
         : undefined,
     };
   },
 
   toJSON(message: GetResourcesInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.resourceRoleId !== undefined &&
-      (obj.resourceRoleId = Math.round(message.resourceRoleId));
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.resourceRoleId !== undefined) {
+      obj.resourceRoleId = Math.round(message.resourceRoleId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<GetResourcesInput>, I>>(
     base?: I
   ): GetResourcesInput {
-    return GetResourcesInput.fromPartial(base ?? {});
+    return GetResourcesInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<GetResourcesInput>, I>>(
     object: I
   ): GetResourcesInput {
@@ -512,28 +542,31 @@ export const DeleteResourcesInput = {
 
   fromJSON(object: any): DeleteResourcesInput {
     return {
-      projectId: isSet(object.projectId) ? Number(object.projectId) : 0,
+      projectId: isSet(object.projectId)
+        ? globalThis.Number(object.projectId)
+        : 0,
       resourceRoleId: isSet(object.resourceRoleId)
-        ? Number(object.resourceRoleId)
+        ? globalThis.Number(object.resourceRoleId)
         : undefined,
     };
   },
 
   toJSON(message: DeleteResourcesInput): unknown {
     const obj: any = {};
-    message.projectId !== undefined &&
-      (obj.projectId = Math.round(message.projectId));
-    message.resourceRoleId !== undefined &&
-      (obj.resourceRoleId = Math.round(message.resourceRoleId));
+    if (message.projectId !== 0) {
+      obj.projectId = Math.round(message.projectId);
+    }
+    if (message.resourceRoleId !== undefined) {
+      obj.resourceRoleId = Math.round(message.resourceRoleId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<DeleteResourcesInput>, I>>(
     base?: I
   ): DeleteResourcesInput {
-    return DeleteResourcesInput.fromPartial(base ?? {});
+    return DeleteResourcesInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DeleteResourcesInput>, I>>(
     object: I
   ): DeleteResourcesInput {
@@ -585,7 +618,7 @@ export const ResourceList = {
 
   fromJSON(object: any): ResourceList {
     return {
-      resources: Array.isArray(object?.resources)
+      resources: globalThis.Array.isArray(object?.resources)
         ? object.resources.map((e: any) => Resource.fromJSON(e))
         : [],
     };
@@ -593,12 +626,8 @@ export const ResourceList = {
 
   toJSON(message: ResourceList): unknown {
     const obj: any = {};
-    if (message.resources) {
-      obj.resources = message.resources.map((e) =>
-        e ? Resource.toJSON(e) : undefined
-      );
-    } else {
-      obj.resources = [];
+    if (message.resources?.length) {
+      obj.resources = message.resources.map((e) => Resource.toJSON(e));
     }
     return obj;
   },
@@ -606,9 +635,8 @@ export const ResourceList = {
   create<I extends Exact<DeepPartial<ResourceList>, I>>(
     base?: I
   ): ResourceList {
-    return ResourceList.fromPartial(base ?? {});
+    return ResourceList.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<ResourceList>, I>>(
     object: I
   ): ResourceList {
@@ -728,42 +756,59 @@ export const ResourceInfo = {
 
   fromJSON(object: any): ResourceInfo {
     return {
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
-      resourceInfoTypeId: isSet(object.resourceInfoTypeId)
-        ? Number(object.resourceInfoTypeId)
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
         : 0,
-      value: isSet(object.value) ? String(object.value) : "",
-      createUser: isSet(object.createUser) ? Number(object.createUser) : 0,
-      createDate: isSet(object.createDate) ? Number(object.createDate) : 0,
-      modifyUser: isSet(object.modifyUser) ? Number(object.modifyUser) : 0,
-      modifyDate: isSet(object.modifyDate) ? Number(object.modifyDate) : 0,
+      resourceInfoTypeId: isSet(object.resourceInfoTypeId)
+        ? globalThis.Number(object.resourceInfoTypeId)
+        : 0,
+      value: isSet(object.value) ? globalThis.String(object.value) : "",
+      createUser: isSet(object.createUser)
+        ? globalThis.Number(object.createUser)
+        : 0,
+      createDate: isSet(object.createDate)
+        ? globalThis.Number(object.createDate)
+        : 0,
+      modifyUser: isSet(object.modifyUser)
+        ? globalThis.Number(object.modifyUser)
+        : 0,
+      modifyDate: isSet(object.modifyDate)
+        ? globalThis.Number(object.modifyDate)
+        : 0,
     };
   },
 
   toJSON(message: ResourceInfo): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.resourceInfoTypeId !== undefined &&
-      (obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId));
-    message.value !== undefined && (obj.value = message.value);
-    message.createUser !== undefined &&
-      (obj.createUser = Math.round(message.createUser));
-    message.createDate !== undefined &&
-      (obj.createDate = Math.round(message.createDate));
-    message.modifyUser !== undefined &&
-      (obj.modifyUser = Math.round(message.modifyUser));
-    message.modifyDate !== undefined &&
-      (obj.modifyDate = Math.round(message.modifyDate));
+    if (message.resourceId !== 0) {
+      obj.resourceId = Math.round(message.resourceId);
+    }
+    if (message.resourceInfoTypeId !== 0) {
+      obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId);
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
+    if (message.createUser !== 0) {
+      obj.createUser = Math.round(message.createUser);
+    }
+    if (message.createDate !== 0) {
+      obj.createDate = Math.round(message.createDate);
+    }
+    if (message.modifyUser !== 0) {
+      obj.modifyUser = Math.round(message.modifyUser);
+    }
+    if (message.modifyDate !== 0) {
+      obj.modifyDate = Math.round(message.modifyDate);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<ResourceInfo>, I>>(
     base?: I
   ): ResourceInfo {
-    return ResourceInfo.fromPartial(base ?? {});
+    return ResourceInfo.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<ResourceInfo>, I>>(
     object: I
   ): ResourceInfo {
@@ -843,30 +888,35 @@ export const CreateResourceInfoInput = {
 
   fromJSON(object: any): CreateResourceInfoInput {
     return {
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
-      resourceInfoTypeId: isSet(object.resourceInfoTypeId)
-        ? Number(object.resourceInfoTypeId)
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
         : 0,
-      value: isSet(object.value) ? String(object.value) : "",
+      resourceInfoTypeId: isSet(object.resourceInfoTypeId)
+        ? globalThis.Number(object.resourceInfoTypeId)
+        : 0,
+      value: isSet(object.value) ? globalThis.String(object.value) : "",
     };
   },
 
   toJSON(message: CreateResourceInfoInput): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.resourceInfoTypeId !== undefined &&
-      (obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId));
-    message.value !== undefined && (obj.value = message.value);
+    if (message.resourceId !== 0) {
+      obj.resourceId = Math.round(message.resourceId);
+    }
+    if (message.resourceInfoTypeId !== 0) {
+      obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId);
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<CreateResourceInfoInput>, I>>(
     base?: I
   ): CreateResourceInfoInput {
-    return CreateResourceInfoInput.fromPartial(base ?? {});
+    return CreateResourceInfoInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<CreateResourceInfoInput>, I>>(
     object: I
   ): CreateResourceInfoInput {
@@ -942,30 +992,35 @@ export const UpdateResourceInfoInput = {
 
   fromJSON(object: any): UpdateResourceInfoInput {
     return {
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
-      resourceInfoTypeId: isSet(object.resourceInfoTypeId)
-        ? Number(object.resourceInfoTypeId)
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
         : 0,
-      value: isSet(object.value) ? String(object.value) : "",
+      resourceInfoTypeId: isSet(object.resourceInfoTypeId)
+        ? globalThis.Number(object.resourceInfoTypeId)
+        : 0,
+      value: isSet(object.value) ? globalThis.String(object.value) : "",
     };
   },
 
   toJSON(message: UpdateResourceInfoInput): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.resourceInfoTypeId !== undefined &&
-      (obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId));
-    message.value !== undefined && (obj.value = message.value);
+    if (message.resourceId !== 0) {
+      obj.resourceId = Math.round(message.resourceId);
+    }
+    if (message.resourceInfoTypeId !== 0) {
+      obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId);
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdateResourceInfoInput>, I>>(
     base?: I
   ): UpdateResourceInfoInput {
-    return UpdateResourceInfoInput.fromPartial(base ?? {});
+    return UpdateResourceInfoInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<UpdateResourceInfoInput>, I>>(
     object: I
   ): UpdateResourceInfoInput {
@@ -1021,23 +1076,25 @@ export const DeleteResourceInfoInput = {
 
   fromJSON(object: any): DeleteResourceInfoInput {
     return {
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
+        : 0,
     };
   },
 
   toJSON(message: DeleteResourceInfoInput): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
+    if (message.resourceId !== 0) {
+      obj.resourceId = Math.round(message.resourceId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<DeleteResourceInfoInput>, I>>(
     base?: I
   ): DeleteResourceInfoInput {
-    return DeleteResourceInfoInput.fromPartial(base ?? {});
+    return DeleteResourceInfoInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DeleteResourceInfoInput>, I>>(
     object: I
   ): DeleteResourceInfoInput {
@@ -1101,28 +1158,31 @@ export const GetResourceInfosInput = {
 
   fromJSON(object: any): GetResourceInfosInput {
     return {
-      resourceId: isSet(object.resourceId) ? Number(object.resourceId) : 0,
+      resourceId: isSet(object.resourceId)
+        ? globalThis.Number(object.resourceId)
+        : 0,
       resourceInfoTypeId: isSet(object.resourceInfoTypeId)
-        ? Number(object.resourceInfoTypeId)
+        ? globalThis.Number(object.resourceInfoTypeId)
         : undefined,
     };
   },
 
   toJSON(message: GetResourceInfosInput): unknown {
     const obj: any = {};
-    message.resourceId !== undefined &&
-      (obj.resourceId = Math.round(message.resourceId));
-    message.resourceInfoTypeId !== undefined &&
-      (obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId));
+    if (message.resourceId !== 0) {
+      obj.resourceId = Math.round(message.resourceId);
+    }
+    if (message.resourceInfoTypeId !== undefined) {
+      obj.resourceInfoTypeId = Math.round(message.resourceInfoTypeId);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<GetResourceInfosInput>, I>>(
     base?: I
   ): GetResourceInfosInput {
-    return GetResourceInfosInput.fromPartial(base ?? {});
+    return GetResourceInfosInput.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<GetResourceInfosInput>, I>>(
     object: I
   ): GetResourceInfosInput {
@@ -1176,7 +1236,7 @@ export const ResourceInfoList = {
 
   fromJSON(object: any): ResourceInfoList {
     return {
-      resourceInfos: Array.isArray(object?.resourceInfos)
+      resourceInfos: globalThis.Array.isArray(object?.resourceInfos)
         ? object.resourceInfos.map((e: any) => ResourceInfo.fromJSON(e))
         : [],
     };
@@ -1184,12 +1244,10 @@ export const ResourceInfoList = {
 
   toJSON(message: ResourceInfoList): unknown {
     const obj: any = {};
-    if (message.resourceInfos) {
+    if (message.resourceInfos?.length) {
       obj.resourceInfos = message.resourceInfos.map((e) =>
-        e ? ResourceInfo.toJSON(e) : undefined
+        ResourceInfo.toJSON(e)
       );
-    } else {
-      obj.resourceInfos = [];
     }
     return obj;
   },
@@ -1197,9 +1255,8 @@ export const ResourceInfoList = {
   create<I extends Exact<DeepPartial<ResourceInfoList>, I>>(
     base?: I
   ): ResourceInfoList {
-    return ResourceInfoList.fromPartial(base ?? {});
+    return ResourceInfoList.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<ResourceInfoList>, I>>(
     object: I
   ): ResourceInfoList {
@@ -1209,25 +1266,6 @@ export const ResourceInfoList = {
     return message;
   },
 };
-
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
 
 type Builtin =
   | Date
@@ -1240,8 +1278,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }
@@ -1260,10 +1298,8 @@ type Exact<P, I extends P> = P extends Builtin
     };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error(
-      "Value is larger than Number.MAX_SAFE_INTEGER"
-    );
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

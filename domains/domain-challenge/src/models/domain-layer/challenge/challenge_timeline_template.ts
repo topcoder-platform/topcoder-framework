@@ -23,7 +23,7 @@ export interface CreateChallengeTimelineTemplateInput {
 
 export interface UpdateChallengeTimelineTemplateInput {
   filterCriteria: ScanCriteria[];
-  updateInput?: UpdateChallengeTimelineTemplateInput_UpdateInput;
+  updateInput?: UpdateChallengeTimelineTemplateInput_UpdateInput | undefined;
 }
 
 export interface UpdateChallengeTimelineTemplateInput_UpdateInput {
@@ -123,33 +123,43 @@ export const ChallengeTimelineTemplate = {
 
   fromJSON(object: any): ChallengeTimelineTemplate {
     return {
-      id: isSet(object.id) ? String(object.id) : "",
-      trackId: isSet(object.trackId) ? String(object.trackId) : "",
-      typeId: isSet(object.typeId) ? String(object.typeId) : "",
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      trackId: isSet(object.trackId) ? globalThis.String(object.trackId) : "",
+      typeId: isSet(object.typeId) ? globalThis.String(object.typeId) : "",
       timelineTemplateId: isSet(object.timelineTemplateId)
-        ? String(object.timelineTemplateId)
+        ? globalThis.String(object.timelineTemplateId)
         : "",
-      isDefault: isSet(object.isDefault) ? Boolean(object.isDefault) : false,
+      isDefault: isSet(object.isDefault)
+        ? globalThis.Boolean(object.isDefault)
+        : false,
     };
   },
 
   toJSON(message: ChallengeTimelineTemplate): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = message.id);
-    message.trackId !== undefined && (obj.trackId = message.trackId);
-    message.typeId !== undefined && (obj.typeId = message.typeId);
-    message.timelineTemplateId !== undefined &&
-      (obj.timelineTemplateId = message.timelineTemplateId);
-    message.isDefault !== undefined && (obj.isDefault = message.isDefault);
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.trackId !== "") {
+      obj.trackId = message.trackId;
+    }
+    if (message.typeId !== "") {
+      obj.typeId = message.typeId;
+    }
+    if (message.timelineTemplateId !== "") {
+      obj.timelineTemplateId = message.timelineTemplateId;
+    }
+    if (message.isDefault === true) {
+      obj.isDefault = message.isDefault;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<ChallengeTimelineTemplate>, I>>(
     base?: I
   ): ChallengeTimelineTemplate {
-    return ChallengeTimelineTemplate.fromPartial(base ?? {});
+    return ChallengeTimelineTemplate.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<ChallengeTimelineTemplate>, I>>(
     object: I
   ): ChallengeTimelineTemplate {
@@ -209,7 +219,7 @@ export const ChallengeTimelineTemplateList = {
 
   fromJSON(object: any): ChallengeTimelineTemplateList {
     return {
-      items: Array.isArray(object?.items)
+      items: globalThis.Array.isArray(object?.items)
         ? object.items.map((e: any) => ChallengeTimelineTemplate.fromJSON(e))
         : [],
     };
@@ -217,12 +227,8 @@ export const ChallengeTimelineTemplateList = {
 
   toJSON(message: ChallengeTimelineTemplateList): unknown {
     const obj: any = {};
-    if (message.items) {
-      obj.items = message.items.map((e) =>
-        e ? ChallengeTimelineTemplate.toJSON(e) : undefined
-      );
-    } else {
-      obj.items = [];
+    if (message.items?.length) {
+      obj.items = message.items.map((e) => ChallengeTimelineTemplate.toJSON(e));
     }
     return obj;
   },
@@ -230,9 +236,8 @@ export const ChallengeTimelineTemplateList = {
   create<I extends Exact<DeepPartial<ChallengeTimelineTemplateList>, I>>(
     base?: I
   ): ChallengeTimelineTemplateList {
-    return ChallengeTimelineTemplateList.fromPartial(base ?? {});
+    return ChallengeTimelineTemplateList.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<ChallengeTimelineTemplateList>, I>>(
     object: I
   ): ChallengeTimelineTemplateList {
@@ -317,31 +322,41 @@ export const CreateChallengeTimelineTemplateInput = {
 
   fromJSON(object: any): CreateChallengeTimelineTemplateInput {
     return {
-      trackId: isSet(object.trackId) ? String(object.trackId) : "",
-      typeId: isSet(object.typeId) ? String(object.typeId) : "",
+      trackId: isSet(object.trackId) ? globalThis.String(object.trackId) : "",
+      typeId: isSet(object.typeId) ? globalThis.String(object.typeId) : "",
       timelineTemplateId: isSet(object.timelineTemplateId)
-        ? String(object.timelineTemplateId)
+        ? globalThis.String(object.timelineTemplateId)
         : "",
-      isDefault: isSet(object.isDefault) ? Boolean(object.isDefault) : false,
+      isDefault: isSet(object.isDefault)
+        ? globalThis.Boolean(object.isDefault)
+        : false,
     };
   },
 
   toJSON(message: CreateChallengeTimelineTemplateInput): unknown {
     const obj: any = {};
-    message.trackId !== undefined && (obj.trackId = message.trackId);
-    message.typeId !== undefined && (obj.typeId = message.typeId);
-    message.timelineTemplateId !== undefined &&
-      (obj.timelineTemplateId = message.timelineTemplateId);
-    message.isDefault !== undefined && (obj.isDefault = message.isDefault);
+    if (message.trackId !== "") {
+      obj.trackId = message.trackId;
+    }
+    if (message.typeId !== "") {
+      obj.typeId = message.typeId;
+    }
+    if (message.timelineTemplateId !== "") {
+      obj.timelineTemplateId = message.timelineTemplateId;
+    }
+    if (message.isDefault === true) {
+      obj.isDefault = message.isDefault;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<CreateChallengeTimelineTemplateInput>, I>>(
     base?: I
   ): CreateChallengeTimelineTemplateInput {
-    return CreateChallengeTimelineTemplateInput.fromPartial(base ?? {});
+    return CreateChallengeTimelineTemplateInput.fromPartial(
+      base ?? ({} as any)
+    );
   },
-
   fromPartial<
     I extends Exact<DeepPartial<CreateChallengeTimelineTemplateInput>, I>
   >(object: I): CreateChallengeTimelineTemplateInput {
@@ -417,7 +432,7 @@ export const UpdateChallengeTimelineTemplateInput = {
 
   fromJSON(object: any): UpdateChallengeTimelineTemplateInput {
     return {
-      filterCriteria: Array.isArray(object?.filterCriteria)
+      filterCriteria: globalThis.Array.isArray(object?.filterCriteria)
         ? object.filterCriteria.map((e: any) => ScanCriteria.fromJSON(e))
         : [],
       updateInput: isSet(object.updateInput)
@@ -430,28 +445,26 @@ export const UpdateChallengeTimelineTemplateInput = {
 
   toJSON(message: UpdateChallengeTimelineTemplateInput): unknown {
     const obj: any = {};
-    if (message.filterCriteria) {
+    if (message.filterCriteria?.length) {
       obj.filterCriteria = message.filterCriteria.map((e) =>
-        e ? ScanCriteria.toJSON(e) : undefined
+        ScanCriteria.toJSON(e)
       );
-    } else {
-      obj.filterCriteria = [];
     }
-    message.updateInput !== undefined &&
-      (obj.updateInput = message.updateInput
-        ? UpdateChallengeTimelineTemplateInput_UpdateInput.toJSON(
-            message.updateInput
-          )
-        : undefined);
+    if (message.updateInput !== undefined) {
+      obj.updateInput = UpdateChallengeTimelineTemplateInput_UpdateInput.toJSON(
+        message.updateInput
+      );
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<UpdateChallengeTimelineTemplateInput>, I>>(
     base?: I
   ): UpdateChallengeTimelineTemplateInput {
-    return UpdateChallengeTimelineTemplateInput.fromPartial(base ?? {});
+    return UpdateChallengeTimelineTemplateInput.fromPartial(
+      base ?? ({} as any)
+    );
   },
-
   fromPartial<
     I extends Exact<DeepPartial<UpdateChallengeTimelineTemplateInput>, I>
   >(object: I): UpdateChallengeTimelineTemplateInput {
@@ -548,24 +561,35 @@ export const UpdateChallengeTimelineTemplateInput_UpdateInput = {
 
   fromJSON(object: any): UpdateChallengeTimelineTemplateInput_UpdateInput {
     return {
-      trackId: isSet(object.trackId) ? String(object.trackId) : undefined,
-      typeId: isSet(object.typeId) ? String(object.typeId) : undefined,
+      trackId: isSet(object.trackId)
+        ? globalThis.String(object.trackId)
+        : undefined,
+      typeId: isSet(object.typeId)
+        ? globalThis.String(object.typeId)
+        : undefined,
       timelineTemplateId: isSet(object.timelineTemplateId)
-        ? String(object.timelineTemplateId)
+        ? globalThis.String(object.timelineTemplateId)
         : undefined,
       isDefault: isSet(object.isDefault)
-        ? Boolean(object.isDefault)
+        ? globalThis.Boolean(object.isDefault)
         : undefined,
     };
   },
 
   toJSON(message: UpdateChallengeTimelineTemplateInput_UpdateInput): unknown {
     const obj: any = {};
-    message.trackId !== undefined && (obj.trackId = message.trackId);
-    message.typeId !== undefined && (obj.typeId = message.typeId);
-    message.timelineTemplateId !== undefined &&
-      (obj.timelineTemplateId = message.timelineTemplateId);
-    message.isDefault !== undefined && (obj.isDefault = message.isDefault);
+    if (message.trackId !== undefined) {
+      obj.trackId = message.trackId;
+    }
+    if (message.typeId !== undefined) {
+      obj.typeId = message.typeId;
+    }
+    if (message.timelineTemplateId !== undefined) {
+      obj.timelineTemplateId = message.timelineTemplateId;
+    }
+    if (message.isDefault !== undefined) {
+      obj.isDefault = message.isDefault;
+    }
     return obj;
   },
 
@@ -576,10 +600,9 @@ export const UpdateChallengeTimelineTemplateInput_UpdateInput = {
     >
   >(base?: I): UpdateChallengeTimelineTemplateInput_UpdateInput {
     return UpdateChallengeTimelineTemplateInput_UpdateInput.fromPartial(
-      base ?? {}
+      base ?? ({} as any)
     );
   },
-
   fromPartial<
     I extends Exact<
       DeepPartial<UpdateChallengeTimelineTemplateInput_UpdateInput>,
@@ -607,8 +630,8 @@ type Builtin =
 
 type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
+  : T extends globalThis.Array<infer U>
+  ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends { $case: string }
