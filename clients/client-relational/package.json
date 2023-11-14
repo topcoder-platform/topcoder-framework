@@ -26,7 +26,7 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.8.0",
     "@topcoder-framework/lib-common": "^0.24.0",
-    "topcoder-proto-registry": "0.1.0",
+    "topcoder-proto-registry": "0.2.0",
     "tslib": "^2.4.1"
   },
   "devDependencies": {

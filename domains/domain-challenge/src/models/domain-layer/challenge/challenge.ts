@@ -144,6 +144,8 @@ export interface Challenge_PrizeSet_Prize {
 export interface Challenge_Overview {
   totalPrizesInCents?: number | undefined;
   totalPrizes?: number | undefined;
+  /** USD, POINT */
+  type?: string | undefined;
 }
 
 export interface Challenge_Constraint {
@@ -2611,7 +2613,7 @@ export const Challenge_PrizeSet_Prize = {
       writer.uint32(8).int64(message.amountInCents);
     }
     if (message.value !== undefined) {
-      writer.uint32(21).float(message.value);
+      writer.uint32(17).double(message.value);
     }
     if (message.type !== "") {
       writer.uint32(26).string(message.type);
@@ -2638,11 +2640,11 @@ export const Challenge_PrizeSet_Prize = {
           message.amountInCents = longToNumber(reader.int64() as Long);
           continue;
         case 2:
-          if (tag !== 21) {
+          if (tag !== 17) {
             break;
           }
 
-          message.value = reader.float();
+          message.value = reader.double();
           continue;
         case 3:
           if (tag !== 26) {
@@ -2701,7 +2703,11 @@ export const Challenge_PrizeSet_Prize = {
 };
 
 function createBaseChallenge_Overview(): Challenge_Overview {
-  return { totalPrizesInCents: undefined, totalPrizes: undefined };
+  return {
+    totalPrizesInCents: undefined,
+    totalPrizes: undefined,
+    type: undefined,
+  };
 }
 
 export const Challenge_Overview = {
@@ -2713,7 +2719,10 @@ export const Challenge_Overview = {
       writer.uint32(8).int64(message.totalPrizesInCents);
     }
     if (message.totalPrizes !== undefined) {
-      writer.uint32(21).float(message.totalPrizes);
+      writer.uint32(17).double(message.totalPrizes);
+    }
+    if (message.type !== undefined) {
+      writer.uint32(26).string(message.type);
     }
     return writer;
   },
@@ -2734,11 +2743,18 @@ export const Challenge_Overview = {
           message.totalPrizesInCents = longToNumber(reader.int64() as Long);
           continue;
         case 2:
-          if (tag !== 21) {
+          if (tag !== 17) {
             break;
           }
 
-          message.totalPrizes = reader.float();
+          message.totalPrizes = reader.double();
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.type = reader.string();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -2757,6 +2773,7 @@ export const Challenge_Overview = {
       totalPrizes: isSet(object.totalPrizes)
         ? globalThis.Number(object.totalPrizes)
         : undefined,
+      type: isSet(object.type) ? globalThis.String(object.type) : undefined,
     };
   },
 
@@ -2767,6 +2784,9 @@ export const Challenge_Overview = {
     }
     if (message.totalPrizes !== undefined) {
       obj.totalPrizes = message.totalPrizes;
+    }
+    if (message.type !== undefined) {
+      obj.type = message.type;
     }
     return obj;
   },
@@ -2782,6 +2802,7 @@ export const Challenge_Overview = {
     const message = createBaseChallenge_Overview();
     message.totalPrizesInCents = object.totalPrizesInCents ?? undefined;
     message.totalPrizes = object.totalPrizes ?? undefined;
+    message.type = object.type ?? undefined;
     return message;
   },
 };
